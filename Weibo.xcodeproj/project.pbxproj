@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		C6011AFA151475D500A0A49C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C6011AF9151475D500A0A49C /* README.md */; };
+		C6011B0815147B2500A0A49C /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011AFE15147B2500A0A49C /* FMDatabase.m */; };
+		C6011B0915147B2500A0A49C /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */; };
+		C6011B0A15147B2500A0A49C /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0215147B2500A0A49C /* FMDatabasePool.m */; };
+		C6011B0B15147B2500A0A49C /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0415147B2500A0A49C /* FMDatabaseQueue.m */; };
+		C6011B0C15147B2500A0A49C /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0515147B2500A0A49C /* fmdb.m */; };
+		C6011B0D15147B2500A0A49C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0715147B2500A0A49C /* FMResultSet.m */; };
 		C6053FB514F24616003A581D /* WeiboBaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */; };
 		C6053FB714F2462B003A581D /* WTActiveTextRanges.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */; };
 		C6053FEB14F380F1003A581D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6053FE914F380F1003A581D /* SSKeychain.m */; };
@@ -121,6 +127,17 @@
 
 /* Begin PBXFileReference section */
 		C6011AF9151475D500A0A49C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		C6011AFD15147B2500A0A49C /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		C6011AFE15147B2500A0A49C /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		C6011AFF15147B2500A0A49C /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		C6011B0115147B2500A0A49C /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		C6011B0215147B2500A0A49C /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		C6011B0315147B2500A0A49C /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		C6011B0415147B2500A0A49C /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		C6011B0515147B2500A0A49C /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
+		C6011B0615147B2500A0A49C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		C6011B0715147B2500A0A49C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		C6053FE814F380F1003A581D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		C6053FE914F380F1003A581D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		C617C90414EB56C600CC75F5 /* WeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboConstants.h; path = WeiboSDK/WeiboConstants.h; sourceTree = "<group>"; };
@@ -273,6 +290,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C6011AFC15147B2500A0A49C /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				C6011AFD15147B2500A0A49C /* FMDatabase.h */,
+				C6011AFE15147B2500A0A49C /* FMDatabase.m */,
+				C6011AFF15147B2500A0A49C /* FMDatabaseAdditions.h */,
+				C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */,
+				C6011B0115147B2500A0A49C /* FMDatabasePool.h */,
+				C6011B0215147B2500A0A49C /* FMDatabasePool.m */,
+				C6011B0315147B2500A0A49C /* FMDatabaseQueue.h */,
+				C6011B0415147B2500A0A49C /* FMDatabaseQueue.m */,
+				C6011B0515147B2500A0A49C /* fmdb.m */,
+				C6011B0615147B2500A0A49C /* FMResultSet.h */,
+				C6011B0715147B2500A0A49C /* FMResultSet.m */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
 		C6053FE614F380F1003A581D /* SSKeyChain */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +424,7 @@
 		C6DB908C14E4E139001DE9F5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C6011AFC15147B2500A0A49C /* fmdb */,
 				C6053FE614F380F1003A581D /* SSKeyChain */,
 				C617C92014EBDF4300CC75F5 /* Additions */,
 				C6CED1A114E686180033CA45 /* WTOASingnaturer.h */,
@@ -772,6 +808,12 @@
 				C6DC65D814FDE5D000B70E45 /* WeiboUnread.m in Sources */,
 				C67ED9AE1501B0E80059AF71 /* WeiboComment.m in Sources */,
 				C6DC00DB150DADC700E95B58 /* WeiboRepliesStream.m in Sources */,
+				C6011B0815147B2500A0A49C /* FMDatabase.m in Sources */,
+				C6011B0915147B2500A0A49C /* FMDatabaseAdditions.m in Sources */,
+				C6011B0A15147B2500A0A49C /* FMDatabasePool.m in Sources */,
+				C6011B0B15147B2500A0A49C /* FMDatabaseQueue.m in Sources */,
+				C6011B0C15147B2500A0A49C /* fmdb.m in Sources */,
+				C6011B0D15147B2500A0A49C /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
