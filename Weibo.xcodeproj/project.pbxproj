@@ -14,6 +14,9 @@
 		C6011B0B15147B2500A0A49C /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0415147B2500A0A49C /* FMDatabaseQueue.m */; };
 		C6011B0C15147B2500A0A49C /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0515147B2500A0A49C /* fmdb.m */; };
 		C6011B0D15147B2500A0A49C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0715147B2500A0A49C /* FMResultSet.m */; };
+		C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */ = {isa = PBXBuildFile; fileRef = C6011B13151484BE00A0A49C /* LocalAutocompleteDB.h */; };
+		C6011B16151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */; };
+		C6011B17151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */; };
 		C6053FB514F24616003A581D /* WeiboBaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */; };
 		C6053FB714F2462B003A581D /* WTActiveTextRanges.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */; };
 		C6053FEB14F380F1003A581D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6053FE914F380F1003A581D /* SSKeychain.m */; };
@@ -138,6 +141,8 @@
 		C6011B0515147B2500A0A49C /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
 		C6011B0615147B2500A0A49C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		C6011B0715147B2500A0A49C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		C6011B13151484BE00A0A49C /* LocalAutocompleteDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalAutocompleteDB.h; path = WeiboSDK/Support/LocalAutocompleteDB.h; sourceTree = "<group>"; };
+		C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalAutocompleteDB.m; path = WeiboSDK/Support/LocalAutocompleteDB.m; sourceTree = "<group>"; };
 		C6053FE814F380F1003A581D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		C6053FE914F380F1003A581D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		C617C90414EB56C600CC75F5 /* WeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboConstants.h; path = WeiboSDK/WeiboConstants.h; sourceTree = "<group>"; };
@@ -484,6 +489,8 @@
 				C6FC9E6514E3C43D00094A8F /* WTCallback.m */,
 				C6DB908114E4C0F0001DE9F5 /* WTKeychain.h */,
 				C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */,
+				C6011B13151484BE00A0A49C /* LocalAutocompleteDB.h */,
+				C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -618,6 +625,7 @@
 			files = (
 				C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */,
 				C67ED9AD1501B0E80059AF71 /* WeiboComment.h in Headers */,
+				C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +760,7 @@
 				C6647D8114ED638E00422998 /* WeiboSDKEngine.m in Sources */,
 				C6DE37D814EF85BB004DAFE9 /* ABActiveRange.m in Sources */,
 				C67ED9AF1501B0E80059AF71 /* WeiboComment.m in Sources */,
+				C6011B17151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +823,7 @@
 				C6011B0B15147B2500A0A49C /* FMDatabaseQueue.m in Sources */,
 				C6011B0C15147B2500A0A49C /* fmdb.m in Sources */,
 				C6011B0D15147B2500A0A49C /* FMResultSet.m in Sources */,
+				C6011B16151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
