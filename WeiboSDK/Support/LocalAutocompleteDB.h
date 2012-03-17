@@ -22,4 +22,8 @@
 + (void)resetDatabase;
 + (void)shutdown;
 
+#pragma mark -
+#pragma mark Database Life Cycle
+- (void)close;
+
 @end

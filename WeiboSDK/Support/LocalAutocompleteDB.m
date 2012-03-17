@@ -7,6 +7,7 @@
 //
 
 #import "LocalAutocompleteDB.h"
+#import "FMDatabase.h"
 #import "WTFoundationUtilities.h"
 
 static LocalAutocompleteDB * sharedDB = nil;
@@ -18,8 +19,9 @@ static LocalAutocompleteDB * sharedDB = nil;
     WeiboUnimplementedMethod
 }
 + (NSString *)databasePath{
-    WeiboUnimplementedMethod
-    return nil;
+    NSString * cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString * databasePath = [[cachesDirectory stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]] stringByAppendingPathComponent:@"AutocompleteDB"];
+    return databasePath;
 }
 + (LocalAutocompleteDB *)sharedAutocompleteDB{
     if (sharedDB) {
@@ -31,7 +33,25 @@ static LocalAutocompleteDB * sharedDB = nil;
     WeiboUnimplementedMethod
 }
 + (void)shutdown{
-    WeiboUnimplementedMethod
+    [[self sharedAutocompleteDB] close];
+    [[self sharedAutocompleteDB] release];
+}
+
+#pragma mark -
+#pragma mark Database Life Cycle
+- (id)init{
+    if (self = [super init]) {
+        db = [FMDatabase databaseWithPath:[[self class] databasePath]];
+        if (![db open]) {
+            [db release];
+            return nil;
+        }
+    }
+    return self;
+}
+- (void)close{
+    if ([db close]) {
+    }
 }
 
 @end
