@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6011AFA151475D500A0A49C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C6011AF9151475D500A0A49C /* README.md */; };
 		C6053FB514F24616003A581D /* WeiboBaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */; };
 		C6053FB714F2462B003A581D /* WTActiveTextRanges.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */; };
 		C6053FEB14F380F1003A581D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6053FE914F380F1003A581D /* SSKeychain.m */; };
@@ -119,6 +120,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C6011AF9151475D500A0A49C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		C6053FE814F380F1003A581D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		C6053FE914F380F1003A581D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		C617C90414EB56C600CC75F5 /* WeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboConstants.h; path = WeiboSDK/WeiboConstants.h; sourceTree = "<group>"; };
@@ -189,7 +191,7 @@
 		C6DB90A114E50A8E001DE9F5 /* WeiboUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboUser.m; path = WeiboSDK/Model/WeiboUser.m; sourceTree = "<group>"; };
 		C6DB90C514E51127001DE9F5 /* WeiboConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboConfiguration.h; path = WeiboSDK/Model/WeiboConfiguration.h; sourceTree = "<group>"; };
 		C6DB90C614E51127001DE9F5 /* WeiboConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboConfiguration.m; path = WeiboSDK/Model/WeiboConfiguration.m; sourceTree = "<group>"; };
-		C6DC00D9150DADC700E95B58 /* WeiboRepliesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; name = WeiboRepliesStream.h; path = WeiboSDK/Model/Stream/WeiboRepliesStream.h; sourceTree = "<group>"; };
+		C6DC00D9150DADC700E95B58 /* WeiboRepliesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboRepliesStream.h; path = WeiboSDK/Model/Stream/WeiboRepliesStream.h; sourceTree = "<group>"; };
 		C6DC00DA150DADC700E95B58 /* WeiboRepliesStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboRepliesStream.m; path = WeiboSDK/Model/Stream/WeiboRepliesStream.m; sourceTree = "<group>"; };
 		C6DC65D614FDE5D000B70E45 /* WeiboUnread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboUnread.h; path = WeiboSDK/Model/WeiboUnread.h; sourceTree = "<group>"; };
 		C6DC65D714FDE5D000B70E45 /* WeiboUnread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboUnread.m; path = WeiboSDK/Model/WeiboUnread.m; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 		C6FC9E3714E3C3F300094A8F = {
 			isa = PBXGroup;
 			children = (
+				C6011AF9151475D500A0A49C /* README.md */,
 				C6FC9E6314E3C40200094A8F /* WeiboSDK */,
 				C6FC9E4C14E3C3F400094A8F /* Weibo */,
 				C6B4DC1614ED347C0032A8CF /* WeiboSDKEngine */,
@@ -654,6 +657,7 @@
 				C6FC9E5114E3C3F400094A8F /* InfoPlist.strings in Resources */,
 				C6FC9E5714E3C3F400094A8F /* Credits.rtf in Resources */,
 				C6FC9E5D14E3C3F400094A8F /* MainMenu.xib in Resources */,
+				C6011AFA151475D500A0A49C /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
