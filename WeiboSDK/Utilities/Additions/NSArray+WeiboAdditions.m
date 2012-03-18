@@ -22,7 +22,7 @@
         return -1;
     NSInteger min = 0, max = [self count] - 1;
     while (min <= max){
-        const NSInteger mid = min + (max - min) / 2;
+        const NSInteger mid = (min + max) >> 1;
         switch (comparator(key, [self objectAtIndex:mid])){
             case NSOrderedSame:
                 return mid;

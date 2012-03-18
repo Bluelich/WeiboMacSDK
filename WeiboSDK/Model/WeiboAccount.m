@@ -138,7 +138,7 @@
             [timelineStream loadNewer];
             break;
         case WeiboCompositionTypeComment:
-            [commentsTimelineStream loadNewer];
+            //[commentsTimelineStream loadNewer];
             break;
         default:
             break;
@@ -156,6 +156,7 @@
     if ([response isKindOfClass:[WeiboRequestError class]]) {
         return ;
     }
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
     WeiboUnread * unread = (WeiboUnread *)response;
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
@@ -169,10 +170,12 @@
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
     if (unread.newDirectMessages > 0) {
-        
+        // have NOT get access to DM api yet, just post a notification
+        [nc postNotificationName:kWeiboAccountFoundNewDirectMessageNotification object:nil];
     }
     if (unread.newFollowers > 0) {
-        
+        // Follower list not implemented yet.
+        [nc postNotificationName:kWeiboAccountFoundNewFollowerNotification object:nil];
     }
     if ([_delegate respondsToSelector:@selector(account:finishCheckingUnreadCount:)]) {
         [_delegate account:self finishCheckingUnreadCount:unread];
