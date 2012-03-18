@@ -128,7 +128,7 @@
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus{
     NSInteger index = [statuses binarySearch:theStatus 
                                   usingBlock:^NSComparisonResult(id key, id object) {
-                                      return [(WeiboBaseStatus *)object compare:key];
+                                      return [object compare:key];
                                   }];
     return index;
 }
