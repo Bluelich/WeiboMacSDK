@@ -12,6 +12,8 @@
 
 @class WeiboStatus,WeiboBaseStatus,WeiboUser,WeiboAccount,WTCallback;
 
+
+
 @interface WeiboComposition : NSObject <CLLocationManagerDelegate> {
     NSString *text;
     WeiboUser *replyToUser;

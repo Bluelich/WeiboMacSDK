@@ -61,6 +61,8 @@
 
 #pragma mark -
 #pragma mark Timeline
+- (void)forceRefreshTimelines;
+- (void)refreshTimelineForType:(WeiboCompositionType)type;
 - (void)refreshTimelines;
 - (void)resetUnreadCountWithType:(WeiboUnreadCountType)type;
 

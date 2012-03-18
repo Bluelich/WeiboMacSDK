@@ -49,9 +49,13 @@ static LocalAutocompleteDB * sharedDB = nil;
     }
     return self;
 }
+- (void)dealloc{
+    [self close];
+    [super dealloc];
+}
 - (void)close{
-    if ([db close]) {
-    }
+    [db close];
+    [db release];
 }
 
 @end

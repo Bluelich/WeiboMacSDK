@@ -125,6 +125,23 @@
 
 #pragma mark -
 #pragma mark Timeline
+- (void)forceRefreshTimelines{
+    [timelineStream loadNewer];
+    [mentionsStream loadNewer];
+    [commentsTimelineStream loadNewer];
+}
+- (void)refreshTimelineForType:(WeiboCompositionType)type{
+    switch (type) {
+        case WeiboCompositionTypeStatus:
+            [timelineStream loadNewer];
+            break;
+        case WeiboCompositionTypeComment:
+            [commentsTimelineStream loadNewer];
+            break;
+        default:
+            break;
+    }
+}
 - (void)refreshTimelines{
     WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];

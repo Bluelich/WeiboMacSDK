@@ -197,7 +197,8 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image
       latitude:(double)latValue longitude:(double)longValue{
-    WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), nil);
+    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
+    WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              text, @"status",
                              [NSString stringWithFormat:@"%lld",reply],@"in_reply_to_status_id",
@@ -215,7 +216,8 @@ multipartFormData:(NSDictionary *)parts
     [self update:text inReplyToStatusID:reply imageData:nil latitude:0 longitude:0];
 }
 - (void)updated:(id)response info:(id)info{
-    [authenticateWithAccount refreshTimelines];
+    WeiboCompositionType type = [info integerValue];
+    [authenticateWithAccount refreshTimelineForType:type];
     [responseCallback invoke:response];
 }
 - (void)destoryStatus:(WeiboStatusID)sid{
@@ -225,7 +227,8 @@ multipartFormData:(NSDictionary *)parts
     [self POST:url parameters:nil callback:callback];
 }
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid{
-    WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), nil);
+    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeComment];
+    WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              text, @"comment",
                              [NSString stringWithFormat:@"%lld",sid],@"id",
