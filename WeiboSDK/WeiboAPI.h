@@ -46,6 +46,7 @@
       latitude:(double)latValue longitude:(double)longValue;
 - (void)update:(NSString *)text inReplyToStatusID:(WeiboStatusID)reply;
 - (void)destoryStatus:(WeiboStatusID)sid;
+- (void)destoryComment:(WeiboStatusID)sid;
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid;
 #pragma mark -
 #pragma mark User Access

@@ -18,6 +18,8 @@
 #import "WeiboUserTimelineStream.h"
 #import "WeiboRepliesStream.h"
 #import "WeiboBaseStatus.h"
+#import "WeiboStatus.h"
+#import "WeiboComment.h"
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
 #import "SSKeychain.h"
@@ -297,7 +299,13 @@
 }
 - (void)deleteStatus:(WeiboBaseStatus *)status{
     WeiboAPI * api = [self authenticatedRequest:nil];
-    [api destoryStatus:status.sid];
+    if ([status isKindOfClass:[WeiboStatus class]]) {
+        [api destoryStatus:status.sid];
+    }else if ([status isKindOfClass:[WeiboComment class]]) {
+        [api destoryComment:status.sid];
+    }else {
+        return;
+    }
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:kWeiboStatusDeleteNotification object:status];
 }

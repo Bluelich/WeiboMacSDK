@@ -192,8 +192,14 @@ multipartFormData:(NSDictionary *)parts
 - (void)statuseResponse:(id)response info:(id)info{
     [responseCallback invoke:response];
 }
+- (void)commentResponse:(id)response info:(id)info{
+    [responseCallback invoke:response];
+}
 - (WTCallback *)statuseResponseCallback{
     return WTCallbackMake(self, @selector(statuseResponse:info:), nil);
+}
+- (WTCallback *)commentResponseCallback{
+    return WTCallbackMake(self, @selector(commentResponseCallback), nil);
 }
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image
       latitude:(double)latValue longitude:(double)longValue{
@@ -224,6 +230,12 @@ multipartFormData:(NSDictionary *)parts
     WTCallback * callback = [self statuseResponseCallback];
     // using RESTful API here.
     NSString * url = [NSString stringWithFormat:@"statuses/destroy/%lld.json",sid];
+    [self POST:url parameters:nil callback:callback];
+}
+- (void)destoryComment:(WeiboStatusID)sid{
+    WTCallback * callback = [self commentResponseCallback];
+    // using RESTful API here.
+    NSString * url = [NSString stringWithFormat:@"statuses/comment_destroy/%lld.json",sid];
     [self POST:url parameters:nil callback:callback];
 }
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid{
