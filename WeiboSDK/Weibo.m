@@ -31,6 +31,9 @@ static Weibo * _sharedWeibo = nil;
             NSArray * restoredAccounts = [NSKeyedUnarchiver unarchiveObjectWithData:accountData];
             if ([restoredAccounts isKindOfClass:[NSArray class]]) {
                 for (WeiboAccount * account in restoredAccounts) {
+                    if (![account isKindOfClass:[WeiboAccount class]]) {
+                        continue;
+                    }
                     if (account.oAuthTokenSecret) {
                         [self addAccount:account];
                     }
