@@ -64,6 +64,8 @@
 		C6647D7B14ED638E00422998 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908E14E4E14C001DE9F5 /* RegexKitLite.m */; };
 		C6647D7E14ED638E00422998 /* Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909114E4EE29001DE9F5 /* Weibo.m */; };
 		C6647D8114ED638E00422998 /* WeiboSDKEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B4DC1A14ED347C0032A8CF /* WeiboSDKEngine.m */; };
+		C66747A9151B1F2100F5C973 /* POAPinyin.h in Headers */ = {isa = PBXBuildFile; fileRef = C66747A7151B1F2100F5C973 /* POAPinyin.h */; };
+		C66747AA151B1F2100F5C973 /* POAPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = C66747A8151B1F2100F5C973 /* POAPinyin.m */; };
 		C67ED9AD1501B0E80059AF71 /* WeiboComment.h in Headers */ = {isa = PBXBuildFile; fileRef = C67ED9AB1501B0E80059AF71 /* WeiboComment.h */; };
 		C67ED9AE1501B0E80059AF71 /* WeiboComment.m in Sources */ = {isa = PBXBuildFile; fileRef = C67ED9AC1501B0E80059AF71 /* WeiboComment.m */; };
 		C67ED9AF1501B0E80059AF71 /* WeiboComment.m in Sources */ = {isa = PBXBuildFile; fileRef = C67ED9AC1501B0E80059AF71 /* WeiboComment.m */; };
@@ -174,6 +176,8 @@
 		C6634FE714EF350B0097E15B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C6634FE914EF35240097E15B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = usr/lib/libz.1.dylib; sourceTree = SDKROOT; };
 		C6634FEB14EF352C0097E15B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		C66747A7151B1F2100F5C973 /* POAPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POAPinyin.h; sourceTree = "<group>"; };
+		C66747A8151B1F2100F5C973 /* POAPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POAPinyin.m; sourceTree = "<group>"; };
 		C67ED9AB1501B0E80059AF71 /* WeiboComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboComment.h; path = WeiboSDK/Model/WeiboComment.h; sourceTree = "<group>"; };
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDKEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDKEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -362,6 +366,15 @@
 			name = UserStream;
 			sourceTree = "<group>";
 		};
+		C66747A5151B1F1200F5C973 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				C66747A7151B1F2100F5C973 /* POAPinyin.h */,
+				C66747A8151B1F2100F5C973 /* POAPinyin.m */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		C6B4DC1614ED347C0032A8CF /* WeiboSDKEngine */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +396,7 @@
 		C6B8C5271514DB0900935AC5 /* AutocompleteDB */ = {
 			isa = PBXGroup;
 			children = (
+				C66747A5151B1F1200F5C973 /* Support */,
 				C6011B13151484BE00A0A49C /* LocalAutocompleteDB.h */,
 				C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */,
 				C6B8C52B1514DC1D00935AC5 /* WTAutoCompleteResultItem.h */,
@@ -648,6 +662,7 @@
 				C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */,
 				C6B8C52D1514DC1D00935AC5 /* WTAutoCompleteResultItem.h in Headers */,
 				C6B8C5321514DC7200935AC5 /* WeiboAutocompleteResultItem.h in Headers */,
+				C66747A9151B1F2100F5C973 /* POAPinyin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +804,7 @@
 				C67ED9AF1501B0E80059AF71 /* WeiboComment.m in Sources */,
 				C6011B17151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */,
 				C6B8C5341514DC7200935AC5 /* WeiboAutocompleteResultItem.m in Sources */,
+				C66747AA151B1F2100F5C973 /* POAPinyin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

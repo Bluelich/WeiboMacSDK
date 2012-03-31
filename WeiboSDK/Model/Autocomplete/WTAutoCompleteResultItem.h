@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+enum {
+    WeiboAutocompleteTypeUser       = 1,
+    WeiboAutocompleteTypeHashtag    = 2
+};
+typedef NSInteger WeiboAutocompleteType;
+
 @protocol WTAutoCompleteResultItem <NSObject>
 - (NSString *)searchableSortableText;
 @property(nonatomic) NSInteger priority;
-@property(nonatomic) int autocompleteType;
+@property(nonatomic) WeiboAutocompleteType autocompleteType;
 @property(nonatomic) long long autocompleteAction;
 @property(retain, nonatomic) NSString *itemID;
 @property(retain, nonatomic) id userInfo;

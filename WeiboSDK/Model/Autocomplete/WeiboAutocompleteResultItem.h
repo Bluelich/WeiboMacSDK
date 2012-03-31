@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WTAutoCompleteResultItem.h"
 
+
 @interface WeiboAutocompleteResultItem : NSObject <WTAutoCompleteResultItem> {
     NSString *autocompleteText;
     NSString *autocompleteSubtext;
@@ -16,7 +17,7 @@
     id userInfo;
     NSString *itemID;
     long long autocompleteAction;
-    int autocompleteType;
+    WeiboAutocompleteType autocompleteType;
     NSInteger priority;
     NSString *_derivedSearchableText;
 }

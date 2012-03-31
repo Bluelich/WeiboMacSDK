@@ -28,4 +28,8 @@
     return NO;
 }
 
+- (NSString *)description{
+    return [NSString stringWithFormat:@"%@",self.autocompleteText];
+}
+
 @end

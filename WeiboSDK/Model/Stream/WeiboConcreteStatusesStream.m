@@ -9,6 +9,7 @@
 #import "WeiboConcreteStatusesStream.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboRequestError.h"
+#import "LocalAutocompleteDB.h"
 
 #import "WTCallback.h"
 #import "NSArray+WeiboAdditions.h"
@@ -110,6 +111,10 @@
     
     if (shouldPostNotification) {
         [self postStatusesChangedNotification];
+    }
+    
+    if ([self shouldIndexUsersInAutocomplete]) {
+        [[LocalAutocompleteDB sharedAutocompleteDB] assimilateFromStatuses:newStatuses];
     }
 }
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus{
