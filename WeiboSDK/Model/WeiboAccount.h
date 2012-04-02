@@ -30,6 +30,14 @@
     id<WeiboAccountDelegate> _delegate;
     WeiboNotificationOptions notificationOptions;
     NSCache * userDetailsStreamsCache;
+    
+    // DirectMessage & Follower Not Implemented Yet.
+    // But we need notificate this things.
+    // Temporary use below flags.
+    struct {
+        unsigned int newDirectMessages:1;
+        unsigned int newFollowers:1;
+    } _notificationFlags;
 }
 
 @property(assign, nonatomic) id<WeiboAccountDelegate> delegate;
@@ -91,10 +99,15 @@
 - (BOOL)hasFreshTweets;
 - (BOOL)hasFreshMentions;
 - (BOOL)hasFreshComments;
+- (BOOL)hasFreshDirectMessages;
+- (BOOL)hasNewFollowers;
 - (BOOL)hasAnythingUnread;
 - (BOOL)hasFreshAnythingApplicableToStatusItem;
 - (BOOL)hasFreshAnythingApplicableToDockBadge;
 - (void)deleteStatus:(WeiboBaseStatus *)status;
+
+- (void)setHasNewDirectMessages:(BOOL)hasNew;
+- (void)setHasNewFollowers:(BOOL)hasNew;
 
 @end
 

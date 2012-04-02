@@ -169,9 +169,11 @@
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
     if (unread.newDirectMessages > 0) {
+        [self setHasNewDirectMessages:YES];
         // have NOT get access to DM api yet, just post a notification
     }
     if (unread.newFollowers > 0) {
+        [self setHasNewFollowers:YES];
         // Follower list not implemented yet.
         
     }
@@ -183,6 +185,14 @@
     WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api resetUnreadWithType:type];
+    
+    // may remove in further update.
+    if (type == WeiboUnreadCountTypeDirectMessage) {
+        [self setHasNewDirectMessages:NO];
+    }
+    if (type == WeiboUnreadCountTypeFollower) {
+        [self setHasNewFollowers:NO];
+    }
 }
 
 #pragma mark -
@@ -287,14 +297,50 @@
     }
     return !topStatus.wasSeen;
 }
+- (BOOL)hasFreshDirectMessages{
+    return _notificationFlags.newDirectMessages;
+}
+- (BOOL)hasNewFollowers{
+    return _notificationFlags.newFollowers;
+}
 - (BOOL)hasAnythingUnread{
-    return [self hasFreshTweets] || [self hasFreshMentions] || [self hasFreshComments];
+    return [self hasFreshTweets] || [self hasFreshMentions] || [self hasFreshComments] || [self hasFreshDirectMessages] || [self hasNewFollowers];
 }
 - (BOOL)hasFreshAnythingApplicableToStatusItem{
-    return [self hasAnythingUnread];
+    if ((notificationOptions & WeiboTweetNotificationMenubar) && [self hasFreshTweets]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboMentionNotificationMenubar) && [self hasFreshMentions]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboCommentNotificationMenubar) && [self hasFreshComments]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboDirectMessageNotificationMenubar) && [self hasFreshDirectMessages]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboFollowerNotificationMenubar) && [self hasNewFollowers]) {
+        return YES;
+    }
+    return NO;
     // need alter.
 }
 - (BOOL)hasFreshAnythingApplicableToDockBadge{
+    if ((notificationOptions & WeiboTweetNotificationBadge) && [self hasFreshTweets]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboMentionNotificationBadge) && [self hasFreshMentions]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboCommentNotificationBadge) && [self hasFreshComments]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboDirectMessageNotificationBadge) && [self hasFreshDirectMessages]) {
+        return YES;
+    }
+    if ((notificationOptions & WeiboFollowerNotificationBadge) && [self hasNewFollowers]) {
+        return YES;
+    }
     return NO;
     // need alter.
 }
@@ -309,5 +355,12 @@
     }
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:kWeiboStatusDeleteNotification object:status];
+}
+
+- (void)setHasNewDirectMessages:(BOOL)hasNew{
+    _notificationFlags.newDirectMessages = hasNew;
+}
+- (void)setHasNewFollowers:(BOOL)hasNew{
+    _notificationFlags.newFollowers = hasNew;
 }
 @end
