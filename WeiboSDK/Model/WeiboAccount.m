@@ -22,6 +22,7 @@
 #import "WeiboComment.h"
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
+#import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
 
 #define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
@@ -38,7 +39,7 @@
     if (self = [super init]) {
         notificationOptions = WeiboTweetNotificationMenubar | WeiboMentionNotificationMenubar |
                               WeiboFollowerNotificationMenubar | WeiboCommentNotificationMenubar | 
-        WeiboDirectMessageNotificationMenubar;
+                              WeiboDirectMessageNotificationMenubar;
         timelineStream = [[WeiboTimelineStream alloc] init];
         timelineStream.account = self;
         mentionsStream = [[WeiboMentionsStream alloc] init];
@@ -55,6 +56,8 @@
     [encoder encodeObject:oAuthToken forKey:@"oauth-token"];
     [encoder encodeObject:apiRoot forKey:@"api-root"];
     [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
+    NSLog(@"saving");
+    LogBinary(notificationOptions,16);
     [encoder encodeObject:user forKey:@"user"];
 }
 - (id)initWithCoder:(NSCoder *)decoder{
@@ -65,6 +68,8 @@
                                                        account:self.oAuthToken];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
+        NSLog(@"loading");
+        LogBinary(notificationOptions,16);
         self.user = [decoder decodeObjectForKey:@"user"];
         [self verifyCredentials:nil];
     }
@@ -156,6 +161,7 @@
     if ([response isKindOfClass:[WeiboRequestError class]]) {
         return ;
     }
+    NSLog(@"%@",response);
     WeiboUnread * unread = (WeiboUnread *)response;
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];

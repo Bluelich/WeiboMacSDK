@@ -10,6 +10,7 @@
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
 #import "WTFoundationUtilities.h"
+#import "WTFileManager.h"
 #import "WeiboAccount.h"
 #import "WeiboUser.h"
 #import "WeiboBaseStatus.h"
@@ -28,14 +29,13 @@ static LocalAutocompleteDB * sharedDB = nil;
     }
 }
 + (NSString *)databasePath{
-    NSString * cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString * databasePath = [[cachesDirectory stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]] stringByAppendingPathComponent:@"AutocompleteDB.sqlite3"];
+    NSString * databaseCacheDirectory = [WTFileManager databaseCacheDirectory];
+    NSString * databasePath = [databaseCacheDirectory stringByAppendingPathComponent:@"AutocompleteDB.sqlite3"];
     return databasePath;
 }
 + (LocalAutocompleteDB *)sharedAutocompleteDB{
     if (!sharedDB) {
         sharedDB = [[[self class] alloc] init];
-        [self verifyDatabase];
     }
     return sharedDB;
 }

@@ -23,6 +23,8 @@
 		C617C91514EBA90000CC75F5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91414EBA90000CC75F5 /* JSONKit.m */; };
 		C617C91B14EBAB1F00CC75F5 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C617C92314EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */; };
+		C630CC6D152ABDED00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
+		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
 		C63A182314F0CF51000F3E72 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
 		C63A182714F0D778000F3E72 /* WeiboAccountStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182614F0D778000F3E72 /* WeiboAccountStream.m */; };
 		C641275014F1EBA300D47925 /* WeiboTimelineStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C641274F14F1EBA300D47925 /* WeiboTimelineStream.m */; };
@@ -161,6 +163,8 @@
 		C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboGeotag.m; path = WeiboSDK/Model/WeiboGeotag.m; sourceTree = "<group>"; };
 		C617C92114EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSDictionary+WeiboAdditions.h"; sourceTree = "<group>"; };
 		C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+WeiboAdditions.m"; path = "WeiboSDK/Utilities/Additions/NSDictionary+WeiboAdditions.m"; sourceTree = "<group>"; };
+		C630CC6B152ABDED00A5AF7A /* WTFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTFileManager.h; path = WeiboSDK/Support/WTFileManager.h; sourceTree = "<group>"; };
+		C630CC6C152ABDED00A5AF7A /* WTFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTFileManager.m; path = WeiboSDK/Support/WTFileManager.m; sourceTree = "<group>"; };
 		C63A182114F0CF51000F3E72 /* NSArray+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.h"; sourceTree = "<group>"; };
 		C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+WeiboAdditions.m"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.m"; sourceTree = "<group>"; };
 		C63A182514F0D777000F3E72 /* WeiboAccountStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboAccountStream.h; path = WeiboSDK/Model/Stream/WeiboAccountStream.h; sourceTree = "<group>"; };
@@ -525,6 +529,8 @@
 				C6FC9E6514E3C43D00094A8F /* WTCallback.m */,
 				C6DB908114E4C0F0001DE9F5 /* WTKeychain.h */,
 				C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */,
+				C630CC6B152ABDED00A5AF7A /* WTFileManager.h */,
+				C630CC6C152ABDED00A5AF7A /* WTFileManager.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -749,6 +755,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */,
 				C6B8C51D1514D75D00935AC5 /* FMDatabase.m in Sources */,
 				C6B8C51E1514D75D00935AC5 /* FMDatabaseAdditions.m in Sources */,
 				C6B8C51F1514D75D00935AC5 /* FMDatabasePool.m in Sources */,
@@ -868,6 +875,7 @@
 				C6011B0D15147B2500A0A49C /* FMResultSet.m in Sources */,
 				C6011B16151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */,
 				C6B8C5331514DC7200935AC5 /* WeiboAutocompleteResultItem.m in Sources */,
+				C630CC6D152ABDED00A5AF7A /* WTFileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
