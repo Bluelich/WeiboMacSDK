@@ -45,10 +45,10 @@ enum {
     WeiboMentionNotificationBadge           = 1 << 3,
     WeiboCommentNotificationMenubar         = 1 << 4,
     WeiboCommentNotificationBadge           = 1 << 5,
-    WeiboDirectMessageNotificationBadge     = 1 << 6,
-    WeiboDirectMessageNotificationMenubar   = 1 << 7,
-    WeiboFollowerNotificationBadge          = 1 << 8,
-    WeiboFollowerNotificationMenubar        = 1 << 9
+    WeiboDirectMessageNotificationMenubar   = 1 << 6,
+    WeiboDirectMessageNotificationBadge     = 1 << 7,
+    WeiboFollowerNotificationMenubar        = 1 << 8,
+    WeiboFollowerNotificationBadge          = 1 << 9
 };
 typedef NSUInteger WeiboNotificationOptions;
 

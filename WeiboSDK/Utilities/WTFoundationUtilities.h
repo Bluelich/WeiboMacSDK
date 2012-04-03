@@ -27,4 +27,15 @@ static void LogIt (id format, ...) {
     [string release];
 }
 
+static void LogBinary (NSUInteger theNumber,NSInteger bits) {
+    NSMutableString *str = [NSMutableString string];
+    NSUInteger numberCopy = theNumber; // so you won't change your original value
+    for(NSInteger i = 0; i < bits ; i++) {
+        // Prepend "0" or "1", depending on the bit
+        [str insertString:((numberCopy & 1) ? @"1" : @"0") atIndex:0];
+        numberCopy >>= 1;
+    }
+    NSLog(@"Binary version: %@", str);
+}
+
 #define WeiboUnimplementedMethod NSLog(@"[Warning - Weibo SDK] A Unimplemented Method Has Been Called. In File:%s , Line:%d.", __FILE__, __LINE__);
