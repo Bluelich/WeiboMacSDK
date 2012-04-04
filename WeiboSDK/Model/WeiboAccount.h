@@ -13,6 +13,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
+@class WeiboComposition;
 
 @protocol WeiboAccountDelegate;
 
@@ -27,6 +28,7 @@
     WeiboTimelineStream * timelineStream;
     WeiboMentionsStream * mentionsStream;
     WeiboCommentsTimelineStream * commentsTimelineStream;
+    NSMutableArray *outbox;
     id<WeiboAccountDelegate> _delegate;
     WeiboNotificationOptions notificationOptions;
     NSCache * userDetailsStreamsCache;
@@ -76,6 +78,8 @@
 
 #pragma mark -
 #pragma mark Composition
+- (void)sendCompletedComposition:(WeiboComposition *)composition;
+- (void)didSendCompletedComposition:(id)response info:(id)info;
 
 #pragma mark -
 #pragma mark User
@@ -113,7 +117,7 @@
 
 
 @protocol WeiboAccountDelegate <NSObject>
-- (void)account:(WeiboAccount *)account didFailToPost:(id)arg2 errorMessage:(NSString *)message error:(WeiboRequestError *)error;
+- (void)account:(WeiboAccount *)account didFailToPost:(WeiboComposition *)composition errorMessage:(NSString *)message error:(WeiboRequestError *)error;
 - (void)account:(WeiboAccount *)account didCheckingUnreadCount:(id)info;
 - (void)account:(WeiboAccount *)account finishCheckingUnreadCount:(WeiboUnread *)unread;
 @end

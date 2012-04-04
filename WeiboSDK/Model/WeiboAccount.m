@@ -20,6 +20,7 @@
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
+#import "WeiboComposition.h"
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
@@ -48,6 +49,7 @@
         commentsTimelineStream.account = self;
 
         usersByUsername = [[NSMutableDictionary alloc] init];
+        outbox = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -203,6 +205,21 @@
 
 #pragma mark -
 #pragma mark Composition
+- (void)sendCompletedComposition:(WeiboComposition *)composition{
+    WTCallback * callback = WTCallbackMake(self, @selector(didSendCompletedComposition:info:), composition);
+    WeiboAPI * api = [self authenticatedRequest:callback];
+    [api updateWithComposition:composition];
+}
+- (void)didSendCompletedComposition:(id)response info:(id)info{
+    WeiboComposition * composition = info;
+    if ([response isKindOfClass:[WeiboRequestError class]]) {
+        WeiboRequestError * error = response;
+        [composition errorSending];
+        [_delegate account:self didFailToPost:composition errorMessage:error.errorString error:error];
+    }else {
+        [composition didSend:response];
+    }
+}
 
 #pragma mark -
 #pragma mark User
@@ -329,7 +346,6 @@
         return YES;
     }
     return NO;
-    // need alter.
 }
 - (BOOL)hasFreshAnythingApplicableToDockBadge{
     if ((notificationOptions & WeiboTweetNotificationBadge) && [self hasFreshTweets]) {
@@ -348,7 +364,6 @@
         return YES;
     }
     return NO;
-    // need alter.
 }
 - (void)deleteStatus:(WeiboBaseStatus *)status{
     WeiboAPI * api = [self authenticatedRequest:nil];

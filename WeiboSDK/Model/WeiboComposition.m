@@ -33,12 +33,9 @@
 #pragma mark -
 #pragma mark Sending
 - (void)_sendFromAccount:(WeiboAccount *)account{
-    WTCallback * callback = WTCallbackMake(self, @selector(didSend:), nil);
-    WeiboAPI * api = [account authenticatedRequest:callback];
-    [api updateWithComposition:self];
+    [account sendCompletedComposition:self];
 }
 - (void)didSend:(id)response{
-    NSLog(@"response:%@",response);
     if (didSendCallback) {
         [didSendCallback invoke:response];
     }

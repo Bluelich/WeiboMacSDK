@@ -7,6 +7,7 @@
 //
 
 #import "WeiboRequestError.h"
+#import "JSONKit.h"
 
 NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 
@@ -31,6 +32,9 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
  &error_code=403
  &error=40307:Error:+HTTP+METHOD+is+not+suported+for+this+request!
  &error_CN=错误:请求的HTTP+METHOD不支持!
+ */
+/*
+ {"request":"/statuses/update.json","error_code":"400","error":"40025:Error: repeated weibo text!"}
  */
 - (id)initWithResponseString:(NSString *)responseString statusCode:(int)code{
     NSDictionary * resultDictionary = [self parseResponseToDictionaryWithString:responseString];
@@ -85,7 +89,7 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     return string;
 }
 
-- (NSDictionary *)parseResponseToDictionaryWithString:(NSString *)string{
+- (NSDictionary *)parseWithQueryString:(NSString *)string{
     string = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray * components = [string componentsSeparatedByString:@"&"];
     NSDictionary * resultDictionary = [NSMutableDictionary dictionary];
@@ -109,6 +113,30 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
         }
     }
     return resultDictionary;
+}
+- (NSDictionary *)parseWithJSONString:(NSString *)string{
+    NSDictionary * dic = [string objectFromJSONString];
+    NSDictionary * resultDictionary = [NSMutableDictionary dictionaryWithDictionary:dic];
+    NSString * eString = [resultDictionary valueForKey:@"error"];
+    if (eString) {
+        NSString * detailCodeString = [eString substringToIndex:5];
+        NSNumberFormatter* numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
+        NSNumber* number = [numberFormatter numberFromString:detailCodeString];
+        if (number) {
+            eString = [eString substringFromIndex:6];
+            [resultDictionary setValue:eString forKey:@"error"];
+            [resultDictionary setValue:number forKey:@"error_detail_code"];
+        }
+    }
+    return resultDictionary;
+}
+- (NSDictionary *)parseResponseToDictionaryWithString:(NSString *)string{
+    if ([string hasPrefix:@"{"]) {
+        return [self parseWithJSONString:string];
+    } else {
+        return [self parseWithQueryString:string];
+    }
+    
 }
 
 
