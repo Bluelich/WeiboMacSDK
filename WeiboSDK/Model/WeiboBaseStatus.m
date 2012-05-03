@@ -13,7 +13,7 @@
 @implementation WeiboBaseStatus
 @synthesize createdAt, text, sid, activeRanges, displayText, user;
 @synthesize thumbPicURL, bigPicURL, midPicURL;
-@synthesize wasSeen;
+@synthesize wasSeen, isComment;
 
 - (id)init{
     if (self = [super init]) {
@@ -75,6 +75,10 @@
     }else{
         return NSOrderedDescending;
     }
+}
+
+- (BOOL)isComment{
+    return NO;
 }
 
 @end

@@ -9,8 +9,8 @@
 #import "WeiboStream.h"
 
 @implementation WeiboStream
-@synthesize lastDismissTime, statuses, savedCellIndex, savedRelativeOffset;
-@synthesize delegate = _delegate;
+@synthesize cacheTime, statuses, savedCellIndex, savedRelativeOffset;
+@synthesize delegate = _delegate, isViewing;
 
 - (BOOL)canLoadNewer{
     return YES;

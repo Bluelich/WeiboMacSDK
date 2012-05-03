@@ -46,7 +46,7 @@ static Weibo * _sharedWeibo = nil;
                                                userInfo:nil 
                                                 repeats:YES];
         [heartbeatTimer fire];
-        cachePruningTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 
+        cachePruningTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 
                                                              target:self 
                                                            selector:@selector(pruneCaches:) 
                                                            userInfo:nil 
@@ -71,7 +71,8 @@ static Weibo * _sharedWeibo = nil;
 - (void)pruneCaches:(id)sender{
     for (WeiboAccount * account in accounts) {
         //NSLog(@"pruning cache for : %@",[account username]);
-        [account pruneUserDetailStreamCache];
+        [account pruneUserCache];
+        [account pruneStatusCache];
     }
 }
 

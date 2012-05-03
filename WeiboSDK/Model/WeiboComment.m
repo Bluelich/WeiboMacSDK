@@ -113,5 +113,8 @@ static BOOL shouldMakeFullDisplayText = YES;
     [self setDisplayTextWithString:string];
 }
 
+- (BOOL)isComment{
+    return YES;
+}
 
 @end

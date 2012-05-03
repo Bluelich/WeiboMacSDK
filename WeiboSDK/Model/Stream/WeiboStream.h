@@ -14,17 +14,19 @@
 @protocol WeiboStreamDelegate;
 
 @interface WeiboStream : NSObject {
-    NSTimeInterval lastDismissTime;
+    NSTimeInterval cacheTime;
+    BOOL isViewing;
     NSUInteger savedCellIndex;
     double savedRelativeOffset;
     id<WeiboStreamDelegate> _delegate;
 }
 
-@property (nonatomic) NSTimeInterval lastDismissTime;
+@property (assign, nonatomic) NSTimeInterval cacheTime;
 @property (retain, nonatomic) NSMutableArray * statuses;
 @property (assign) NSUInteger savedCellIndex;
 @property (assign) double savedRelativeOffset;
 @property (assign, nonatomic) id<WeiboStreamDelegate> delegate;
+@property (assign, nonatomic) BOOL isViewing;
 
 - (BOOL)canLoadNewer;
 - (void)loadNewer;

@@ -121,14 +121,14 @@
     NSInteger index = [self statuseIndex:theStatus];
     if (index < 0) {
         return;
-    }
-    [theStatus retain];
+
+    }    [theStatus retain];
     [[self statuses] removeObjectAtIndex:index];
+    // NOT SURE HERE.
+    // Is removeObject:theStatus enough ?
     if ([_delegate respondsToSelector:@selector(statusesStream:didRemoveStatus:atIndex:)]) {
         [_delegate statusesStream:self didRemoveStatus:[theStatus autorelease] atIndex:index];
     }
-    // DID NOT SURE HERE.
-    // Is removeObject:theStatus enough ?
 }
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus{
     NSInteger index = [statuses binarySearch:theStatus 

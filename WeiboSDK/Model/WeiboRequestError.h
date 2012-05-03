@@ -24,5 +24,6 @@
 + (WeiboRequestError *)errorWithHttpRequestError:(NSError *)error;
 - (id)initWithResponseString:(NSString *)responseString statusCode:(int)code;
 - (id)initWithHttpRequestError:(NSError *)error;
+- (NSString *)message;
 
 @end

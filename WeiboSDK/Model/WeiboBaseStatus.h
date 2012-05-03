@@ -41,8 +41,8 @@
 
 @property (readonly, nonatomic) NSArray * activeRanges;
 @property (retain, nonatomic) NSMutableAttributedString * displayText;
-
 @property (assign, nonatomic) BOOL wasSeen;
+@property (readonly, nonatomic) BOOL isComment;
 
 - (id)initWithDictionary:(NSDictionary *)dic asRoot:(BOOL)root;
 - (void)setDisplayTextWithString:(NSString *)string;

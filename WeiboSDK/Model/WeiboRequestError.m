@@ -88,6 +88,16 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     [string appendFormat:@". "];
     return string;
 }
+- (NSString *)message{
+    NSMutableString * string = [NSMutableString string];
+    [string appendString:errorStringInChinese?errorStringInChinese:errorString];
+    [string appendFormat:@" ( 错误代码:%ld",self.code];
+    if (errorDetailCode > 0) {
+        [string appendFormat:@" , 详细代码:%ld",errorDetailCode];
+    }
+    [string appendString:@" )"];
+    return string;
+}
 
 - (NSDictionary *)parseWithQueryString:(NSString *)string{
     string = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
