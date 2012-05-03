@@ -31,6 +31,8 @@
     time_t createAt;
     BOOL following;
     BOOL verified;
+    BOOL isViewing;
+    NSTimeInterval cacheTime;
 }
 
 @property (assign, readwrite) WeiboUserID userID;
@@ -52,6 +54,8 @@
 @property (assign, readwrite) time_t createAt;
 @property (assign, readwrite) BOOL following;
 @property (assign, readwrite) BOOL verified;
+@property (assign, nonatomic) NSTimeInterval cacheTime;
+@property (assign, nonatomic) BOOL isViewing;
 
 #pragma mark -
 #pragma mark Parse Methods

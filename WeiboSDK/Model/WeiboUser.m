@@ -16,6 +16,7 @@
 @synthesize userID, screenName, name, province, city, location, description;
 @synthesize url, profileImageUrl, domain, gender, followersCount, friendsCount;
 @synthesize statusesCount, favouritesCount, createAt, following, verified, status;
+@synthesize cacheTime, isViewing;
 
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [super init]) {
@@ -62,26 +63,6 @@
     [encoder encodeBool:following forKey:@"following"];
     [encoder encodeBool:verified forKey:@"verified"];
 }
-
-WeiboUserID userID;
-NSString * screenName;
-NSString * name;
-NSString * province;
-NSString * city;
-NSString * location;
-NSString * description;
-NSString * url;
-NSString * profileImageUrl;
-NSString * domain;
-WeiboStatus * status;
-WeiboGender gender;
-int followersCount;
-int friendsCount;
-int statusesCount;
-int favouritesCount;
-time_t createAt;
-BOOL following;
-BOOL verified;
 
 - (void)dealloc{
     [screenName release]; screenName = nil;

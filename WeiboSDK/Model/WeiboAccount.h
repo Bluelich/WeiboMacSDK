@@ -13,7 +13,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboComposition;
+@class WeiboComposition, WeiboUserStream;
 
 @protocol WeiboAccountDelegate;
 
@@ -31,7 +31,7 @@
     NSMutableArray *outbox;
     id<WeiboAccountDelegate> _delegate;
     WeiboNotificationOptions notificationOptions;
-    NSCache * userDetailsStreamsCache;
+    NSMutableDictionary * userDetailsStreamsCache;
     
     // DirectMessage & Follower Not Implemented Yet.
     // But we need notificate this things.
@@ -96,7 +96,12 @@
 #pragma mark -
 #pragma mark User Detail Streams
 - (WeiboUserTimelineStream *)timelineStreamForUser:(WeiboUser *)aUser;
-- (void)pruneUserDetailStreamCache;
+
+
+#pragma mark - Cache
+- (void)pruneStatusCache;
+- (void)pruneUserCache;
+- (void)cacheUser:(WeiboUser *)newUser;
 
 #pragma mark - Others
 - (WeiboRepliesStream *)repliesStreamForStatus:(WeiboStatus *)status;

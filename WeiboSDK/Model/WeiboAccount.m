@@ -29,6 +29,7 @@
 #define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
 #define WEIBO_APIROOT_V2 @"https://api.weibo.com/2/"
 #define WEIBO_APIROOT_DEFAULT WEIBO_APIROOT_V1
+#define CACHE_LIVETIME 600.0
 
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
@@ -176,15 +177,12 @@
         [commentsTimelineStream loadNewer];
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
-    if (unread.newDirectMessages > 0) {
-        [self setHasNewDirectMessages:YES];
-        // have NOT get access to DM api yet, just post a notification
-    }
-    if (unread.newFollowers > 0) {
-        [self setHasNewFollowers:YES];
-        // Follower list not implemented yet.
-        
-    }
+    [self setHasNewDirectMessages:(unread.newDirectMessages > 0)];
+    // can NOT get access to DM api yet, just post a notification
+    
+    [self setHasNewFollowers:(unread.newFollowers > 0)];
+    // Follower list not implemented yet.
+    
     if ([_delegate respondsToSelector:@selector(account:finishCheckingUnreadCount:)]) {
         [_delegate account:self finishCheckingUnreadCount:unread];
     }
@@ -236,7 +234,7 @@
 - (void)userResponse:(id)response info:(id)info{
     WTCallback * callback = (WTCallback *)info;
     WeiboUser * newUser = (WeiboUser *)response;
-    [usersByUsername setObject:newUser forKey:newUser.screenName];
+    [self cacheUser:newUser];
     [callback invoke:response];
 }
 
@@ -267,9 +265,9 @@
 
 #pragma mark -
 #pragma mark User Detail Streams
-- (NSCache *)_userDetailsStreamCache{
+- (NSMutableDictionary *)_userDetailsStreamCache{
     if (!userDetailsStreamsCache) {
-        userDetailsStreamsCache = [[NSCache alloc] init];
+        userDetailsStreamsCache = [[NSMutableDictionary alloc] init];
     }
     return userDetailsStreamsCache;
 }
@@ -288,7 +286,35 @@
     }
     return stream;
 }
-- (void)pruneUserDetailStreamCache{
+
+#pragma mark - Cache
+- (void)pruneStatusCache{
+    for (NSString * key in userDetailsStreamsCache) {
+        WeiboStream * stream = [userDetailsStreamsCache objectForKey:key];
+        if ([NSDate timeIntervalSinceReferenceDate] - stream.cacheTime > CACHE_LIVETIME) {
+            if (stream.isViewing) {
+                continue;
+            }
+            [userDetailsStreamsCache removeObjectForKey:key];
+        }
+    }
+}
+- (void)pruneUserCache{
+    for (NSString * screenname in usersByUsername) {
+        WeiboUser * theUser = [usersByUsername objectForKey:screenname];
+        if ([NSDate timeIntervalSinceReferenceDate] - theUser.cacheTime > CACHE_LIVETIME) {
+            if (theUser.isViewing) {
+                continue;
+            }
+            [usersByUsername removeObjectForKey:screenname];
+        }
+    }
+}
+- (void)cacheUser:(WeiboUser *)newUser{
+    if ([newUser isKindOfClass:[WeiboUser class]]) {
+        [usersByUsername setObject:newUser forKey:newUser.screenName];
+        [newUser setCacheTime:[NSDate timeIntervalSinceReferenceDate]];
+    }
 }
 
 #pragma mark - Others
