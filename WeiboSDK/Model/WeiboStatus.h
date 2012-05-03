@@ -21,6 +21,7 @@
     WeiboUserID inReplyToUserID;
     NSString * inReplyToScreenname;
     NSString * source;
+    NSString * sourceUrl;
     NSString * thumbnailPic;
     NSString * middlePic;
     NSString * originalPic;
@@ -34,6 +35,7 @@
 @property (assign, readwrite) WeiboUserID inReplyToUserID;
 @property (assign, readwrite) NSString * inReplyToScreenname;
 @property (retain, readwrite) NSString * source;
+@property (retain, readwrite) NSString * sourceUrl;
 @property (retain, readwrite) NSString * thumbnailPic;
 @property (retain, readwrite) NSString * middlePic;
 @property (retain, readwrite) NSString * originalPic;

@@ -16,13 +16,14 @@
 
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;
-@synthesize geo, favorited, inReplyToUserID, source;
+@synthesize geo, favorited, inReplyToUserID, source, sourceUrl;
 @synthesize thumbnailPic, middlePic, originalPic, inReplyToScreenname;
 
 - (void)dealloc{
     [retweetedStatus release]; retweetedStatus = nil;
     [geo release]; geo = nil;
     [source release]; source = nil;
+    [sourceUrl release]; sourceUrl = nil;
     [thumbnailPic release]; thumbnailPic = nil;
     [middlePic release]; middlePic = nil;
     [originalPic release]; originalPic = nil;
@@ -78,7 +79,46 @@
         self.sid = [dic longlongForKey:@"id" defaultValue:-1];
 		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
 		self.text = [dic stringForKey:@"text" defaultValue:@""];
-        self.source = [dic stringForKey:@"source" defaultValue:@""];
+        
+        // parse source parameter
+		NSString *src = [dic stringForKey:@"source" defaultValue:@""];
+		NSRange r = [src rangeOfString:@"<a href"];
+		NSRange end;
+		if (r.location != NSNotFound) {
+			NSRange start = [src rangeOfString:@"<a href=\""];
+			if (start.location != NSNotFound) {
+				int l = [src length];
+				NSRange fromRang = NSMakeRange(start.location + start.length, l-start.length-start.location);
+				end   = [src rangeOfString:@"\"" options:NSCaseInsensitiveSearch 
+                                     range:fromRang];
+				if (end.location != NSNotFound) {
+					r.location = start.location + start.length;
+					r.length = end.location - r.location;
+					self.sourceUrl = [src substringWithRange:r];
+				}
+				else {
+					self.sourceUrl = @"";
+				}
+			}
+			else {
+				self.sourceUrl = @"";
+			}			
+			start = [src rangeOfString:@"\">"];
+			end   = [src rangeOfString:@"</a>"];
+			if (start.location != NSNotFound && end.location != NSNotFound) {
+				r.location = start.location + start.length;
+				r.length = end.location - r.location;
+				self.source = [src substringWithRange:r];
+			}
+			else {
+				self.source = @"";
+			}
+		}
+		else {
+			self.source = src;
+		}
+        
+        
         self.favorited = [dic boolForKey:@"favorited" defaultValue:NO];
         self.truncated = [dic boolForKey:@"truncated" defaultValue:NO];
         self.inReplyToStatusID = [dic longlongForKey:@"in_reply_to_status_id" defaultValue:-1];
