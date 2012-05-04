@@ -27,18 +27,18 @@
     NSString * originalPic;
 }
 
-@property (assign, readwrite) BOOL truncated;
-@property (retain, readwrite) WeiboStatus * retweetedStatus;
-@property (assign, readwrite) WeiboStatusID inReplyToStatusID;
-@property (retain, readwrite) WeiboGeotag * geo;
-@property (assign, readwrite) BOOL favorited;
-@property (assign, readwrite) WeiboUserID inReplyToUserID;
-@property (assign, readwrite) NSString * inReplyToScreenname;
-@property (retain, readwrite) NSString * source;
-@property (retain, readwrite) NSString * sourceUrl;
-@property (retain, readwrite) NSString * thumbnailPic;
-@property (retain, readwrite) NSString * middlePic;
-@property (retain, readwrite) NSString * originalPic;
+@property (assign, nonatomic) BOOL truncated;
+@property (retain, nonatomic) WeiboStatus * retweetedStatus;
+@property (assign, nonatomic) WeiboStatusID inReplyToStatusID;
+@property (retain, nonatomic) WeiboGeotag * geo;
+@property (assign, nonatomic) BOOL favorited;
+@property (assign, nonatomic) WeiboUserID inReplyToUserID;
+@property (assign, nonatomic) NSString * inReplyToScreenname;
+@property (retain, nonatomic) NSString * source;
+@property (retain, nonatomic) NSString * sourceUrl;
+@property (retain, nonatomic) NSString * thumbnailPic;
+@property (retain, nonatomic) NSString * middlePic;
+@property (retain, nonatomic) NSString * originalPic;
 
 #pragma mark -
 #pragma mark Parse Methods

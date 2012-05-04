@@ -81,7 +81,7 @@
 		self.text = [dic stringForKey:@"text" defaultValue:@""];
         
         // parse source parameter
-		NSString *src = [dic stringForKey:@"source" defaultValue:@""];
+		NSString *src = [dic stringForKey:@"source" defaultValue:nil];
 		NSRange r = [src rangeOfString:@"<a href"];
 		NSRange end;
 		if (r.location != NSNotFound) {
@@ -97,11 +97,11 @@
 					self.sourceUrl = [src substringWithRange:r];
 				}
 				else {
-					self.sourceUrl = @"";
+					self.sourceUrl = nil;
 				}
 			}
 			else {
-				self.sourceUrl = @"";
+				self.sourceUrl = nil;
 			}			
 			start = [src rangeOfString:@"\">"];
 			end   = [src rangeOfString:@"</a>"];
@@ -111,7 +111,7 @@
 				self.source = [src substringWithRange:r];
 			}
 			else {
-				self.source = @"";
+				self.source = nil;
 			}
 		}
 		else {
