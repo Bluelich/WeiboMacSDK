@@ -29,6 +29,14 @@
 - (WTCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info;
 - (NSDictionary *)_queryStringToDictionary:(NSString *)string;
 - (void)statusResponse:(id)response info:(id)info;
+- (void)friendshipInfo:(id)response info:(id)info;
+- (void)friendshipExists:(id)response info:(id)info;
+- (void)directMessageResponse:(id)response info:(id)info;
+- (void)directMessagesResponse:(id)response info:(id)info;
+- (void)unreadCountResponse:(id)response info:(id)info;
+- (void)resetUnreadResponse:(id)response info:(id)info;
+- (void)xAuthMigrateResponse:(id)response info:(id)info;
+
 @end
 
 @implementation WeiboAPI
@@ -83,10 +91,30 @@ multipartFormData:(NSDictionary *)parts
     for (NSString * key in parts) {
         [request addData:[parts objectForKey:key] forKey:key];
     }
+    if (authenticateWithAccount.oAuth2Token || [method isEqualToString:@"POST"]) {
+        [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
+        [request startAuthrizedRequest];
+    }else {
+        [request startAsynchronous];
+    }
+}
+- (void)v1_request:(NSString *)partialUrl 
+         method:(NSString *)method parameters:(NSDictionary *)parameters
+multipartFormData:(NSDictionary *)parts
+       callback:(WTCallback *)actualCallback
+{
+    WTCallback * callback = [self errorlessCallbackWithCallback:actualCallback];
+    WTHTTPRequest * request = [self v1_baseRequestWithPartialURL:partialUrl];
+    [request setResponseCallback:callback];
+    [request setRequestMethod:method];
+    [request setParameters:parameters];
+    for (NSString * key in parts) {
+        [request addData:[parts objectForKey:key] forKey:key];
+    }
     if (authenticateWithAccount.oAuthTokenSecret || [method isEqualToString:@"POST"]) {
         [request setOAuthToken:authenticateWithAccount.oAuthToken];
         [request setOAuthTokenSecret:authenticateWithAccount.oAuthTokenSecret];
-        [request startAuthrizedRequest];
+        [request v1_startAuthrizedRequest];
     }else{
         [request startAsynchronous];
     }
@@ -97,6 +125,9 @@ multipartFormData:(NSDictionary *)parts
 - (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
     [self POST:partialUrl parameters:parameters multipartFormData:nil callback:actualCallback];
 }
+- (void)v1_POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
+    [self v1_request:partialUrl method:@"POST" parameters:parameters multipartFormData:nil callback:actualCallback];
+}
 - (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
     [self request:partialUrl method:@"GET" parameters:parameters multipartFormData:(NSDictionary *)nil callback:actualCallback];
 }
@@ -104,6 +135,10 @@ multipartFormData:(NSDictionary *)parts
 - (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl 
                                                 relativeToURL:[NSURL URLWithString:apiRoot]]];
+}
+- (WTHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl{
+    return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl 
+                                                relativeToURL:[NSURL URLWithString:WEIBO_APIROOT_V1]]];
 }
 
 #pragma mark Response Handling
@@ -148,7 +183,7 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params 
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count callback:(WTCallback *)callback{
-    [self statusesRequest:url parameters:params sinceID:since maxID:max page:0 count:count callback:callback];
+    [self statusesRequest:url parameters:params sinceID:since maxID:max page:1 count:count callback:callback];
 }
 - (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params 
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
@@ -171,7 +206,7 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
-    [self statusesRequest:@"statuses/comments_timeline.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+    [self statusesRequest:@"comments/timeline.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
 }
 - (void)userTimelineForUserID:(WeiboUserID)uid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",uid] forKey:@"user_id"];
@@ -201,13 +236,25 @@ multipartFormData:(NSDictionary *)parts
 - (WTCallback *)commentResponseCallback{
     return WTCallbackMake(self, @selector(commentResponseCallback), nil);
 }
-- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image
-      latitude:(double)latValue longitude:(double)longValue{
+- (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment{
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              text, @"status",
-                             [NSString stringWithFormat:@"%lld",reply],@"in_reply_to_status_id",
+                             [NSString stringWithFormat:@"%lld",repostID], @"id", nil];
+    NSString * url = @"statuses/repost.json";
+    [self POST:url parameters:params callback:callback];
+}
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image
+      latitude:(double)latValue longitude:(double)longValue{
+    if (reply > 0) {
+        [self repost:text repostingID:reply shouldComment:NO];
+        return;
+    }
+    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
+    WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
+                             text, @"status",
                              [NSString stringWithFormat:@"%f",latValue], @"lat",
                              [NSString stringWithFormat:@"%f",longValue], @"long", nil];
     NSDictionary * parts = nil;
@@ -228,15 +275,17 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)destoryStatus:(WeiboStatusID)sid{
     WTCallback * callback = [self statuseResponseCallback];
-    // using RESTful API here.
-    NSString * url = [NSString stringWithFormat:@"statuses/destroy/%lld.json",sid];
-    [self POST:url parameters:nil callback:callback];
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSString stringWithFormat:@"%lld",sid],@"id", nil];
+    NSString * url = @"statuses/destroy.json";
+    [self POST:url parameters:params callback:callback];
 }
 - (void)destoryComment:(WeiboStatusID)sid{
     WTCallback * callback = [self commentResponseCallback];
-    // using RESTful API here.
-    NSString * url = [NSString stringWithFormat:@"statuses/comment_destroy/%lld.json",sid];
-    [self POST:url parameters:nil callback:callback];
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSString stringWithFormat:@"%lld",sid],@"cid", nil];
+    NSString * url = @"comments/destroy.json";
+    [self POST:url parameters:params callback:callback];
 }
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid{
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeComment];
@@ -245,9 +294,9 @@ multipartFormData:(NSDictionary *)parts
                              text, @"comment",
                              [NSString stringWithFormat:@"%lld",sid],@"id",
                              [NSString stringWithFormat:@"%lld",cid],@"cid", nil];
-    NSString * url = @"statuses/comment.json";
+    NSString * url = @"comments/create.json";
     if (cid > 0) {
-        url = @"statuses/reply.json";
+        url = @"comments/reply.json";
     }
     [self POST:url parameters:params multipartFormData:nil callback:callback];
 }
@@ -268,8 +317,17 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark -
 #pragma mark User Access
 - (void)verifyCredentials{
+    WTCallback * callback = WTCallbackMake(self, @selector(myUserIDResponse:info:), nil);
+    [self GET:@"account/get_uid.json" parameters:nil callback:callback];
+}
+- (void)myUserIDResponse:(id)returnValue info:(id)info{
+    if ([returnValue isKindOfClass:[WeiboRequestError class]]) {
+        return;
+    }
+    NSString * userID = [[[returnValue objectFromJSONString] objectForKey:@"uid"] stringValue];
     WTCallback * callback = WTCallbackMake(self, @selector(verifyCredentialsResponse:info:), nil);
-    [self GET:@"account/verify_credentials.json" parameters:nil callback:callback];
+    NSDictionary * params = [NSDictionary dictionaryWithObject:userID forKey:@"uid"];
+    [self GET:@"users/show.json" parameters:params callback:callback];
 }
 - (void)verifyCredentialsResponse:(id)response info:(id)info{
     [WeiboUser parseUserJSON:response onComplete:^(id object) {
@@ -302,7 +360,7 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark Relationship
 - (void)followUserID:(WeiboUserID)uid{
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSString stringWithFormat:@"%lld",uid],@"user_id", nil];
+                             [NSString stringWithFormat:@"%lld",uid],@"uid", nil];
     [self POST:@"friendships/create.json" parameters:params callback:[self userResponseCallback]];
 }
 - (void)followUsername:(NSString *)screenname{
@@ -312,7 +370,7 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)unfollowUserID:(WeiboUserID)uid{
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSString stringWithFormat:@"%lld",uid],@"user_id", nil];
+                             [NSString stringWithFormat:@"%lld",uid],@"uid", nil];
     [self POST:@"friendships/destroy.json" parameters:params callback:[self userResponseCallback]];
 }
 - (void)unfollowUsername:(NSString *)screenname{
@@ -412,7 +470,7 @@ multipartFormData:(NSDictionary *)parts
      authenticateWithAccount.username,@"x_auth_username",
      authenticateWithAccount.password,@"x_auth_password",
      @"client_auth",@"x_auth_mode", nil];
-     [self POST:@"oauth/access_token" parameters:parameters callback:callback];
+     [self v1_POST:@"oauth/access_token" parameters:parameters callback:callback];
 }
 
 - (void)xAuthMigrateResponse:(id)returnValue info:(id)info{
@@ -421,7 +479,22 @@ multipartFormData:(NSDictionary *)parts
     NSString * tokenSecret = [resultDictionary valueForKey:@"oauth_token_secret"];
     [authenticateWithAccount setOAuthToken:token];
     [authenticateWithAccount setOAuthTokenSecret:tokenSecret];
-    [SSKeychain setPassword:tokenSecret forService:[self keychainService] account:token];
+    [self oAuth2RequestTokenByAccessToken];
+}
+- (void)oAuth2RequestTokenByAccessToken{
+    WTCallback * callback = [self errorlessCallbackWithTarget:self 
+                                                     selector:@selector(oAuth2TokenResponse:info:) 
+                                                         info:nil];
+    [self v1_POST:@"oauth2/get_oauth2_token" parameters:nil callback:callback];
+}
+- (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
+    NSString * tokenResponse = returnValue;
+    NSDictionary * dic = [tokenResponse objectFromJSONString];
+    NSString * token = [dic valueForKey:@"access_token"];
+    NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
+    [authenticateWithAccount setOAuth2Token:token];
+    [authenticateWithAccount setExpireTime:expiresIn];
+    [SSKeychain setPassword:token forService:[self keychainService] account:authenticateWithAccount.username];
     [authenticateWithAccount verifyCredentials:responseCallback];
 }
 

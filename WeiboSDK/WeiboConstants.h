@@ -21,6 +21,10 @@ typedef void (^WTArrayBlock)(NSArray *array);
 typedef void (^WTObjectBlock)(id object);
 #endif
 
+#define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
+#define WEIBO_APIROOT_V2 @"https://api.weibo.com/2/"
+#define WEIBO_APIROOT_DEFAULT WEIBO_APIROOT_V2
+
 #define kWeiboStatusDeleteNotification @"WeiboStatusDeleteNotification"
 #define kWeiboStreamStatusChangedNotification @"WeiboStreamStatusChangedNotification"
 #define kWeiboAccountDidUpdateNotification @"WeiboAccountDidUpdateNotification"

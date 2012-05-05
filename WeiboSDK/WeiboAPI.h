@@ -59,27 +59,21 @@
 - (void)followUsername:(NSString *)screenname;
 - (void)unfollowUserID:(WeiboUserID)uid;
 - (void)unfollowUsername:(NSString *)screenname;
-- (void)lookupRelationships:(WeiboUserID)tuid;
+- (void)lookupRelationships:(WeiboUserID)tuid __attribute__((deprecated));
 - (void)userID:(WeiboUserID)suid followsUserID:(WeiboUserID)tuid;
 - (void)friendshipForSourceUserID:(WeiboUserID)suid targetUserID:(WeiboUserID)tuid;
 - (void)friendshipForSourceUsername:(NSString *)sscreenname targetUsername:(NSString *)tscreenname;
-- (void)friendshipInfo:(id)response info:(id)info;
-- (void)friendshipExists:(id)response info:(id)info;
 #pragma mark -
 #pragma mark Direct Message
 - (void)directMessagesSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)directMessageResponse:(id)response info:(id)info;
-- (void)directMessagesResponse:(id)response info:(id)info;
 #pragma mark -
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID)since;
 - (void)unreadCount;
-- (void)unreadCountResponse:(id)response info:(id)info;
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type;
-- (void)resetUnreadResponse:(id)response info:(id)info;
 #pragma mark -
 #pragma mark oAuth (xAuth)
 - (void)xAuthRequestAccessTokens;
-- (void)xAuthMigrateResponse:(id)response info:(id)info;
+- (void)oAuth2RequestTokenByAccessToken;
 
 @end

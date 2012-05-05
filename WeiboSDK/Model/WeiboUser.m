@@ -16,7 +16,7 @@
 @synthesize userID, screenName, name, province, city, location, description;
 @synthesize url, profileImageUrl, domain, gender, followersCount, friendsCount;
 @synthesize statusesCount, favouritesCount, createAt, following, verified, status;
-@synthesize cacheTime, isViewing;
+@synthesize cacheTime, isViewing, followMe;
 
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [super init]) {
@@ -37,6 +37,7 @@
         self.favouritesCount = [decoder decodeIntForKey:@"favourites-count"];
         self.createAt = [decoder decodeIntForKey:@"create-at"];
         self.following = [decoder decodeBoolForKey:@"following"];
+        self.followMe = [decoder decodeBoolForKey:@"follow-me"];
         self.verified = [decoder decodeBoolForKey:@"verified"];
         //self.status = [decoder decodeObjectForKey:@"status"];
     }
@@ -61,6 +62,7 @@
     [encoder encodeInt:favouritesCount forKey:@"favourites-count"];
     [encoder encodeInt:createAt forKey:@"create-at"];
     [encoder encodeBool:following forKey:@"following"];
+    [encoder encodeBool:followMe forKey:@"follow-me"];
     [encoder encodeBool:verified forKey:@"verified"];
 }
 
@@ -152,6 +154,7 @@
         self.favouritesCount = [dic intForKey:@"favourites_count" defaultValue:0];
         self.createAt = [dic timeForKey:@"create_at" defaultValue:0];
         self.following = [dic boolForKey:@"following" defaultValue:NO];
+        self.followMe = [dic boolForKey:@"follow_me" defaultValue:NO];
         self.verified = [dic boolForKey:@"verified" defaultValue:NO];
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];

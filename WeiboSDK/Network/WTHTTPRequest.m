@@ -21,6 +21,7 @@
 
 @implementation WTHTTPRequest
 @synthesize responseCallback, oAuthToken, oAuthTokenSecret, parameters;
+@synthesize oAuth2Token = _oAuth2Token;
 
 + (WTHTTPRequest *)requestWithURL:(NSURL *)url{
     return [[[self alloc] initWithURL:url] autorelease];
@@ -33,10 +34,10 @@
     return self;
 }
 
-- (void)startAuthrizedRequest{
+- (void)prepareAuthrize{
     if ([[self requestMethod] isEqualToString:@"GET"]) {
         NSURL * urlWithQuery = [NSURL URLWithString:[self _parameterStringByDictionary:parameters] 
-                                relativeToURL:[self url]];
+                                      relativeToURL:[self url]];
         [self setURL:urlWithQuery];
     }else{
         for(NSString * key in parameters){
@@ -46,6 +47,14 @@
             }
         }
     }
+}
+- (void)v1_startAuthrizedRequest{
+    [self prepareAuthrize];
+    [self addRequestHeader:@"Authorization" value:[self v1_oAuthAuthorizationHeader]];
+    [self startAsynchronous];
+}
+- (void)startAuthrizedRequest{
+    [self prepareAuthrize];
     [self addRequestHeader:@"Authorization" value:[self oAuthAuthorizationHeader]];
     [self startAsynchronous];
 }
@@ -59,6 +68,9 @@
 }
 
 - (NSString *)oAuthAuthorizationHeader{
+    return [NSString stringWithFormat:@"OAuth2 %@",self.oAuth2Token];
+}
+- (NSString *)v1_oAuthAuthorizationHeader{
     OAConsumer *consumer = [[OAConsumer alloc] initWithKey:WEIBO_CONSUMER_KEY
 													secret:WEIBO_CONSUMER_SECRET];
     OAToken * token = [[OAToken alloc] initWithKey:oAuthToken secret:oAuthTokenSecret];
@@ -125,8 +137,16 @@
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
+    WeiboRequestError * requestError = [WeiboRequestError 
+                                        errorWithResponseString:[self responseString] statusCode:self.responseStatusCode];
+    [self postFailWithError:requestError];
+    
+    // In weibo api v2, error response has currect status code.
+    // For more information, use WeiboRequestError instead.
+    /*
     WeiboRequestError * requestError = [WeiboRequestError errorWithHttpRequestError:[self error]];
     [self postFailWithError:requestError];
+     */
 }
 
 @end

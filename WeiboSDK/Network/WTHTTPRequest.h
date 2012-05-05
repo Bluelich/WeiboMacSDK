@@ -18,15 +18,18 @@
     WTCallback * responseCallback;
     NSString *oAuthToken;
     NSString *oAuthTokenSecret;
+    NSString *oAuth2Token;
     NSDictionary * parameters;
 }
 
 @property(retain, nonatomic) WTCallback *responseCallback;
 @property(retain, nonatomic) NSString *oAuthToken;
 @property(retain, nonatomic) NSString *oAuthTokenSecret;
+@property(retain, nonatomic) NSString *oAuth2Token;
 @property(retain, nonatomic) NSDictionary * parameters;
 
 + (WTHTTPRequest *)requestWithURL:(NSURL *)url;
+- (void)v1_startAuthrizedRequest;
 - (void)startAuthrizedRequest;
 
 @end

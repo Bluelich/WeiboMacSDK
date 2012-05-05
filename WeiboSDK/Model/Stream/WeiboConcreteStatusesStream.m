@@ -121,8 +121,11 @@
     NSInteger index = [self statuseIndex:theStatus];
     if (index < 0) {
         return;
-
-    }    [theStatus retain];
+    }    
+    if (index >= [[self statuses] count]) {
+        return;
+    }
+    [theStatus retain];
     [[self statuses] removeObjectAtIndex:index];
     // NOT SURE HERE.
     // Is removeObject:theStatus enough ?

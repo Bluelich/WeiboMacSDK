@@ -34,7 +34,7 @@ static Weibo * _sharedWeibo = nil;
                     if (![account isKindOfClass:[WeiboAccount class]]) {
                         continue;
                     }
-                    if (account.oAuthTokenSecret) {
+                    if (account.oAuth2Token) {
                         [self addAccount:account];
                     }
                 }
@@ -105,8 +105,10 @@ static Weibo * _sharedWeibo = nil;
 }
 
 - (void)addAccount:(WeiboAccount *)aAccount{
-    [accounts addObject:aAccount];
-    [aAccount refreshTimelines];
+    if ([aAccount isKindOfClass:[WeiboAccount class]]) {
+        [accounts addObject:aAccount];
+        [aAccount refreshTimelines];
+    }
 }
 
 - (void)removeAccount:(WeiboAccount *)aAccount{

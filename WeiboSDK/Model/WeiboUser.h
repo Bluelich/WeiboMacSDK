@@ -30,6 +30,7 @@
     int favouritesCount;
     time_t createAt;
     BOOL following;
+    BOOL followMe;
     BOOL verified;
     BOOL isViewing;
     NSTimeInterval cacheTime;
@@ -53,6 +54,7 @@
 @property (assign, readwrite) int favouritesCount;
 @property (assign, readwrite) time_t createAt;
 @property (assign, readwrite) BOOL following;
+@property (assign, readwrite) BOOL followMe;
 @property (assign, readwrite) BOOL verified;
 @property (assign, nonatomic) NSTimeInterval cacheTime;
 @property (assign, nonatomic) BOOL isViewing;

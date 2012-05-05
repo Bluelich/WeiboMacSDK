@@ -26,14 +26,12 @@
 #import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
 
-#define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
-#define WEIBO_APIROOT_V2 @"https://api.weibo.com/2/"
-#define WEIBO_APIROOT_DEFAULT WEIBO_APIROOT_V1
 #define CACHE_LIVETIME 600.0
 
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
 @synthesize delegate = _delegate, notificationOptions;
+@synthesize oAuth2Token = _oAuth2Token, expireTime = _expireTime;
 
 #pragma mark -
 #pragma mark Life Cycle
@@ -59,20 +57,17 @@
     [encoder encodeObject:oAuthToken forKey:@"oauth-token"];
     [encoder encodeObject:apiRoot forKey:@"api-root"];
     [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
-    NSLog(@"saving");
-    LogBinary(notificationOptions,16);
     [encoder encodeObject:user forKey:@"user"];
 }
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [self init]) {
         username = [[decoder decodeObjectForKey:@"username"] retain];
-        self.oAuthToken = [decoder decodeObjectForKey:@"oauth-token"];
-        self.oAuthTokenSecret = [SSKeychain passwordForService:[self keychainService] 
-                                                       account:self.oAuthToken];
+        //self.oAuthToken = [decoder decodeObjectForKey:@"oauth-token"];
+        //self.oAuthTokenSecret = [SSKeychain passwordForService:[self keychainService] account:self.oAuthToken];
+        self.oAuth2Token = [SSKeychain passwordForService:[self keychainService] 
+                                                       account:self.username];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
-        NSLog(@"loading");
-        LogBinary(notificationOptions,16);
         self.user = [decoder decodeObjectForKey:@"user"];
         [self verifyCredentials:nil];
     }
@@ -94,6 +89,7 @@
     [apiRoot release];
     [oAuthToken release];
     [oAuthTokenSecret release];
+    [_oAuth2Token release];
     [user release];
     [usersByUsername release];
     [super dealloc];

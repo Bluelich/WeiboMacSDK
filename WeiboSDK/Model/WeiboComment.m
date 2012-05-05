@@ -39,7 +39,7 @@ static BOOL shouldMakeFullDisplayText = YES;
     return comment;
 }
 + (NSArray *)commentsWithJSON:(NSString *)json{
-    NSArray * dictionaries = [json objectFromJSONString];
+    NSArray * dictionaries = [[json objectFromJSONString] objectForKey:@"comments"];
     NSMutableArray * comments = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries) {
         WeiboComment * comment = [WeiboComment commentWithDictionary:dic];
