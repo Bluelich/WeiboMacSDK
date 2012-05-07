@@ -12,7 +12,6 @@
 
 @interface WeiboRepliesStream : WeiboAccountStream {
     WeiboStatus * baseStatus;
-    NSUInteger loadedPage;
 }
 
 @property (retain, nonatomic) WeiboStatus * baseStatus;
