@@ -75,6 +75,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     NSString * schema = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     sqlite3 * sqliteDB = [db sqliteHandle];
     sqlite3_exec(sqliteDB, [schema UTF8String], NULL, NULL, NULL);
+    [schema release];
 }
 
 #pragma mark - Accessor
