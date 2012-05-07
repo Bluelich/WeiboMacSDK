@@ -7,7 +7,25 @@
 //
 
 #import "WeiboFavoriteStatus.h"
+#import "JSONKit.h"
 
 @implementation WeiboFavoriteStatus
+
++ (NSArray *)statusesWithJSON:(NSString *)json{
+    NSArray * dictionaries = [[json objectFromJSONString] objectForKey:@"favorites"];
+    NSMutableArray * statuses = [NSMutableArray array];
+    for (NSDictionary * dic in dictionaries) {
+        WeiboFavoriteStatus * status = [WeiboFavoriteStatus statusWithDictionary:dic];
+        [statuses addObject:status];
+    }
+    return statuses;
+}
+
+- (id)initWithDictionary:(NSDictionary *)dic asRoot:(BOOL)root{
+    if (self = [super initWithDictionary:[dic objectForKey:@"status"] asRoot:YES]) {
+        self.favorited = YES;
+    }
+    return self;
+}
 
 @end

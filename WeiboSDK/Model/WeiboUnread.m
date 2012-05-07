@@ -41,11 +41,11 @@
 }
 - (WeiboUnread *)initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
-        self.newStatus = [dic intForKey:@"new_status" defaultValue:0];
-        self.newMentions = [dic intForKey:@"mentions" defaultValue:0];
-        self.newComments = [dic intForKey:@"comments" defaultValue:0];
+        self.newStatus = [dic intForKey:@"status" defaultValue:0];
+        self.newMentions = [dic intForKey:@"mention_status" defaultValue:0];
+        self.newComments = [dic intForKey:@"cmt" defaultValue:0];
         self.newDirectMessages = [dic intForKey:@"dm" defaultValue:0];
-        self.newFollowers = [dic intForKey:@"followers" defaultValue:0];
+        self.newFollowers = [dic intForKey:@"follower" defaultValue:0];
     }
     return self;
 }

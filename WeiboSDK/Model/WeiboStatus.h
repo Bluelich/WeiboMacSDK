@@ -42,8 +42,8 @@
 
 #pragma mark -
 #pragma mark Parse Methods
-+ (WeiboStatus *)statusWithDictionary:(NSDictionary *)dic;
-+ (WeiboStatus *)statusWithJSON:(NSString *)json;
++ (id)statusWithDictionary:(NSDictionary *)dic;
++ (id)statusWithJSON:(NSString *)json;
 + (NSArray *)statusesWithJSON:(NSString *)json;
 + (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback;
 + (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback;

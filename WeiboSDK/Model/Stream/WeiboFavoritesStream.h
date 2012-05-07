@@ -8,6 +8,8 @@
 
 #import "WeiboAccountStream.h"
 
-@interface WeiboFavoritesStream : WeiboAccountStream
+@interface WeiboFavoritesStream : WeiboAccountStream{
+    NSUInteger loadedPage;
+}
 
 @end

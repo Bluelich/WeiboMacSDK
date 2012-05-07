@@ -34,11 +34,11 @@
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboStatus *)statusWithDictionary:(NSDictionary *)dic{
-    return [[[WeiboStatus alloc] initWithDictionary:dic asRoot:YES] autorelease];
+    return [[[[self class] alloc] initWithDictionary:dic asRoot:YES] autorelease];
 }
 + (WeiboStatus *)statusWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
-    WeiboStatus * status = [WeiboStatus statusWithDictionary:dictionary];
+    WeiboStatus * status = [[self class] statusWithDictionary:dictionary];
     return status;
 }
 + (NSArray *)statusesWithJSON:(NSString *)json{

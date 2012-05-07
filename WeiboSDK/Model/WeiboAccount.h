@@ -13,7 +13,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboComposition, WeiboUserStream;
+@class WeiboComposition, WeiboUserStream, WeiboFavoritesStream;
 
 @protocol WeiboAccountDelegate;
 
@@ -28,6 +28,7 @@
     WeiboTimelineStream * timelineStream;
     WeiboMentionsStream * mentionsStream;
     WeiboCommentsTimelineStream * commentsTimelineStream;
+    WeiboFavoritesStream * favoritesStream;
     NSMutableArray *outbox;
     id<WeiboAccountDelegate> _delegate;
     WeiboNotificationOptions notificationOptions;
@@ -63,6 +64,7 @@
 - (WeiboTimelineStream *) timelineStream;
 - (WeiboMentionsStream *) mentionsStream;
 - (WeiboCommentsTimelineStream *) commentsTimelineStream;
+- (WeiboFavoritesStream *) favoritesStream;
 
 #pragma mark -
 #pragma mark Core Methods

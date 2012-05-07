@@ -15,6 +15,7 @@
 #import "WeiboTimelineStream.h"
 #import "WeiboMentionsStream.h"
 #import "WeiboCommentsTimelineStream.h"
+#import "WeiboFavoritesStream.h"
 #import "WeiboUserTimelineStream.h"
 #import "WeiboRepliesStream.h"
 #import "WeiboBaseStatus.h"
@@ -35,6 +36,20 @@
 
 #pragma mark -
 #pragma mark Life Cycle
+- (void)dealloc{
+    [username release]; 
+    [apiRoot release];
+    [oAuthToken release];
+    [oAuthTokenSecret release];
+    [_oAuth2Token release];
+    [user release];
+    [usersByUsername release];
+    [timelineStream release];
+    [mentionsStream release];
+    [commentsTimelineStream release];
+    [favoritesStream release];
+    [super dealloc];
+}
 - (id)init{
     if (self = [super init]) {
         notificationOptions = WeiboTweetNotificationMenubar | WeiboMentionNotificationMenubar |
@@ -46,6 +61,8 @@
         mentionsStream.account = self;
         commentsTimelineStream = [[WeiboCommentsTimelineStream alloc] init];
         commentsTimelineStream.account = self;
+        favoritesStream = [[WeiboFavoritesStream alloc] init];
+        favoritesStream.account = self;
 
         usersByUsername = [[NSMutableDictionary alloc] init];
         outbox = [[NSMutableArray alloc] init];
@@ -84,16 +101,7 @@
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword{
     return [self initWithUsername:aUsername password:aPassword apiRoot:WEIBO_APIROOT_DEFAULT];
 }
-- (void)dealloc{
-    [username release]; 
-    [apiRoot release];
-    [oAuthToken release];
-    [oAuthTokenSecret release];
-    [_oAuth2Token release];
-    [user release];
-    [usersByUsername release];
-    [super dealloc];
-}
+
 
 #pragma mark -
 #pragma mark Accessor
@@ -105,6 +113,9 @@
 }
 - (WeiboCommentsTimelineStream *) commentsTimelineStream{
     return commentsTimelineStream;
+}
+- (WeiboFavoritesStream *) favoritesStream{
+    return favoritesStream;
 }
 
 #pragma mark -

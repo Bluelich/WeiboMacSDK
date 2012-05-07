@@ -11,6 +11,7 @@
 #import "WeiboComposition.h"
 #import "WeiboRequestError.h"
 #import "WeiboStatus.h"
+#import "WeiboFavoriteStatus.h"
 #import "WeiboComment.h"
 #import "WeiboUser.h"
 #import "WeiboUnread.h"
@@ -131,6 +132,10 @@ multipartFormData:(NSDictionary *)parts
 - (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
     [self request:partialUrl method:@"GET" parameters:parameters multipartFormData:(NSDictionary *)nil callback:actualCallback];
 }
+- (void)v1_GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
+    [self v1_request:partialUrl method:@"GET" parameters:parameters multipartFormData:(NSDictionary *)nil callback:actualCallback];
+}
+
 
 - (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl 
@@ -220,6 +225,21 @@ multipartFormData:(NSDictionary *)parts
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), [NSNumber numberWithBool:YES]);
     NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",sid] forKey:@"id"];
     [self statusesRequest:@"statuses/comments.json" parameters:params sinceID:0 maxID:0 page:page count:count callback:callback];
+}
+- (void)repliesForStatusID:(WeiboStatusID)sid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
+    WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), [NSNumber numberWithBool:YES]);
+    NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",sid] forKey:@"id"];
+    [self statusesRequest:@"comments/show.json" parameters:params sinceID:since maxID:max page:1 count:count callback:callback];
+}
+#pragma mark -
+#pragma mark Favorites
+- (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count{
+    WTCallback * callback = WTCallbackMake(self, @selector(favoritesResponse:info:), nil);
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"page",[NSString stringWithFormat:@"%ld",count],@"count", nil];
+    [self GET:@"favorites.json" parameters:params callback:callback];
+}
+- (void)favoritesResponse:(id)returnValue info:(id)info{
+    [WeiboFavoriteStatus parseStatusesJSON:returnValue callback:responseCallback];
 }
 
 #pragma mark -
@@ -316,9 +336,23 @@ multipartFormData:(NSDictionary *)parts
 
 #pragma mark -
 #pragma mark User Access
+- (void)clientAuthTest{
+    WTCallback * callback = WTCallbackMake(self, @selector(clientAuthResponse:info:), nil);
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[@"naituw@gmail.com" stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",@"",@"password",@"password",@"grant_type", nil];    
+    WTHTTPRequest * request = [self v1_baseRequestWithPartialURL:@"OAuth2/access_token"];
+    [request setURL:[NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"]];
+    [request setResponseCallback:callback];
+    [request setRequestMethod:@"POST"];
+    [request setParameters:params];
+    [request startAuthrizedRequest];
+}
+- (void)clientAuthResponse:(id)returnValue info:(id)info{
+    NSLog(@"%@",returnValue);
+}
 - (void)verifyCredentials{
     WTCallback * callback = WTCallbackMake(self, @selector(myUserIDResponse:info:), nil);
     [self GET:@"account/get_uid.json" parameters:nil callback:callback];
+    //[self clientAuthTest];
 }
 - (void)myUserIDResponse:(id)returnValue info:(id)info{
     if ([returnValue isKindOfClass:[WeiboRequestError class]]) {
@@ -431,13 +465,9 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark -
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID)since{
-    WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
-    NSDictionary * param = nil;
-    if (since > 0) {
-        param = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"with_new_status",
-                 [NSString stringWithFormat:@"%lld",since],@"since_id", nil];
-    }
-    [self GET:@"statuses/unread.json" parameters:param callback:callback];
+    //WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
+    //NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
+    //[self GET:@"remind/unread_count.json" parameters:param callback:callback];
 }
 - (void)unreadCount{
     [self unreadCountSinceID:0];
@@ -452,7 +482,7 @@ multipartFormData:(NSDictionary *)parts
     NSDictionary * param;
     param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld",type] 
                                         forKey:@"type"];
-    [self POST:@"statuses/reset_count.json" parameters:param callback:callback];
+    [self v1_POST:@"statuses/reset_count.json" parameters:param callback:callback];
 }
 - (void)resetUnreadResponse:(id)response info:(id)info{
     // Not Implemented Yet.
