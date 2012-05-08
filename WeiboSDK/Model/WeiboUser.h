@@ -21,6 +21,7 @@
     NSString * description;
     NSString * url;
     NSString * profileImageUrl;
+    NSString * profileLargeImageUrl;
     NSString * domain;
     WeiboStatus * status;
     WeiboGender gender;
@@ -45,6 +46,7 @@
 @property (retain, readwrite) NSString * description;
 @property (retain, readwrite) NSString * url;
 @property (retain, readwrite) NSString * profileImageUrl;
+@property (retain, readwrite) NSString * profileLargeImageUrl;
 @property (retain, readwrite) NSString * domain;
 @property (retain, readwrite) WeiboStatus * status;
 @property (assign, readwrite) WeiboGender gender;

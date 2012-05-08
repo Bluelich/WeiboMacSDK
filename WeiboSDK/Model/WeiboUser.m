@@ -16,7 +16,7 @@
 @synthesize userID, screenName, name, province, city, location, description;
 @synthesize url, profileImageUrl, domain, gender, followersCount, friendsCount;
 @synthesize statusesCount, favouritesCount, createAt, following, verified, status;
-@synthesize cacheTime, isViewing, followMe;
+@synthesize cacheTime, isViewing, followMe, profileLargeImageUrl;
 
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [super init]) {
@@ -29,6 +29,7 @@
         self.description = [decoder decodeObjectForKey:@"description"];
         self.url = [decoder decodeObjectForKey:@"url"];
         self.profileImageUrl = [decoder decodeObjectForKey:@"profile-image-url"];
+        self.profileLargeImageUrl = [decoder decodeObjectForKey:@"profile-large-image-url"];
         self.domain = [decoder decodeObjectForKey:@"domain"];
         self.gender = [decoder decodeIntegerForKey:@"gender"];
         self.followersCount = [decoder decodeIntForKey:@"followers-count"];
@@ -53,6 +54,7 @@
     [encoder encodeObject:description forKey:@"description"];
     [encoder encodeObject:url forKey:@"url"];
     [encoder encodeObject:profileImageUrl forKey:@"profile-image-url"];
+    [encoder encodeObject:profileLargeImageUrl forKey:@"profile-large-image-url"];
     [encoder encodeObject:domain forKey:@"domain"];
     //[encoder encodeObject:status forKey:@"status"];
     [encoder encodeInteger:gender forKey:@"gender"];
@@ -75,6 +77,7 @@
     [description release]; description = nil;
     [url release]; url = nil;
     [profileImageUrl release]; profileImageUrl = nil;
+    [profileLargeImageUrl release]; profileLargeImageUrl = nil;
     [domain release]; domain = nil;
     [status release]; status = nil;
     [super dealloc];
@@ -132,7 +135,7 @@
 }
 - (WeiboUser *)initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
-        self.userID = [dic longlongForKey:@"id" defaultValue:-1];
+        self.userID = [dic longlongForKey:@"id" defaultValue:0];
         self.screenName = [dic stringForKey:@"screen_name" defaultValue:@""];
         self.name = [dic stringForKey:@"name" defaultValue:@""];
         self.province = @""; // Not implemented yet.
@@ -141,6 +144,7 @@
         self.description = [dic stringForKey:@"description" defaultValue:@""];
         self.url = [dic stringForKey:@"url" defaultValue:@""];
         self.profileImageUrl = [dic stringForKey:@"profile_image_url" defaultValue:@""];
+        self.profileLargeImageUrl = [dic stringForKey:@"avatar_large" defaultValue:nil];
         self.domain = [dic stringForKey:@"domain" defaultValue:@""];
         
         NSString * genderChar = [dic objectForKey:@"gender"];
