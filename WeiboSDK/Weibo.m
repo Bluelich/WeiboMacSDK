@@ -40,7 +40,7 @@ static Weibo * _sharedWeibo = nil;
                 }
             }
         }
-        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:80.0 
+        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 
                                                  target:self 
                                                selector:@selector(heartbeat:) 
                                                userInfo:nil 
