@@ -129,7 +129,7 @@
 		self.originalPic = [dic stringForKey:@"original_pic" defaultValue:nil];
         
         NSDictionary* userDic = [dic objectForKey:@"user"];
-		if (userDic) {
+		if (userDic && ![userDic isKindOfClass:[NSNull class]]) {
 			self.user = [WeiboUser userWithDictionary:userDic];
 		}
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];
