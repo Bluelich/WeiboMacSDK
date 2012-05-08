@@ -30,6 +30,7 @@
 - (id)initWithURL:(NSURL *)newURL{
     if ((self = [super initWithURL:newURL])) {
         [self setDelegate:self];
+        [self setValidatesSecureCertificate:NO];
     }
     return self;
 }
@@ -54,6 +55,12 @@
     [self startAsynchronous];
 }
 - (void)startAuthrizedRequest{
+    // Two ways to complete OAuth.
+    /*
+    NSMutableDictionary * params = [NSMutableDictionary dictionaryWithDictionary:self.parameters];
+    [params setValue:self.oAuth2Token forKey:@"access_token"];
+    self.parameters = params;
+     */
     [self prepareAuthrize];
     [self addRequestHeader:@"Authorization" value:[self oAuthAuthorizationHeader]];
     [self startAsynchronous];
@@ -136,7 +143,7 @@
     }
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request{
+- (void)requestFailed:(ASIHTTPRequest *)aRequest{
     WeiboRequestError * requestError = [WeiboRequestError 
                                         errorWithResponseString:[self responseString] statusCode:self.responseStatusCode];
     [self postFailWithError:requestError];
