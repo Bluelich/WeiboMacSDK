@@ -43,6 +43,10 @@
 #pragma mark Favorites
 - (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count;
 #pragma mark -
+#pragma mark Trends
+- (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count;
+- (void)trendsInHourly;
+#pragma mark -
 #pragma mark Weibo Access
 - (WTCallback *)statuseResponseCallback;
 - (void)updateWithComposition:(WeiboComposition *)composition;

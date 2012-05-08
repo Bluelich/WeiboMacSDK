@@ -241,6 +241,32 @@ multipartFormData:(NSDictionary *)parts
 - (void)favoritesResponse:(id)returnValue info:(id)info{
     [WeiboFavoriteStatus parseStatusesJSON:returnValue callback:responseCallback];
 }
+#pragma mark -
+#pragma mark Trends
+- (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count{
+    WTCallback * callback = WTCallbackMake(self, @selector(statusResponse:info:), nil);
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:keyword,@"q",nil];
+    [self statusesRequest:@"search/topics.json" parameters:params sinceID:0 maxID:0 page:page count:count callback:callback];
+}
+- (void)trendsInHourly{
+    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(trendsResponse:info:) info:nil];
+    [self GET:@"trends/hourly.json" parameters:nil callback:callback];
+}
+- (void)trendsResponse:(id)returnValue info:(id)info{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_async(queue, ^{
+        NSDictionary * trends = [[returnValue objectFromJSONString] objectForKey:@"trends"];
+        NSArray * keys = [trends allKeys];
+        NSArray * items = [trends objectForKey:[keys objectAtIndex:0]];
+        NSMutableArray * result = [NSMutableArray array];
+        for (NSDictionary * item in items) {
+            [result addObject:[item objectForKey:@"query"]];
+        }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [responseCallback invoke:result];
+        });
+    });
+}
 
 #pragma mark -
 #pragma mark Weibo Access
@@ -465,24 +491,70 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark -
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID)since{
-    //WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
-    //NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
-    //[self GET:@"remind/unread_count.json" parameters:param callback:callback];
+    WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
+    NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
+    
+    NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/unread_count.json"];
+    WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
+    [request setResponseCallback:callback];
+    [request setRequestMethod:@"GET"];
+    [request setParameters:param];
+    [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
+    [request startAuthrizedRequest];
 }
 - (void)unreadCount{
     [self unreadCountSinceID:0];
 }
 - (void)unreadCountResponse:(id)response info:(id)info{
+    if ([response isKindOfClass:[WeiboRequestError class]]) {
+        NSLog(@"response:%@",response);
+        [responseCallback dissociateTarget];
+        return;
+    }
     [WeiboUnread parseUnreadJSON:response onComplete:^(id object) {
         [responseCallback invoke:object];
     }];
 }
-- (void)resetUnreadWithType:(WeiboUnreadCountType)type{
+- (void)v1_resetUnreadWithType:(WeiboUnreadCountType)type{
     WTCallback * callback = WTCallbackMake(self, @selector(resetUnreadResponse:info:), nil);
     NSDictionary * param;
     param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld",type] 
                                         forKey:@"type"];
     [self v1_POST:@"statuses/reset_count.json" parameters:param callback:callback];
+}
+- (void)resetUnreadWithType:(WeiboUnreadCountType)type{
+    WTCallback * callback = WTCallbackMake(self, @selector(resetUnreadResponse:info:), nil);
+    NSString * typeString = nil;
+    switch (type) {
+        case WeiboUnreadCountTypeStatus:
+            typeString = @"status";
+            break;
+        case WeiboUnreadCountTypeFollower:
+            typeString = @"follower";
+            break;
+        case WeiboUnreadCountTypeComment:
+            typeString = @"cmt";
+            break;
+        case WeiboUnreadCountTypeDirectMessage:
+            typeString = @"dm";
+            break;
+        case WeiboUnreadCountTypeMention:
+            typeString = @"mention_status";
+            break;
+        default:{
+            [callback dissociateTarget];
+            return;
+        }
+    }
+    NSDictionary * param;
+    param = [NSDictionary dictionaryWithObject:typeString forKey:@"type"];
+    NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/set_count.json"];
+    WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
+    [request setResponseCallback:callback];
+    [request setRequestMethod:@"POST"];
+    [request setParameters:param];
+    [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
+    [request startAuthrizedRequest];
 }
 - (void)resetUnreadResponse:(id)response info:(id)info{
     // Not Implemented Yet.

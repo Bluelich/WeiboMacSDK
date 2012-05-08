@@ -8,6 +8,10 @@
 
 #import "WeiboAccountStream.h"
 
-@interface WeiboTrendStatusesStream : WeiboAccountStream
+@interface WeiboTrendStatusesStream : WeiboAccountStream {
+    NSUInteger loadedPage;
+}
+
+@property (copy, nonatomic) NSString * trendName;
 
 @end
