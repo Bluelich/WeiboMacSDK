@@ -175,6 +175,7 @@
     WeiboUnread * unread = (WeiboUnread *)response;
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
+        [self resetUnreadCountWithType:WeiboUnreadCountTypeStatus];
     }
     if (unread.newMentions > 0) {
         [mentionsStream loadNewer];
