@@ -134,7 +134,7 @@ static LocalAutocompleteDB * sharedDB = nil;
         [self beginTransaction];
         for (WeiboBaseStatus * status in statuses) {
             WeiboUser * user = status.user;
-            if (![userDict valueForKey:user.screenName]) {
+            if (user.screenName && ![userDict valueForKey:user.screenName]) {
                 [userDict setValue:@"" forKey:user.screenName];
                 [self addUser:user];
             }
