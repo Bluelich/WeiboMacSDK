@@ -149,6 +149,10 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark Response Handling
 - (void)handleRequestError:(WeiboRequestError *)error{
     LogIt([error description]);
+    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+    if (error.code == WeiboErrorCodeGrantTypeError) {
+        [nc postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
+    }
 }
 
 - (void)_responseRecived:(id)responseValue callback:(WTCallback *)callback{
@@ -291,8 +295,8 @@ multipartFormData:(NSDictionary *)parts
     NSString * url = @"statuses/repost.json";
     [self POST:url parameters:params callback:callback];
 }
-- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image
-      latitude:(double)latValue longitude:(double)longValue{
+
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue{
     if (reply > 0) {
         [self repost:text repostingID:reply shouldComment:NO];
         return;
@@ -311,8 +315,8 @@ multipartFormData:(NSDictionary *)parts
     }
     [self POST:url parameters:params multipartFormData:parts callback:callback];
 }
-- (void)update:(NSString *)text inReplyToStatusID:(WeiboStatusID)reply{
-    [self update:text inReplyToStatusID:reply imageData:nil latitude:0 longitude:0];
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply{
+    [self update:text inRetweetStatusID:reply imageData:nil latitude:0 longitude:0];
 }
 - (void)updated:(id)response info:(id)info{
     WeiboCompositionType type = [info integerValue];
@@ -362,23 +366,9 @@ multipartFormData:(NSDictionary *)parts
 
 #pragma mark -
 #pragma mark User Access
-- (void)clientAuthTest{
-    WTCallback * callback = WTCallbackMake(self, @selector(clientAuthResponse:info:), nil);
-    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[@"naituw@gmail.com" stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",@"",@"password",@"password",@"grant_type", nil];    
-    WTHTTPRequest * request = [self v1_baseRequestWithPartialURL:@"OAuth2/access_token"];
-    [request setURL:[NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"]];
-    [request setResponseCallback:callback];
-    [request setRequestMethod:@"POST"];
-    [request setParameters:params];
-    [request startAuthrizedRequest];
-}
-- (void)clientAuthResponse:(id)returnValue info:(id)info{
-    NSLog(@"%@",returnValue);
-}
 - (void)verifyCredentials{
     WTCallback * callback = WTCallbackMake(self, @selector(myUserIDResponse:info:), nil);
     [self GET:@"account/get_uid.json" parameters:nil callback:callback];
-    //[self clientAuthTest];
 }
 - (void)myUserIDResponse:(id)returnValue info:(id)info{
     if ([returnValue isKindOfClass:[WeiboRequestError class]]) {
@@ -563,6 +553,20 @@ multipartFormData:(NSDictionary *)parts
 
 #pragma mark -
 #pragma mark oAuth (xAuth)
+- (void)clientAuthRequestAccessToken{
+    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(clientAuthResponse:info:) info:nil];
+    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[authenticateWithAccount.username stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",authenticateWithAccount.password,@"password",@"password",@"grant_type", nil];
+    
+    NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
+    WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
+    [request setResponseCallback:callback];
+    [request setRequestMethod:@"POST"];
+    [request setParameters:params];
+    [request startAuthrizedRequest];
+}
+- (void)clientAuthResponse:(id)returnValue info:(id)info{
+    [self oAuth2TokenResponse:returnValue info:info];
+}
 - (void)xAuthRequestAccessTokens{
     WTCallback * callback = [self errorlessCallbackWithTarget:self 
                                                      selector:@selector(xAuthMigrateResponse:info:) 
@@ -592,6 +596,7 @@ multipartFormData:(NSDictionary *)parts
 - (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
     NSString * tokenResponse = returnValue;
     NSDictionary * dic = [tokenResponse objectFromJSONString];
+    NSLog(@"%@",dic);
     NSString * token = [dic valueForKey:@"access_token"];
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
     [authenticateWithAccount setOAuth2Token:token];

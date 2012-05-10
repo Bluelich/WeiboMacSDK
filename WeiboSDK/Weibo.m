@@ -94,7 +94,7 @@ static Weibo * _sharedWeibo = nil;
     WTCallback * callback = [WTCallback callbackWithTarget:self selector:@selector(didSignIn:info:) info:aCallback];
     WeiboAccount * account = [[WeiboAccount alloc] initWithUsername:aUsername password:aPassword];
     WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:account.apiRoot account:account callback:callback];
-    [api xAuthRequestAccessTokens];
+    [api clientAuthRequestAccessToken];
     [account autorelease];
 }
 

@@ -50,9 +50,8 @@
 #pragma mark Weibo Access
 - (WTCallback *)statuseResponseCallback;
 - (void)updateWithComposition:(WeiboComposition *)composition;
-- (void)update:(NSString *)text inReplyToStatusID:(WeiboStatusID)reply imageData:(NSData *)image
-      latitude:(double)latValue longitude:(double)longValue;
-- (void)update:(NSString *)text inReplyToStatusID:(WeiboStatusID)reply;
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;
 - (void)destoryStatus:(WeiboStatusID)sid;
 - (void)destoryComment:(WeiboStatusID)sid;
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid;
@@ -81,6 +80,7 @@
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type;
 #pragma mark -
 #pragma mark oAuth (xAuth)
+- (void)clientAuthRequestAccessToken;
 - (void)xAuthRequestAccessTokens;
 - (void)oAuth2RequestTokenByAccessToken;
 
