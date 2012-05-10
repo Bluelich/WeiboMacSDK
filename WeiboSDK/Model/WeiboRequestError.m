@@ -47,7 +47,18 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
         requestURLString = [[resultDictionary valueForKey:@"request"] retain];
         errorDetailCode = [[resultDictionary valueForKey:@"error_detail_code"] intValue];
         errorString = [[resultDictionary valueForKey:@"error"] retain];
-        errorStringInChinese = [[resultDictionary valueForKey:@"error_CN"] retain];
+        NSString * errorDescription = [resultDictionary valueForKey:@"error_description"];
+        if (errorDescription) {
+            [errorString release];
+            errorString = [errorDescription retain];
+        }
+        
+        NSString * errorInCN = [resultDictionary valueForKey:@"error_CN"];
+        if (errorInCN) {
+            errorStringInChinese = [errorInCN retain];
+        }else {
+            errorStringInChinese = [errorString retain];
+        }
     }
     return self;
 }

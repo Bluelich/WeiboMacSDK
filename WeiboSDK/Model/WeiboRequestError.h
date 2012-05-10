@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    WeiboErrorCodeInvaildRequest = 21323,
+	WeiboErrorCodeTokenExpired = 21327,
+    WeiboErrorCodeGrantTypeError = 21328
+} WeiboErrorCode;
+
 @interface WeiboRequestError : NSError {
     NSString * requestURLString;
     NSInteger  errorDetailCode;
