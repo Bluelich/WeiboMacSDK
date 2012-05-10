@@ -48,6 +48,7 @@
 }
 
 - (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [statuses release]; statuses = nil;
     [super dealloc];
 }
