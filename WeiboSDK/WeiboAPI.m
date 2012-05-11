@@ -151,6 +151,7 @@ multipartFormData:(NSDictionary *)parts
     LogIt([error description]);
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
     if (error.code == WeiboErrorCodeGrantTypeError) {
+        authenticateWithAccount.tokenExpired = YES;
         [nc postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
     }
 }
@@ -374,6 +375,7 @@ multipartFormData:(NSDictionary *)parts
     if ([returnValue isKindOfClass:[WeiboRequestError class]]) {
         return;
     }
+    authenticateWithAccount.tokenExpired = NO;
     NSString * userID = [[[returnValue objectFromJSONString] objectForKey:@"uid"] stringValue];
     WTCallback * callback = WTCallbackMake(self, @selector(verifyCredentialsResponse:info:), nil);
     NSDictionary * params = [NSDictionary dictionaryWithObject:userID forKey:@"uid"];

@@ -33,11 +33,13 @@
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
 @synthesize delegate = _delegate, notificationOptions;
 @synthesize oAuth2Token = _oAuth2Token, expireTime = _expireTime;
+@synthesize tokenExpired = _tokenExpired;
 
 #pragma mark -
 #pragma mark Life Cycle
 - (void)dealloc{
     [username release]; 
+    [password release];
     [apiRoot release];
     [oAuthToken release];
     [oAuthTokenSecret release];
@@ -93,7 +95,7 @@
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root{
     if ((self = [self init])) {
         username = [aUsername retain];
-        password = aPassword;
+        password = [aPassword retain];
         apiRoot  = [root retain];
     }
     return self;

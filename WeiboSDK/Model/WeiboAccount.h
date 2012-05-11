@@ -45,10 +45,11 @@
 
 @property(assign, nonatomic) id<WeiboAccountDelegate> delegate;
 @property(readonly, nonatomic) NSString *username;
-@property(readonly, nonatomic) NSString *password;
+@property(retain, nonatomic) NSString *password;
 @property(copy, nonatomic) NSString *oAuthTokenSecret;
 @property(retain, nonatomic) NSString *oAuthToken;
 @property(retain, nonatomic) NSString *oAuth2Token;
+@property(assign, nonatomic) BOOL tokenExpired;
 @property(assign, nonatomic) NSTimeInterval expireTime;
 @property(retain, nonatomic) WeiboUser *user;
 @property(readonly, nonatomic) NSString *apiRoot;

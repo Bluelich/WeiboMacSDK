@@ -65,7 +65,9 @@ static Weibo * _sharedWeibo = nil;
 
 - (void)heartbeat:(id)sender{
     for (WeiboAccount * account in accounts) {
-        [account refreshTimelines];
+        if (!account.tokenExpired) {
+            [account refreshTimelines];
+        }
     }
 }
 - (void)pruneCaches:(id)sender{
@@ -97,10 +99,22 @@ static Weibo * _sharedWeibo = nil;
     [api clientAuthRequestAccessToken];
     [account autorelease];
 }
-
 - (void)didSignIn:(id)response info:(id)info{
     WeiboAccount * account = (WeiboAccount *)response;
     [self addAccount:account];
+    [info invoke:account];
+}
+
+- (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
+                      password:(NSString *)aPassword 
+                      callback:(WTCallback *)aCallback{
+    WTCallback * callback = WTCallbackMake(self, @selector(didRefresh:info:), aCallback);
+    aAccount.password = aPassword;
+    WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:aAccount.apiRoot account:aAccount callback:callback];
+    [api clientAuthRequestAccessToken];
+}
+- (void)didRefresh:(id)response info:(id)info{
+    WeiboAccount * account = (WeiboAccount *)response;
     [info invoke:account];
 }
 

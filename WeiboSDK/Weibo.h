@@ -25,6 +25,9 @@
 - (void)signInWithUsername:(NSString *)aUsername 
                   password:(NSString *)aPassword 
                   callback:(WTCallback *)aCallback;
+- (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
+                      password:(NSString *)aPassword 
+                      callback:(WTCallback *)aCallback;
 - (void)didSignIn:(id)response info:(id)info;
 - (void)addAccount:(WeiboAccount *)aAccount;
 - (void)removeAccount:(WeiboAccount *)aAccount;
