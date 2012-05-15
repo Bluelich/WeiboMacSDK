@@ -44,7 +44,8 @@ static LocalAutocompleteDB * sharedDB = nil;
 }
 + (void)shutdown{
     [[self sharedAutocompleteDB] close];
-    [[self sharedAutocompleteDB] release];
+    // NO need to release singleton
+    //[[self sharedAutocompleteDB] release];
 }
 
 #pragma mark -

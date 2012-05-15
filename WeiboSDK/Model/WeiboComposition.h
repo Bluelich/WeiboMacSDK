@@ -49,8 +49,6 @@
 @property(nonatomic) BOOL dirty;
 @property(nonatomic) BOOL isDraft;
 
-
-
 - (void)_sendFromAccount:(WeiboAccount *)account;
 - (void)didSend:(id)response;
 - (void)errorSending;

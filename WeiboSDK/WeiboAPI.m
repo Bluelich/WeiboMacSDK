@@ -150,7 +150,7 @@ multipartFormData:(NSDictionary *)parts
 - (void)handleRequestError:(WeiboRequestError *)error{
     LogIt([error description]);
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-    if (error.code == WeiboErrorCodeGrantTypeError) {
+    if (error.code == WeiboErrorCodeTokenExpired) {
         authenticateWithAccount.tokenExpired = YES;
         [nc postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
     }
