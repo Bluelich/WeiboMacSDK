@@ -6,9 +6,5 @@
 //  Copyright (c) 2012年 Wutian. All rights reserved.
 //
 
-#ifndef Weibo_WeiboAppInfo_h
-#define Weibo_WeiboAppInfo_h
-
-
-
-#endif
+#define WEIBO_CONSUMER_KEY @"83996567"
+#define WEIBO_CONSUMER_SECRET @"d3ae350c39c5f12be40e4c7fc389266d"
