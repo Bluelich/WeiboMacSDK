@@ -11,7 +11,7 @@
 
 #import "WeiboAppInfo.h"
 /*
- Create your own, contains:
+ TODO: Create your own WeiboAppInfo.h , contains:
  #define WEIBO_CONSUMER_KEY @"12345"
  #define WEIBO_CONSUMER_SECRET @"1234567890"
 */
