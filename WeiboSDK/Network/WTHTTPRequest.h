@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ASIFormDataRequest.h"
 
-#define WEIBO_CONSUMER_KEY @"83996567"
-#define WEIBO_CONSUMER_SECRET @"d3ae350c39c5f12be40e4c7fc389266d"
+#import "WeiboAppInfo.h"
+/*
+ Create your own, contains:
+ #define WEIBO_CONSUMER_KEY @"12345"
+ #define WEIBO_CONSUMER_SECRET @"1234567890"
+*/
 
 @class WTMutableMultiDictionary, WTCallback;
 

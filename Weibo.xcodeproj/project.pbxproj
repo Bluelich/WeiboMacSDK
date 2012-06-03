@@ -207,6 +207,7 @@
 		C66747A8151B1F2100F5C973 /* POAPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POAPinyin.m; sourceTree = "<group>"; };
 		C67ED9AB1501B0E80059AF71 /* WeiboComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboComment.h; path = WeiboSDK/Model/WeiboComment.h; sourceTree = "<group>"; };
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
+		C680AA8C157B899A00E34853 /* WeiboAppInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeiboAppInfo.h; path = WeiboSDK/WeiboAppInfo.h; sourceTree = "<group>"; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDKEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDKEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B4DC1814ED347C0032A8CF /* WeiboSDKEngine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDKEngine-Prefix.pch"; sourceTree = "<group>"; };
 		C6B4DC1914ED347C0032A8CF /* WeiboSDKEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiboSDKEngine.h; sourceTree = "<group>"; };
@@ -685,6 +686,7 @@
 				C6DB909014E4EE29001DE9F5 /* Weibo.h */,
 				C6DB909114E4EE29001DE9F5 /* Weibo.m */,
 				C617C90414EB56C600CC75F5 /* WeiboConstants.h */,
+				C680AA8C157B899A00E34853 /* WeiboAppInfo.h */,
 			);
 			name = WeiboSDK;
 			sourceTree = "<group>";
