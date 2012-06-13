@@ -49,7 +49,7 @@ static BOOL shouldMakeFullDisplayText = YES;
 }
 + (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSArray * comments = [self commentsWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -60,7 +60,7 @@ static BOOL shouldMakeFullDisplayText = YES;
 }
 + (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboComment * comment = [self commentWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{

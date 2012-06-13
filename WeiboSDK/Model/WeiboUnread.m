@@ -30,7 +30,7 @@
 }
 + (void)parseUnreadJSON:(NSString *)json onComplete:(WTObjectBlock)block{
     [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboUnread * unread = [self unreadWithJSON:json];
         [json release];

@@ -52,7 +52,7 @@
 }
 + (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSArray * statuses = [self statusesWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -64,7 +64,7 @@
 }
 + (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboStatus * status = [self statusWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{

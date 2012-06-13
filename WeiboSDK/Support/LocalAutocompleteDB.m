@@ -129,7 +129,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     WeiboUnimplementedMethod
 }
 - (void)assimilateFromStatuses:(NSArray *)statuses{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
     dispatch_async(queue, ^{
         NSMutableDictionary * userDict = [NSMutableDictionary dictionary];
         [self beginTransaction];
