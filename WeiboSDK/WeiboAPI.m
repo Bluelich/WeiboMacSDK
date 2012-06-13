@@ -258,7 +258,7 @@ multipartFormData:(NSDictionary *)parts
     [self GET:@"trends/hourly.json" parameters:nil callback:callback];
 }
 - (void)trendsResponse:(id)returnValue info:(id)info{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSDictionary * trends = [[returnValue objectFromJSONString] objectForKey:@"trends"];
         NSArray * keys = [trends allKeys];
@@ -483,7 +483,7 @@ multipartFormData:(NSDictionary *)parts
 #pragma mark -
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID)since{
-    WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
+    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
     NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
     
     NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/unread_count.json"];
