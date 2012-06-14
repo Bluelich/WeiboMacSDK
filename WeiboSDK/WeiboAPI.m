@@ -304,10 +304,11 @@ multipartFormData:(NSDictionary *)parts
     }
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
-    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             text, @"status",
-                             [NSString stringWithFormat:@"%f",latValue], @"lat",
-                             [NSString stringWithFormat:@"%f",longValue], @"long", nil];
+    NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
+    if (latValue > 0 || longValue > 0) {
+        [params setObject:[NSString stringWithFormat:@"%f",latValue] forKey:@"lat"];
+        [params setObject:[NSString stringWithFormat:@"%f",longValue] forKey:@"long"];
+    }
     NSDictionary * parts = nil;
     NSString * url = @"statuses/update.json";
     if (image && reply == 0) {
