@@ -31,6 +31,9 @@
 		C617C91514EBA90000CC75F5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91414EBA90000CC75F5 /* JSONKit.m */; };
 		C617C91B14EBAB1F00CC75F5 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C617C92314EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */; };
+		C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */ = {isa = PBXBuildFile; fileRef = C61E986515A9921100C42FE5 /* WeiboEmotion.h */; };
+		C61E986815A9921100C42FE5 /* WeiboEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E986615A9921100C42FE5 /* WeiboEmotion.m */; };
+		C61E986915A9921100C42FE5 /* WeiboEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E986615A9921100C42FE5 /* WeiboEmotion.m */; };
 		C630CC6D152ABDED00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
 		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
 		C63A182314F0CF51000F3E72 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
@@ -183,6 +186,8 @@
 		C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboGeotag.m; path = WeiboSDK/Model/WeiboGeotag.m; sourceTree = "<group>"; };
 		C617C92114EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSDictionary+WeiboAdditions.h"; sourceTree = "<group>"; };
 		C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+WeiboAdditions.m"; path = "WeiboSDK/Utilities/Additions/NSDictionary+WeiboAdditions.m"; sourceTree = "<group>"; };
+		C61E986515A9921100C42FE5 /* WeiboEmotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboEmotion.h; sourceTree = "<group>"; };
+		C61E986615A9921100C42FE5 /* WeiboEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboEmotion.m; sourceTree = "<group>"; };
 		C630CC6B152ABDED00A5AF7A /* WTFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTFileManager.h; path = WeiboSDK/Support/WTFileManager.h; sourceTree = "<group>"; };
 		C630CC6C152ABDED00A5AF7A /* WTFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTFileManager.m; path = WeiboSDK/Support/WTFileManager.m; sourceTree = "<group>"; };
 		C63A182114F0CF51000F3E72 /* NSArray+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.h"; sourceTree = "<group>"; };
@@ -529,6 +534,8 @@
 				C6653D901556869E00350990 /* WeiboFavoriteStatus.m */,
 				C67ED9AB1501B0E80059AF71 /* WeiboComment.h */,
 				C67ED9AC1501B0E80059AF71 /* WeiboComment.m */,
+				C61E986515A9921100C42FE5 /* WeiboEmotion.h */,
+				C61E986615A9921100C42FE5 /* WeiboEmotion.m */,
 				C6DB90A014E50A8E001DE9F5 /* WeiboUser.h */,
 				C6DB90A114E50A8E001DE9F5 /* WeiboUser.m */,
 				C6DB90C514E51127001DE9F5 /* WeiboConfiguration.h */,
@@ -709,6 +716,7 @@
 				C6094FAC155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h in Headers */,
 				C6094FB11557E95A0038C7D2 /* WeiboTrendStatusesStream.h in Headers */,
 				C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */,
+				C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,6 +865,7 @@
 				C6653D93155686A000350990 /* WeiboFavoriteStatus.m in Sources */,
 				C6094FAE155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */,
 				C6094FB31557E95A0038C7D2 /* WeiboTrendStatusesStream.m in Sources */,
+				C61E986915A9921100C42FE5 /* WeiboEmotion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,6 +935,7 @@
 				C6094FA5155764F10038C7D2 /* WeiboStatusStreamFilter.m in Sources */,
 				C6094FAD155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */,
 				C6094FB21557E95A0038C7D2 /* WeiboTrendStatusesStream.m in Sources */,
+				C61E986815A9921100C42FE5 /* WeiboEmotion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

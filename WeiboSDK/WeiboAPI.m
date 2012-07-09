@@ -139,7 +139,7 @@ multipartFormData:(NSDictionary *)parts
 
 - (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl 
-                                                relativeToURL:[NSURL URLWithString:apiRoot]]];
+                                                relativeToURL:[NSURL URLWithString:OFFLINE_DEBUG_MODE?@"http://127.0.0.1/":apiRoot]]];
 }
 - (WTHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl 
@@ -487,7 +487,8 @@ multipartFormData:(NSDictionary *)parts
     WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
     NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
     
-    NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/unread_count.json"];
+    NSString * urlString = OFFLINE_DEBUG_MODE?@"http://localhost/remind/unread_count.json":@"https://rm.api.weibo.com/2/remind/unread_count.json";
+    NSURL * url = [NSURL URLWithString:urlString];
     WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
     [request setResponseCallback:callback];
     [request setRequestMethod:@"GET"];
@@ -500,7 +501,6 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)unreadCountResponse:(id)response info:(id)info{
     if ([response isKindOfClass:[WeiboRequestError class]]) {
-        NSLog(@"response:%@",response);
         [responseCallback dissociateTarget];
         return;
     }
@@ -599,7 +599,6 @@ multipartFormData:(NSDictionary *)parts
 - (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
     NSString * tokenResponse = returnValue;
     NSDictionary * dic = [tokenResponse objectFromJSONString];
-    NSLog(@"%@",dic);
     NSString * token = [dic valueForKey:@"access_token"];
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
     [authenticateWithAccount setOAuth2Token:token];
