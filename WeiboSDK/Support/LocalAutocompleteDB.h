@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboAutocompleteResultItem.h"
+#import "WeiboConstants.h"
 
 @class FMDatabase, WeiboUser, WeiboAccount;
 
@@ -43,7 +44,7 @@
 #pragma mark - 
 #pragma mark Data Access
 - (void)addUser:(WeiboUser *)user;
-- (void)addUsername:(NSString *)screenname avatarURL:(NSString *)url;
+- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url;
 - (void)prioritizeUsername:(NSString *)screenname;
 - (void)assimilateFromStatuses:(NSArray *)statuses;
 - (void)compact;

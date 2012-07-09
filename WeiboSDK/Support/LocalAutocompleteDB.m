@@ -40,7 +40,22 @@ static LocalAutocompleteDB * sharedDB = nil;
     return sharedDB;
 }
 + (void)resetDatabase{
-    WeiboUnimplementedMethod
+    [self shutdown];
+    [sharedDB release];
+    sharedDB = nil;
+    NSString * path = [self databasePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    BOOL fileExists = [fileManager fileExistsAtPath:path];
+    NSLog(@"Path to file: %@", path);        
+    NSLog(@"File exists: %d", fileExists);
+    NSLog(@"Is deletable file at path: %d", [fileManager isDeletableFileAtPath:path]);
+    if (fileExists) 
+    {
+        BOOL success = [fileManager removeItemAtPath:path error:&error];
+        if (!success) NSLog(@"Error: %@", [error localizedDescription]);
+    }
+    [self verifyDatabase];
 }
 + (void)shutdown{
     [[self sharedAutocompleteDB] close];
@@ -69,7 +84,6 @@ static LocalAutocompleteDB * sharedDB = nil;
 }
 - (void)close{
     [db close];
-    [db release];
 }
 - (void)loadSchema{
     NSString * filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:@"/autocomplete_schema.sql"];
@@ -105,10 +119,10 @@ static LocalAutocompleteDB * sharedDB = nil;
     [db commit];
 }
 - (void)addUser:(WeiboUser *)user{
-    [self addUsername:user.screenName avatarURL:user.profileImageUrl];
+    [self addUserID:user.userID username:user.screenName avatarURL:user.profileImageUrl];
 }
-- (void)addUsername:(NSString *)screenname avatarURL:(NSString *)url{
-    NSString * ID = [screenname lowercaseString];
+- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url{
+    NSString * ID = [NSString stringWithFormat:@"%lld",userID];
     NSNumber * priority = [NSNumber numberWithInteger:1];
     NSString * username = screenname;
     NSString * fullname = [self stylizedPinyinFromString:screenname];

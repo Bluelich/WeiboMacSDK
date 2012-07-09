@@ -29,6 +29,7 @@
     NSString * bigPicURL;
     
     BOOL wasSeen;
+    
 }
 
 @property (assign, readwrite) time_t createdAt;

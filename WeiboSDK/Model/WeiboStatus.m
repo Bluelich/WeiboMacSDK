@@ -42,7 +42,8 @@
     return status;
 }
 + (NSArray *)statusesWithJSON:(NSString *)json{
-    NSArray * dictionaries = [[json objectFromJSONString] objectForKey:@"statuses"];
+    NSDictionary * jsonObject = [json objectFromJSONString];
+    NSArray * dictionaries = [jsonObject objectForKey:@"statuses"];
     NSMutableArray * statuses = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries) {
         WeiboStatus * status = [WeiboStatus statusWithDictionary:dic];

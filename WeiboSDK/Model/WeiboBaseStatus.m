@@ -51,6 +51,7 @@
                                              blue:0.25 alpha:1.0];
     [display addAttribute:NSForegroundColorAttributeName 
                     value:color range:NSMakeRange(0, [display length])];
+    
     for (ABFlavoredRange * range in ranges.activeRanges) {
         NSColor * fontColor = HIGHLIGHTED_COLOR;
         if (range.rangeFlavor == ABActiveTextRangeFlavorTwitterHashtag) {
