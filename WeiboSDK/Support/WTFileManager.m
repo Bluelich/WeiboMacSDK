@@ -36,5 +36,9 @@
 + (NSString *)databaseCacheDirectory{
     return [self subCacheDirectory:@"AutoCompleteDB"];
 }
++ (BOOL)fileExist:(NSString *)path{
+    NSFileManager *fileManager= [NSFileManager defaultManager]; 
+    return [fileManager fileExistsAtPath:path];
+}
 
 @end

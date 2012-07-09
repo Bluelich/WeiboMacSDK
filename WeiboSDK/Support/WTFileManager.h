@@ -16,5 +16,6 @@
 + (NSString *)subCacheDirectory:(NSString *)name;
 + (NSString *)subDocumentsDirectory:(NSString *)name;
 + (NSString *)databaseCacheDirectory;
++ (BOOL)fileExist:(NSString *)path;
 
 @end
