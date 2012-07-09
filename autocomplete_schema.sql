@@ -26,6 +26,7 @@ CREATE UNIQUE INDEX "name_primary" ON "names" ("id","priority");
 CREATE UNIQUE INDEX "hashtag_primary" ON "hashtags" ("id","priority");
 CREATE UNIQUE INDEX "place_primary" ON "places" ("id","priority");
 CREATE INDEX "full_name_index" ON "names" ("full_name");
+CREATE INDEX "username_name_index" ON "names" ("username");
 CREATE INDEX "name_index" ON "places" ("name");
 CREATE INDEX "place_type_index" ON "places" ("place_type");
 CREATE INDEX "address_index" ON "places" ("address");
