@@ -21,7 +21,7 @@ typedef void (^WTArrayBlock)(NSArray *array);
 typedef void (^WTObjectBlock)(id object);
 #endif
 
-#define OFFLINE_DEBUG_MODE YES
+#define OFFLINE_DEBUG_MODE NO
 
 #define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
 #define WEIBO_APIROOT_V2 @"https://api.weibo.com/2/"

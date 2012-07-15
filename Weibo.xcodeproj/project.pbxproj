@@ -150,7 +150,6 @@
 		C6FC9E5114E3C3F400094A8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6FC9E4F14E3C3F400094A8F /* InfoPlist.strings */; };
 		C6FC9E5314E3C3F400094A8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E5214E3C3F400094A8F /* main.m */; };
 		C6FC9E5714E3C3F400094A8F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C6FC9E5514E3C3F400094A8F /* Credits.rtf */; };
-		C6FC9E5A14E3C3F400094A8F /* WeiboAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E5914E3C3F400094A8F /* WeiboAppDelegate.m */; };
 		C6FC9E5D14E3C3F400094A8F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FC9E5B14E3C3F400094A8F /* MainMenu.xib */; };
 		C6FC9E6614E3C43D00094A8F /* WTCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WTCallback.m */; };
 		C6FE675F14F4EC62009EE772 /* WeiboMentionsStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FE675E14F4EC62009EE772 /* WeiboMentionsStream.m */; };
@@ -307,8 +306,6 @@
 		C6FC9E5214E3C3F400094A8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C6FC9E5414E3C3F400094A8F /* Weibo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Weibo-Prefix.pch"; sourceTree = "<group>"; };
 		C6FC9E5614E3C3F400094A8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C6FC9E5814E3C3F400094A8F /* WeiboAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiboAppDelegate.h; sourceTree = "<group>"; };
-		C6FC9E5914E3C3F400094A8F /* WeiboAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeiboAppDelegate.m; sourceTree = "<group>"; };
 		C6FC9E5C14E3C3F400094A8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C6FC9E6414E3C43D00094A8F /* WTCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTCallback.h; path = WeiboSDK/WTCallback.h; sourceTree = SOURCE_ROOT; };
 		C6FC9E6514E3C43D00094A8F /* WTCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTCallback.m; path = WeiboSDK/WTCallback.m; sourceTree = SOURCE_ROOT; };
@@ -663,8 +660,6 @@
 		C6FC9E4C14E3C3F400094A8F /* Weibo */ = {
 			isa = PBXGroup;
 			children = (
-				C6FC9E5814E3C3F400094A8F /* WeiboAppDelegate.h */,
-				C6FC9E5914E3C3F400094A8F /* WeiboAppDelegate.m */,
 				C6FC9E5B14E3C3F400094A8F /* MainMenu.xib */,
 				C6FC9E4D14E3C3F400094A8F /* Supporting Files */,
 			);
@@ -874,7 +869,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6FC9E5314E3C3F400094A8F /* main.m in Sources */,
-				C6FC9E5A14E3C3F400094A8F /* WeiboAppDelegate.m in Sources */,
 				C6FC9E6614E3C43D00094A8F /* WTCallback.m in Sources */,
 				C6DB908314E4C0F0001DE9F5 /* WTKeychain.m in Sources */,
 				C6DB908F14E4E14C001DE9F5 /* RegexKitLite.m in Sources */,
