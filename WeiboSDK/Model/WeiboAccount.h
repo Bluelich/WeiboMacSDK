@@ -34,12 +34,17 @@
     WeiboNotificationOptions notificationOptions;
     NSMutableDictionary * userDetailsStreamsCache;
     
-    // DirectMessage & Follower Not Implemented Yet.
-    // But we need notificate this things.
-    // Temporary use below flags.
     struct {
+        // DirectMessage & Follower Not Implemented Yet.
+        // But we need notificate this things.
+        // Temporary use two flags below.
         unsigned int newDirectMessages:1;
         unsigned int newFollowers:1;
+        // When mentions stream or comments stream not loaded
+        // and account has unread mentions or comments
+        // use following flags to store and detect.
+        unsigned int newMentions:1;
+        unsigned int newCommnets:1;
     } _notificationFlags;
 }
 
@@ -53,6 +58,7 @@
 @property(assign, nonatomic) NSTimeInterval expireTime;
 @property(retain, nonatomic) WeiboUser *user;
 @property(readonly, nonatomic) NSString *apiRoot;
+@property(retain, nonatomic) NSImage * profileImage;
 @property(assign, nonatomic) WeiboNotificationOptions notificationOptions;
 
 #pragma mark -
@@ -84,19 +90,16 @@
 #pragma mark -
 #pragma mark Composition
 - (void)sendCompletedComposition:(WeiboComposition *)composition;
-- (void)didSendCompletedComposition:(id)response info:(id)info;
 
 #pragma mark -
 #pragma mark User
 - (void)userWithUsername:(NSString *)screenname callback:(WTCallback *)callback;
-- (void)userResponse:(id)response info:(id)info;
 
 #pragma mark -
 #pragma mark Account
-- (void)_postAccountDidUpdateNotification;
-- (void)myUserResponse:(id)response info:(id)info;
 - (void)myUserDidUpdate:(WeiboUser *)user;
 - (void)verifyCredentials:(WTCallback *)callback;
+- (void)requestProfileImageWithCallback:(WTCallback *)callback;
 
 #pragma mark -
 #pragma mark User Detail Streams
@@ -122,6 +125,8 @@
 
 - (void)setHasNewDirectMessages:(BOOL)hasNew;
 - (void)setHasNewFollowers:(BOOL)hasNew;
+- (void)setHasNewMentions:(BOOL)hasNewMentions;
+- (void)setHasNewComments:(BOOL)hasNewComments;
 
 @end
 

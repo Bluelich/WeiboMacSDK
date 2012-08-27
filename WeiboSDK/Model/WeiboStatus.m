@@ -88,7 +88,7 @@
 		if (r.location != NSNotFound) {
 			NSRange start = [src rangeOfString:@"<a href=\""];
 			if (start.location != NSNotFound) {
-				int l = [src length];
+				int l = (int)[src length];
 				NSRange fromRang = NSMakeRange(start.location + start.length, l-start.length-start.location);
 				end   = [src rangeOfString:@"\"" options:NSCaseInsensitiveSearch 
                                      range:fromRang];
@@ -128,7 +128,7 @@
 		self.thumbnailPic = [dic stringForKey:@"thumbnail_pic" defaultValue:nil];
 		self.middlePic = [dic stringForKey:@"bmiddle_pic" defaultValue:nil];
 		self.originalPic = [dic stringForKey:@"original_pic" defaultValue:nil];
-        
+                
         NSDictionary* userDic = [dic objectForKey:@"user"];
 		if (userDic && ![userDic isKindOfClass:[NSNull class]]) {
 			self.user = [WeiboUser userWithDictionary:userDic];

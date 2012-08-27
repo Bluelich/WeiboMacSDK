@@ -39,7 +39,7 @@ WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo){
 }
 - (NSString *)description{
     return [NSString stringWithFormat:
-            @"Callback to %@'s %@ method, with info:%@",target,selector,info];
+            @"Callback to %@'s %@ method, with info:%@",target,NSStringFromSelector(selector),info];
 }
 
 @end

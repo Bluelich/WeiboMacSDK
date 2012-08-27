@@ -7,12 +7,19 @@
 //
 
 #import "WeiboUserStream.h"
+#import "WeiboUser.h"
 
 @implementation WeiboUserStream
-@synthesize user;
+@synthesize user = _user;
+
+- (void)dealloc
+{
+    [_user release], _user = nil;
+    [super dealloc];
+}
 
 - (NSString *)autosaveName{
-    return [[super autosaveName] stringByAppendingFormat:@"user/%ld/"];
+    return [[super autosaveName] stringByAppendingFormat:@"user/%lld/",self.user.userID];
 }
 
 @end

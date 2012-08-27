@@ -54,11 +54,11 @@
 #pragma mark Others
 - (NSString *)description{
     NSMutableString * string = [NSMutableString string];
-    [string appendFormat:@"\nnew status:%d, ",self.newStatus];
-    [string appendFormat:@"\nnew mentions:%d, ",self.newMentions];
-    [string appendFormat:@"\nnew comments:%d, ",self.newComments];
-    [string appendFormat:@"\nnew dms:%d, ",self.newDirectMessages];
-    [string appendFormat:@"\nnew followers:%d. ",self.newFollowers];
+    [string appendFormat:@"\nnew status:%ld, ",self.newStatus];
+    [string appendFormat:@"\nnew mentions:%ld, ",self.newMentions];
+    [string appendFormat:@"\nnew comments:%ld, ",self.newComments];
+    [string appendFormat:@"\nnew dms:%ld, ",self.newDirectMessages];
+    [string appendFormat:@"\nnew followers:%ld. ",self.newFollowers];
     return string;
 }
 

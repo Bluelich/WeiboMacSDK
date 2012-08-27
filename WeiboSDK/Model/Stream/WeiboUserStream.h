@@ -10,10 +10,8 @@
 
 @class WeiboUser;
 
-@interface WeiboUserStream : WeiboAccountStream {
-    WeiboUser * user;
-}
+@interface WeiboUserStream : WeiboAccountStream
 
-@property (assign,nonatomic) WeiboUser * user;
+@property (retain,nonatomic) WeiboUser * user;
 
 @end

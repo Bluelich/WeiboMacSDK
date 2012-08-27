@@ -62,7 +62,7 @@
     [encoder encodeInt:friendsCount forKey:@"friends-count"];
     [encoder encodeInt:statusesCount forKey:@"statuses-count"];
     [encoder encodeInt:favouritesCount forKey:@"favourites-count"];
-    [encoder encodeInt:createAt forKey:@"create-at"];
+    [encoder encodeInt:(int)createAt forKey:@"create-at"];
     [encoder encodeBool:following forKey:@"following"];
     [encoder encodeBool:followMe forKey:@"follow-me"];
     [encoder encodeBool:verified forKey:@"verified"];

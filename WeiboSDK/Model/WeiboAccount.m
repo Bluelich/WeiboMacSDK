@@ -26,6 +26,7 @@
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
+#import "WTHTTPRequest.h"
 
 #define CACHE_LIVETIME 600.0
 
@@ -33,7 +34,7 @@
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
 @synthesize delegate = _delegate, notificationOptions;
 @synthesize oAuth2Token = _oAuth2Token, expireTime = _expireTime;
-@synthesize tokenExpired = _tokenExpired;
+@synthesize tokenExpired = _tokenExpired, profileImage = _profileImage;
 
 #pragma mark -
 #pragma mark Life Cycle
@@ -50,6 +51,7 @@
     [mentionsStream release];
     [commentsTimelineStream release];
     [favoritesStream release];
+    [_profileImage release];
     [super dealloc];
 }
 - (id)init{
@@ -77,6 +79,7 @@
     [encoder encodeObject:apiRoot forKey:@"api-root"];
     [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
     [encoder encodeObject:user forKey:@"user"];
+    [encoder encodeObject:self.profileImage forKey:@"profile-image"];
 }
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [self init]) {
@@ -88,6 +91,7 @@
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
         self.user = [decoder decodeObjectForKey:@"user"];
+        self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
         [self verifyCredentials:nil];
     }
     return self;
@@ -118,6 +122,12 @@
 }
 - (WeiboFavoritesStream *) favoritesStream{
     return favoritesStream;
+}
+- (void)setUser:(WeiboUser *)newUser{
+    [newUser retain];
+    [user release];
+    user = newUser;
+    [self requestProfileImageWithCallback:nil];
 }
 
 #pragma mark -
@@ -177,7 +187,6 @@
     WeiboUnread * unread = (WeiboUnread *)response;
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
-        [self resetUnreadCountWithType:WeiboUnreadCountTypeStatus];
     }
     if (unread.newMentions > 0) {
         [mentionsStream loadNewer];
@@ -202,12 +211,12 @@
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api resetUnreadWithType:type];
     
-    // may remove in further update.
-    if (type == WeiboUnreadCountTypeDirectMessage) {
-        [self setHasNewDirectMessages:NO];
-    }
-    if (type == WeiboUnreadCountTypeFollower) {
-        [self setHasNewFollowers:NO];
+    switch (type) {
+        case WeiboUnreadCountTypeDirectMessage:[self setHasNewDirectMessages:NO];break;
+        case WeiboUnreadCountTypeFollower:[self setHasNewFollowers:NO];break;
+        case WeiboUnreadCountTypeMention:[self setHasNewMentions:NO];break;
+        case WeiboUnreadCountTypeComment:[self setHasNewComments:NO];break;
+        default:break;
     }
 }
 
@@ -272,6 +281,25 @@
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api verifyCredentials];
 }
+- (void)profileImageResponse:(id)response info:(id)info{
+    WTCallback * callback = (WTCallback *)info;
+    NSImage * image = [[[NSImage alloc] initWithData:response] autorelease];
+    if (image) {
+        self.profileImage = image;
+        NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+        [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
+    }
+    [callback invoke:image];
+}
+- (void)requestProfileImageWithCallback:(WTCallback *)aCallback{
+    WTCallback * callback = WTCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
+    NSURL * url = [NSURL URLWithString:self.user.profileImageUrl];
+    ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
+    [request setCompletionBlock:^{
+        [callback invoke:request.responseData];
+    }];
+    [request startAsynchronous];
+}
 
 #pragma mark -
 #pragma mark User Detail Streams
@@ -285,6 +313,7 @@
     return [[self _userDetailsStreamCache] objectForKey:key];
 }
 - (WeiboUserTimelineStream *)timelineStreamForUser:(WeiboUser *)aUser{
+    if (!user) return nil;
     NSString * key = [NSString stringWithFormat:@"%@/timeline",aUser.screenName];
     WeiboUserTimelineStream * stream = [self _cachedStream:key];
     if (!stream) {
@@ -419,5 +448,11 @@
 }
 - (void)setHasNewFollowers:(BOOL)hasNew{
     _notificationFlags.newFollowers = hasNew;
+}
+- (void)setHasNewMentions:(BOOL)hasNewMentions{
+    _notificationFlags.newMentions = hasNewMentions;
+}
+- (void)setHasNewComments:(BOOL)hasNewComments{
+    _notificationFlags.newCommnets = hasNewComments;
 }
 @end

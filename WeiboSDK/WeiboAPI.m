@@ -223,6 +223,7 @@ multipartFormData:(NSDictionary *)parts
     [self statusesRequest:@"statuses/user_timeline.json" parameters:params sinceID:since maxID:max count:count];
 }
 - (void)userTimelineForUsername:(NSString *)screenname sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
+    if (!screenname) return;
     NSDictionary * params = [NSDictionary dictionaryWithObject:screenname forKey:@"screen_name"];
     [self statusesRequest:@"statuses/user_timeline.json" parameters:params sinceID:since maxID:max count:count];
 }
@@ -389,7 +390,7 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)userWithID:(WeiboUserID)uid{
     NSDictionary * param;
-    param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld",uid] 
+    param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",uid] 
                                         forKey:@"user_id"];
     WTCallback * callback = [self userResponseCallback];
     [self GET:@"users/show.json" parameters:param callback:callback];
@@ -516,6 +517,11 @@ multipartFormData:(NSDictionary *)parts
     [self v1_POST:@"statuses/reset_count.json" parameters:param callback:callback];
 }
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type{
+    if (type == WeiboUnreadCountTypeStatus) {
+        // Weibo Open API auto reset status count now.
+        return;
+    }
+    
     WTCallback * callback = WTCallbackMake(self, @selector(resetUnreadResponse:info:), nil);
     NSString * typeString = nil;
     switch (type) {

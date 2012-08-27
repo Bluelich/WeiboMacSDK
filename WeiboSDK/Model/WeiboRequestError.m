@@ -85,10 +85,10 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
         [string appendFormat:@", is a request to: %@",requestURLString];
     }
     if (self.code > 0) {
-        [string appendFormat:@", an error with code %d was occurred",self.code];
+        [string appendFormat:@", an error with code %ld was occurred",self.code];
     }
     if (errorDetailCode > 0) {
-        [string appendFormat:@", has detail code: %d",errorDetailCode];
+        [string appendFormat:@", has detail code: %ld",errorDetailCode];
     }
     if (errorString) {
         [string appendFormat:@", reason: %@",errorString];

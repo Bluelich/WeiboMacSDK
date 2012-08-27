@@ -32,6 +32,7 @@ typedef void (^WTObjectBlock)(id object);
 #define kWeiboAccountDidUpdateNotification @"WeiboAccountDidUpdateNotification"
 #define kWeiboAccountDidReciveUnreadNotification @"WeiboAccountDidReciveUnreadNotification" 
 #define kWeiboAccessTokenExpriedNotification @"WeiboAccessTokenExpriedNotification"
+#define kWeiboAccountAvatarDidUpdateNotification @"WeiboAccountAvatarDidUpdateNotification"
 
 #define WEIBO_LINK_REGEX @"(?i)https?://[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)+([-A-Z0-9a-z_\\$\\.\\+!\\*\\(\\)/,:;@&=\\?~#%]*)*"
 #define SHORT_LINK_REGEX @"(http://t.cn/)([a-zA-Z0-9]+)"

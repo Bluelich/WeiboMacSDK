@@ -526,7 +526,7 @@ static short *cache = NULL;
             for (int i = 0; i < pycount; i++) {
                 pinyinTableCell pycell = pinyinTable[i];
                 NSString *hz = pycell.hanzi;
-                int hzCount = [hz length];
+                int hzCount = (int)[hz length];
                 for (int j = 0; j < hzCount; j++) {
                     unichar c = [hz characterAtIndex:j];
                     max = MAX(max, c);
@@ -544,7 +544,7 @@ static short *cache = NULL;
         for (int i = 0; i < pycount; i++) {
             pinyinTableCell pycell = pinyinTable[i];
             NSString *hz = pycell.hanzi;
-            int hzCount = [hz length];
+            int hzCount = (int)[hz length];
             for (int j = 0; j < hzCount; j++) {
                 unichar c = [hz characterAtIndex:j];
                 cache[c - cacheFloor] = i;
@@ -552,7 +552,7 @@ static short *cache = NULL;
         }
     }
     
-    int hzLength = [hzString length];
+    int hzLength = (int)[hzString length];
     
     NSMutableString *string = [NSMutableString string];
     

@@ -28,7 +28,6 @@
 		C6094FB11557E95A0038C7D2 /* WeiboTrendStatusesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6094FAF1557E95A0038C7D2 /* WeiboTrendStatusesStream.h */; };
 		C6094FB21557E95A0038C7D2 /* WeiboTrendStatusesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FB01557E95A0038C7D2 /* WeiboTrendStatusesStream.m */; };
 		C6094FB31557E95A0038C7D2 /* WeiboTrendStatusesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FB01557E95A0038C7D2 /* WeiboTrendStatusesStream.m */; };
-		C617C91514EBA90000CC75F5 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91414EBA90000CC75F5 /* JSONKit.m */; };
 		C617C91B14EBAB1F00CC75F5 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C617C92314EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */; };
 		C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */ = {isa = PBXBuildFile; fileRef = C61E986515A9921100C42FE5 /* WeiboEmotion.h */; };
@@ -65,7 +64,6 @@
 		C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C6647D5914ED638E00422998 /* NSDictionary+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */; };
 		C6647D5B14ED638E00422998 /* WTOASingnaturer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED1A214E686180033CA45 /* WTOASingnaturer.m */; };
-		C6647D5D14ED638E00422998 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91414EBA90000CC75F5 /* JSONKit.m */; };
 		C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19C14E666650033CA45 /* Base64Transcoder.c */; };
 		C6647D6114ED638E00422998 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19314E6662B0033CA45 /* NSString+URLEncoding.m */; };
 		C6647D6514ED638E00422998 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19714E6662B0033CA45 /* NSURL+Base.m */; };
@@ -127,6 +125,8 @@
 		C6DE37D814EF85BB004DAFE9 /* ABActiveRange.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */; };
 		C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */ = {isa = PBXBuildFile; fileRef = C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */; };
 		C6DE37DA14EF85FA004DAFE9 /* ABActiveRange.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */; };
+		C6E0BC2415E8A222007BAA20 /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C6E0BC2215E8A222007BAA20 /* JSONKit.h */; };
+		C6E0BC2515E8A222007BAA20 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E0BC2315E8A222007BAA20 /* JSONKit.m */; };
 		C6E1CD5B14E5FB2E000137B9 /* WTHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */; };
 		C6E2D07214E6BF03000D3507 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */; };
 		C6E2D07314E6BF03000D3507 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */; };
@@ -179,8 +179,6 @@
 		C6094FAF1557E95A0038C7D2 /* WeiboTrendStatusesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboTrendStatusesStream.h; path = WeiboSDK/Model/Stream/WeiboTrendStatusesStream.h; sourceTree = "<group>"; };
 		C6094FB01557E95A0038C7D2 /* WeiboTrendStatusesStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboTrendStatusesStream.m; path = WeiboSDK/Model/Stream/WeiboTrendStatusesStream.m; sourceTree = "<group>"; };
 		C617C90414EB56C600CC75F5 /* WeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboConstants.h; path = WeiboSDK/WeiboConstants.h; sourceTree = "<group>"; };
-		C617C91314EBA90000CC75F5 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		C617C91414EBA90000CC75F5 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		C617C91914EBAB1D00CC75F5 /* WeiboGeotag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboGeotag.h; path = WeiboSDK/Model/WeiboGeotag.h; sourceTree = "<group>"; };
 		C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboGeotag.m; path = WeiboSDK/Model/WeiboGeotag.m; sourceTree = "<group>"; };
 		C617C92114EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSDictionary+WeiboAdditions.h"; sourceTree = "<group>"; };
@@ -270,6 +268,8 @@
 		C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTActiveTextRanges.m; path = WeiboSDK/Model/WTActiveTextRanges.m; sourceTree = "<group>"; };
 		C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABActiveRange.m; sourceTree = "<group>"; };
 		C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABActiveRange.h; sourceTree = "<group>"; };
+		C6E0BC2215E8A222007BAA20 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		C6E0BC2315E8A222007BAA20 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		C6E1CD5914E5FB2E000137B9 /* WTHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTHTTPRequest.h; path = WeiboSDK/Network/WTHTTPRequest.h; sourceTree = "<group>"; };
 		C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTHTTPRequest.m; path = WeiboSDK/Network/WTHTTPRequest.m; sourceTree = "<group>"; };
 		C6E2D05F14E6BF02000D3507 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -369,8 +369,8 @@
 		C617C91214EBA90000CC75F5 /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
-				C617C91314EBA90000CC75F5 /* JSONKit.h */,
-				C617C91414EBA90000CC75F5 /* JSONKit.m */,
+				C6E0BC2215E8A222007BAA20 /* JSONKit.h */,
+				C6E0BC2315E8A222007BAA20 /* JSONKit.m */,
 			);
 			path = JSONKit;
 			sourceTree = "<group>";
@@ -712,6 +712,7 @@
 				C6094FB11557E95A0038C7D2 /* WeiboTrendStatusesStream.h in Headers */,
 				C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */,
 				C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */,
+				C6E0BC2415E8A222007BAA20 /* JSONKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,7 +759,7 @@
 		C6FC9E3914E3C3F300094A8F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = Wutian;
 			};
 			buildConfigurationList = C6FC9E3C14E3C3F300094A8F /* Build configuration list for PBXProject "Weibo" */;
@@ -839,7 +840,6 @@
 				C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */,
 				C6647D5914ED638E00422998 /* NSDictionary+WeiboAdditions.m in Sources */,
 				C6647D5B14ED638E00422998 /* WTOASingnaturer.m in Sources */,
-				C6647D5D14ED638E00422998 /* JSONKit.m in Sources */,
 				C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */,
 				C6647D6114ED638E00422998 /* NSString+URLEncoding.m in Sources */,
 				C6647D6514ED638E00422998 /* NSURL+Base.m in Sources */,
@@ -861,6 +861,7 @@
 				C6094FAE155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */,
 				C6094FB31557E95A0038C7D2 /* WeiboTrendStatusesStream.m in Sources */,
 				C61E986915A9921100C42FE5 /* WeiboEmotion.m in Sources */,
+				C6E0BC2515E8A222007BAA20 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,7 +898,6 @@
 				C6E2D08C14E7A109000D3507 /* WeiboComposition.m in Sources */,
 				C6E2D08F14E7A136000D3507 /* WeiboStatus.m in Sources */,
 				C6F317B214E7CD2200A952FE /* WeiboRequestError.m in Sources */,
-				C617C91514EBA90000CC75F5 /* JSONKit.m in Sources */,
 				C617C91B14EBAB1F00CC75F5 /* WeiboGeotag.m in Sources */,
 				C617C92314EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m in Sources */,
 				C6DE37CD14EF75AC004DAFE9 /* WeiboBaseStatus.m in Sources */,
@@ -966,6 +966,7 @@
 		C6B4DC1D14ED347C0032A8CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDKEngine/WeiboSDKEngine-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -975,6 +976,7 @@
 		C6B4DC1E14ED347C0032A8CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDKEngine/WeiboSDKEngine-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1029,6 +1031,7 @@
 		C6FC9E6114E3C3F400094A8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Weibo/Weibo-Prefix.pch";
 				INFOPLIST_FILE = "Weibo/Weibo-Info.plist";
@@ -1042,6 +1045,7 @@
 		C6FC9E6214E3C3F400094A8F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Weibo/Weibo-Prefix.pch";
 				INFOPLIST_FILE = "Weibo/Weibo-Info.plist";

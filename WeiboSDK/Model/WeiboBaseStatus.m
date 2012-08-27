@@ -47,8 +47,7 @@
     WTActiveTextRanges * ranges = [[WTActiveTextRanges alloc] initWithString:string];
     
     NSMutableAttributedString * display = [[NSMutableAttributedString alloc] initWithString:string];
-    NSColor * color = [NSColor colorWithDeviceRed:0.25 green:0.25
-                                             blue:0.25 alpha:1.0];
+    NSColor * color = [NSColor colorWithDeviceWhite:0.4 alpha:1.0];
     [display addAttribute:NSForegroundColorAttributeName 
                     value:color range:NSMakeRange(0, [display length])];
     
