@@ -23,7 +23,10 @@
 - (void)_loadOlder{
     WTCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
-    [api friendsTimelineSinceID:0 maxID:[self oldestStatusID]-1 count:100];
+    
+    WeiboStatusID oldestID = self.oldestStatusID;
+    WeiboStatusID maxID = oldestID > 0 ? (oldestID - 1) : 0;
+    [api friendsTimelineSinceID:0 maxID:maxID count:100];
 }
 - (NSString *)autosaveName{
     return [[super autosaveName] stringByAppendingString:@"timeline.scrollPosition"];
