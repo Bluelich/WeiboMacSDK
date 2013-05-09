@@ -78,7 +78,7 @@
     [self addStatuses:newStatuses withType:WeiboStatusesAddingTypePrepend];
 }
 - (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type{
-    BOOL shouldPostNotification = [self hasData];
+    BOOL shouldPostNotification = YES;//[self hasData];
     // prepend can keep scroll position at top, 
     // for some subclass that can NOT load newer, 
     // load older has a append effect,
@@ -280,6 +280,7 @@
 
 #pragma mark -
 #pragma mark Others
+
 - (void)markAtEnd{
     _flags.isAtEnd = YES;
 }

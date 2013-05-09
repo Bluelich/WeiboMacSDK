@@ -9,62 +9,48 @@
 #import "WeiboBaseStatus.h"
 #import "WTActiveTextRanges.h"
 #import "ABActiveRange.h"
+#import "WeiboLayoutCache.h"
+#import "WeiboUser.h"
 
 @implementation WeiboBaseStatus
-@synthesize createdAt, text, sid, activeRanges, displayText, user;
-@synthesize thumbPicURL, bigPicURL, midPicURL;
+@synthesize createdAt, text, sid, user;
+@synthesize thumbnailPic, originalPic, middlePic;
 @synthesize wasSeen, isComment;
+@synthesize activeRanges = _activeRanges;
+@synthesize layoutCache = _layoutCache;
+@synthesize quoted = _quoted;
+
+- (void)dealloc{
+    [text release]; text = nil;
+    [_activeRanges release]; _activeRanges = nil;
+    [user release]; user = nil;
+    [_layoutCache release], _layoutCache = nil;
+    [thumbnailPic release]; thumbnailPic = nil;
+    [middlePic release]; middlePic = nil;
+    [originalPic release]; originalPic = nil;
+    [super dealloc];
+}
 
 - (id)init{
     if (self = [super init]) {
         wasSeen = NO;
+        self.layoutCache = [[[WeiboLayoutCache alloc] init] autorelease];
     }
     return self;
 }
 - (id)_initWithDictionary:(NSDictionary *)dic{
     return [self init];
 }
-- (id)initWithDictionary:(NSDictionary *)dic asRoot:(BOOL)root{
-    WeiboBaseStatus * status = [self _initWithDictionary:dic];
-    if (root) {
-        [status _setUpDisplayText];
-    }
-    return status;
-}
-- (void)_setUpDisplayText{
-    // sub-class should implement.
-}
-
-- (void)dealloc{
-    [text release]; text = nil;
-    [activeRanges release]; activeRanges = nil;
-    [displayText release]; displayText = nil;
-    [user release]; user = nil;
-    [super dealloc];
-}
-
-- (void)setDisplayTextWithString:(NSString *)string{
-    WTActiveTextRanges * ranges = [[WTActiveTextRanges alloc] initWithString:string];
-    
-    NSMutableAttributedString * display = [[NSMutableAttributedString alloc] initWithString:string];
-    NSColor * color = [NSColor colorWithDeviceWhite:0.4 alpha:1.0];
-    [display addAttribute:NSForegroundColorAttributeName 
-                    value:color range:NSMakeRange(0, [display length])];
-    
-    for (ABFlavoredRange * range in ranges.activeRanges) {
-        NSColor * fontColor = HIGHLIGHTED_COLOR;
-        if (range.rangeFlavor == ABActiveTextRangeFlavorTwitterHashtag) {
-            fontColor = HASHTAG_COLOR;
+- (id)initWithDictionary:(NSDictionary *)dic{
+    if ([self _initWithDictionary:dic])
+    {
+        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.displayText] autorelease];
+        if (!self.quoted && self.quotedBaseStatus)
+        {
+            self.quotedBaseStatus.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.quotedBaseStatus.displayText] autorelease];
         }
-        NSDictionary * linkAttr = [NSDictionary dictionaryWithObjectsAndKeys:
-                    fontColor, NSForegroundColorAttributeName,nil];
-        [display addAttributes:linkAttr range:range.rangeValue];
     }
-    self.displayText = display;
-    [display release];
-    
-    activeRanges = [ranges.activeRanges retain];
-    [ranges release];
+    return self;
 }
 
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus{
@@ -79,6 +65,21 @@
 
 - (BOOL)isComment{
     return NO;
+}
+
+- (WeiboBaseStatus *)quotedBaseStatus
+{
+    return nil;
+}
+
+- (NSString *)displayText
+{
+    if (self.quoted)
+    {
+        return [NSString stringWithFormat:@"@%@:%@",self.user.screenName, self.text];
+    }
+    
+    return self.text;
 }
 
 @end

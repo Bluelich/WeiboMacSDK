@@ -22,9 +22,6 @@
     NSString * inReplyToScreenname;
     NSString * source;
     NSString * sourceUrl;
-    NSString * thumbnailPic;
-    NSString * middlePic;
-    NSString * originalPic;
 }
 
 @property (assign, nonatomic) BOOL truncated;
@@ -36,9 +33,6 @@
 @property (assign, nonatomic) NSString * inReplyToScreenname;
 @property (retain, nonatomic) NSString * source;
 @property (retain, nonatomic) NSString * sourceUrl;
-@property (retain, nonatomic) NSString * thumbnailPic;
-@property (retain, nonatomic) NSString * middlePic;
-@property (retain, nonatomic) NSString * originalPic;
 
 #pragma mark -
 #pragma mark Parse Methods

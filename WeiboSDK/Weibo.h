@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const WeiboAccountSetDidChangeNotification;
+
 @class WeiboAccount, WTCallback;
 
 @interface Weibo : NSObject {

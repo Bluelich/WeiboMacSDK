@@ -8,6 +8,7 @@
 
 #import "WeiboStatusStreamFilterSimpleSearchFilter.h"
 #import "WeiboBaseStatus.h"
+#import "WeiboUser.h"
 
 @implementation WeiboStatusStreamFilterSimpleSearchFilter
 @synthesize query = _query;
@@ -18,10 +19,25 @@
 }
 
 - (BOOL)validStatus:(WeiboBaseStatus *)status{
-    NSString * text = status.displayText.string;
-    if ([text rangeOfString:self.query 
+    if ([status.text rangeOfString:self.query 
                     options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return YES;
+    }
+    if ([status.user.screenName rangeOfString:self.query
+                                           options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        return YES;
+    }
+    
+    if (status.quotedBaseStatus)
+    {
+        if ([status.quotedBaseStatus.text rangeOfString:self.query
+                                               options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return YES;
+        }
+        if ([status.quotedBaseStatus.user.screenName rangeOfString:self.query
+                                                          options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return YES;
+        }
     }
     return NO;
 }

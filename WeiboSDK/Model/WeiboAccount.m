@@ -328,15 +328,17 @@
 
 #pragma mark - Cache
 - (void)pruneStatusCache{
+    NSMutableArray * keysToRemove = [NSMutableArray arrayWithCapacity:userDetailsStreamsCache.count];
     for (NSString * key in userDetailsStreamsCache) {
         WeiboStream * stream = [userDetailsStreamsCache objectForKey:key];
         if ([NSDate timeIntervalSinceReferenceDate] - stream.cacheTime > CACHE_LIVETIME) {
             if (stream.isViewing) {
                 continue;
             }
-            [userDetailsStreamsCache removeObjectForKey:key];
+            [keysToRemove addObject:key];
         }
     }
+    [userDetailsStreamsCache removeObjectsForKeys:keysToRemove];
 }
 - (void)pruneUserCache{
     for (NSString * screenname in usersByUsername) {
@@ -369,21 +371,24 @@
     if (!topStatus) {
         return NO;
     }
-    return !topStatus.wasSeen;
+    return topStatus.sid > timelineStream.viewedMostRecentID;
+    //return !topStatus.wasSeen;
 }
 - (BOOL)hasFreshMentions{
     WeiboBaseStatus * topStatus = [mentionsStream newestStatus];
     if (!topStatus) {
         return NO;
     }
-    return !topStatus.wasSeen;
+    return topStatus.sid > mentionsStream.viewedMostRecentID;
+    //return !topStatus.wasSeen;
 }
 - (BOOL)hasFreshComments{
     WeiboBaseStatus * topStatus = [commentsTimelineStream newestStatus];
     if (!topStatus) {
         return NO;
     }
-    return !topStatus.wasSeen;
+    return topStatus.sid > commentsTimelineStream.viewedMostRecentID;
+    //return !topStatus.wasSeen;
 }
 - (BOOL)hasFreshDirectMessages{
     return _notificationFlags.newDirectMessages;

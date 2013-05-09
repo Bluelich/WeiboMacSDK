@@ -13,8 +13,6 @@
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
-static BOOL shouldMakeFullDisplayText = YES;
-
 @implementation WeiboComment
 @synthesize replyToStatus, replyToComment;
 
@@ -24,14 +22,10 @@ static BOOL shouldMakeFullDisplayText = YES;
     [super dealloc];
 }
 
-+ (void)setShouldMakeFullDisplayText:(BOOL)full{
-    shouldMakeFullDisplayText = full;
-}
-
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic{
-    return [[[WeiboComment alloc] initWithDictionary:dic asRoot:YES] autorelease];
+    return [[[WeiboComment alloc] initWithDictionary:dic] autorelease];
 }
 + (WeiboComment *)commentWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -81,40 +75,38 @@ static BOOL shouldMakeFullDisplayText = YES;
 			self.user = [WeiboUser userWithDictionary:userDic];
 		}
 		NSDictionary* statusDic = [dic objectForKey:@"status"];
-		if (shouldMakeFullDisplayText && statusDic) {
-            WeiboStatus * status = [[WeiboStatus alloc] initWithDictionary:statusDic asRoot:NO];
+        WeiboStatus * status = [[WeiboStatus alloc] initWithDictionary:statusDic];
+		if (statusDic) {
 			self.replyToStatus = status;
+            self.replyToStatus.quoted = YES;
             [status release];
 		}
         NSDictionary* commentDic = [dic objectForKey:@"reply_comment"];
-        if (shouldMakeFullDisplayText && commentDic) {
-            WeiboComment * comment = [[WeiboComment alloc] initWithDictionary:commentDic asRoot:NO];
+        if (commentDic) {
+            WeiboComment * comment = [[WeiboComment alloc] initWithDictionary:commentDic];
             self.replyToComment = comment;
+            self.replyToComment.quoted = YES;
             [comment release];
-        }
-        if (replyToStatus) {
-            self.thumbPicURL = replyToStatus.thumbPicURL;
-            self.midPicURL = replyToStatus.midPicURL;
-            self.bigPicURL = replyToStatus.bigPicURL;
         }
     }
     return self;
 }
 
-- (void)_setUpDisplayText{
-    NSMutableString * string = [NSMutableString stringWithString:text];
-    if (replyToComment) {
-        [string appendFormat:@"\n\n// @%@:",replyToComment.user.name];
-        [string appendString:replyToComment.text];
-    }else if (replyToStatus) {
-        [string appendFormat:@"\n\n// @%@:",replyToStatus.user.name];
-        [string appendString:replyToStatus.text];
-    }
-    [self setDisplayTextWithString:string];
-}
-
 - (BOOL)isComment{
     return YES;
+}
+
+- (WeiboBaseStatus *)quotedBaseStatus
+{
+    if (self.replyToComment)
+    {
+        return self.replyToComment;
+    }
+    else if (self.replyToStatus)
+    {
+        return self.replyToStatus;
+    }
+    return nil;
 }
 
 @end

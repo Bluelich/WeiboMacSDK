@@ -11,6 +11,8 @@
 #import "WeiboAPI.h"
 #import "WTCallback.h"
 
+NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
+
 @implementation Weibo
 
 static Weibo * _sharedWeibo = nil;
@@ -40,7 +42,7 @@ static Weibo * _sharedWeibo = nil;
                 }
             }
         }
-        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 
+        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                  target:self 
                                                selector:@selector(heartbeat:) 
                                                userInfo:nil 
@@ -84,6 +86,7 @@ static Weibo * _sharedWeibo = nil;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSData * accountData = [NSKeyedArchiver archivedDataWithRootObject:[self accounts]];
     [defaults setObject:accountData forKey:@"accounts"];
+    [defaults synchronize];
 }
 
 - (NSArray *)accounts{
@@ -122,11 +125,15 @@ static Weibo * _sharedWeibo = nil;
     if ([aAccount isKindOfClass:[WeiboAccount class]]) {
         [accounts addObject:aAccount];
         [aAccount refreshTimelines];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification
+                                                            object:self];
     }
 }
 
 - (void)removeAccount:(WeiboAccount *)aAccount{
     [accounts removeObject:aAccount];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification
+                                                        object:self];
 }
 
 - (BOOL)containsAccount:(WeiboAccount *)aAccount{
@@ -159,9 +166,10 @@ static Weibo * _sharedWeibo = nil;
         return;
     }
     WeiboAccount * accountToMove = [[accounts objectAtIndex:fromIndex] retain];
-    [accounts removeObject:accounts];
+    [accounts removeObject:accountToMove];
     [accounts insertObject:accountToMove atIndex:toIndex];
     [accountToMove release];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification object:nil];
 }
 
 - (void)refresh{

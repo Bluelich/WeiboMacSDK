@@ -25,6 +25,7 @@
 @property (retain, nonatomic) NSMutableArray * statuses;
 @property (assign) NSUInteger savedCellIndex;
 @property (assign) double savedRelativeOffset;
+@property (assign) WeiboStatusID viewedMostRecentID;
 @property (assign, nonatomic) id<WeiboStreamDelegate> delegate;
 @property (assign, nonatomic) BOOL isViewing;
 

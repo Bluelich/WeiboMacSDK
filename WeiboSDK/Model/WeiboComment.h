@@ -19,8 +19,6 @@
 @property (readwrite,retain) WeiboStatus * replyToStatus;
 @property (readwrite,retain) WeiboComment * replyToComment;
 
-
-+ (void)setShouldMakeFullDisplayText:(BOOL)full;
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic;

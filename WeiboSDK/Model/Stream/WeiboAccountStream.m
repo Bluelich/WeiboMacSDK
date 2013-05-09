@@ -14,6 +14,12 @@
 @implementation WeiboAccountStream
 @synthesize account;
 
+- (void)dealloc
+{
+    [account release], account = nil;
+    [super dealloc];
+}
+
 - (WeiboBaseStatus *)newestStatusThatIsNotMine{
     for (WeiboBaseStatus * status in statuses) {
         if (status.user.userID != self.account.user.userID) {

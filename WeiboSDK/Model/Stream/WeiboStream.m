@@ -11,6 +11,7 @@
 @implementation WeiboStream
 @synthesize cacheTime, statuses, savedCellIndex, savedRelativeOffset;
 @synthesize delegate = _delegate, isViewing;
+@synthesize viewedMostRecentID = _viewedMostRecentID;
 
 - (BOOL)canLoadNewer{
     return YES;
@@ -45,6 +46,35 @@
 }
 - (BOOL)isStreamEnded{
     return NO;
+}
+
+- (NSString *)viewedMostRecentIDKey
+{
+    NSString * autosaveName = [self autosaveName];
+    return [autosaveName stringByAppendingString:@"/viewedMostRecentID"];
+}
+- (void)setViewedMostRecentID:(WeiboStatusID)viewedMostRecentID
+{
+    _viewedMostRecentID = viewedMostRecentID;
+    NSString * key = [self viewedMostRecentIDKey];
+    if (key)
+    {
+        NSNumber * value = [NSNumber numberWithLongLong:viewedMostRecentID];
+        [[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
+    }
+}
+- (WeiboStatusID)viewedMostRecentID
+{
+    if (_viewedMostRecentID == 0)
+    {
+        NSString * key = [self viewedMostRecentIDKey];
+        if (key)
+        {
+            NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];
+            _viewedMostRecentID = [[ud objectForKey:key] longLongValue];
+        }
+    }
+    return _viewedMostRecentID;
 }
 
 @end

@@ -17,16 +17,13 @@
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;
 @synthesize geo, favorited, inReplyToUserID, source, sourceUrl;
-@synthesize thumbnailPic, middlePic, originalPic, inReplyToScreenname;
+@synthesize inReplyToScreenname;
 
 - (void)dealloc{
     [retweetedStatus release]; retweetedStatus = nil;
     [geo release]; geo = nil;
     [source release]; source = nil;
     [sourceUrl release]; sourceUrl = nil;
-    [thumbnailPic release]; thumbnailPic = nil;
-    [middlePic release]; middlePic = nil;
-    [originalPic release]; originalPic = nil;
     [inReplyToScreenname release]; inReplyToScreenname = nil;
     [super dealloc];
 }
@@ -34,7 +31,7 @@
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboStatus *)statusWithDictionary:(NSDictionary *)dic{
-    return [[[[self class] alloc] initWithDictionary:dic asRoot:YES] autorelease];
+    return [[[[self class] alloc] initWithDictionary:dic] autorelease];
 }
 + (WeiboStatus *)statusWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -137,27 +134,16 @@
 		if (retweetedStatusDic) {
             WeiboStatus * retweeted = [[WeiboStatus alloc] _initWithDictionary:retweetedStatusDic];
 			self.retweetedStatus = retweeted;
+            self.retweetedStatus.quoted = YES;
             [retweeted release];
 		}
-        
-        WeiboStatus * statusThatHasImage = self;
-        if (retweetedStatus) {
-            statusThatHasImage = retweetedStatus;
-        }
-        self.thumbPicURL = statusThatHasImage.thumbnailPic;
-        self.midPicURL = statusThatHasImage.middlePic;
-        self.bigPicURL = statusThatHasImage.originalPic;
     }
     return self;
 }
 
-- (void)_setUpDisplayText{
-    NSMutableString * string = [NSMutableString stringWithString:text];
-    if (retweetedStatus) {
-        [string appendFormat:@"\n\n// @%@:",retweetedStatus.user.name];
-        [string appendString:retweetedStatus.text];
-    }
-    [self setDisplayTextWithString:string];
+- (WeiboBaseStatus *)quotedBaseStatus
+{
+    return self.retweetedStatus;
 }
 
 @end

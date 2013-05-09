@@ -21,8 +21,8 @@
     return statuses;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic asRoot:(BOOL)root{
-    if (self = [super initWithDictionary:[dic objectForKey:@"status"] asRoot:YES]) {
+- (id)initWithDictionary:(NSDictionary *)dic{
+    if (self = [super initWithDictionary:[dic objectForKey:@"status"]]) {
         self.favorited = YES;
     }
     return self;

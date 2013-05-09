@@ -98,6 +98,7 @@ multipartFormData:(NSDictionary *)parts
     }else {
         [request startAsynchronous];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
 }
 - (void)v1_request:(NSString *)partialUrl 
          method:(NSString *)method parameters:(NSDictionary *)parameters
@@ -150,13 +151,15 @@ multipartFormData:(NSDictionary *)parts
 - (void)handleRequestError:(WeiboRequestError *)error{
     LogIt([error description]);
     NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-    if (error.code == WeiboErrorCodeTokenExpired) {
+    if (error.code == WeiboErrorCodeTokenExpired ||
+        error.code == WeiboErrorCodeTokenInvalid) {
         authenticateWithAccount.tokenExpired = YES;
         [nc postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
     }
 }
 
 - (void)_responseRecived:(id)responseValue callback:(WTCallback *)callback{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
     if ([responseValue isKindOfClass:[WeiboRequestError class]]) {
         [self handleRequestError:responseValue];
         [callback dissociateTarget];
@@ -204,8 +207,6 @@ multipartFormData:(NSDictionary *)parts
     [WeiboStatus parseStatusesJSON:response callback:responseCallback];
 }
 - (void)commentsResponse:(id)response info:(id)info{
-    BOOL fullText = info?![info boolValue]:YES;
-    [WeiboComment setShouldMakeFullDisplayText:fullText];
     [WeiboComment parseCommentsJSON:response callback:responseCallback];
 }
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
