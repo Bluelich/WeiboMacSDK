@@ -83,7 +83,7 @@
     // for some subclass that can NOT load newer, 
     // load older has a append effect,
     // so we should force to prepend if there is no data yet.
-    BOOL shouldForceToPrepend = ![self hasData];
+    BOOL shouldForceToAppend = ![self hasData];
     
     switch (type) {
         case WeiboStatusesAddingTypeAppend:{
@@ -107,7 +107,7 @@
             break;
     }
     if ([_delegate respondsToSelector:@selector(statusesStream:didReciveNewStatuses:withAddingType:)]) {
-        [_delegate statusesStream:self didReciveNewStatuses:newStatuses withAddingType:shouldForceToPrepend?WeiboStatusesAddingTypePrepend:type];
+        [_delegate statusesStream:self didReciveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
     }
     
     if (shouldPostNotification) {
@@ -135,11 +135,7 @@
     }
 }
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus{
-    NSInteger index = [statuses binarySearch:theStatus 
-                                  usingBlock:^NSComparisonResult(id key, id object) {
-                                      return [object compare:key];
-                                  }];
-    return index;
+    return [statuses indexOfObject:theStatus];
 }
 - (NSUInteger)statuseIndexByID:(WeiboStatusID)theID{
     WeiboBaseStatus * temp = [[WeiboBaseStatus alloc] init];
@@ -149,7 +145,23 @@
     return index;
 }
 - (WeiboBaseStatus *)newestStatus{
-    return [[self statuses] firstObject];
+    if (self.statuses.count > 1)
+    {
+        // Workaround for users that has a weibo stick on top.
+        
+        WeiboBaseStatus * first = self.statuses[0];
+        WeiboBaseStatus * second = self.statuses[1];
+        
+        if (first.createdAt >= second.createdAt)
+        {
+            return first;
+        }
+        return second;
+    }
+    else
+    {
+        return [[self statuses] firstObject]; 
+    }
 }
 - (WeiboBaseStatus *)oldestStatus{
     return [[self statuses] lastObject];
