@@ -66,7 +66,7 @@
 - (void)followUsername:(NSString *)screenname;
 - (void)unfollowUserID:(WeiboUserID)uid;
 - (void)unfollowUsername:(NSString *)screenname;
-- (void)lookupRelationships:(WeiboUserID)tuid __attribute__((deprecated));
+- (void)lookupRelationships:(WeiboUserID)tuid;
 - (void)userID:(WeiboUserID)suid followsUserID:(WeiboUserID)tuid;
 - (void)friendshipForSourceUserID:(WeiboUserID)suid targetUserID:(WeiboUserID)tuid;
 - (void)friendshipForSourceUsername:(NSString *)sscreenname targetUsername:(NSString *)tscreenname;

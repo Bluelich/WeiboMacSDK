@@ -444,9 +444,9 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)userID:(WeiboUserID)suid followsUserID:(WeiboUserID)tuid{
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSString stringWithFormat:@"%lld",suid],@"user_a",
-                             [NSString stringWithFormat:@"%lld",tuid],@"user_b", nil];
-    [self GET:@"friendships/exists.json" parameters:params callback:[self friendshipExistsCallback]];
+                             [NSString stringWithFormat:@"%lld",suid],@"source_id",
+                             [NSString stringWithFormat:@"%lld",tuid],@"target_id", nil];
+    [self GET:@"friendships/show.json" parameters:params callback:[self friendshipExistsCallback]];
 }
 - (void)friendshipForSourceUserID:(WeiboUserID)suid targetUserID:(WeiboUserID)tuid{
     WeiboUnimplementedMethod
@@ -459,7 +459,7 @@ multipartFormData:(NSDictionary *)parts
 }
 - (void)friendshipExists:(id)response info:(id)info{
     NSDictionary * result = [response objectFromJSONString];
-    [responseCallback invoke:[result objectForKey:@"friends"]];
+    [responseCallback invoke:[result objectForKey:@"target"]];
 }
 #pragma mark -
 #pragma mark Direct Message
