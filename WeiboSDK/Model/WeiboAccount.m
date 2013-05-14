@@ -84,15 +84,13 @@
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [self init]) {
         username = [[decoder decodeObjectForKey:@"username"] retain];
-        //self.oAuthToken = [decoder decodeObjectForKey:@"oauth-token"];
-        //self.oAuthTokenSecret = [SSKeychain passwordForService:[self keychainService] account:self.oAuthToken];
         self.oAuth2Token = [SSKeychain passwordForService:[self keychainService] 
                                                        account:self.username];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
-        [self verifyCredentials:nil];
+        [self verifyCredentials:nil]; 
     }
     return self;
 }
@@ -341,15 +339,17 @@
     [userDetailsStreamsCache removeObjectsForKeys:keysToRemove];
 }
 - (void)pruneUserCache{
+    NSMutableArray * keysToRemove = [NSMutableArray array];
     for (NSString * screenname in usersByUsername) {
         WeiboUser * theUser = [usersByUsername objectForKey:screenname];
         if ([NSDate timeIntervalSinceReferenceDate] - theUser.cacheTime > CACHE_LIVETIME) {
             if (theUser.isViewing) {
                 continue;
             }
-            [usersByUsername removeObjectForKey:screenname];
+            [keysToRemove addObject:screenname];
         }
     }
+    [usersByUsername removeObjectsForKeys:keysToRemove];
 }
 - (void)cacheUser:(WeiboUser *)newUser{
     if ([newUser isKindOfClass:[WeiboUser class]]) {
