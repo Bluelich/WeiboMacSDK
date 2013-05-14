@@ -31,8 +31,18 @@
     if ((self = [super initWithURL:newURL])) {
         [self setDelegate:self];
         [self setValidatesSecureCertificate:NO];
+        [self setDefaultResponseEncoding:NSUTF8StringEncoding];
     }
     return self;
+}
+
+- (NSStringEncoding)responseEncoding
+{
+    if (!responseEncoding)
+    {
+        return NSUTF8StringEncoding;
+    }
+    return responseEncoding;
 }
 
 - (void)prepareAuthrize{
