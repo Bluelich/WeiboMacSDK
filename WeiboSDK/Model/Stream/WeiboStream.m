@@ -10,7 +10,6 @@
 
 @implementation WeiboStream
 @synthesize cacheTime, statuses, savedCellIndex, savedRelativeOffset;
-@synthesize isViewing;
 @synthesize viewedMostRecentID = _viewedMostRecentID;
 
 - (BOOL)canLoadNewer{

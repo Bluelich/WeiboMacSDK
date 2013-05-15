@@ -12,19 +12,24 @@
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
 
+@interface WeiboBaseStatus ()
+
+@property (nonatomic, retain) NSMutableDictionary * layoutCaches;
+
+@end
+
 @implementation WeiboBaseStatus
 @synthesize createdAt, text, sid, user;
 @synthesize thumbnailPic, originalPic, middlePic;
 @synthesize wasSeen, isComment;
 @synthesize activeRanges = _activeRanges;
-@synthesize layoutCache = _layoutCache;
 @synthesize quoted = _quoted;
 
 - (void)dealloc{
     [text release]; text = nil;
     [_activeRanges release]; _activeRanges = nil;
     [user release]; user = nil;
-    [_layoutCache release], _layoutCache = nil;
+    [_layoutCaches release], _layoutCaches = nil;
     [thumbnailPic release]; thumbnailPic = nil;
     [middlePic release]; middlePic = nil;
     [originalPic release]; originalPic = nil;
@@ -34,7 +39,7 @@
 - (id)init{
     if (self = [super init]) {
         wasSeen = NO;
-        self.layoutCache = [[[WeiboLayoutCache alloc] init] autorelease];
+        self.layoutCaches = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -80,6 +85,47 @@
     }
     
     return self.text;
+}
+
+- (WeiboLayoutCache *)layoutCacheWithIdentifier:(NSString *)identifier
+{
+    if (!identifier) return nil;
+    
+    WeiboLayoutCache * cache = self.layoutCaches[identifier];
+    if (!cache)
+    {
+        cache = [[[WeiboLayoutCache alloc] init] autorelease];
+        self.layoutCaches[identifier] = cache;
+    }
+    return cache;
+}
+
+- (void)removeLayoutCacheWithIdentifier:(NSString *)identifier
+{
+    if (identifier)
+    {
+        [self.layoutCaches removeObjectForKey:identifier];
+    }
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (self == object)
+    {
+        return YES;
+    }
+    
+    if (![object isKindOfClass:[WeiboBaseStatus class]])
+    {
+        return NO;
+    }
+    
+    if (self.sid == [object sid])
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

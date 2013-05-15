@@ -13,7 +13,6 @@
 
 @interface WeiboStream : NSObject {
     NSTimeInterval cacheTime;
-    BOOL isViewing;
     NSUInteger savedCellIndex;
     double savedRelativeOffset;
 }
@@ -23,7 +22,6 @@
 @property (assign) NSUInteger savedCellIndex;
 @property (assign) double savedRelativeOffset;
 @property (assign) WeiboStatusID viewedMostRecentID;
-@property (assign, nonatomic) BOOL isViewing;
 
 - (BOOL)canLoadNewer;
 - (void)loadNewer;

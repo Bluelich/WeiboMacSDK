@@ -13,6 +13,9 @@
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
 
+NSString * const WeiboObjectWithIdentifierWillDeallocNotification = @"WeiboObjectWithIdentifierWillDeallocNotification";
+NSString * const WeiboObjectUserInfoUniqueIdentifierKey = @"WeiboObjectUserInfoUniqueIdentifierKey";
+
 @implementation Weibo
 
 static Weibo * _sharedWeibo = nil;

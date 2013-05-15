@@ -33,7 +33,6 @@
     BOOL following;
     BOOL followMe;
     BOOL verified;
-    BOOL isViewing;
     NSTimeInterval cacheTime;
 }
 
@@ -59,7 +58,6 @@
 @property (assign, readwrite) BOOL followMe;
 @property (assign, readwrite) BOOL verified;
 @property (assign, nonatomic) NSTimeInterval cacheTime;
-@property (assign, nonatomic) BOOL isViewing;
 
 #pragma mark -
 #pragma mark Parse Methods

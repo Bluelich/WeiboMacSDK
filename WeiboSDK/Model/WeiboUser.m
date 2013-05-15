@@ -16,7 +16,7 @@
 @synthesize userID, screenName, name, province, city, location, description;
 @synthesize url, profileImageUrl, domain, gender, followersCount, friendsCount;
 @synthesize statusesCount, favouritesCount, createAt, following, verified, status;
-@synthesize cacheTime, isViewing, followMe, profileLargeImageUrl;
+@synthesize cacheTime, followMe, profileLargeImageUrl;
 
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [super init]) {

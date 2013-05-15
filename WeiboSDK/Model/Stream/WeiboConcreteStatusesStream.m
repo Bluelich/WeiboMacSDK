@@ -53,6 +53,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     if (self = [super init]) {
         NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(deleteStatusNotification:) name:kWeiboStatusDeleteNotification object:nil];
+        [center addObserver:self selector:@selector(weiboObjectWillDeallocNotification:) name:WeiboObjectWithIdentifierWillDeallocNotification object:nil];
     }
     return self;
 }
@@ -305,6 +306,20 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 - (void)deleteStatusNotification:(NSNotification *)notification{
     WeiboBaseStatus * status = notification.object;
     [self _deleteStatus:status];
+}
+- (void)weiboObjectWillDeallocNotification:(NSNotification *)notification
+{
+    NSString * identifier = notification.userInfo[WeiboObjectUserInfoUniqueIdentifierKey];
+    
+    if (!identifier)
+    {
+        return;
+    }
+    
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        [status removeLayoutCacheWithIdentifier:identifier];
+    }
 }
 
 - (void)postStatusesChangedNotification{

@@ -41,9 +41,10 @@
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;
 
-@property (nonatomic, retain) WeiboLayoutCache * layoutCache;
-
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus;
+
+- (WeiboLayoutCache *)layoutCacheWithIdentifier:(NSString *)identifier;
+- (void)removeLayoutCacheWithIdentifier:(NSString *)identifier;
 
 @end

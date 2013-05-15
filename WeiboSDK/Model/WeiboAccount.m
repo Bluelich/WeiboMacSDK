@@ -330,9 +330,6 @@
     for (NSString * key in userDetailsStreamsCache) {
         WeiboStream * stream = [userDetailsStreamsCache objectForKey:key];
         if ([NSDate timeIntervalSinceReferenceDate] - stream.cacheTime > CACHE_LIVETIME) {
-            if (stream.isViewing) {
-                continue;
-            }
             [keysToRemove addObject:key];
         }
     }
@@ -343,9 +340,6 @@
     for (NSString * screenname in usersByUsername) {
         WeiboUser * theUser = [usersByUsername objectForKey:screenname];
         if ([NSDate timeIntervalSinceReferenceDate] - theUser.cacheTime > CACHE_LIVETIME) {
-            if (theUser.isViewing) {
-                continue;
-            }
             [keysToRemove addObject:screenname];
         }
     }
