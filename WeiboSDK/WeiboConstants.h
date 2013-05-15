@@ -41,11 +41,12 @@ typedef void (^WTObjectBlock)(id object);
 #define MENTION_REGEX @"@([\\x{4e00}-\\x{9fa5}A-Za-z0-9_\\-]+)"
 #define HASHTAG_REGEX @"#(.+?)#"
 
-typedef enum {
+enum {
 	WeiboStatusesAddingTypePrepend,
     WeiboStatusesAddingTypeAppend,
     WeiboStatusesAddingTypeGap
-} WeiboStatusesAddingType;
+};
+typedef NSInteger WeiboStatusesAddingType;
 
 enum {
     WeiboNotificationNone                   = 0,

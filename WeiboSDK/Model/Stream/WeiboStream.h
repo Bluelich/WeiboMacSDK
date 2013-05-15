@@ -11,14 +11,11 @@
 
 @class WeiboRequestError, WeiboBaseStatus;
 
-@protocol WeiboStreamDelegate;
-
 @interface WeiboStream : NSObject {
     NSTimeInterval cacheTime;
     BOOL isViewing;
     NSUInteger savedCellIndex;
     double savedRelativeOffset;
-    id<WeiboStreamDelegate> _delegate;
 }
 
 @property (assign, nonatomic) NSTimeInterval cacheTime;
@@ -26,7 +23,6 @@
 @property (assign) NSUInteger savedCellIndex;
 @property (assign) double savedRelativeOffset;
 @property (assign) WeiboStatusID viewedMostRecentID;
-@property (assign, nonatomic) id<WeiboStreamDelegate> delegate;
 @property (assign, nonatomic) BOOL isViewing;
 
 - (BOOL)canLoadNewer;
@@ -41,10 +37,4 @@
 - (NSUInteger)statuseIndexByID:(WeiboStatusID)theID;
 - (BOOL)isStreamEnded;
 
-@end
-
-@protocol WeiboStreamDelegate <NSObject>
-- (void)statusesStream:(WeiboStream *)stream didReciveNewStatuses:(NSArray *)status withAddingType:(WeiboStatusesAddingType)type;
-- (void)statusesStream:(WeiboStream *)stream didReciveRequestError:(WeiboRequestError *)error;
-- (void)statusesStream:(WeiboStream *)stream didRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index;
 @end

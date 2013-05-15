@@ -14,6 +14,16 @@
 #import "WTCallback.h"
 #import "NSArray+WeiboAdditions.h"
 
+NSString * const WeiboStatusStreamDidReciveNewStatusesNotificationKey = @"WeiboStatusStreamDidReciveNewStatusesNotificationKey";
+NSString * const WeiboStatusStreamDidReciveRequestErrorNotificationKey = @"WeiboStatusStreamDidReciveRequestErrorNotificationKey";
+NSString * const WeiboStatusStreamDidRemoveStatusNotificationKey = @"WeiboStatusStreamDidRemoveStatusNotificationKey";
+
+NSString * const WeiboStatusStreamNotificationStatusesArrayKey = @"WeiboStatusStreamNotificationStatusesArrayKey";
+NSString * const WeiboStatusStreamNotificationRequestErrorKey = @"WeiboStatusStreamNotificationRequestErrorKey";
+NSString * const WeiboStatusStreamNotificationBaseStatusKey = @"WeiboStatusStreamNotificationBaseStatusKey";
+NSString * const WeiboStatusStreamNotificationStatusIndexKey = @"WeiboStatusStreamNotificationStatusIndexKey";
+NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStreamNotificationAddingTypeKey";
+
 @interface WeiboConcreteStatusesStream ()
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus;
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus;
@@ -106,9 +116,7 @@
         default:
             break;
     }
-    if ([_delegate respondsToSelector:@selector(statusesStream:didReciveNewStatuses:withAddingType:)]) {
-        [_delegate statusesStream:self didReciveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
-    }
+    [self noticeDidReciveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
     
     if (shouldPostNotification) {
         [self postStatusesChangedNotification];
@@ -128,11 +136,8 @@
     }
     [theStatus retain];
     [[self statuses] removeObjectAtIndex:index];
-    // NOT SURE HERE.
-    // Is removeObject:theStatus enough ?
-    if ([_delegate respondsToSelector:@selector(statusesStream:didRemoveStatus:atIndex:)]) {
-        [_delegate statusesStream:self didRemoveStatus:[theStatus autorelease] atIndex:index];
-    }
+    
+    [self noticeDidRemoveStatus:[theStatus autorelease] atIndex:index];
 }
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus{
     return [statuses indexOfObject:theStatus];
@@ -243,9 +248,7 @@
 
 - (void)statusesResponse:(id)response couldBeGap:(BOOL)beGap isFromFillingInGap:(BOOL)fillingGap{
     if ([response isKindOfClass:[WeiboRequestError class]]) {
-        if ([_delegate respondsToSelector:@selector(statusesStream:didReciveRequestError:)]) {
-            [_delegate statusesStream:self didReciveRequestError:response];
-        }
+        [self noticeDidReciveRequestError:response];
         return;
     }
     if (fillingGap) {
@@ -299,13 +302,32 @@
 - (void)_postError:(WeiboRequestError *)error{
     
 }
+- (void)deleteStatusNotification:(NSNotification *)notification{
+    WeiboBaseStatus * status = notification.object;
+    [self _deleteStatus:status];
+}
+
 - (void)postStatusesChangedNotification{
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:kWeiboStreamStatusChangedNotification object:self];
 }
-- (void)deleteStatusNotification:(NSNotification *)notification{
-    WeiboBaseStatus * status = notification.object;
-    [self _deleteStatus:status];
+
+- (void)noticeDidReciveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
+{
+    NSDictionary * userInfo = @{WeiboStatusStreamNotificationStatusesArrayKey : newStatuses,
+                                WeiboStatusStreamNotificationAddingTypeKey : [NSNumber numberWithInteger:type]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReciveNewStatusesNotificationKey object:self userInfo:userInfo];
+}
+- (void)noticeDidReciveRequestError:(WeiboRequestError *)error
+{
+    NSDictionary * userInfo = @{WeiboStatusStreamNotificationRequestErrorKey : error};
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReciveRequestErrorNotificationKey object:self userInfo:userInfo];
+}
+- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index
+{
+    NSDictionary * userInfo = @{WeiboStatusStreamNotificationBaseStatusKey : status,
+                                WeiboStatusStreamNotificationStatusIndexKey : [NSNumber numberWithInteger:index]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidRemoveStatusNotificationKey object:self userInfo:userInfo];
 }
 
 @end

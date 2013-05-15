@@ -9,6 +9,16 @@
 #import "WeiboStream.h"
 #import "WeiboConstants.h"
 
+extern NSString * const WeiboStatusStreamDidReciveNewStatusesNotificationKey;
+extern NSString * const WeiboStatusStreamDidReciveRequestErrorNotificationKey;
+extern NSString * const WeiboStatusStreamDidRemoveStatusNotificationKey;
+
+extern NSString * const WeiboStatusStreamNotificationStatusesArrayKey;
+extern NSString * const WeiboStatusStreamNotificationRequestErrorKey;
+extern NSString * const WeiboStatusStreamNotificationBaseStatusKey;
+extern NSString * const WeiboStatusStreamNotificationStatusIndexKey;
+extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
+
 @class WeiboBaseStatus, WTCallback;
 
 @interface WeiboConcreteStatusesStream : WeiboStream {
