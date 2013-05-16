@@ -14,7 +14,6 @@
 
 @interface WeiboBaseStatus ()
 
-@property (nonatomic, retain) NSMutableDictionary * layoutCaches;
 
 @end
 
