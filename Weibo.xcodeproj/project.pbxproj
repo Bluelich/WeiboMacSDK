@@ -60,7 +60,6 @@
 		C6647D7314ED638E00422998 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17E14E6661A0033CA45 /* OARequestParameter.m */; };
 		C6647D7B14ED638E00422998 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908E14E4E14C001DE9F5 /* RegexKitLite.m */; };
 		C6647D7E14ED638E00422998 /* Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909114E4EE29001DE9F5 /* Weibo.m */; };
-		C6647D8114ED638E00422998 /* WeiboSDKEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B4DC1A14ED347C0032A8CF /* WeiboSDKEngine.m */; };
 		C6653D8E1556715800350990 /* WeiboFavoritesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6653D8A15566B0600350990 /* WeiboFavoritesStream.m */; };
 		C6653D91155686A000350990 /* WeiboFavoriteStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = C6653D8F1556869D00350990 /* WeiboFavoriteStatus.h */; };
 		C6653D93155686A000350990 /* WeiboFavoriteStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6653D901556869E00350990 /* WeiboFavoriteStatus.m */; };
@@ -173,10 +172,8 @@
 		C67ED9AB1501B0E80059AF71 /* WeiboComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboComment.h; path = WeiboSDK/Model/WeiboComment.h; sourceTree = "<group>"; };
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
 		C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
-		C6B4DC1414ED347C0032A8CF /* libWeiboSDKEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDKEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6B4DC1814ED347C0032A8CF /* WeiboSDKEngine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDKEngine-Prefix.pch"; sourceTree = "<group>"; };
-		C6B4DC1914ED347C0032A8CF /* WeiboSDKEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiboSDKEngine.h; sourceTree = "<group>"; };
-		C6B4DC1A14ED347C0032A8CF /* WeiboSDKEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeiboSDKEngine.m; sourceTree = "<group>"; };
+        C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
+		C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B8C52B1514DC1D00935AC5 /* WTAutoCompleteResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTAutoCompleteResultItem.h; path = WeiboSDK/Model/Autocomplete/WTAutoCompleteResultItem.h; sourceTree = "<group>"; };
 		C6B8C5301514DC7200935AC5 /* WeiboAutocompleteResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboAutocompleteResultItem.h; path = WeiboSDK/Model/Autocomplete/WeiboAutocompleteResultItem.h; sourceTree = "<group>"; };
 		C6B8C5311514DC7200935AC5 /* WeiboAutocompleteResultItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboAutocompleteResultItem.m; path = WeiboSDK/Model/Autocomplete/WeiboAutocompleteResultItem.m; sourceTree = "<group>"; };
@@ -379,22 +376,13 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
-		C6B4DC1614ED347C0032A8CF /* WeiboSDKEngine */ = {
-			isa = PBXGroup;
-			children = (
-				C6B4DC1914ED347C0032A8CF /* WeiboSDKEngine.h */,
-				C6B4DC1A14ED347C0032A8CF /* WeiboSDKEngine.m */,
-				C6B4DC1714ED347C0032A8CF /* Supporting Files */,
-			);
-			path = WeiboSDKEngine;
-			sourceTree = "<group>";
-		};
 		C6B4DC1714ED347C0032A8CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C6B4DC1814ED347C0032A8CF /* WeiboSDKEngine-Prefix.pch */,
+                C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			path = WeiboSDK;
 			sourceTree = "<group>";
 		};
 		C6B8C5271514DB0900935AC5 /* AutocompleteDB */ = {
@@ -604,7 +592,6 @@
 			children = (
 				C6011AF9151475D500A0A49C /* README.md */,
 				C6FC9E6314E3C40200094A8F /* WeiboSDK */,
-				C6B4DC1614ED347C0032A8CF /* WeiboSDKEngine */,
 				C6FC9E4514E3C3F400094A8F /* Frameworks */,
 				C6FC9E4314E3C3F400094A8F /* Products */,
 			);
@@ -613,7 +600,7 @@
 		C6FC9E4314E3C3F400094A8F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C6B4DC1414ED347C0032A8CF /* libWeiboSDKEngine.a */,
+				C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -646,6 +633,7 @@
 		C6FC9E6314E3C40200094A8F /* WeiboSDK */ = {
 			isa = PBXGroup;
 			children = (
+				C6B4DC1714ED347C0032A8CF /* Supporting Files */,
 				C6E1CD5414E5FADF000137B9 /* Network */,
 				C6DB909B14E4F07D001DE9F5 /* Support */,
 				C6DB909A14E4EF52001DE9F5 /* API */,
@@ -695,9 +683,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C6B4DC1314ED347C0032A8CF /* WeiboSDKEngine */ = {
+		C6B4DC1314ED347C0032A8CF /* WeiboSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDKEngine" */;
+			buildConfigurationList = C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */;
 			buildPhases = (
 				C6B4DC1014ED347C0032A8CF /* Sources */,
 				C6B4DC1114ED347C0032A8CF /* Frameworks */,
@@ -707,9 +695,9 @@
 			);
 			dependencies = (
 			);
-			name = WeiboSDKEngine;
+			name = WeiboSDK;
 			productName = WeiboSDKEngine;
-			productReference = C6B4DC1414ED347C0032A8CF /* libWeiboSDKEngine.a */;
+			productReference = C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -733,7 +721,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C6B4DC1314ED347C0032A8CF /* WeiboSDKEngine */,
+				C6B4DC1314ED347C0032A8CF /* WeiboSDK */,
 			);
 		};
 /* End PBXProject section */
@@ -796,7 +784,6 @@
 				C6647D7B14ED638E00422998 /* RegexKitLite.m in Sources */,
 				C6647D7E14ED638E00422998 /* Weibo.m in Sources */,
 				C6053FEC14F382E2003A581D /* SSKeychain.m in Sources */,
-				C6647D8114ED638E00422998 /* WeiboSDKEngine.m in Sources */,
 				C6DE37D814EF85BB004DAFE9 /* ABActiveRange.m in Sources */,
 				C67ED9AF1501B0E80059AF71 /* WeiboComment.m in Sources */,
 				C6011B17151484BE00A0A49C /* LocalAutocompleteDB.m in Sources */,
@@ -829,7 +816,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKEngine/WeiboSDKEngine-Prefix.pch";
+				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -839,7 +826,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKEngine/WeiboSDKEngine-Prefix.pch";
+				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -902,7 +889,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDKEngine" */ = {
+		C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C6B4DC1D14ED347C0032A8CF /* Debug */,

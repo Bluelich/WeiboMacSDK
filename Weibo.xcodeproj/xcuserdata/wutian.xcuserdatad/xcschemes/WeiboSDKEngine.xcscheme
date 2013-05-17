@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C6B4DC1314ED347C0032A8CF"
-               BuildableName = "libWeiboSDKEngine.a"
-               BlueprintName = "WeiboSDKEngine"
+               BuildableName = "libWeiboSDK.a"
+               BlueprintName = "WeiboSDK"
                ReferencedContainer = "container:Weibo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
