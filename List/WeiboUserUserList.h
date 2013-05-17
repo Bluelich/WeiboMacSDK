@@ -10,15 +10,18 @@
 #import "WeiboUser.h"
 #import "WeiboAccount.h"
 
+extern NSString * const WeiboUserUserListDidAddUsersNotification;
+extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey;
+
 @interface WeiboUserUserList : WeiboUserList
 
-@property (nonatomic, retain, readonly) NSString * cursor;
+@property (nonatomic, retain, readonly) WeiboUserID cursor;
 @property (nonatomic, retain) WeiboUser * user;
 @property (nonatomic, retain) WeiboAccount * account;
 
 - (void)markAtEnd;
-- (void)didAddUsers:(NSArray *)users;
+- (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend;
 
-- (WTCallback *)receiveUsersCallback;
+- (WTCallback *)usersListCallbackWithCursor:(WeiboUserID)cursor;
 
 @end

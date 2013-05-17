@@ -7,7 +7,15 @@
 //
 
 #import "WeiboUserRelationshipUserList.h"
+#import "LocalAutocompleteDB.h"
 
 @implementation WeiboUserRelationshipUserList
+
+- (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend
+{
+    [super didAddUsers:users prepend:prepend];
+    
+    [[LocalAutocompleteDB sharedAutocompleteDB] addUsers:users];
+}
 
 @end

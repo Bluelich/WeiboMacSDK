@@ -27,4 +27,11 @@
 - (void)friendshipForSourceUserID:(WeiboUserID)suid targetUserID:(WeiboUserID)tuid;
 - (void)friendshipForSourceUsername:(NSString *)sscreenname targetUsername:(NSString *)tscreenname;
 
+#pragma mark -
+#pragma mark User Lists
+- (void)followersForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor;
+- (void)followersForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor;
+- (void)friendsForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor;
+- (void)friendsForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor;
+
 @end

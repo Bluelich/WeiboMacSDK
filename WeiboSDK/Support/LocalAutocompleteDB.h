@@ -44,6 +44,7 @@
 #pragma mark - 
 #pragma mark Data Access
 - (void)addUser:(WeiboUser *)user;
+- (void)addUsers:(NSArray *)users;
 - (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url;
 - (void)prioritizeUsername:(NSString *)screenname;
 - (void)assimilateFromStatuses:(NSArray *)statuses;

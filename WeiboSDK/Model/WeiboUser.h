@@ -64,6 +64,7 @@
 + (WeiboUser *)userWithDictionary:(NSDictionary *)dic;
 + (WeiboUser *)userWithJSON:(NSString *)json;
 + (NSArray *)usersWithJSON:(NSString *)json;
++ (NSArray *)usersWithDictionaries:(NSArray *)array;
 + (void)parseUserJSON:(NSString *)json callback:(WTCallback *)callback;
 + (void)parseUsersJSON:(NSString *)json callback:(WTCallback *)callback;
 + (void)parseUserJSON:(NSString *)json onComplete:(WTObjectBlock)block;

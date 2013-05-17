@@ -94,6 +94,10 @@
 }
 + (NSArray *)usersWithJSON:(NSString *)json{
     NSArray * dictionaries = [json objectFromJSONString];
+    return [self usersWithDictionaries:dictionaries];
+}
++ (NSArray *)usersWithDictionaries:(NSArray *)dictionaries
+{
     NSMutableArray * users = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries) {
         WeiboUser * user = [WeiboUser userWithDictionary:dic];
@@ -167,6 +171,19 @@
         }
     }
     return self;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (self == object)
+    {
+        return YES;
+    }
+    else if (![object isKindOfClass:[self class]])
+    {
+        return NO;
+    }
+    return ([object userID] == [self userID]);
 }
 
 @end

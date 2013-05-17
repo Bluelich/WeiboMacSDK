@@ -7,17 +7,20 @@
 //
 
 #import "WeiboUserFollowersList.h"
+#import "WeiboAPI+UserMethods.h"
 
 @implementation WeiboUserFollowersList
 
 - (void)_loadNewer
 {
-    
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:0]];
+    [api followersForUserID:self.user cursor:0];
 }
 
 - (void)_loadOlder
 {
-    
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:self.cursor]];
+    [api followersForUserID:self.user cursor:self.cursor];
 }
 
 @end

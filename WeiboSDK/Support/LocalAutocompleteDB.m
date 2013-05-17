@@ -112,16 +112,20 @@ static LocalAutocompleteDB * sharedDB = nil;
 
 #pragma mark - 
 #pragma mark Data Access
-- (void)beginTransaction{
+- (void)beginTransaction
+{
     [db beginTransaction];
 }
-- (void)endTransaction{
+- (void)endTransaction
+{
     [db commit];
 }
-- (void)addUser:(WeiboUser *)user{
+- (void)addUser:(WeiboUser *)user
+{
     [self addUserID:user.userID username:user.screenName avatarURL:user.profileImageUrl];
 }
-- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url{
+- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url
+{
     NSString * ID = [NSString stringWithFormat:@"%lld",userID];
     NSNumber * priority = [NSNumber numberWithInteger:1];
     NSString * username = screenname;
@@ -131,25 +135,16 @@ static LocalAutocompleteDB * sharedDB = nil;
                                                         timeIntervalSince1970]];
     [db executeUpdate:@"insert or replace into names values (?,?,?,?,?,?)",ID,priority,username,fullname,avatar_url,updated_at];
 }
-- (NSString *)stylizedPinyinFromString:(NSString *)string{
-    NSMutableString * mString = [NSMutableString stringWithString:string];
-    NSRange range = NSMakeRange(0, [mString length]);
-    CFStringTransform((CFMutableStringRef)mString, (CFRange *)&range, 
-                      CFSTR("Any - Latin; NFD; [:Nonspacing Mark:] Remove; [:Whitespace:] Remove; Lower; NFC;"), NO);
-    NSString * fullpinyin = [mString uppercaseString];
-    return [fullpinyin substringToIndex:[fullpinyin length] > 16?16:[fullpinyin length]];
-}
-- (void)prioritizeUsername:(NSString *)screenname{
-    WeiboUnimplementedMethod
-}
-- (void)assimilateFromStatuses:(NSArray *)statuses{
+- (void)addUsers:(NSArray *)users
+{
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
     dispatch_async(queue, ^{
         NSMutableDictionary * userDict = [NSMutableDictionary dictionary];
         [self beginTransaction];
-        for (WeiboBaseStatus * status in statuses) {
-            WeiboUser * user = status.user;
-            if (user.screenName && ![userDict valueForKey:user.screenName]) {
+        for (WeiboUser * user in users)
+        {
+            if (user.screenName && ![userDict valueForKey:user.screenName])
+            {
                 [userDict setValue:@"" forKey:user.screenName];
                 [self addUser:user];
             }
@@ -157,15 +152,45 @@ static LocalAutocompleteDB * sharedDB = nil;
         [self endTransaction];
     });
 }
-- (void)compact{
+- (NSString *)stylizedPinyinFromString:(NSString *)string
+{
+    NSMutableString * mString = [NSMutableString stringWithString:string];
+    NSRange range = NSMakeRange(0, [mString length]);
+    CFStringTransform((CFMutableStringRef)mString, (CFRange *)&range, 
+                      CFSTR("Any - Latin; NFD; [:Nonspacing Mark:] Remove; [:Whitespace:] Remove; Lower; NFC;"), NO);
+    NSString * fullpinyin = [mString uppercaseString];
+    return [fullpinyin substringToIndex:[fullpinyin length] > 16?16:[fullpinyin length]];
+}
+- (void)prioritizeUsername:(NSString *)screenname
+{
+    WeiboUnimplementedMethod
+}
+- (void)assimilateFromStatuses:(NSArray *)statuses
+{
+    NSMutableArray * users = [NSMutableArray array];
+    
+    for (WeiboBaseStatus * status in statuses)
+    {
+        if (status.user)
+        {
+            [users addObject:status];
+        }
+    }
+    
+    [self addUsers:users];
+}
+- (void)compact
+{
     
 }
 
 
-- (NSArray *)defaultResultsForType:(WeiboAutocompleteType)type{
+- (NSArray *)defaultResultsForType:(WeiboAutocompleteType)type
+{
     return [self resultsForPartialText:@"" type:type];
 }
-- (NSArray *)resultsForPartialText:(NSString *)text type:(WeiboAutocompleteType)type{
+- (NSArray *)resultsForPartialText:(NSString *)text type:(WeiboAutocompleteType)type
+{
     if (![self isReady]) {
         return nil;
     }

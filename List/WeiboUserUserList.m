@@ -9,6 +9,9 @@
 #import "WeiboUserUserList.h"
 #import "WTCallback.h"
 
+extern NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
+extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey = @"WeiboUserUserListDidAddUserNotificationPrependKey";
+
 @interface WeiboUserUserList ()
 {
     struct {
@@ -18,7 +21,7 @@
 }
 
 @property (nonatomic, retain) NSMutableArray * users;
-@property (nonatomic, retain) NSString * cursor;
+@property (nonatomic, assign) WeiboUserID cursor;
 
 @end
 
@@ -28,7 +31,6 @@
 - (void)dealloc
 {
     [_users release], _users = nil;
-    [_cursor release], _cursor = nil;
     [_user release], _user = nil;
     [_account release], _account = nil;
     [super dealloc];
@@ -43,6 +45,8 @@
     if (!_flags.isLoading)
     {
         [self _loadOlder];
+        
+        _flags.isLoading = YES;
     }
 }
 - (void)_loadNewer
@@ -54,6 +58,8 @@
     if (!_flags.isLoading)
     {
         [self _loadNewer];
+        
+        _flags.isLoading = YES;
     }
 }
 
@@ -62,24 +68,67 @@
     _flags.isAtEnd = YES;
 }
 
-- (void)didAddUsers:(NSArray *)users
+- (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend
 {
+    NSDictionary * userInfo = @{WeiboUserUserListDidAddUserNotificationPrependKey : @(prepend)};
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserUserListDidAddUsersNotification object:self userInfo:userInfo];
 }
 - (NSArray *)users
 {
     return _users;
 }
 
-- (WTCallback *)receiveUsersCallback
+- (WTCallback *)usersListCallbackWithCursor:(WeiboUserID)cursor
 {
-    return WTCallbackMake(self, @selector(_usersResponse:info:), nil);
+    NSNumber * info = cursor ? @(cursor) : nil;
+    
+    return WTCallbackMake(self, @selector(_usersResponse:info:), info);
 }
 
 - (void)_usersResponse:(id)response info:(id)info
 {
+    _flags.isLoading = NO;
     
+    if (![response isKindOfClass:[NSDictionary class]])
+    {
+        return;
+    }
+    
+    NSArray * users = [response arrayForKey:@"users"];
+    
+    if (!users)
+    {
+        return;
+    }
+    
+    BOOL loadingNew = (self.users.count && [info isKindOfClass:[NSNumber class]]);
+    
+    if (!loadingNew)
+    {
+        self.cursor = [response longLongForKey:@"next_cursor"];
+    }
+    
+    [self _addUsers:users loadingNew:loadingNew];
 }
 
+- (void)_addUsers:(NSArray *)newUsers loadingNew:(BOOL)loadingNew
+{
+    NSMutableArray * toAdd = [[newUsers mutableCopy] autorelease];
+    
+    [toAdd removeObjectsInArray:_users];
+    
+    if (loadingNew)
+    {
+        NSIndexSet * set = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, toAdd.count)];
+        [_users insertObjects:toAdd atIndexes:set];
+    }
+    else
+    {
+        [_users addObjectsFromArray:toAdd];
+    }
+    
+    [self didAddUsers:toAdd];
+}
 
 @end

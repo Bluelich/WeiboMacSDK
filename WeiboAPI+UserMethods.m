@@ -125,4 +125,52 @@
     [responseCallback invoke:[result objectForKey:@"target"]];
 }
 
+#pragma mark - User Lists
+
+- (void)userlistResponse:(id)response info:(id)info
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul), ^{
+        NSMutableDictionary * result = [response mutableObjectFromJSONString];
+        NSArray * users = result[@"users"];
+        if (users && [users isKindOfClass:[NSArray class]])
+        {
+            result[@"users"] = [WeiboUser usersWithDictionaries:users];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [responseCallback invoke:result];
+        });
+    });
+}
+
+- (WTCallback *)userlistCallbackWithCursor:(WeiboUserID)cursor
+{
+    return WTCallbackMake(self, @selector(userlistResponse:info:), nil);
+}
+
+- (void)followersForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor
+{
+    NSDictionary * params = @{@"screen_name":screenname,
+                              @"cursor":@(cursor)};
+    [self GET:@"friendships/followers.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
+}
+- (void)followersForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor
+{
+    NSDictionary * params = @{@"uid":@(userid),
+                              @"cursor":@(cursor)};
+    [self GET:@"friendships/followers.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
+}
+- (void)friendsForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor
+{
+    NSDictionary * params = @{@"screen_name":screenname,
+                              @"cursor":@(cursor)};
+    [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
+}
+- (void)friendsForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor
+{
+    NSDictionary * params = @{@"uid":@(userid),
+                              @"cursor":@(cursor)};
+    [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
+}
+
+
 @end
