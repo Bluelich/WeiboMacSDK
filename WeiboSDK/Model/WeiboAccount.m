@@ -7,7 +7,9 @@
 //
 
 #import "WeiboAccount.h"
-#import "WeiboAPI.h"
+#import "WeiboAPI+UnreadCount.h"
+#import "WeiboAPI+StatusMethods.h"
+#import "WeiboAPI+UserMethods.h"
 #import "WeiboUser.h"
 #import "WeiboUnread.h"
 #import "WeiboRequestError.h"

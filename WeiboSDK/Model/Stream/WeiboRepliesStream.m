@@ -9,7 +9,7 @@
 #import "WeiboRepliesStream.h"
 #import "WeiboAccount.h"
 #import "WeiboStatus.h"
-#import "WeiboAPI.h"
+#import "WeiboAPI+StatusMethods.h"
 
 @implementation WeiboRepliesStream
 @synthesize baseStatus;

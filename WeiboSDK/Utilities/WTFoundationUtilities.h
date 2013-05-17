@@ -37,5 +37,3 @@ static void LogBinary (NSUInteger theNumber,NSInteger bits) {
     }
     NSLog(@"Binary version: %@", str);
 }
-
-#define WeiboUnimplementedMethod NSLog(@"[Warning - Weibo SDK] A Unimplemented Method Has Been Called. In File:%s , Line:%d.", __FILE__, __LINE__);

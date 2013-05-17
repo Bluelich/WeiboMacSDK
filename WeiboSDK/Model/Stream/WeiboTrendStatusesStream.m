@@ -8,7 +8,7 @@
 
 #import "WeiboTrendStatusesStream.h"
 #import "WeiboAccount.h"
-#import "WeiboAPI.h"
+#import "WeiboAPI+StatusMethods.h"
 
 @implementation WeiboTrendStatusesStream
 @synthesize trendName = _trendName;

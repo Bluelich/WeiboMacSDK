@@ -8,7 +8,7 @@
 
 #import "WeiboTimelineStream.h"
 #import "WeiboAccount.h"
-#import "WeiboAPI.h"
+#import "WeiboAPI+StatusMethods.h"
 
 @implementation WeiboTimelineStream
 

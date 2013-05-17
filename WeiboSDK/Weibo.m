@@ -8,7 +8,7 @@
 
 #import "Weibo.h"
 #import "WeiboAccount.h"
-#import "WeiboAPI.h"
+#import "WeiboAPI+AccountMethods.h"
 #import "WTCallback.h"
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";

@@ -1,0 +1,41 @@
+//
+//  WeiboAPI+StatusMethods.h
+//  Weibo
+//
+//  Created by Wutian on 13-5-17.
+//  Copyright (c) 2013年 Wutian. All rights reserved.
+//
+
+#import "WeiboAPI.h"
+
+@interface WeiboAPI (StatusMethods)
+
+#pragma mark -
+#pragma mark Statuses Getting
+- (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params
+                sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)userTimelineForUserID:(WeiboUserID)uid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)userTimelineForUsername:(NSString *)screenname sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)repliesForStatusID:(WeiboStatusID)sid page:(NSUInteger)page count:(NSUInteger)count __attribute__((deprecated));
+- (void)repliesForStatusID:(WeiboStatusID)sid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+#pragma mark -
+#pragma mark Favorites
+- (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count;
+#pragma mark -
+#pragma mark Trends
+- (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count;
+- (void)trendsInHourly;
+#pragma mark -
+#pragma mark Weibo Access
+- (WTCallback *)statuseResponseCallback;
+- (void)updateWithComposition:(WeiboComposition *)composition;
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;
+- (void)destoryStatus:(WeiboStatusID)sid;
+- (void)destoryComment:(WeiboStatusID)sid;
+- (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid;
+
+@end
