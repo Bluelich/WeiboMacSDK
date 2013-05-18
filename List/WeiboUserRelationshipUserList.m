@@ -15,7 +15,10 @@
 {
     [super didAddUsers:users prepend:prepend];
     
-    [[LocalAutocompleteDB sharedAutocompleteDB] addUsers:users];
+    if (self.user.userID == self.account.user.userID)
+    {
+        [[LocalAutocompleteDB sharedAutocompleteDB] addUsers:users];
+    }
 }
 
 @end
