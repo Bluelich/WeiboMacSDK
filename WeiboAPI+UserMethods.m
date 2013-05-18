@@ -150,25 +150,29 @@
 - (void)followersForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor
 {
     NSDictionary * params = @{@"screen_name":screenname,
-                              @"cursor":@(cursor)};
+                              @"cursor":@(cursor),
+                              @"count":@"200"};
     [self GET:@"friendships/followers.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
 - (void)followersForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor
 {
     NSDictionary * params = @{@"uid":@(userid),
-                              @"cursor":@(cursor)};
+                              @"cursor":@(cursor),
+                              @"count":@"200"};
     [self GET:@"friendships/followers.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
 - (void)friendsForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor
 {
     NSDictionary * params = @{@"screen_name":screenname,
-                              @"cursor":@(cursor)};
+                              @"cursor":@(cursor),
+                              @"count":@"200"};
     [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
 - (void)friendsForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor
 {
     NSDictionary * params = @{@"uid":@(userid),
-                              @"cursor":@(cursor)};
+                              @"cursor":@(cursor),
+                              @"count":@"200"};
     [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
 
