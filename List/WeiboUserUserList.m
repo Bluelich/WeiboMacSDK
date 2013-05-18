@@ -8,9 +8,15 @@
 
 #import "WeiboUserUserList.h"
 #import "WTCallback.h"
+#import "WeiboRequestError.h"
 
-extern NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
-extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey = @"WeiboUserUserListDidAddUserNotificationPrependKey";
+NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
+NSString * const WeiboUserUserListDidReceiveRequestErrorNotification = @"WeiboUserUserListDidReceiveRequestErrorNotification";
+
+NSString * const WeiboUserUserListDidAddUserNotificationPrependKey = @"WeiboUserUserListDidAddUserNotificationPrependKey";
+NSString * const WeiboUserUserListDidAddUserNotificationUsersKey = @"WeiboUserUserListDidAddUserNotificationUsersKey";
+NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserListNotificationRequestErrorKey";
+
 
 @interface WeiboUserUserList ()
 {
@@ -70,10 +76,18 @@ extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey = @"We
 
 - (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend
 {
-    NSDictionary * userInfo = @{WeiboUserUserListDidAddUserNotificationPrependKey : @(prepend)};
+    NSDictionary * userInfo = @{WeiboUserUserListDidAddUserNotificationPrependKey : @(prepend),
+                                WeiboUserUserListDidAddUserNotificationUsersKey : users};
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserUserListDidAddUsersNotification object:self userInfo:userInfo];
 }
+- (void)didReceiveRequestError:(WeiboRequestError *)error
+{
+    NSDictionary * userInfo = @{WeiboUserUserListNotificationRequestErrorKey : error};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserUserListDidReceiveRequestErrorNotification object:self userInfo:userInfo];
+}
+
 - (NSArray *)users
 {
     return _users;
@@ -92,6 +106,10 @@ extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey = @"We
     
     if (![response isKindOfClass:[NSDictionary class]])
     {
+        if ([response isKindOfClass:[WeiboRequestError class]])
+        {
+            [self didReceiveRequestError:response];
+        }
         return;
     }
     

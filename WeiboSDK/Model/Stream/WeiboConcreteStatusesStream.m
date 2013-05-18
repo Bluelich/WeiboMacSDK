@@ -14,8 +14,8 @@
 #import "WTCallback.h"
 #import "NSArray+WeiboAdditions.h"
 
-NSString * const WeiboStatusStreamDidReciveNewStatusesNotificationKey = @"WeiboStatusStreamDidReciveNewStatusesNotificationKey";
-NSString * const WeiboStatusStreamDidReciveRequestErrorNotificationKey = @"WeiboStatusStreamDidReciveRequestErrorNotificationKey";
+NSString * const WeiboStatusStreamDidReceiveNewStatusesNotificationKey = @"WeiboStatusStreamDidReceiveNewStatusesNotificationKey";
+NSString * const WeiboStatusStreamDidReceiveRequestErrorNotificationKey = @"WeiboStatusStreamDidReceiveRequestErrorNotificationKey";
 NSString * const WeiboStatusStreamDidRemoveStatusNotificationKey = @"WeiboStatusStreamDidRemoveStatusNotificationKey";
 
 NSString * const WeiboStatusStreamNotificationStatusesArrayKey = @"WeiboStatusStreamNotificationStatusesArrayKey";
@@ -117,7 +117,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         default:
             break;
     }
-    [self noticeDidReciveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
+    [self noticeDidReceiveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
     
     if (shouldPostNotification) {
         [self postStatusesChangedNotification];
@@ -249,7 +249,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 
 - (void)statusesResponse:(id)response couldBeGap:(BOOL)beGap isFromFillingInGap:(BOOL)fillingGap{
     if ([response isKindOfClass:[WeiboRequestError class]]) {
-        [self noticeDidReciveRequestError:response];
+        [self noticeDidReceiveRequestError:response];
         return;
     }
     if (fillingGap) {
@@ -327,16 +327,16 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     [center postNotificationName:kWeiboStreamStatusChangedNotification object:self];
 }
 
-- (void)noticeDidReciveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
+- (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
 {
     NSDictionary * userInfo = @{WeiboStatusStreamNotificationStatusesArrayKey : newStatuses,
                                 WeiboStatusStreamNotificationAddingTypeKey : [NSNumber numberWithInteger:type]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReciveNewStatusesNotificationKey object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReceiveNewStatusesNotificationKey object:self userInfo:userInfo];
 }
-- (void)noticeDidReciveRequestError:(WeiboRequestError *)error
+- (void)noticeDidReceiveRequestError:(WeiboRequestError *)error
 {
     NSDictionary * userInfo = @{WeiboStatusStreamNotificationRequestErrorKey : error};
-    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReciveRequestErrorNotificationKey object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReceiveRequestErrorNotificationKey object:self userInfo:userInfo];
 }
 - (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index
 {

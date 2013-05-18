@@ -88,7 +88,7 @@ multipartFormData:(NSDictionary *)parts
     }
 }
 
-- (void)_responseRecived:(id)responseValue callback:(WTCallback *)callback{
+- (void)_responseReceived:(id)responseValue callback:(WTCallback *)callback{
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
     if ([responseValue isKindOfClass:[WeiboRequestError class]]) {
         [self handleRequestError:responseValue];
@@ -101,7 +101,7 @@ multipartFormData:(NSDictionary *)parts
 
 - (WTCallback *)errorlessCallbackWithCallback:(WTCallback *)callback{
     return [WTCallback callbackWithTarget:self
-                                 selector:@selector(_responseRecived:callback:)
+                                 selector:@selector(_responseReceived:callback:)
                                      info:callback];
 }
 - (WTCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info{

@@ -46,7 +46,7 @@ multipartFormData:(NSDictionary *)parts
 
 #pragma mark Response Handling
 - (void)handleRequestError:(WeiboRequestError *)error;
-- (void)_responseRecived:(id)responseValue callback:(WTCallback *)callback;
+- (void)_responseReceived:(id)responseValue callback:(WTCallback *)callback;
 - (WTCallback *)errorlessCallbackWithCallback:(WTCallback *)callback;
 - (WTCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info;
 

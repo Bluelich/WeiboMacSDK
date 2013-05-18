@@ -32,7 +32,7 @@ typedef void (^WTObjectBlock)(id object);
 #define kWeiboStatusDeleteNotification @"WeiboStatusDeleteNotification"
 #define kWeiboStreamStatusChangedNotification @"WeiboStreamStatusChangedNotification"
 #define kWeiboAccountDidUpdateNotification @"WeiboAccountDidUpdateNotification"
-#define kWeiboAccountDidReciveUnreadNotification @"WeiboAccountDidReciveUnreadNotification" 
+#define kWeiboAccountDidReceiveUnreadNotification @"WeiboAccountDidReceiveUnreadNotification" 
 #define kWeiboAccessTokenExpriedNotification @"WeiboAccessTokenExpriedNotification"
 #define kWeiboAccountAvatarDidUpdateNotification @"WeiboAccountAvatarDidUpdateNotification"
 #define kWeiboHTTPRequestDidSendNotification @"WeiboHTTPRequestDidSendNotification"

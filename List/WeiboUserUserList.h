@@ -11,7 +11,11 @@
 #import "WeiboAccount.h"
 
 extern NSString * const WeiboUserUserListDidAddUsersNotification;
+extern NSString * const WeiboUserUserListDidReceiveRequestErrorNotification;
+
+extern NSString * const WeiboUserUserListDidAddUserNotificationUsersKey;
 extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey;
+extern NSString * const WeiboUserUserListNotificationRequestErrorKey;
 
 @interface WeiboUserUserList : WeiboUserList
 
