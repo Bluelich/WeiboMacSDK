@@ -9,6 +9,7 @@
 #import "WeiboUserUserList.h"
 #import "WTCallback.h"
 #import "WeiboRequestError.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
 NSString * const WeiboUserUserListDidReceiveRequestErrorNotification = @"WeiboUserUserListDidReceiveRequestErrorNotification";
@@ -40,6 +41,15 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     [_user release], _user = nil;
     [_account release], _account = nil;
     [super dealloc];
+}
+
+- (id)init
+{
+    if (self = [super init])
+    {
+        self.users = [NSMutableArray array];
+    }
+    return self;
 }
 
 - (void)_loadOlder
@@ -113,9 +123,9 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    NSArray * users = [response arrayForKey:@"users"];
+    NSArray * users = [response objectForKey:@"users"];
     
-    if (!users)
+    if (!users || ![users isKindOfClass:[NSArray class]])
     {
         return;
     }
@@ -124,7 +134,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     
     if (!loadingNew)
     {
-        self.cursor = [response longLongForKey:@"next_cursor"];
+        self.cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
     }
     
     [self _addUsers:users loadingNew:loadingNew];
@@ -146,7 +156,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         [_users addObjectsFromArray:toAdd];
     }
     
-    [self didAddUsers:toAdd];
+    [self didAddUsers:toAdd prepend:loadingNew];
 }
 
 @end

@@ -173,7 +173,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     {
         if (status.user)
         {
-            [users addObject:status];
+            [users addObject:status.user];
         }
     }
     

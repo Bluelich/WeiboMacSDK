@@ -180,10 +180,10 @@
     }
 }
 - (void)unreadCountResponse:(id)response info:(id)info{
-    if ([response isKindOfClass:[WeiboRequestError class]]) {
+    if ([response isKindOfClass:[WeiboRequestError class]])
+    {
         return ;
     }
-    NSLog(@"%@",response);
     WeiboUnread * unread = (WeiboUnread *)response;
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
