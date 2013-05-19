@@ -24,6 +24,8 @@ extern NSString * const WeiboUserUserListNotificationRequestErrorKey;
 @property (nonatomic, retain) WeiboAccount * account;
 
 - (void)markAtEnd;
+- (BOOL)isEnded;
+
 - (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend;
 
 - (WTCallback *)usersListCallbackWithCursor:(WeiboUserID)cursor;

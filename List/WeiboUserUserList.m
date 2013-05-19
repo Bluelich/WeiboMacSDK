@@ -83,6 +83,10 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 {
     _flags.isAtEnd = YES;
 }
+- (BOOL)isEnded
+{
+    return _flags.isAtEnd;
+}
 
 - (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend
 {
@@ -130,11 +134,13 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    BOOL loadingNew = (self.users.count && [info isKindOfClass:[NSNumber class]]);
+    BOOL loadingNew = !(self.users.count && [info isKindOfClass:[NSNumber class]]);
     
-    if (!loadingNew)
+    WeiboUserID cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
+    
+    if (cursor)
     {
-        self.cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
+        self.cursor = cursor;
     }
     
     [self _addUsers:users loadingNew:loadingNew];
@@ -144,7 +150,10 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 {
     NSMutableArray * toAdd = [[newUsers mutableCopy] autorelease];
     
-    [toAdd removeObjectsInArray:_users];
+    for (WeiboUser * user in _users)
+    {
+        [toAdd removeObject:user];
+    }
     
     if (loadingNew)
     {

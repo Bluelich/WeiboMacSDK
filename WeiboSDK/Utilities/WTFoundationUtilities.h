@@ -37,3 +37,11 @@ static void LogBinary (NSUInteger theNumber,NSInteger bits) {
     }
     NSLog(@"Binary version: %@", str);
 }
+
+#define SetRetainedIvar(ivar, newVar) [newVar retain];\
+[ivar release];\
+ivar = newVar;
+
+#define SetCopiedIvar(ivar, newVar) [newVar copy];\
+[ivar release];\
+ivar = newVar;
