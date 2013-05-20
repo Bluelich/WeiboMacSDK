@@ -33,6 +33,7 @@
 @property (assign, nonatomic) NSString * inReplyToScreenname;
 @property (retain, nonatomic) NSString * source;
 @property (retain, nonatomic) NSString * sourceUrl;
+@property (retain, nonatomic, readonly) NSURL * webLink;
 
 #pragma mark -
 #pragma mark Parse Methods

@@ -146,4 +146,50 @@
     return self.retweetedStatus;
 }
 
++ (NSString *)base62FromDouble:(double)value
+{
+	NSString *base62 = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSInteger baseLength = [base62 length];
+    NSMutableString *returnValue = [NSMutableString string];
+	double g = value;
+	while (g != 0)
+    {
+		int x = fmod(g,baseLength);
+		NSString *y = [base62 substringWithRange:NSMakeRange(x, 1)];
+		[returnValue insertString:y atIndex:0];
+		value /= baseLength;
+		g = round(value - 0.5);
+	}
+	return returnValue;
+}
++ (NSString *)midFromId:(WeiboStatusID)sid
+{
+    NSMutableString * url = [NSMutableString string];
+	NSString * idString = [NSString stringWithFormat:@"%lld",sid];
+	for (int i = (int)(idString.length - 7); i > -7; i = i - 7)
+    {
+		NSString * temp = [idString substringWithRange:NSMakeRange(i < 0? 0:i, i < 0? i + 7:7)];
+		temp = [self base62FromDouble:[temp doubleValue]];
+        NSInteger zerosToFill = 4 - temp.length;
+        if (i > 0)
+        {
+            for (int j = 0; j < zerosToFill; j++)
+            {
+                [url insertString:@"0" atIndex:0];
+            }
+        }
+        else
+        {
+            zerosToFill = 0;
+        }
+		[url insertString:temp atIndex:zerosToFill];
+	}
+    return url;
+}
+- (NSURL *)webLink
+{
+    NSString * url = [NSString stringWithFormat:@"http://weibo.com/%lld/%@",self.user.userID,[[self class] midFromId:self.sid]];
+    return [NSURL URLWithString:url];
+}
+
 @end
