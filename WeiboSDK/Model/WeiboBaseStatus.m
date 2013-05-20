@@ -45,8 +45,10 @@
 - (id)_initWithDictionary:(NSDictionary *)dic{
     return [self init];
 }
-- (id)initWithDictionary:(NSDictionary *)dic{
-    if ([self _initWithDictionary:dic])
+- (id)initWithDictionary:(NSDictionary *)dic
+{
+    self = [self _initWithDictionary:dic];
+    if (self)
     {
         self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.displayText] autorelease];
         if (!self.quoted && self.quotedBaseStatus)

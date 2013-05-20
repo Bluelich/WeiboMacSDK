@@ -76,11 +76,13 @@
 		}
 		NSDictionary* statusDic = [dic objectForKey:@"status"];
         WeiboStatus * status = [[WeiboStatus alloc] initWithDictionary:statusDic];
-		if (statusDic) {
+		if (statusDic)
+        {
 			self.replyToStatus = status;
             self.replyToStatus.quoted = YES;
-            [status release];
 		}
+        [status release];
+
         NSDictionary* commentDic = [dic objectForKey:@"reply_comment"];
         if (commentDic) {
             WeiboComment * comment = [[WeiboComment alloc] initWithDictionary:commentDic];

@@ -14,7 +14,6 @@
 #import "WeiboAccount.h"
 #import "WeiboUser.h"
 #import "WeiboBaseStatus.h"
-#import "POAPinyin.h"
 #import "sqlite3.h"
 
 static LocalAutocompleteDB * sharedDB = nil;
