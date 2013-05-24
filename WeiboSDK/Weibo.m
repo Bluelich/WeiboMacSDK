@@ -20,33 +20,23 @@ NSString * const WeiboObjectUserInfoUniqueIdentifierKey = @"WeiboObjectUserInfoU
 
 static Weibo * _sharedWeibo = nil;
 
-+ (Weibo *)sharedWeibo{
-    if (!_sharedWeibo) {
++ (Weibo *)sharedWeibo
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         _sharedWeibo = [[[self class] alloc] init];
-    }
+        [_sharedWeibo restoreAccounts];
+    });
     return _sharedWeibo;
 }
 
-- (id)init{
+- (id)init
+{
     if ((self = [super init])) {
         accounts = [[NSMutableArray alloc] init];
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSData * accountData = [defaults dataForKey:@"accounts"];
-        if (accountData) {
-            NSArray * restoredAccounts = [NSKeyedUnarchiver unarchiveObjectWithData:accountData];
-            if ([restoredAccounts isKindOfClass:[NSArray class]]) {
-                for (WeiboAccount * account in restoredAccounts) {
-                    if (![account isKindOfClass:[WeiboAccount class]]) {
-                        continue;
-                    }
-                    if (account.oAuth2Token) {
-                        [self addAccount:account];
-                    }
-                }
-            }
-        }
+        
         heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
-                                                 target:self 
+                                                 target:self
                                                selector:@selector(heartbeat:) 
                                                userInfo:nil 
                                                 repeats:YES];
@@ -59,6 +49,28 @@ static Weibo * _sharedWeibo = nil;
         [cachePruningTimer fire];
     }
     return self;
+}
+
+- (void)restoreAccounts
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSData * accountData = [defaults dataForKey:@"accounts"];
+    BOOL hasAccountRestored = NO;
+    if (accountData) {
+        NSArray * restoredAccounts = [NSKeyedUnarchiver unarchiveObjectWithData:accountData];
+        if ([restoredAccounts isKindOfClass:[NSArray class]]) {
+            for (WeiboAccount * account in restoredAccounts) {
+                if (![account isKindOfClass:[WeiboAccount class]]) {
+                    continue;
+                }
+                if (account.oAuth2Token) {
+                    [self addAccount:account postsNotification:NO];
+                    
+                    hasAccountRestored = YES;
+                }
+            }
+        }
+    }
 }
 
 - (void)dealloc{
@@ -124,13 +136,23 @@ static Weibo * _sharedWeibo = nil;
     [info invoke:account];
 }
 
-- (void)addAccount:(WeiboAccount *)aAccount{
-    if ([aAccount isKindOfClass:[WeiboAccount class]]) {
+- (void)addAccount:(WeiboAccount *)aAccount postsNotification:(BOOL)post
+{
+    if ([aAccount isKindOfClass:[WeiboAccount class]])
+    {
         [accounts addObject:aAccount];
         [aAccount refreshTimelines];
-        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification
-                                                            object:self];
+        
+        if (post)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification object:self];
+        }
     }
+}
+
+- (void)addAccount:(WeiboAccount *)aAccount
+{
+    [self addAccount:aAccount postsNotification:YES];
 }
 
 - (void)removeAccount:(WeiboAccount *)aAccount{
