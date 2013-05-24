@@ -31,8 +31,8 @@
 #pragma mark -
 #pragma mark Weibo Access
 - (WTCallback *)statuseResponseCallback;
-- (void)updateWithComposition:(WeiboComposition *)composition;
-- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
+- (void)updateWithComposition:(id<WeiboComposition>)composition;
+- (void)update:(NSString *)text imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;
 - (void)destoryStatus:(WeiboStatusID)sid;
 - (void)destoryComment:(WeiboStatusID)sid;

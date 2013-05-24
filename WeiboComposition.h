@@ -7,7 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboUser.h"
+#import "WeiboBaseStatus.h"
+
+enum {
+	WeiboCompositionTypeStatus,
+	WeiboCompositionTypeComment
+};
+typedef NSInteger WeiboCompositionType;
 
 @protocol WeiboComposition <NSObject>
+
+@property (nonatomic, copy)   NSString * text;
+@property (nonatomic, retain) WeiboUser *replyToUser;
+@property (nonatomic, retain) WeiboUser * directMessageUser;
+@property (nonatomic, retain) WeiboBaseStatus * retweetingStatus;
+@property (nonatomic, retain) WeiboBaseStatus * replyToStatus;
+@property (nonatomic, assign) WeiboCompositionType type;
+
+@property (nonatomic, retain) NSData * imageData;
+
+- (void)didSend:(id)response;
+- (void)errorSending;
 
 @end

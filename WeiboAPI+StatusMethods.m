@@ -8,6 +8,7 @@
 
 #import "WeiboAPI+Private.h"
 #import "WeiboAPI+StatusMethods.h"
+#import "WeiboStatus.h"
 
 @implementation WeiboAPI (StatusMethods)
 
@@ -117,7 +118,8 @@
 - (WTCallback *)commentResponseCallback{
     return WTCallbackMake(self, @selector(commentResponseCallback), nil);
 }
-- (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment{
+- (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment
+{
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -127,11 +129,8 @@
     [self POST:url parameters:params callback:callback];
 }
 
-- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue{
-    if (reply > 0) {
-        [self repost:text repostingID:reply shouldComment:NO];
-        return;
-    }
+- (void)update:(NSString *)text imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue
+{
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
@@ -141,16 +140,19 @@
     }
     NSDictionary * parts = nil;
     NSString * url = @"statuses/update.json";
-    if (image && reply == 0) {
+    if (image)
+    {
         parts = [NSDictionary dictionaryWithObject:image forKey:@"pic"];
         url = @"statuses/upload.json";
     }
     [self POST:url parameters:params multipartFormData:parts callback:callback];
 }
-- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply{
-    [self update:text inRetweetStatusID:reply imageData:nil latitude:0 longitude:0];
+- (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply
+{
+    [self repost:text repostingID:reply shouldComment:NO];
 }
-- (void)updated:(id)response info:(id)info{
+- (void)updated:(id)response info:(id)info
+{
     WeiboCompositionType type = [info integerValue];
     [authenticateWithAccount refreshTimelineForType:type];
     [responseCallback invoke:response];
@@ -169,7 +171,8 @@
     NSString * url = @"comments/destroy.json";
     [self POST:url parameters:params callback:callback];
 }
-- (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid{
+- (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid
+{
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeComment];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -182,17 +185,36 @@
     }
     [self POST:url parameters:params multipartFormData:nil callback:callback];
 }
-- (void)updateWithComposition:(WeiboComposition *)composition{
-    if (composition.replyToStatus) {
+- (void)updateWithComposition:(id<WeiboComposition>)composition
+{
+    if (composition.replyToStatus)
+    {
         WeiboStatusID toSID = composition.replyToStatus.sid, toCID = 0;
-        if ([composition.replyToStatus isKindOfClass:[WeiboComment class]]) {
+        if ([composition.replyToStatus isKindOfClass:[WeiboComment class]])
+        {
             WeiboComment * comment = (WeiboComment *)composition.replyToStatus;
             toCID = toSID;
             toSID = comment.replyToStatus.sid;
         }
         [self reply:composition.text toStatusID:toSID toCommentID:toCID];
-    }else {
-        [self update:composition.text inRetweetStatusID:composition.retweetingStatusID imageData:composition.imageData latitude:0 longitude:0];
+    }
+    else if (composition.retweetingStatus)
+    {
+        WeiboStatus * status = (WeiboStatus *)composition.retweetingStatus;
+        
+        if ([status isKindOfClass:[WeiboStatus class]])
+        {
+            if (status.retweetedStatus)
+            {
+                status = status.retweetedStatus;
+            }
+        }
+        
+        [self repost:composition.text repostingID:status.sid shouldComment:NO];
+    }
+    else
+    {
+        [self update:composition.text imageData:composition.imageData latitude:0 longitude:0];
     }
 }
 

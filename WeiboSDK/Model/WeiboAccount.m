@@ -23,7 +23,6 @@
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
-#import "WeiboComposition.h"
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
@@ -222,13 +221,14 @@
 
 #pragma mark -
 #pragma mark Composition
-- (void)sendCompletedComposition:(WeiboComposition *)composition{
+- (void)sendCompletedComposition:(id<WeiboComposition>)composition
+{
     WTCallback * callback = WTCallbackMake(self, @selector(didSendCompletedComposition:info:), composition);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api updateWithComposition:composition];
 }
 - (void)didSendCompletedComposition:(id)response info:(id)info{
-    WeiboComposition * composition = info;
+    id<WeiboComposition> composition = info;
     if ([response isKindOfClass:[WeiboRequestError class]]) {
         WeiboRequestError * error = response;
         [composition errorSending];

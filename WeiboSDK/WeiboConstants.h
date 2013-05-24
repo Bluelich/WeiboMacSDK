@@ -76,9 +76,3 @@ enum {
     WeiboUnreadCountTypeFollower = 4
 };
 typedef NSUInteger WeiboUnreadCountType;
-
-enum {
-	WeiboCompositionTypeStatus,        
-	WeiboCompositionTypeComment    
-};
-typedef NSUInteger WeiboCompositionType;

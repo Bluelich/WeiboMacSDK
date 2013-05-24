@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
+#import "WeiboComposition.h"
 
 @class WeiboUser, WeiboRequestError, WeiboAPI, WTCallback;
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboComposition, WeiboUserStream, WeiboFavoritesStream;
+@class WeiboUserStream, WeiboFavoritesStream;
 
 @protocol WeiboAccountDelegate;
 
@@ -89,7 +90,7 @@
 
 #pragma mark -
 #pragma mark Composition
-- (void)sendCompletedComposition:(WeiboComposition *)composition;
+- (void)sendCompletedComposition:(id<WeiboComposition>)composition;
 
 #pragma mark -
 #pragma mark User
@@ -132,7 +133,7 @@
 
 
 @protocol WeiboAccountDelegate <NSObject>
-- (void)account:(WeiboAccount *)account didFailToPost:(WeiboComposition *)composition errorMessage:(NSString *)message error:(WeiboRequestError *)error;
+- (void)account:(WeiboAccount *)account didFailToPost:(id<WeiboComposition>)composition errorMessage:(NSString *)message error:(WeiboRequestError *)error;
 - (void)account:(WeiboAccount *)account didCheckingUnreadCount:(id)info;
 - (void)account:(WeiboAccount *)account finishCheckingUnreadCount:(WeiboUnread *)unread;
 @end
