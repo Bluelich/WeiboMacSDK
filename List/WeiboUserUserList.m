@@ -58,12 +58,23 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 }
 - (void)loadOlder
 {
+    if (_flags.isAtEnd)
+    {
+        return;
+    }
+    
     if (!_flags.isLoading)
     {
         [self _loadOlder];
         
         _flags.isLoading = YES;
     }
+}
+- (void)retryLoadOlder
+{
+    _flags.isAtEnd = NO;
+    
+    [self loadOlder];
 }
 - (void)_loadNewer
 {
@@ -162,6 +173,10 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     }
     else
     {
+        if ([toAdd count] == 0)
+        {
+            [self markAtEnd];
+        }
         [_users addObjectsFromArray:toAdd];
     }
     

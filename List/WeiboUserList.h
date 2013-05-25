@@ -14,5 +14,7 @@
 
 - (void)loadNewer;
 - (void)loadOlder;
+- (BOOL)isEnded;
+- (void)retryLoadOlder;
 
 @end

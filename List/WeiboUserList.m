@@ -25,4 +25,13 @@
     
 }
 
+- (BOOL)isEnded
+{
+    return NO;
+}
+- (void)retryLoadOlder
+{
+    
+}
+
 @end
