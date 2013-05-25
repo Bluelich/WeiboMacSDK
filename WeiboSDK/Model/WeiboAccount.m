@@ -160,7 +160,7 @@
 }
 - (void)refreshTimelineForType:(WeiboCompositionType)type{
     switch (type) {
-        case WeiboCompositionTypeStatus:
+        case WeiboCompositionTypeNewTweet:
             [timelineStream loadNewer];
             break;
         case WeiboCompositionTypeComment:
@@ -227,15 +227,16 @@
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api updateWithComposition:composition];
 }
-- (void)didSendCompletedComposition:(id)response info:(id)info{
+- (void)didSendCompletedComposition:(id)response info:(id)info
+{
     id<WeiboComposition> composition = info;
-    if ([response isKindOfClass:[WeiboRequestError class]]) {
+    if ([response isKindOfClass:[WeiboRequestError class]])
+    {
         WeiboRequestError * error = response;
         [composition errorSending];
         [_delegate account:self didFailToPost:composition errorMessage:error.errorString error:error];
-    }else {
-        [composition didSend:response];
     }
+    [composition didSend:response];
 }
 
 #pragma mark -
