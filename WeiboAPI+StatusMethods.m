@@ -120,7 +120,7 @@
 }
 - (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment
 {
-    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
+    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeNewTweet];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              text, @"status",
@@ -131,7 +131,7 @@
 
 - (void)update:(NSString *)text imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue
 {
-    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeStatus];
+    NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeNewTweet];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
     if (latValue > 0 || longValue > 0) {

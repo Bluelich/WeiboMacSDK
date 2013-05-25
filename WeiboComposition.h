@@ -11,8 +11,9 @@
 #import "WeiboBaseStatus.h"
 
 enum {
-	WeiboCompositionTypeStatus,
-	WeiboCompositionTypeComment
+	WeiboCompositionTypeNewTweet,
+	WeiboCompositionTypeComment,
+    WeiboCompositionTypeRetweet,
 };
 typedef NSInteger WeiboCompositionType;
 
