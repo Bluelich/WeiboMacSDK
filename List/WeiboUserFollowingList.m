@@ -13,13 +13,13 @@
 
 - (void)_loadNewer
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:0]];
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:YES]];
     [api friendsForUserID:self.user.userID cursor:0];
 }
 
 - (void)_loadOlder
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:self.cursor]];
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:NO]];
     [api friendsForUserID:self.user.userID cursor:self.cursor];
 }
 

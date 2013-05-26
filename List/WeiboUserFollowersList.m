@@ -13,14 +13,31 @@
 
 - (void)_loadNewer
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:0]];
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:YES]];
     [api followersForUserID:self.user.userID cursor:0];
 }
 
 - (void)_loadOlder
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithCursor:self.cursor]];
+    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:NO]];
     [api followersForUserID:self.user.userID cursor:self.cursor];
+}
+
+- (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend
+{
+    [super didAddUsers:users prepend:prepend];
+    
+    if (users.count == self.users.count ||
+        prepend)
+    {
+        // Loading Newer
+        
+        if ([self.user isEqual:self.account.user] ||
+            [self.account hasNewFollowers])
+        {
+            [self.account resetUnreadCountWithType:WeiboUnreadCountTypeFollower];
+        }
+    }
 }
 
 @end

@@ -205,7 +205,8 @@
         [_delegate account:self finishCheckingUnreadCount:unread];
     }
 }
-- (void)resetUnreadCountWithType:(WeiboUnreadCountType)type{
+- (void)resetUnreadCountWithType:(WeiboUnreadCountType)type
+{
     WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api resetUnreadWithType:type];
