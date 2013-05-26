@@ -28,6 +28,6 @@ extern NSString * const WeiboUserUserListNotificationRequestErrorKey;
 
 - (void)didAddUsers:(NSArray *)users prepend:(BOOL)prepend;
 
-- (WTCallback *)usersListCallbackWithCursor:(WeiboUserID)cursor;
+- (WTCallback *)usersListCallbackWithLoadingNewer:(BOOL)loadingNewer;
 
 @end

@@ -118,9 +118,9 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     return _users;
 }
 
-- (WTCallback *)usersListCallbackWithCursor:(WeiboUserID)cursor
+- (WTCallback *)usersListCallbackWithLoadingNewer:(BOOL)loadingNewer
 {
-    NSNumber * info = cursor ? @(cursor) : nil;
+    NSNumber * info = loadingNewer ? @(YES) : nil;
     
     return WTCallbackMake(self, @selector(_usersResponse:info:), info);
 }
@@ -145,25 +145,35 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    BOOL loadingNew = !(self.users.count && [info isKindOfClass:[NSNumber class]]);
+    BOOL loadingNew = !(self.users.count && ![info isKindOfClass:[NSNumber class]]);
     
     WeiboUserID cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
+    NSInteger totalCount = [response intForKey:@"total_number" defaultValue:0];
     
     if (cursor)
     {
         self.cursor = cursor;
     }
     
-    [self _addUsers:users loadingNew:loadingNew];
+    [self _addUsers:users loadingNew:loadingNew totalCount:totalCount];
 }
 
-- (void)_addUsers:(NSArray *)newUsers loadingNew:(BOOL)loadingNew
+- (void)_addUsers:(NSArray *)newUsers loadingNew:(BOOL)loadingNew totalCount:(NSInteger)totalCount
 {
     NSMutableArray * toAdd = [[newUsers mutableCopy] autorelease];
     
     for (WeiboUser * user in _users)
     {
         [toAdd removeObject:user];
+    }
+    
+    if (!toAdd.count)
+    {
+        if (!_users.count ||
+            !loadingNew)
+        {
+            [self markAtEnd];
+        }
     }
     
     if (loadingNew)
@@ -173,11 +183,12 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     }
     else
     {
-        if ([toAdd count] == 0)
-        {
-            [self markAtEnd];
-        }
         [_users addObjectsFromArray:toAdd];
+    }
+    
+    if (_users.count == totalCount)
+    {
+        [self markAtEnd];
     }
     
     [self didAddUsers:toAdd prepend:loadingNew];
