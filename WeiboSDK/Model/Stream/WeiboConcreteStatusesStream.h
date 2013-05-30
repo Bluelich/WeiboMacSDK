@@ -21,24 +21,14 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 
 @class WeiboBaseStatus, WTCallback;
 
-@interface WeiboConcreteStatusesStream : WeiboStream {
-    NSString * guid;
-    NSMutableArray * statuses;
-    NSDate * lastUpdated;
-    struct {
-		unsigned int isLoadingNewer:1;
-		unsigned int isLoadingOlder:1;
-        unsigned int isAtEnd:1;
-        unsigned int shouldAutoClearUp:1;
-        unsigned int isKeyStream:1;
-	} _flags;
-    
-    
-}
+@interface WeiboConcreteStatusesStream : WeiboStream
+
+@property (nonatomic, retain) WeiboRequestError * loadNewerError;
+@property (nonatomic, retain) WeiboRequestError * loadOlderError;
 
 #pragma mark -
 #pragma mark Accessors
-- (NSString *)guid;
+
 - (NSMutableArray *)statuses;
 - (void)setStatuses:(NSArray *)newStatuses;
 - (void)addStatus:(WeiboBaseStatus *)newStatus;
@@ -48,7 +38,6 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (WeiboBaseStatus *)oldestStatus;
 - (WeiboStatusID)newestStatusID;
 - (WeiboStatusID)oldestStatusID;
-- (NSDate *)lastUpdated;
 - (NSUInteger)maxCount;
 - (NSUInteger)minStatusesToConsiderBeingGap;
 - (BOOL)shouldIndexUsersInAutocomplete;
@@ -68,7 +57,6 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 #pragma mark On Disk Caching ( Not Implemented Yet )
 - (NSString *)storedStreamPath;
 - (void)saveStream;
-
 
 #pragma mark -
 #pragma mark Others

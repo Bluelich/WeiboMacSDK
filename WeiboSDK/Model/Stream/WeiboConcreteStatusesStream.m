@@ -25,6 +25,17 @@ NSString * const WeiboStatusStreamNotificationStatusIndexKey = @"WeiboStatusStre
 NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStreamNotificationAddingTypeKey";
 
 @interface WeiboConcreteStatusesStream ()
+{
+    NSMutableArray * statuses;
+    struct {
+		unsigned int isLoadingNewer:1;
+		unsigned int isLoadingOlder:1;
+        unsigned int isAtEnd:1;
+        unsigned int shouldAutoClearUp:1;
+        unsigned int isKeyStream:1;
+	} _flags;
+}
+
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus;
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus;
 - (void)_loadNewer;
@@ -58,8 +69,11 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     return self;
 }
 
-- (void)dealloc{
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_loadNewerError release], _loadNewerError = nil;
+    [_loadOlderError release], _loadOlderError = nil;
     [statuses release]; statuses = nil;
     [super dealloc];
 }
@@ -67,9 +81,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 
 #pragma mark -
 #pragma mark Accessors
-- (NSString *)guid{
-    return guid;
-}
+
 - (NSMutableArray *)statuses{
     if (!statuses) {
         statuses = [[NSMutableArray alloc] init];
@@ -188,9 +200,6 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     }
     return 0;
 }
-- (NSDate *)lastUpdated{
-    return lastUpdated;
-}
 - (NSUInteger)maxCount{
     return 500;
 }
@@ -251,17 +260,42 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     
 }
 
-- (void)statusesResponse:(id)response couldBeGap:(BOOL)beGap isFromFillingInGap:(BOOL)fillingGap{
-    if ([response isKindOfClass:[WeiboRequestError class]]) {
+- (void)statusesResponse:(id)response couldBeGap:(BOOL)couldBeGap isFromFillingInGap:(BOOL)fillingGap
+{
+    if ([response isKindOfClass:[WeiboRequestError class]])
+    {
+        if (fillingGap)
+        {
+            // Filling Gap
+            // TODO: set filling gap error
+        }
+        else if (couldBeGap)
+        {
+            // Prepend, Loading Newer
+            self.loadNewerError = response;
+        }
+        else
+        {
+            // Append, Loading Older
+            self.loadOlderError = response;
+        }
+        
         [self noticeDidReceiveRequestError:response];
         return;
     }
-    if (fillingGap) {
+    
+    if (fillingGap)
+    {
         [self addStatuses:response withType:WeiboStatusesAddingTypeGap];
     }
-    else if (beGap) {
+    else if (couldBeGap)
+    {
+        [self setLoadNewerError:nil];
         [self addStatuses:response withType:WeiboStatusesAddingTypePrepend];
-    }else {
+    }
+    else
+    {
+        [self setLoadOlderError:nil];
         [self addStatuses:response withType:WeiboStatusesAddingTypeAppend];
     }
 }

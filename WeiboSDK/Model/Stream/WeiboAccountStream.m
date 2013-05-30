@@ -21,8 +21,10 @@
 }
 
 - (WeiboBaseStatus *)newestStatusThatIsNotMine{
-    for (WeiboBaseStatus * status in statuses) {
-        if (status.user.userID != self.account.user.userID) {
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        if (status.user.userID != self.account.user.userID)
+        {
             return status;
         }
     }
