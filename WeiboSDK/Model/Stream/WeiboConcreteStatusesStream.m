@@ -114,9 +114,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     
     switch (type) {
         case WeiboStatusesAddingTypeAppend:{
-            if ([statusesToAdd count] == 0) {
-                [self markAtEnd];
-            }
+            _flags.isAtEnd = statusesToAdd.count == 0;
             [[self statuses] addObjectsFromArray:statusesToAdd];
             break;
         }
