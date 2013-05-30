@@ -129,12 +129,36 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 {
     _flags.isLoading = NO;
     
+    BOOL loadingNew = !(self.users.count && ![info isKindOfClass:[NSNumber class]]);
+    
+    BOOL errorLoading = NO;
+    
     if (![response isKindOfClass:[NSDictionary class]])
     {
         if ([response isKindOfClass:[WeiboRequestError class]])
         {
-            [self didReceiveRequestError:response];
+            errorLoading = YES;
         }
+    }
+    
+    if (loadingNew)
+    {
+        self.loadNewerError = errorLoading ? response : nil;
+    }
+    else
+    {
+        self.loadOlderError = errorLoading ? response : nil;
+    }
+
+    if (errorLoading)
+    {
+        if (!loadingNew || !self.users.count)
+        {
+            [self markAtEnd];
+        }
+        
+        [self didReceiveRequestError:response];
+        
         return;
     }
     
@@ -144,8 +168,6 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     {
         return;
     }
-    
-    BOOL loadingNew = !(self.users.count && ![info isKindOfClass:[NSNumber class]]);
     
     WeiboUserID cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
     NSInteger totalCount = [response intForKey:@"total_number" defaultValue:0];

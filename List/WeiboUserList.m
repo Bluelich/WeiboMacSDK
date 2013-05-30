@@ -10,6 +10,13 @@
 
 @implementation WeiboUserList
 
+- (void)dealloc
+{
+    [_loadNewerError release], _loadNewerError = nil;
+    [_loadOlderError release], _loadOlderError = nil;
+    [super dealloc];
+}
+
 - (NSArray *)users
 {
     return nil;

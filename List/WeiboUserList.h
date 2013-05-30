@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboRequestError.h"
 
 @interface WeiboUserList : NSObject
 
 @property (nonatomic, readonly) NSArray *users;
+@property (nonatomic, retain) WeiboRequestError * loadNewerError;
+@property (nonatomic, retain) WeiboRequestError * loadOlderError;
 
 - (void)loadNewer;
 - (void)loadOlder;
