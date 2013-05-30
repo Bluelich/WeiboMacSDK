@@ -26,12 +26,13 @@
 
 - (void)dealloc{
     [text release]; text = nil;
-    [_activeRanges release]; _activeRanges = nil;
-    [user release]; user = nil;
+    [_activeRanges release], _activeRanges = nil;
+    [user release], user = nil;
     [_layoutCaches release], _layoutCaches = nil;
-    [thumbnailPic release]; thumbnailPic = nil;
-    [middlePic release]; middlePic = nil;
-    [originalPic release]; originalPic = nil;
+    [thumbnailPic release], thumbnailPic = nil;
+    [middlePic release], middlePic = nil;
+    [originalPic release], originalPic = nil;
+    [_pics release], _pics = nil;
     [super dealloc];
 }
 

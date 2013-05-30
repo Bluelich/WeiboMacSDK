@@ -34,13 +34,13 @@
 @property (retain, readwrite) NSString * originalPic;
 @property (nonatomic, assign) BOOL quoted;
 @property (nonatomic, readonly) WeiboBaseStatus * quotedBaseStatus;
-@property (nonatomic, readonly) NSString * displayText;
+@property (nonatomic, retain) NSArray * pics;
 
+@property (nonatomic, readonly) NSString * displayText;
 @property (retain, nonatomic) WTActiveTextRanges * activeRanges;
 
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;
-
 @property (nonatomic, retain) NSMutableDictionary * layoutCaches;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

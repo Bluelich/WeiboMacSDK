@@ -71,6 +71,11 @@ static Weibo * _sharedWeibo = nil;
             }
         }
     }
+    
+    if (hasAccountRestored)
+    {
+        // Post notification ?
+    }
 }
 
 - (void)dealloc{

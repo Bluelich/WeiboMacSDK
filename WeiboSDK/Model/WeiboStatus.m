@@ -125,6 +125,8 @@
 		self.thumbnailPic = [dic stringForKey:@"thumbnail_pic" defaultValue:nil];
 		self.middlePic = [dic stringForKey:@"bmiddle_pic" defaultValue:nil];
 		self.originalPic = [dic stringForKey:@"original_pic" defaultValue:nil];
+        
+        self.pics = [dic objectForKey:@"pic_urls"];
                 
         NSDictionary* userDic = [dic objectForKey:@"user"];
 		if (userDic && ![userDic isKindOfClass:[NSNull class]]) {
