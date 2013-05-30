@@ -90,24 +90,28 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 }
 - (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type{
     BOOL shouldPostNotification = YES;//[self hasData];
-    // prepend can keep scroll position at top, 
-    // for some subclass that can NOT load newer, 
-    // load older has a append effect,
-    // so we should force to prepend if there is no data yet.
+
     BOOL shouldForceToAppend = ![self hasData];
+    
+    NSMutableArray * statusesToAdd = [[newStatuses mutableCopy] autorelease];
+    
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        [statusesToAdd removeObject:status];
+    }
     
     switch (type) {
         case WeiboStatusesAddingTypeAppend:{
-            if ([newStatuses count] == 0) {
+            if ([statusesToAdd count] == 0) {
                 [self markAtEnd];
             }
-            [[self statuses] addObjectsFromArray:newStatuses];
+            [[self statuses] addObjectsFromArray:statusesToAdd];
             break;
         }
         case WeiboStatusesAddingTypePrepend:{
-            NSRange insertRange = NSMakeRange(0, [newStatuses count]);
+            NSRange insertRange = NSMakeRange(0, [statusesToAdd count]);
             NSIndexSet * indexes = [NSIndexSet indexSetWithIndexesInRange:insertRange];
-            [statuses insertObjects:newStatuses atIndexes:indexes];
+            [statuses insertObjects:statusesToAdd atIndexes:indexes];
             break;
         }
         case WeiboStatusesAddingTypeGap:{
@@ -117,14 +121,14 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         default:
             break;
     }
-    [self noticeDidReceiveNewStatuses:newStatuses withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
+    [self noticeDidReceiveNewStatuses:statusesToAdd withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
     
     if (shouldPostNotification) {
         [self postStatusesChangedNotification];
     }
     
     if ([self shouldIndexUsersInAutocomplete]) {
-        [[LocalAutocompleteDB sharedAutocompleteDB] assimilateFromStatuses:newStatuses];
+        [[LocalAutocompleteDB sharedAutocompleteDB] assimilateFromStatuses:statusesToAdd];
     }
 }
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus{
