@@ -9,10 +9,5 @@
 #import "WeiboLayoutCache.h"
 
 @implementation WeiboLayoutCache
-@synthesize width = _width;
-@synthesize height = _height;
-@synthesize textHeight = _textHeight;
-@synthesize textHeightOfQuotedStatus = _textHeightOfQuotedStatus;
-@synthesize showThumb = _showThumb;
-@synthesize fontSize = _fontSize;
+
 @end
