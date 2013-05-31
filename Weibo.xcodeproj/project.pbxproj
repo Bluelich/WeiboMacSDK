@@ -30,6 +30,8 @@
 		C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */ = {isa = PBXBuildFile; fileRef = C61E986515A9921100C42FE5 /* WeiboEmotion.h */; };
 		C61E986915A9921100C42FE5 /* WeiboEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E986615A9921100C42FE5 /* WeiboEmotion.m */; };
 		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
+		C638914A175840400005069A /* WeiboPicture.h in Headers */ = {isa = PBXBuildFile; fileRef = C63891481758403E0005069A /* WeiboPicture.h */; };
+		C638914B175840400005069A /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
 		C6647D3014ED638E00422998 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */; };
 		C6647D3214ED638E00422998 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */; };
 		C6647D3414ED638E00422998 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06514E6BF02000D3507 /* ASIDownloadCache.m */; };
@@ -146,6 +148,8 @@
 		C61E986615A9921100C42FE5 /* WeiboEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboEmotion.m; sourceTree = "<group>"; };
 		C630CC6B152ABDED00A5AF7A /* WTFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTFileManager.h; path = WeiboSDK/Support/WTFileManager.h; sourceTree = "<group>"; };
 		C630CC6C152ABDED00A5AF7A /* WTFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTFileManager.m; path = WeiboSDK/Support/WTFileManager.m; sourceTree = "<group>"; };
+		C63891481758403E0005069A /* WeiboPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboPicture.h; sourceTree = "<group>"; };
+		C63891491758403F0005069A /* WeiboPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboPicture.m; sourceTree = "<group>"; };
 		C63A182114F0CF51000F3E72 /* NSArray+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.h"; sourceTree = "<group>"; };
 		C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+WeiboAdditions.m"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.m"; sourceTree = "<group>"; };
 		C63A182514F0D777000F3E72 /* WeiboAccountStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboAccountStream.h; path = WeiboSDK/Model/Stream/WeiboAccountStream.h; sourceTree = "<group>"; };
@@ -469,6 +473,8 @@
 				C6B8C5271514DB0900935AC5 /* AutocompleteDB */,
 				C6DB909714E4EEC8001DE9F5 /* WeiboAccount.h */,
 				C6DB909814E4EEC8001DE9F5 /* WeiboAccount.m */,
+				C63891481758403E0005069A /* WeiboPicture.h */,
+				C63891491758403F0005069A /* WeiboPicture.m */,
 				C6DE37CB14EF75AC004DAFE9 /* WeiboBaseStatus.h */,
 				C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */,
 				C6CDEC7B16619EC40013C1EA /* WeiboLayoutCache.h */,
@@ -661,6 +667,7 @@
 				C6EC37621745F2BA0085E6ED /* WeiboAPI+UnreadCount.h in Headers */,
 				C6EC37671745F33C0085E6ED /* WeiboAPI+AccountMethods.h in Headers */,
 				C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */,
+				C638914A175840400005069A /* WeiboPicture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,6 +794,7 @@
 				C6EC375F1745F26D0085E6ED /* WeiboAPI+DirectMessages.m in Sources */,
 				C6EC37641745F2BA0085E6ED /* WeiboAPI+UnreadCount.m in Sources */,
 				C6EC37691745F33C0085E6ED /* WeiboAPI+AccountMethods.m in Sources */,
+				C638914B175840400005069A /* WeiboPicture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

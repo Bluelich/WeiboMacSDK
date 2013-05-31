@@ -9,6 +9,7 @@
 #import "WeiboStatus.h"
 #import "WeiboGeotag.h"
 #import "WeiboUser.h"
+#import "WeiboPicture.h"
 #import "WTCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
@@ -126,8 +127,36 @@
 		self.middlePic = [dic stringForKey:@"bmiddle_pic" defaultValue:nil];
 		self.originalPic = [dic stringForKey:@"original_pic" defaultValue:nil];
         
-        self.pics = [dic objectForKey:@"pic_urls"];
+        NSArray * picURLs = [dic objectForKey:@"pic_urls"];
+        NSMutableArray * pics = [NSMutableArray array];
+        
+        for (NSDictionary * dict in picURLs)
+        {
+            if ([dict isKindOfClass:[NSDictionary class]])
+            {
+                WeiboPicture * picture = [WeiboPicture pictureWithDictionary:dict];
                 
+                if (picture)
+                {
+                    [pics addObject:picture];
+                }
+            }
+        }
+        
+        self.pics = pics;
+        
+        if (!self.pics.count && self.thumbnailPic.length)
+        {
+            WeiboPicture * picture = [WeiboPicture new];
+            picture.thumbnailImage = self.thumbnailPic;
+            picture.middleImage = self.middlePic;
+            picture.originalImage = self.originalPic;
+            
+            self.pics = @[picture];
+            
+            [picture release];
+        }
+        
         NSDictionary* userDic = [dic objectForKey:@"user"];
 		if (userDic && ![userDic isKindOfClass:[NSNull class]]) {
 			self.user = [WeiboUser userWithDictionary:userDic];
