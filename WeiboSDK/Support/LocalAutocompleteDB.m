@@ -195,7 +195,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     }
     NSMutableArray * resultArray = [NSMutableArray array];
     NSString * pattern = [[text stringByAppendingString:@"%"] lowercaseString];
-    FMResultSet *rs = [db executeQuery:@"select * from names where id like ? or full_name like ? order by full_name asc",pattern,pattern];
+    FMResultSet *rs = [db executeQuery:@"select * from names where id like ? or full_name like ? or username like ? order by full_name asc",pattern,pattern,pattern];
     while ([rs next]) {
         WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
         [item setPriority:[rs intForColumn:@"priority"]];

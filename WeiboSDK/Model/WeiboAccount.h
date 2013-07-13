@@ -66,9 +66,13 @@
 #pragma mark Life Cycle
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root;
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword;
+- (id)initWithUserID:(WeiboUserID)userID oAuth2Token:(NSString *)token;
 
 #pragma mark -
 #pragma mark Accessor
+
++ (NSString *)keyChainAccountForUserID:(WeiboUserID)userID;
+
 - (WeiboTimelineStream *) timelineStream;
 - (WeiboMentionsStream *) mentionsStream;
 - (WeiboCommentsTimelineStream *) commentsTimelineStream;

@@ -32,7 +32,7 @@
 }
 - (NSString *)autosaveName{
     return [[super autosaveName] 
-            stringByAppendingFormat:@"weibo.com/%@/",account.username];
+            stringByAppendingFormat:@"weibo.com/%lld/",account.user.userID];
 }
 
 @end

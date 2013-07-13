@@ -19,6 +19,8 @@
 @property (readwrite,retain) WeiboStatus * replyToStatus;
 @property (readwrite,retain) WeiboComment * replyToComment;
 
+@property (nonatomic, assign) BOOL treatReplyingStatusAsQuoted;
+
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic;

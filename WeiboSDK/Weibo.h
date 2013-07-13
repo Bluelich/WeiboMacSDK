@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboConstants.h"
 
 extern NSString * const WeiboAccountSetDidChangeNotification;
 
@@ -24,9 +25,14 @@ extern NSString * const WeiboAccountSetDidChangeNotification;
 - (void)pruneCaches:(id)sender;
 - (void)shutdown;
 - (NSMutableArray *)accounts;
+
+// Use When Grant Type == Password
 - (void)signInWithUsername:(NSString *)aUsername 
                   password:(NSString *)aPassword 
                   callback:(WTCallback *)aCallback;
+// Use When Grant Type == Authorization Code 
+- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WTCallback *)aCallback;
+
 - (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
                       password:(NSString *)aPassword 
                       callback:(WTCallback *)aCallback;
@@ -35,6 +41,8 @@ extern NSString * const WeiboAccountSetDidChangeNotification;
 - (void)removeAccount:(WeiboAccount *)aAccount;
 - (BOOL)containsAccount:(WeiboAccount *)aAccount;
 - (WeiboAccount *)accountWithUsername:(NSString *)aUsername;
+- (WeiboAccount *)accountWithUserID:(WeiboUserID)userID;
+
 - (WeiboAccount *)defaultAccount;
 - (void)reorderAccountFromIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 - (void)refresh;

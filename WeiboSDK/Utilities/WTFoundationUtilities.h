@@ -42,6 +42,10 @@ static void LogBinary (NSUInteger theNumber,NSInteger bits) {
 [ivar release];\
 ivar = newVar;
 
+#define SetAtomicRetainedIvar(ivar, newVar) @synchronized(self) {[newVar retain];\
+[ivar release];\
+ivar = newVar;}
+
 #define SetCopiedIvar(ivar, newVar) [newVar copy];\
 [ivar release];\
 ivar = newVar;

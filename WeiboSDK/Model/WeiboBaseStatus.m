@@ -24,7 +24,8 @@
 @synthesize activeRanges = _activeRanges;
 @synthesize quoted = _quoted;
 
-- (void)dealloc{
+- (void)dealloc
+{
     [text release]; text = nil;
     [_activeRanges release], _activeRanges = nil;
     [user release], user = nil;
@@ -83,7 +84,14 @@
 {
     if (self.quoted)
     {
-        return [NSString stringWithFormat:@"@%@:%@",self.user.screenName, self.text];
+        if (self.user.screenName)
+        {
+            return [NSString stringWithFormat:@"@%@:%@",self.user.screenName, self.text];
+        }
+        else
+        {
+            return self.text;
+        }
     }
     
     return self.text;

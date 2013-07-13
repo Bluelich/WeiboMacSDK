@@ -31,6 +31,15 @@
 
 #define CACHE_LIVETIME 600.0
 
+@interface WeiboAccount ()
+{
+    struct {
+        unsigned int requestingAvatar: 1;
+    } _flags;
+}
+
+@end
+
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
 @synthesize delegate = _delegate, notificationOptions;
@@ -85,13 +94,25 @@
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [self init]) {
         username = [[decoder decodeObjectForKey:@"username"] retain];
-        self.oAuth2Token = [SSKeychain passwordForService:[self keychainService] 
-                                                       account:self.username];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
-        [self verifyCredentials:nil]; 
+        
+        WeiboUserID userID = self.user.userID;
+        
+        if (userID)
+        {
+            NSString * keyChainAccount = [[self class] keyChainAccountForUserID:userID];
+            
+            self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
+                                                      account:keyChainAccount];
+        }
+        
+        if (self.oAuth2Token)
+        {
+            [self verifyCredentials:nil];
+        }
     }
     return self;
 }
@@ -106,10 +127,30 @@
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword{
     return [self initWithUsername:aUsername password:aPassword apiRoot:WEIBO_APIROOT_DEFAULT];
 }
+- (id)initWithUserID:(WeiboUserID)userID oAuth2Token:(NSString *)token
+{
+    if (self = [self init])
+    {
+        WeiboUser * dummyUser = [[WeiboUser new] autorelease];
+        dummyUser.userID = userID;
+        
+        self.user = dummyUser;
+        self.oAuth2Token = token;
+        
+        apiRoot = [WEIBO_APIROOT_DEFAULT retain];
+    }
+    return self;
+}
 
 
 #pragma mark -
 #pragma mark Accessor
+
++ (NSString *)keyChainAccountForUserID:(WeiboUserID)userID
+{
+    return [NSString stringWithFormat:@"AccessToken:%lld",userID];
+}
+
 - (WeiboTimelineStream *) timelineStream{
     return timelineStream;
 }
@@ -135,10 +176,20 @@
     NSString *identifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
     return identifier;
 }                                                            
-- (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount{
-    return [self.username isEqualToString:anotherAccount.username];
+- (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount
+{
+    if (self.username)
+    {
+        return [self.username isEqualToString:anotherAccount.username];
+    }
+    else if (self.user.userID)
+    {
+        return [self.user isEqual:anotherAccount.user];
+    }
+    return NO;
 }
-- (BOOL)isEqual:(id)object{
+- (BOOL)isEqual:(id)object
+{
     if ([object isKindOfClass:[self class]]) {
         return [self isEqualToAccount:object];
     }
@@ -283,19 +334,64 @@
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api verifyCredentials];
 }
-- (void)profileImageResponse:(id)response info:(id)info{
+
++ (NSImage*)scaleImage:(NSImage*)image toSize:(NSSize)size
+{
+	NSSize originalSize = [image size];
+	NSSize scaledSize = size;
+	
+	if(originalSize.width > originalSize.height)
+		scaledSize.height = (size.height * originalSize.height) / originalSize.width;
+	else
+		scaledSize.width = (size.width * originalSize.width) / originalSize.height;
+    
+	NSImage* icon = [[NSImage alloc] initWithSize:size];
+    
+	[icon lockFocus];
+    
+    float xoff = (size.width - scaledSize.width) * 0.50;
+    float yoff = (size.height - scaledSize.height) * 0.50;
+    
+    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    [image drawInRect:NSMakeRect(xoff, yoff, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[icon unlockFocus];
+	
+	return [icon autorelease];
+}
+
+- (NSImage *)profileImage
+{
+    if (!_profileImage && !_flags.requestingAvatar)
+    {
+        [self requestProfileImageWithCallback:nil];
+    }
+    return _profileImage;
+}
+
+- (void)profileImageResponse:(id)response info:(id)info
+{
+    _flags.requestingAvatar = 0;
+    
     WTCallback * callback = (WTCallback *)info;
+    
     NSImage * image = [[[NSImage alloc] initWithData:response] autorelease];
     if (image) {
+        if (image.size.width > 50 || image.size.height > 50)
+        {
+            image = [[self class] scaleImage:image toSize:NSMakeSize(50, 50)];
+        }
         self.profileImage = image;
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
         [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
     }
     [callback invoke:image];
 }
-- (void)requestProfileImageWithCallback:(WTCallback *)aCallback{
+- (void)requestProfileImageWithCallback:(WTCallback *)aCallback
+{
+    _flags.requestingAvatar = 1;
+    
     WTCallback * callback = WTCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
-    NSURL * url = [NSURL URLWithString:self.user.profileImageUrl];
+    NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
     ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
     [request setCompletionBlock:^{
         [callback invoke:request.responseData];

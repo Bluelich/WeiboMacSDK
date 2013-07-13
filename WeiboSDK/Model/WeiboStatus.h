@@ -25,7 +25,7 @@
 }
 
 @property (assign, nonatomic) BOOL truncated;
-@property (retain, nonatomic) WeiboStatus * retweetedStatus;
+@property (retain, atomic) WeiboStatus * retweetedStatus;
 @property (assign, nonatomic) WeiboStatusID inReplyToStatusID;
 @property (retain, nonatomic) WeiboGeotag * geo;
 @property (assign, nonatomic) BOOL favorited;

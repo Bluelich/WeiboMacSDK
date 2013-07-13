@@ -66,6 +66,9 @@
 
 - (id)_initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
+        
+        self.treatReplyingStatusAsQuoted = YES;
+        
         self.sid = [dic longlongForKey:@"id" defaultValue:-1];
 		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
 		self.text = [dic stringForKey:@"text" defaultValue:@""];
@@ -94,7 +97,8 @@
     return self;
 }
 
-- (BOOL)isComment{
+- (BOOL)isComment
+{
     return YES;
 }
 
@@ -104,7 +108,7 @@
     {
         return self.replyToComment;
     }
-    else if (self.replyToStatus)
+    else if (self.replyToStatus && self.treatReplyingStatusAsQuoted)
     {
         return self.replyToStatus;
     }

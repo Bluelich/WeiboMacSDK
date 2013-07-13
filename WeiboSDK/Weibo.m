@@ -9,7 +9,9 @@
 #import "Weibo.h"
 #import "WeiboAccount.h"
 #import "WeiboAPI+AccountMethods.h"
+#import "WeiboAPI+UserMethods.h"
 #import "WTCallback.h"
+#import "SSKeychain.h"
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
 
@@ -122,10 +124,75 @@ static Weibo * _sharedWeibo = nil;
     [api clientAuthRequestAccessToken];
     [account autorelease];
 }
-- (void)didSignIn:(id)response info:(id)info{
+- (void)didSignIn:(id)response info:(id)info
+{
     WeiboAccount * account = (WeiboAccount *)response;
     [self addAccount:account];
     [info invoke:account];
+}
+
+#define kWeiboAccessTokenVerifingAccountKey @"kWeiboAccessTokenVerifingAccountKey"
+#define kWeiboAccessTokenVerifingCallbackKey @"kWeiboAccessTokenVerifingCallbackKey"
+- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WTCallback *)aCallback
+{
+    WeiboAccount * account = [[[WeiboAccount alloc] initWithUserID:userID oAuth2Token:accessToken] autorelease];
+    
+    account.expireTime = expireTime;
+    
+    NSDictionary * info = @{kWeiboAccessTokenVerifingAccountKey: account,
+                            kWeiboAccessTokenVerifingCallbackKey: aCallback};
+    
+    WTCallback * callback = WTCallbackMake(self, @selector(accessTokenVerifingResponse:info:), info);
+    WeiboAPI * api = [account authenticatedRequest:callback];
+    
+    [api verifyCredentials];
+}
+- (void)accessTokenVerifingResponse:(id)response info:(id)info
+{
+    WeiboAccount * account = info[kWeiboAccessTokenVerifingAccountKey];
+    WTCallback * callback = info[kWeiboAccessTokenVerifingCallbackKey];
+    
+    id callbackObject = account;
+    
+    if ([response isKindOfClass:[WeiboRequestError class]])
+    {
+        callbackObject = response;
+    }
+    else if ([response isKindOfClass:[WeiboUser class]])
+    {
+        WeiboUser * newUser = (WeiboUser *)response;
+        
+        if (account.user.userID && ![newUser isEqual:account.user])
+        {
+            WeiboRequestError * error = [WeiboRequestError errorWithResponseString:@"" statusCode:WeiboErrorCodeTokenInvalid];
+            callbackObject = error;
+        }
+        else
+        {
+            [account setUser:newUser];
+            [account myUserDidUpdate:newUser];
+            
+            NSInteger existIndex = [self.accounts indexOfObject:account];
+            
+            if (existIndex != NSNotFound)
+            {
+                // account exist, update it.
+                
+                [[account retain] autorelease];
+                [self.accounts removeObjectAtIndex:existIndex];
+                [self.accounts insertObject:account atIndex:existIndex];
+            }
+            else
+            {
+                // account not exist, add it to our set.
+                [self addAccount:account];
+            }
+            
+            [SSKeychain setPassword:account.oAuth2Token forService:[account keychainService] account:[WeiboAccount keyChainAccountForUserID:account.user.userID]];
+        }
+    }
+    
+    [callback invoke:callbackObject];
 }
 
 - (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
@@ -185,6 +252,17 @@ static Weibo * _sharedWeibo = nil;
     }
     return nil;
 }
+- (WeiboAccount *)accountWithUserID:(WeiboUserID)userID
+{
+    for (WeiboAccount * account in accounts)
+    {
+        if (account.user.userID == userID)
+        {
+            return account;
+        }
+    }
+    return nil;
+}
 
 - (WeiboAccount *)defaultAccount{
     if ([accounts count] < 1) {
@@ -208,10 +286,12 @@ static Weibo * _sharedWeibo = nil;
     
 }
 
-- (BOOL)hasFreshMessages{
+- (BOOL)hasFreshMessages
+{
     return NO;
 }
-- (BOOL)hasFreshAnythingApplicableToStatusItem{
+- (BOOL)hasFreshAnythingApplicableToStatusItem
+{
     for (WeiboAccount * account in accounts) {
         if (account.hasFreshAnythingApplicableToStatusItem) {
             return YES;
@@ -219,7 +299,8 @@ static Weibo * _sharedWeibo = nil;
     }
     return NO;
 }
-- (BOOL)hasFreshAnythingApplicableToDockBadge{
+- (BOOL)hasFreshAnythingApplicableToDockBadge
+{
     for (WeiboAccount * account in accounts) {
         if (account.hasFreshAnythingApplicableToDockBadge) {
             return YES;
@@ -227,7 +308,8 @@ static Weibo * _sharedWeibo = nil;
     }
     return NO;
 }
-- (BOOL)hasAnythingUnread{
+- (BOOL)hasAnythingUnread
+{
     for (WeiboAccount * account in accounts) {
         if (account.hasAnythingUnread) {
             return YES;
