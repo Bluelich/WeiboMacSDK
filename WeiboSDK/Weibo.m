@@ -17,6 +17,8 @@ NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChan
 
 NSString * const WeiboObjectWithIdentifierWillDeallocNotification = @"WeiboObjectWithIdentifierWillDeallocNotification";
 NSString * const WeiboObjectUserInfoUniqueIdentifierKey = @"WeiboObjectUserInfoUniqueIdentifierKey";
+NSString * const WeiboDidHeartbeatNotification = @"WeiboDidHeartbeatNotification";
+
 
 @implementation Weibo
 
@@ -87,12 +89,15 @@ static Weibo * _sharedWeibo = nil;
     [super dealloc];
 }
 
-- (void)heartbeat:(id)sender{
+- (void)heartbeat:(id)sender
+{
     for (WeiboAccount * account in accounts) {
         if (!account.tokenExpired) {
             [account refreshTimelines];
         }
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDidHeartbeatNotification object:nil];
 }
 - (void)pruneCaches:(id)sender{
     for (WeiboAccount * account in accounts) {

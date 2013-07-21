@@ -36,9 +36,6 @@
     NSMutableDictionary * userDetailsStreamsCache;
     
     struct {
-        // DirectMessage & Follower Not Implemented Yet.
-        // But we need notificate this things.
-        // Temporary use two flags below.
         unsigned int newDirectMessages:1;
         unsigned int newFollowers:1;
         // When mentions stream or comments stream not loaded
