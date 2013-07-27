@@ -19,23 +19,23 @@
 }
 
 - (void)_loadNewer{
-    // This should not be called
+    WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];
+    [api trendStatusesWithTrend:self.trendName page:1 count:100];
 }
-- (void)loadNewer{
-    [self loadOlder];
-}
-
 - (void)_loadOlder{
     WeiboAPI * api = [account authenticatedRequest:[self loadOlderResponseCallback]];
     [api trendStatusesWithTrend:self.trendName page:loadedPage+1 count:100];
 }
 
-- (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type{
-    loadedPage++;
+- (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type
+{
+    if (type == WeiboStatusesAddingTypeAppend)
+    {
+        loadedPage++;
+    }
+    loadedPage = MIN(1, loadedPage);
+    
     [super addStatuses:newStatuses withType:type];
-}
-- (BOOL)canLoadNewer{
-    return NO;
 }
 - (BOOL)supportsFillingInGaps{
     return NO;
