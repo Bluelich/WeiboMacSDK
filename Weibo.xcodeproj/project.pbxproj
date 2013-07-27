@@ -30,7 +30,6 @@
 		C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */ = {isa = PBXBuildFile; fileRef = C61E986515A9921100C42FE5 /* WeiboEmotion.h */; };
 		C61E986915A9921100C42FE5 /* WeiboEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E986615A9921100C42FE5 /* WeiboEmotion.m */; };
 		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
-		C633441A17A3DC8800C147FC /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C633440F17A3DC1800C147FC /* Mantle.framework */; };
 		C638914A175840400005069A /* WeiboPicture.h in Headers */ = {isa = PBXBuildFile; fileRef = C63891481758403E0005069A /* WeiboPicture.h */; };
 		C638914B175840400005069A /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
 		C6647D3014ED638E00422998 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */; };
@@ -71,90 +70,7 @@
 		C68009EA14FE788400FA3175 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
 		C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */; };
 		C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */ = {isa = PBXBuildFile; fileRef = C6880780174E048000FD69F4 /* WeiboComposition.h */; };
-		C6896E7A17A39F130046DD70 /* WeiboList.h in Headers */ = {isa = PBXBuildFile; fileRef = C6896E7817A39F130046DD70 /* WeiboList.h */; };
-		C6896E7B17A39F130046DD70 /* WeiboList.m in Sources */ = {isa = PBXBuildFile; fileRef = C6896E7917A39F130046DD70 /* WeiboList.m */; };
-		C6896E9017A3A1830046DD70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
-		C6896EFC17A3CF220046DD70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
-		C6896F0217A3CF220046DD70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6896F0017A3CF220046DD70 /* InfoPlist.strings */; };
-		C6896F0617A3CF220046DD70 /* WeiboSDKMac.m in Sources */ = {isa = PBXBuildFile; fileRef = C6896F0517A3CF220046DD70 /* WeiboSDKMac.m */; };
-		C6896F2717A3CFE70046DD70 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */; };
-		C6896F2817A3CFE70046DD70 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */; };
-		C6896F2917A3CFE70046DD70 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06514E6BF02000D3507 /* ASIDownloadCache.m */; };
-		C6896F2A17A3CFE70046DD70 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06714E6BF02000D3507 /* ASIFormDataRequest.m */; };
-		C6896F2B17A3CFE70046DD70 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06914E6BF02000D3507 /* ASIHTTPRequest.m */; };
-		C6896F2C17A3CFE70046DD70 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06D14E6BF02000D3507 /* ASIInputStream.m */; };
-		C6896F2D17A3CFE70046DD70 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06F14E6BF02000D3507 /* ASINetworkQueue.m */; };
-		C6896F2E17A3CFE70046DD70 /* WTHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */; };
-		C6896F2F17A3CFE70046DD70 /* WeiboRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F317B114E7CD2200A952FE /* WeiboRequestError.m */; };
-		C6896F3017A3CFE70046DD70 /* WTCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WTCallback.m */; };
-		C6896F3117A3CFE70046DD70 /* WTKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */; };
-		C6896F3217A3CFE70046DD70 /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
-		C6896F3317A3CFE70046DD70 /* WeiboAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */; };
-		C6896F3417A3CFE70046DD70 /* WeiboAPI+AccountMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC37661745F33C0085E6ED /* WeiboAPI+AccountMethods.m */; };
-		C6896F3517A3CFE70046DD70 /* WeiboAPI+StatusMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC37571745F13A0085E6ED /* WeiboAPI+StatusMethods.m */; };
-		C6896F3617A3CFE70046DD70 /* WeiboAPI+DirectMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC375C1745F26D0085E6ED /* WeiboAPI+DirectMessages.m */; };
-		C6896F3717A3CFE70046DD70 /* WeiboAPI+UnreadCount.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC37611745F2BA0085E6ED /* WeiboAPI+UnreadCount.m */; };
-		C6896F3817A3CFE70046DD70 /* WeiboAPI+UserMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC37521745EF9C0085E6ED /* WeiboAPI+UserMethods.m */; };
-		C6896F3917A3CFE70046DD70 /* WeiboAPI+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC374D1745EE570085E6ED /* WeiboAPI+Private.m */; };
-		C6896F3A17A3CFE70046DD70 /* LocalAutocompleteDB.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */; };
-		C6896F3B17A3CFE70046DD70 /* WeiboAutocompleteResultItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B8C5311514DC7200935AC5 /* WeiboAutocompleteResultItem.m */; };
-		C6896F3C17A3CFE70046DD70 /* WeiboAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909814E4EEC8001DE9F5 /* WeiboAccount.m */; };
-		C6896F3D17A3CFE70046DD70 /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
-		C6896F3E17A3CFE70046DD70 /* WeiboBaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */; };
-		C6896F3F17A3CFE70046DD70 /* WeiboLayoutCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CDEC7C16619EC40013C1EA /* WeiboLayoutCache.m */; };
-		C6896F4017A3CFE70046DD70 /* WeiboStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D08E14E7A136000D3507 /* WeiboStatus.m */; };
-		C6896F4117A3CFE80046DD70 /* WeiboFavoriteStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6653D901556869E00350990 /* WeiboFavoriteStatus.m */; };
-		C6896F4217A3CFE80046DD70 /* WeiboComment.m in Sources */ = {isa = PBXBuildFile; fileRef = C67ED9AC1501B0E80059AF71 /* WeiboComment.m */; };
-		C6896F4317A3CFE80046DD70 /* WeiboEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E986615A9921100C42FE5 /* WeiboEmotion.m */; };
-		C6896F4417A3CFE80046DD70 /* WeiboUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB90A114E50A8E001DE9F5 /* WeiboUser.m */; };
-		C6896F4517A3CFE80046DD70 /* WeiboConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB90C614E51127001DE9F5 /* WeiboConfiguration.m */; };
-		C6896F4617A3CFE80046DD70 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
-		C6896F4717A3CFE80046DD70 /* WeiboUnread.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DC65D714FDE5D000B70E45 /* WeiboUnread.m */; };
-		C6896F4817A3CFE80046DD70 /* WeiboList.m in Sources */ = {isa = PBXBuildFile; fileRef = C6896E7917A39F130046DD70 /* WeiboList.m */; };
-		C6896F4917A3CFE80046DD70 /* WTActiveTextRanges.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */; };
-		C6896F4A17A3CFE80046DD70 /* ABActiveRange.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */; };
-		C6896F4B17A3CFE80046DD70 /* WeiboUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B51221745D6A200E99C07 /* WeiboUserList.m */; };
-		C6896F4C17A3CFE80046DD70 /* WeiboUserUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B51271745D72E00E99C07 /* WeiboUserUserList.m */; };
-		C6896F4D17A3CFE80046DD70 /* WeiboUserRelationshipUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B512C1745DB7E00E99C07 /* WeiboUserRelationshipUserList.m */; };
-		C6896F4E17A3CFE80046DD70 /* WeiboUserFollowersList.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B51311745DBAF00E99C07 /* WeiboUserFollowersList.m */; };
-		C6896F4F17A3CFE80046DD70 /* WeiboUserFollowingList.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B51361745DBC800E99C07 /* WeiboUserFollowingList.m */; };
-		C6896F5017A3CFE80046DD70 /* WeiboUserStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C641275314F1EBF000D47925 /* WeiboUserStream.m */; };
-		C6896F5117A3CFE80046DD70 /* WeiboUserTimelineStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C641275614F1EC2700D47925 /* WeiboUserTimelineStream.m */; };
-		C6896F5217A3CFE80046DD70 /* WeiboStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CB06EA14F091D200DF5249 /* WeiboStream.m */; };
-		C6896F5317A3CFE80046DD70 /* WeiboConcreteStatusesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CB06F314F0A79F00DF5249 /* WeiboConcreteStatusesStream.m */; };
-		C6896F5417A3CFE80046DD70 /* WeiboAccountStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182614F0D778000F3E72 /* WeiboAccountStream.m */; };
-		C6896F5517A3CFE80046DD70 /* WeiboTimelineStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C641274F14F1EBA300D47925 /* WeiboTimelineStream.m */; };
-		C6896F5617A3CFE80046DD70 /* WeiboMentionsStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FE675E14F4EC62009EE772 /* WeiboMentionsStream.m */; };
-		C6896F5717A3CFE80046DD70 /* WeiboFavoritesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6653D8A15566B0600350990 /* WeiboFavoritesStream.m */; };
-		C6896F5817A3CFE80046DD70 /* WeiboCommentsTimelineStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FE676214F4EE1D009EE772 /* WeiboCommentsTimelineStream.m */; };
-		C6896F5917A3CFE80046DD70 /* WeiboRepliesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DC00DA150DADC700E95B58 /* WeiboRepliesStream.m */; };
-		C6896F5A17A3CFE80046DD70 /* WeiboTrendStatusesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FB01557E95A0038C7D2 /* WeiboTrendStatusesStream.m */; };
-		C6896F5B17A3CFE80046DD70 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011AFE15147B2500A0A49C /* FMDatabase.m */; };
-		C6896F5C17A3CFE80046DD70 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */; };
-		C6896F5D17A3CFE80046DD70 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0215147B2500A0A49C /* FMDatabasePool.m */; };
-		C6896F5E17A3CFE80046DD70 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0415147B2500A0A49C /* FMDatabaseQueue.m */; };
-		C6896F5F17A3CFE80046DD70 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0715147B2500A0A49C /* FMResultSet.m */; };
-		C6896F6017A3CFE80046DD70 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6053FE914F380F1003A581D /* SSKeychain.m */; };
-		C6896F6117A3CFE80046DD70 /* NSDictionary+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C92214EBDF7600CC75F5 /* NSDictionary+WeiboAdditions.m */; };
-		C6896F6217A3CFE80046DD70 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
-		C6896F6317A3CFE80046DD70 /* WTOASingnaturer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED1A214E686180033CA45 /* WTOASingnaturer.m */; };
-		C6896F6417A3CFE80046DD70 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E0BC2315E8A222007BAA20 /* JSONKit.m */; };
-		C6896F6517A3CFE80046DD70 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19314E6662B0033CA45 /* NSString+URLEncoding.m */; };
-		C6896F6617A3CFE80046DD70 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19714E6662B0033CA45 /* NSURL+Base.m */; };
-		C6896F6717A3CFE80046DD70 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17414E6661A0033CA45 /* OAToken.m */; };
-		C6896F6817A3CFE80046DD70 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17614E6661A0033CA45 /* OAConsumer.m */; };
-		C6896F6917A3CFE80046DD70 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17A14E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.m */; };
-		C6896F6A17A3CFE80046DD70 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17C14E6661A0033CA45 /* OAPlaintextSignatureProvider.m */; };
-		C6896F6B17A3CFE80046DD70 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17E14E6661A0033CA45 /* OARequestParameter.m */; };
-		C6896F6C17A3CFE80046DD70 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908E14E4E14C001DE9F5 /* RegexKitLite.m */; };
-		C6896F6D17A3CFE80046DD70 /* WeiboStatusStreamFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FA4155764F10038C7D2 /* WeiboStatusStreamFilter.m */; };
-		C6896F6E17A3CFE80046DD70 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FAB155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m */; };
-		C6896F6F17A3CFE80046DD70 /* Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909114E4EE29001DE9F5 /* Weibo.m */; };
-		C6896F7117A3D07A0046DD70 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C6896F7017A3D07A0046DD70 /* libsqlite3.dylib */; };
-		C6896F7317A3D0830046DD70 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6896F7217A3D0830046DD70 /* ApplicationServices.framework */; };
-		C6896F7417A3D08E0046DD70 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C6634FEB14EF352C0097E15B /* libz.dylib */; };
-		C6896F7517A3D09E0046DD70 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C6DB908A14E4E11E001DE9F5 /* libicucore.dylib */; };
-		C6896F7C17A3D1C30046DD70 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19C14E666650033CA45 /* Base64Transcoder.c */; };
+		C6B4DC1514ED347C0032A8CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
 		C6B8C51D1514D75D00935AC5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011AFE15147B2500A0A49C /* FMDatabase.m */; };
 		C6B8C51E1514D75D00935AC5 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */; };
 		C6B8C51F1514D75D00935AC5 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0215147B2500A0A49C /* FMDatabasePool.m */; };
@@ -190,30 +106,6 @@
 		C6FBECC414F5D73200430A81 /* WeiboMentionsStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FE675E14F4EC62009EE772 /* WeiboMentionsStream.m */; };
 		C6FBECC514F5D73200430A81 /* WeiboCommentsTimelineStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FE676214F4EE1D009EE772 /* WeiboCommentsTimelineStream.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C633440E17A3DC1800C147FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C633440617A3DC1700C147FC /* Mantle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D042FC3C15F72B23004E8054;
-			remoteInfo = "Mantle Mac";
-		};
-		C633441017A3DC1800C147FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C633440617A3DC1700C147FC /* Mantle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D042FC7915F72BC7004E8054;
-			remoteInfo = "Mantle iOS";
-		};
-		C633441217A3DC1800C147FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C633440617A3DC1700C147FC /* Mantle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D042FC8715F72BC7004E8054;
-			remoteInfo = "Mantle iOS Tests";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C6011AF9151475D500A0A49C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -256,7 +148,6 @@
 		C61E986615A9921100C42FE5 /* WeiboEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboEmotion.m; sourceTree = "<group>"; };
 		C630CC6B152ABDED00A5AF7A /* WTFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTFileManager.h; path = WeiboSDK/Support/WTFileManager.h; sourceTree = "<group>"; };
 		C630CC6C152ABDED00A5AF7A /* WTFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTFileManager.m; path = WeiboSDK/Support/WTFileManager.m; sourceTree = "<group>"; };
-		C633440617A3DC1700C147FC /* Mantle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mantle.xcodeproj; path = Mantle/Mantle.xcodeproj; sourceTree = "<group>"; };
 		C63891481758403E0005069A /* WeiboPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboPicture.h; sourceTree = "<group>"; };
 		C63891491758403F0005069A /* WeiboPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboPicture.m; sourceTree = "<group>"; };
 		C63A182114F0CF51000F3E72 /* NSArray+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+WeiboAdditions.h"; path = "WeiboSDK/Utilities/Additions/NSArray+WeiboAdditions.h"; sourceTree = "<group>"; };
@@ -282,19 +173,6 @@
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
 		C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
 		C6880780174E048000FD69F4 /* WeiboComposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboComposition.h; sourceTree = "<group>"; };
-		C6896E7817A39F130046DD70 /* WeiboList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboList.h; path = WeiboSDK/Model/WeiboList.h; sourceTree = "<group>"; };
-		C6896E7917A39F130046DD70 /* WeiboList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboList.m; path = WeiboSDK/Model/WeiboList.m; sourceTree = "<group>"; };
-		C6896EFB17A3CF220046DD70 /* WeiboSDKMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeiboSDKMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6896EFF17A3CF220046DD70 /* WeiboSDKMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeiboSDKMac-Info.plist"; sourceTree = "<group>"; };
-		C6896F0117A3CF220046DD70 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C6896F0317A3CF220046DD70 /* WeiboSDKMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDKMac-Prefix.pch"; sourceTree = "<group>"; };
-		C6896F0417A3CF220046DD70 /* WeiboSDKMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiboSDKMac.h; sourceTree = "<group>"; };
-		C6896F0517A3CF220046DD70 /* WeiboSDKMac.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeiboSDKMac.m; sourceTree = "<group>"; };
-		C6896F0C17A3CF220046DD70 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C6896F7017A3D07A0046DD70 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		C6896F7217A3D0830046DD70 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
-		C6896F7817A3D1130046DD70 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
-		C6896F7A17A3D1170046DD70 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
 		C6B8C52B1514DC1D00935AC5 /* WTAutoCompleteResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTAutoCompleteResultItem.h; path = WeiboSDK/Model/Autocomplete/WTAutoCompleteResultItem.h; sourceTree = "<group>"; };
@@ -403,24 +281,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C6896EF717A3CF220046DD70 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C633441A17A3DC8800C147FC /* Mantle.framework in Frameworks */,
-				C6896F7517A3D09E0046DD70 /* libicucore.dylib in Frameworks */,
-				C6896F7417A3D08E0046DD70 /* libz.dylib in Frameworks */,
-				C6896F7317A3D0830046DD70 /* ApplicationServices.framework in Frameworks */,
-				C6896F7117A3D07A0046DD70 /* libsqlite3.dylib in Frameworks */,
-				C6896EFC17A3CF220046DD70 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C6B4DC1114ED347C0032A8CF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6896E9017A3A1830046DD70 /* Cocoa.framework in Frameworks */,
+				C6B4DC1514ED347C0032A8CF /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,16 +355,6 @@
 			name = Additions;
 			sourceTree = "<group>";
 		};
-		C633440717A3DC1700C147FC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C633440F17A3DC1800C147FC /* Mantle.framework */,
-				C633441117A3DC1800C147FC /* libMantle.a */,
-				C633441317A3DC1800C147FC /* Mantle iOS Tests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C641275814F1EC7900D47925 /* UserStream */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,26 +364,6 @@
 				C641275614F1EC2700D47925 /* WeiboUserTimelineStream.m */,
 			);
 			name = UserStream;
-			sourceTree = "<group>";
-		};
-		C6896EFD17A3CF220046DD70 /* WeiboSDKMac */ = {
-			isa = PBXGroup;
-			children = (
-				C6896F0417A3CF220046DD70 /* WeiboSDKMac.h */,
-				C6896F0517A3CF220046DD70 /* WeiboSDKMac.m */,
-				C6896EFE17A3CF220046DD70 /* Supporting Files */,
-			);
-			path = WeiboSDKMac;
-			sourceTree = "<group>";
-		};
-		C6896EFE17A3CF220046DD70 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C6896EFF17A3CF220046DD70 /* WeiboSDKMac-Info.plist */,
-				C6896F0017A3CF220046DD70 /* InfoPlist.strings */,
-				C6896F0317A3CF220046DD70 /* WeiboSDKMac-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		C6B4DC1714ED347C0032A8CF /* Supporting Files */ = {
@@ -661,8 +496,6 @@
 				C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */,
 				C6DC65D614FDE5D000B70E45 /* WeiboUnread.h */,
 				C6DC65D714FDE5D000B70E45 /* WeiboUnread.m */,
-				C6896E7817A39F130046DD70 /* WeiboList.h */,
-				C6896E7917A39F130046DD70 /* WeiboList.m */,
 				C6DE37CE14EF7922004DAFE9 /* WTActiveTextRanges.h */,
 				C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */,
 				C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */,
@@ -749,7 +582,6 @@
 			children = (
 				C6011AF9151475D500A0A49C /* README.md */,
 				C6FC9E6314E3C40200094A8F /* WeiboSDK */,
-				C6896EFD17A3CF220046DD70 /* WeiboSDKMac */,
 				C6FC9E4514E3C3F400094A8F /* Frameworks */,
 				C6FC9E4314E3C3F400094A8F /* Products */,
 			);
@@ -759,7 +591,6 @@
 			isa = PBXGroup;
 			children = (
 				C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */,
-				C6896EFB17A3CF220046DD70 /* WeiboSDKMac.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -767,11 +598,6 @@
 		C6FC9E4514E3C3F400094A8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C633440617A3DC1700C147FC /* Mantle.xcodeproj */,
-				C6896F7A17A3D1170046DD70 /* Carbon.framework */,
-				C6896F7817A3D1130046DD70 /* QTKit.framework */,
-				C6896F7217A3D0830046DD70 /* ApplicationServices.framework */,
-				C6896F7017A3D07A0046DD70 /* libsqlite3.dylib */,
 				C6634FEB14EF352C0097E15B /* libz.dylib */,
 				C6634FE914EF35240097E15B /* libz.1.dylib */,
 				C6634FE714EF350B0097E15B /* Security.framework */,
@@ -779,7 +605,6 @@
 				C6634FE214EF34FC0097E15B /* CoreLocation.framework */,
 				C6DB908A14E4E11E001DE9F5 /* libicucore.dylib */,
 				C6FC9E4614E3C3F400094A8F /* Cocoa.framework */,
-				C6896F0C17A3CF220046DD70 /* XCTest.framework */,
 				C6FC9E4814E3C3F400094A8F /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -815,13 +640,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		C6896EF817A3CF220046DD70 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C6B4DC1214ED347C0032A8CF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -837,7 +655,6 @@
 				C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */,
 				C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */,
 				C6E0BC2415E8A222007BAA20 /* JSONKit.h in Headers */,
-				C6896E7A17A39F130046DD70 /* WeiboList.h in Headers */,
 				C60B51231745D6A200E99C07 /* WeiboUserList.h in Headers */,
 				C60B51281745D72F00E99C07 /* WeiboUserUserList.h in Headers */,
 				C60B512D1745DB7F00E99C07 /* WeiboUserRelationshipUserList.h in Headers */,
@@ -857,24 +674,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C6896EFA17A3CF220046DD70 /* WeiboSDKMac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C6896F1A17A3CF220046DD70 /* Build configuration list for PBXNativeTarget "WeiboSDKMac" */;
-			buildPhases = (
-				C6896EF617A3CF220046DD70 /* Sources */,
-				C6896EF717A3CF220046DD70 /* Frameworks */,
-				C6896EF817A3CF220046DD70 /* Headers */,
-				C6896EF917A3CF220046DD70 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WeiboSDKMac;
-			productName = WeiboSDKMac;
-			productReference = C6896EFB17A3CF220046DD70 /* WeiboSDKMac.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		C6B4DC1314ED347C0032A8CF /* WeiboSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */;
@@ -911,138 +710,14 @@
 			mainGroup = C6FC9E3714E3C3F300094A8F;
 			productRefGroup = C6FC9E4314E3C3F400094A8F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C633440717A3DC1700C147FC /* Products */;
-					ProjectRef = C633440617A3DC1700C147FC /* Mantle.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C6B4DC1314ED347C0032A8CF /* WeiboSDK */,
-				C6896EFA17A3CF220046DD70 /* WeiboSDKMac */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		C633440F17A3DC1800C147FC /* Mantle.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Mantle.framework;
-			remoteRef = C633440E17A3DC1800C147FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C633441117A3DC1800C147FC /* libMantle.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMantle.a;
-			remoteRef = C633441017A3DC1800C147FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C633441317A3DC1800C147FC /* Mantle iOS Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Mantle iOS Tests.octest";
-			remoteRef = C633441217A3DC1800C147FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		C6896EF917A3CF220046DD70 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6896F0217A3CF220046DD70 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		C6896EF617A3CF220046DD70 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6896F7C17A3D1C30046DD70 /* Base64Transcoder.c in Sources */,
-				C6896F2717A3CFE70046DD70 /* ASIDataCompressor.m in Sources */,
-				C6896F2817A3CFE70046DD70 /* ASIDataDecompressor.m in Sources */,
-				C6896F2917A3CFE70046DD70 /* ASIDownloadCache.m in Sources */,
-				C6896F2A17A3CFE70046DD70 /* ASIFormDataRequest.m in Sources */,
-				C6896F2B17A3CFE70046DD70 /* ASIHTTPRequest.m in Sources */,
-				C6896F2C17A3CFE70046DD70 /* ASIInputStream.m in Sources */,
-				C6896F2D17A3CFE70046DD70 /* ASINetworkQueue.m in Sources */,
-				C6896F2E17A3CFE70046DD70 /* WTHTTPRequest.m in Sources */,
-				C6896F2F17A3CFE70046DD70 /* WeiboRequestError.m in Sources */,
-				C6896F3017A3CFE70046DD70 /* WTCallback.m in Sources */,
-				C6896F3117A3CFE70046DD70 /* WTKeychain.m in Sources */,
-				C6896F3217A3CFE70046DD70 /* WTFileManager.m in Sources */,
-				C6896F3317A3CFE70046DD70 /* WeiboAPI.m in Sources */,
-				C6896F3417A3CFE70046DD70 /* WeiboAPI+AccountMethods.m in Sources */,
-				C6896F3517A3CFE70046DD70 /* WeiboAPI+StatusMethods.m in Sources */,
-				C6896F3617A3CFE70046DD70 /* WeiboAPI+DirectMessages.m in Sources */,
-				C6896F3717A3CFE70046DD70 /* WeiboAPI+UnreadCount.m in Sources */,
-				C6896F3817A3CFE70046DD70 /* WeiboAPI+UserMethods.m in Sources */,
-				C6896F3917A3CFE70046DD70 /* WeiboAPI+Private.m in Sources */,
-				C6896F3A17A3CFE70046DD70 /* LocalAutocompleteDB.m in Sources */,
-				C6896F3B17A3CFE70046DD70 /* WeiboAutocompleteResultItem.m in Sources */,
-				C6896F3C17A3CFE70046DD70 /* WeiboAccount.m in Sources */,
-				C6896F3D17A3CFE70046DD70 /* WeiboPicture.m in Sources */,
-				C6896F3E17A3CFE70046DD70 /* WeiboBaseStatus.m in Sources */,
-				C6896F3F17A3CFE70046DD70 /* WeiboLayoutCache.m in Sources */,
-				C6896F4017A3CFE70046DD70 /* WeiboStatus.m in Sources */,
-				C6896F4117A3CFE80046DD70 /* WeiboFavoriteStatus.m in Sources */,
-				C6896F4217A3CFE80046DD70 /* WeiboComment.m in Sources */,
-				C6896F4317A3CFE80046DD70 /* WeiboEmotion.m in Sources */,
-				C6896F4417A3CFE80046DD70 /* WeiboUser.m in Sources */,
-				C6896F4517A3CFE80046DD70 /* WeiboConfiguration.m in Sources */,
-				C6896F4617A3CFE80046DD70 /* WeiboGeotag.m in Sources */,
-				C6896F4717A3CFE80046DD70 /* WeiboUnread.m in Sources */,
-				C6896F4817A3CFE80046DD70 /* WeiboList.m in Sources */,
-				C6896F4917A3CFE80046DD70 /* WTActiveTextRanges.m in Sources */,
-				C6896F4A17A3CFE80046DD70 /* ABActiveRange.m in Sources */,
-				C6896F4B17A3CFE80046DD70 /* WeiboUserList.m in Sources */,
-				C6896F4C17A3CFE80046DD70 /* WeiboUserUserList.m in Sources */,
-				C6896F4D17A3CFE80046DD70 /* WeiboUserRelationshipUserList.m in Sources */,
-				C6896F4E17A3CFE80046DD70 /* WeiboUserFollowersList.m in Sources */,
-				C6896F4F17A3CFE80046DD70 /* WeiboUserFollowingList.m in Sources */,
-				C6896F5017A3CFE80046DD70 /* WeiboUserStream.m in Sources */,
-				C6896F5117A3CFE80046DD70 /* WeiboUserTimelineStream.m in Sources */,
-				C6896F5217A3CFE80046DD70 /* WeiboStream.m in Sources */,
-				C6896F5317A3CFE80046DD70 /* WeiboConcreteStatusesStream.m in Sources */,
-				C6896F5417A3CFE80046DD70 /* WeiboAccountStream.m in Sources */,
-				C6896F5517A3CFE80046DD70 /* WeiboTimelineStream.m in Sources */,
-				C6896F5617A3CFE80046DD70 /* WeiboMentionsStream.m in Sources */,
-				C6896F5717A3CFE80046DD70 /* WeiboFavoritesStream.m in Sources */,
-				C6896F5817A3CFE80046DD70 /* WeiboCommentsTimelineStream.m in Sources */,
-				C6896F5917A3CFE80046DD70 /* WeiboRepliesStream.m in Sources */,
-				C6896F5A17A3CFE80046DD70 /* WeiboTrendStatusesStream.m in Sources */,
-				C6896F5B17A3CFE80046DD70 /* FMDatabase.m in Sources */,
-				C6896F5C17A3CFE80046DD70 /* FMDatabaseAdditions.m in Sources */,
-				C6896F5D17A3CFE80046DD70 /* FMDatabasePool.m in Sources */,
-				C6896F5E17A3CFE80046DD70 /* FMDatabaseQueue.m in Sources */,
-				C6896F5F17A3CFE80046DD70 /* FMResultSet.m in Sources */,
-				C6896F6017A3CFE80046DD70 /* SSKeychain.m in Sources */,
-				C6896F6117A3CFE80046DD70 /* NSDictionary+WeiboAdditions.m in Sources */,
-				C6896F6217A3CFE80046DD70 /* NSArray+WeiboAdditions.m in Sources */,
-				C6896F6317A3CFE80046DD70 /* WTOASingnaturer.m in Sources */,
-				C6896F6417A3CFE80046DD70 /* JSONKit.m in Sources */,
-				C6896F6517A3CFE80046DD70 /* NSString+URLEncoding.m in Sources */,
-				C6896F6617A3CFE80046DD70 /* NSURL+Base.m in Sources */,
-				C6896F6717A3CFE80046DD70 /* OAToken.m in Sources */,
-				C6896F6817A3CFE80046DD70 /* OAConsumer.m in Sources */,
-				C6896F6917A3CFE80046DD70 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
-				C6896F6A17A3CFE80046DD70 /* OAPlaintextSignatureProvider.m in Sources */,
-				C6896F6B17A3CFE80046DD70 /* OARequestParameter.m in Sources */,
-				C6896F6C17A3CFE80046DD70 /* RegexKitLite.m in Sources */,
-				C6896F6D17A3CFE80046DD70 /* WeiboStatusStreamFilter.m in Sources */,
-				C6896F6E17A3CFE80046DD70 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */,
-				C6896F6F17A3CFE80046DD70 /* Weibo.m in Sources */,
-				C6896F0617A3CF220046DD70 /* WeiboSDKMac.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C6B4DC1014ED347C0032A8CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1053,7 +728,6 @@
 				C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */,
 				C6B8C51D1514D75D00935AC5 /* FMDatabase.m in Sources */,
 				C6B8C51E1514D75D00935AC5 /* FMDatabaseAdditions.m in Sources */,
-				C6896E7B17A39F130046DD70 /* WeiboList.m in Sources */,
 				C6B8C51F1514D75D00935AC5 /* FMDatabasePool.m in Sources */,
 				C6B8C5201514D75D00935AC5 /* FMDatabaseQueue.m in Sources */,
 				C6B8C5221514D75D00935AC5 /* FMResultSet.m in Sources */,
@@ -1126,81 +800,11 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		C6896F0017A3CF220046DD70 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C6896F0117A3CF220046DD70 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		C6896F1B17A3CF220046DD70 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKMac/WeiboSDKMac-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "WeiboSDKMac/WeiboSDKMac-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		C6896F1C17A3CF220046DD70 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKMac/WeiboSDKMac-Prefix.pch";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "WeiboSDKMac/WeiboSDKMac-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
 		C6B4DC1D14ED347C0032A8CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1211,10 +815,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1285,15 +885,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C6896F1A17A3CF220046DD70 /* Build configuration list for PBXNativeTarget "WeiboSDKMac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C6896F1B17A3CF220046DD70 /* Debug */,
-				C6896F1C17A3CF220046DD70 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

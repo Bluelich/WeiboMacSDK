@@ -9,59 +9,14 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>WeiboMacSDK.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>WeiboSDK.Framework.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
 		<key>WeiboSDKEngine.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>WeiboSDKMac.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>C6896E9617A3A22F0046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6896EA617A3A2300046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6896EC017A3A2550046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6896ED017A3A2550046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6896EFA17A3CF220046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6896F0A17A3CF220046DD70</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C6B4DC1314ED347C0032A8CF</key>
 		<dict>
 			<key>primary</key>
