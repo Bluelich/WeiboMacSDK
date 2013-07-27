@@ -92,7 +92,10 @@ multipartFormData:(NSDictionary *)parts
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
     if ([responseValue isKindOfClass:[WeiboRequestError class]]) {
         [self handleRequestError:responseValue];
-        [callback dissociateTarget];
+        if (callback != responseCallback)
+        {
+            [callback dissociateTarget];
+        }
         [responseCallback invoke:responseValue];
     }else{
         [callback invoke:responseValue];

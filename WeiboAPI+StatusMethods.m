@@ -9,6 +9,7 @@
 #import "WeiboAPI+Private.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboStatus.h"
+#import "WeiboList.h"
 
 @implementation WeiboAPI (StatusMethods)
 
@@ -23,16 +24,20 @@
     [parameters setValue:[NSString stringWithFormat:@"%ld",page] forKey:@"page"];
     [self GET:url parameters:parameters callback:callback];
 }
+- (WTCallback *)statusesResponseCallback
+{
+    return WTCallbackMake(self, @selector(statusesResponse:info:), nil);
+}
 - (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count callback:(WTCallback *)callback{
     [self statusesRequest:url parameters:params sinceID:since maxID:max page:1 count:count callback:callback];
 }
 - (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
-    WTCallback * callback = WTCallbackMake(self, @selector(statusResponse:info:), nil);
+    WTCallback * callback = [self statusesResponseCallback];
     [self statusesRequest:url parameters:params sinceID:since maxID:max count:count callback:callback];
 }
-- (void)statusResponse:(id)response info:(id)info{
+- (void)statusesResponse:(id)response info:(id)info{
     [WeiboStatus parseStatusesJSON:response callback:responseCallback];
 }
 - (void)commentsResponse:(id)response info:(id)info{
@@ -80,7 +85,7 @@
 #pragma mark -
 #pragma mark Trends
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count{
-    WTCallback * callback = WTCallbackMake(self, @selector(statusResponse:info:), nil);
+    WTCallback * callback = [self statusesResponseCallback];
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:keyword,@"q",nil];
     [self statusesRequest:@"search/topics.json" parameters:params sinceID:0 maxID:0 page:page count:count callback:callback];
 }
@@ -105,6 +110,40 @@
 }
 
 #pragma mark -
+#pragma mark Lists
+- (void)lists
+{
+    [self GET:@"friendships/groups.json" parameters:nil callback:WTCallbackMake(self, @selector(listsResponse:info:), nil)];
+}
+- (void)listsResponse:(id)response info:(id)info
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSDictionary * dict = [response objectFromJSONString];
+        NSArray * listDatas = [dict objectForKey:@"lists"];
+        if ([listDatas isKindOfClass:[NSArray class]])
+        {
+            NSMutableArray * lists = [NSMutableArray array];
+            for (NSDictionary * listData in listDatas)
+            {
+                [lists addObject:[WeiboList listWithDictionary:listData]];
+            }
+            [responseCallback invoke:lists];
+        }
+        else
+        {
+            [responseCallback invoke:@[]];
+        }
+    });
+}
+
+- (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSInteger)count page:(NSInteger)page
+{
+    WTCallback * callback = [self statusesResponseCallback];
+    NSDictionary * params = @{@"list_id" : listID};
+    [self statusesRequest:@"friendships/groups/timeline.json" parameters:params sinceID:sinceID maxID:maxID page:page count:count callback:callback];
+}
+
+#pragma mark -
 #pragma mark Weibo Access
 - (void)statuseResponse:(id)response info:(id)info{
     [responseCallback invoke:response];
@@ -112,7 +151,7 @@
 - (void)commentResponse:(id)response info:(id)info{
     [responseCallback invoke:response];
 }
-- (WTCallback *)statuseResponseCallback{
+- (WTCallback *)statusResponseCallback{
     return WTCallbackMake(self, @selector(statuseResponse:info:), nil);
 }
 - (WTCallback *)commentResponseCallback{
@@ -158,7 +197,7 @@
     [responseCallback invoke:response];
 }
 - (void)destoryStatus:(WeiboStatusID)sid{
-    WTCallback * callback = [self statuseResponseCallback];
+    WTCallback * callback = [self statusResponseCallback];
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSString stringWithFormat:@"%lld",sid],@"id", nil];
     NSString * url = @"statuses/destroy.json";

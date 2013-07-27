@@ -31,15 +31,6 @@
 
 #define CACHE_LIVETIME 600.0
 
-@interface WeiboAccount ()
-{
-    struct {
-        unsigned int requestingAvatar: 1;
-    } _flags;
-}
-
-@end
-
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
 @synthesize delegate = _delegate, notificationOptions;
@@ -62,6 +53,7 @@
     [commentsTimelineStream release];
     [favoritesStream release];
     [_profileImage release];
+    [_lists release], _lists = nil;
     [super dealloc];
 }
 - (id)init{
@@ -425,26 +417,33 @@
 }
 
 #pragma mark - Cache
-- (void)pruneStatusCache{
-    NSMutableArray * keysToRemove = [NSMutableArray arrayWithCapacity:userDetailsStreamsCache.count];
-    for (NSString * key in userDetailsStreamsCache) {
-        WeiboStream * stream = [userDetailsStreamsCache objectForKey:key];
-        if ([NSDate timeIntervalSinceReferenceDate] - stream.cacheTime > CACHE_LIVETIME) {
-            [keysToRemove addObject:key];
+- (void)pruneStatusCache
+{
+    {
+        NSMutableArray * keysToRemove = [NSMutableArray arrayWithCapacity:userDetailsStreamsCache.count];
+        for (NSString * key in userDetailsStreamsCache) {
+            WeiboStream * stream = [userDetailsStreamsCache objectForKey:key];
+            if ([NSDate timeIntervalSinceReferenceDate] - stream.cacheTime > CACHE_LIVETIME) {
+                [keysToRemove addObject:key];
+            }
         }
+        [userDetailsStreamsCache removeObjectsForKeys:keysToRemove];
     }
-    [userDetailsStreamsCache removeObjectsForKeys:keysToRemove];
 }
-- (void)pruneUserCache{
-    NSMutableArray * keysToRemove = [NSMutableArray array];
-    for (NSString * screenname in usersByUsername) {
-        WeiboUser * theUser = [usersByUsername objectForKey:screenname];
-        if ([NSDate timeIntervalSinceReferenceDate] - theUser.cacheTime > CACHE_LIVETIME) {
-            [keysToRemove addObject:screenname];
+- (void)pruneUserCache
+{
+    {
+        NSMutableArray * keysToRemove = [NSMutableArray array];
+        for (NSString * screenname in usersByUsername) {
+            WeiboUser * theUser = [usersByUsername objectForKey:screenname];
+            if ([NSDate timeIntervalSinceReferenceDate] - theUser.cacheTime > CACHE_LIVETIME) {
+                [keysToRemove addObject:screenname];
+            }
         }
+        [usersByUsername removeObjectsForKeys:keysToRemove];
     }
-    [usersByUsername removeObjectsForKeys:keysToRemove];
 }
+
 - (void)cacheUser:(WeiboUser *)newUser{
     if ([newUser isKindOfClass:[WeiboUser class]]) {
         [usersByUsername setObject:newUser forKey:newUser.screenName];

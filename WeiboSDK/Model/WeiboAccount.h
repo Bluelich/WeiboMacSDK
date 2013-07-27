@@ -35,6 +35,8 @@
     WeiboNotificationOptions notificationOptions;
     NSMutableDictionary * userDetailsStreamsCache;
     
+    NSMutableArray * _lists;
+    
     struct {
         unsigned int newDirectMessages:1;
         unsigned int newFollowers:1;
@@ -44,20 +46,25 @@
         unsigned int newMentions:1;
         unsigned int newCommnets:1;
     } _notificationFlags;
+    
+    struct {
+        unsigned int requestingAvatar: 1;
+        unsigned int loadingLists:1;
+    } _flags;
 }
 
-@property(assign, nonatomic) id<WeiboAccountDelegate> delegate;
-@property(readonly, nonatomic) NSString *username;
-@property(retain, nonatomic) NSString *password;
-@property(copy, nonatomic) NSString *oAuthTokenSecret;
-@property(retain, nonatomic) NSString *oAuthToken;
-@property(retain, nonatomic) NSString *oAuth2Token;
-@property(assign, nonatomic) BOOL tokenExpired;
-@property(assign, nonatomic) NSTimeInterval expireTime;
-@property(retain, nonatomic) WeiboUser *user;
-@property(readonly, nonatomic) NSString *apiRoot;
-@property(retain, nonatomic) NSImage * profileImage;
-@property(assign, nonatomic) WeiboNotificationOptions notificationOptions;
+@property (assign, nonatomic) id<WeiboAccountDelegate> delegate;
+@property (readonly, nonatomic) NSString *username;
+@property (retain, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *oAuthTokenSecret;
+@property (retain, nonatomic) NSString *oAuthToken;
+@property (retain, nonatomic) NSString *oAuth2Token;
+@property (assign, nonatomic) BOOL tokenExpired;
+@property (assign, nonatomic) NSTimeInterval expireTime;
+@property (retain, nonatomic) WeiboUser *user;
+@property (readonly, nonatomic) NSString *apiRoot;
+@property (retain, nonatomic) NSImage * profileImage;
+@property (assign, nonatomic) WeiboNotificationOptions notificationOptions;
 
 #pragma mark -
 #pragma mark Life Cycle
