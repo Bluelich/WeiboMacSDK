@@ -14,6 +14,8 @@ extern NSString * const WeiboAccountListsDidUpdateNotification;
 
 - (void)updateLists;
 - (BOOL)isLoadingLists;
+- (BOOL)listsLoaded;
+- (BOOL)listsAccessDenied;
 - (NSArray *)lists;
 
 @end

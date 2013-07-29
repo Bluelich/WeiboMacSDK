@@ -15,7 +15,7 @@
 - (void)_loadNewer
 {
     WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];
-    [api listStatuses:self.list.listID sinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20 page:0];
+    [api listStatuses:self.list.listID sinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20 page:1];
 }
 
 - (void)_loadOlder
@@ -24,7 +24,7 @@
     
     WeiboStatusID oldestID = self.oldestStatusID;
     WeiboStatusID maxID = oldestID > 0 ? (oldestID - 1) : 0;
-    [api listStatuses:self.list.listID sinceID:0 maxID:maxID count:100 page:0];
+    [api listStatuses:self.list.listID sinceID:0 maxID:maxID count:100 page:1];
 }
 
 - (NSString *)autosaveName

@@ -111,6 +111,9 @@
 
 #pragma mark -
 #pragma mark Lists
+/**
+ error response:{"error":"access_denied","error_code":21330,"request":"/2/friendships/groups.json"}
+ */
 - (void)lists
 {
     [self GET:@"friendships/groups.json" parameters:nil callback:WTCallbackMake(self, @selector(listsResponse:info:), nil)];
@@ -120,6 +123,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSDictionary * dict = [response objectFromJSONString];
         NSArray * listDatas = [dict objectForKey:@"lists"];
+        id result = nil;
         if ([listDatas isKindOfClass:[NSArray class]])
         {
             NSMutableArray * lists = [NSMutableArray array];
@@ -127,12 +131,15 @@
             {
                 [lists addObject:[WeiboList listWithDictionary:listData]];
             }
-            [responseCallback invoke:lists];
+            result = lists;
         }
         else
         {
-            [responseCallback invoke:@[]];
+            result = @[];
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [responseCallback invoke:result];
+        });
     });
 }
 

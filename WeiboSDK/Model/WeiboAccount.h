@@ -50,6 +50,8 @@
     struct {
         unsigned int requestingAvatar: 1;
         unsigned int loadingLists:1;
+        unsigned int listsLoaded:1;
+        unsigned int listsAccessDenied:1;
     } _flags;
 }
 

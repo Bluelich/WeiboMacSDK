@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class WeiboListStream;
+#import "WeiboListStream.h"
 
 @interface WeiboList : NSObject
 
@@ -18,6 +17,7 @@
 @property (nonatomic, assign) NSInteger memberCount;
 @property (nonatomic, retain) NSString * description;
 
+@property (nonatomic, assign) WeiboAccount * account;
 @property (nonatomic, retain, readonly) WeiboListStream * stream;
 
 + (id)listWithDictionary:(NSDictionary *)dict;

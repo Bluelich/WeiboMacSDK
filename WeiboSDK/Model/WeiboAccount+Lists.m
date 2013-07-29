@@ -8,6 +8,7 @@
 
 #import "WeiboAccount+Lists.h"
 #import "WeiboAPI+StatusMethods.h"
+#import "WeiboList.h"
 #import "WTCallback.h"
 
 NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDidUpdateNotification";
@@ -21,6 +22,8 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
         return;
     }
     
+    _flags.listsAccessDenied = NO;
+    
     WTCallback * callback = WTCallbackMake(self, @selector(listsResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api lists];
@@ -28,22 +31,52 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
 
 - (void)listsResponse:(id)response info:(id)info
 {
-    if (![response isKindOfClass:[NSArray class]]) {
-        return;
-    }
-
-    [_lists removeAllObjects];
-    [_lists addObjectsFromArray:response];
+    BOOL postsNotification = NO;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountListsDidUpdateNotification object:self userInfo:nil];
+    if ([response isKindOfClass:[NSArray class]])
+    {
+        postsNotification = YES;
+        
+        _flags.listsLoaded = YES;
+        
+        [_lists removeAllObjects];
+        [_lists addObjectsFromArray:response];
+        [_lists makeObjectsPerformSelector:@selector(setAccount:) withObject:self];
+    }
+    else if ([response isKindOfClass:[WeiboRequestError class]])
+    {
+        WeiboRequestError * error = response;
+        if (error.code == WeiboErrorCodeScopeAccessDenied)
+        {
+            postsNotification = YES;
+            _flags.listsAccessDenied = YES;
+        }
+    }
+    
+    if (postsNotification)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountListsDidUpdateNotification object:self userInfo:nil];
+    }
 }
 
 - (BOOL)isLoadingLists
 {
     return _flags.loadingLists;
 }
+- (BOOL)listsLoaded
+{
+    return _flags.listsLoaded;
+}
+- (BOOL)listsAccessDenied
+{
+    return _flags.listsAccessDenied;
+}
 - (NSArray *)lists
 {
+    if (!_lists)
+    {
+        _lists = [[NSMutableArray alloc] init];
+    }
     return _lists;
 }
 

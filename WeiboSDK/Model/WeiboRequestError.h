@@ -12,6 +12,7 @@ typedef enum {
     WeiboErrorCodeInvaildRequest = 21323,
 	WeiboErrorCodeTokenExpired = 21327,
     WeiboErrorCodeGrantTypeError = 21328,
+    WeiboErrorCodeScopeAccessDenied = 21330,
     WeiboErrorCodeTokenInvalid = 21332,
 } WeiboErrorCode;
 

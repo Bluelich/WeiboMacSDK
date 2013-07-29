@@ -50,4 +50,15 @@
     return [self.mode isEqual:@"private"];
 }
 
+- (WeiboListStream *)stream
+{
+    if (!_stream)
+    {
+        _stream = [[WeiboListStream alloc] init];
+        _stream.list = self;
+        _stream.account = self.account;
+    }
+    return _stream;
+}
+
 @end
