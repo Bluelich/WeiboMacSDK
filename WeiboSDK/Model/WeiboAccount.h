@@ -18,7 +18,8 @@
 
 @protocol WeiboAccountDelegate;
 
-@interface WeiboAccount : NSObject <NSCoding> {
+@interface WeiboAccount : NSObject <NSCoding>
+{
     NSString * username;
     NSString * password;
     NSString * oAuthToken;

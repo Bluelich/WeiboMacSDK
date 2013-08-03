@@ -30,10 +30,7 @@
 #pragma mark -
 #pragma mark Request Core
 
-- (void)request:(NSString *)partialUrl
-         method:(NSString *)method parameters:(NSDictionary *)parameters
-multipartFormData:(NSDictionary *)parts
-       callback:(WTCallback *)actualCallback;
+- (void)request:(NSString *)partialUrl method:(NSString *)method parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback;
 - (void)v1_request:(NSString *)partialUrl
             method:(NSString *)method parameters:(NSDictionary *)parameters
  multipartFormData:(NSDictionary *)parts

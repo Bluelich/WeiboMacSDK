@@ -15,8 +15,8 @@
 }
 
 WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo);
+
 + (id)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;
-WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo);
 - (id)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;
 - (void)invoke:(id)returnValue;
 - (void)dissociateTarget;
