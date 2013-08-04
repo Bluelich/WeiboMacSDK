@@ -10,4 +10,7 @@
 
 @interface WeiboStatusUserHighlighter : WeiboStatusUserFilter
 
+@property (nonatomic, assign) BOOL highlightPosts;
+@property (nonatomic, assign) BOOL highlightMentions;
+
 @end

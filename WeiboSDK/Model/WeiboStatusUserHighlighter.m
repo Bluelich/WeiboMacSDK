@@ -8,14 +8,33 @@
 
 #import "WeiboStatusUserHighlighter.h"
 #import "WeiboBaseStatus.h"
+#import "WTActiveTextRanges.h"
+#import "WeiboUser.h"
 
 @implementation WeiboStatusUserHighlighter
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        self.highlightMentions = NO;
+        self.highlightPosts = YES;
+    }
+    return self;
+}
+
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
-    if ([super validateStatus:status])
+    if (self.highlightPosts && [super validateStatus:status])
     {
         status.isSpecial = YES;
+    }
+    else if (self.highlightMentions)
+    {
+        if ([status.activeRanges.usernames containsObject:self.screenname])
+        {
+            status.isSpecial = YES;
+        }
     }
     
     return NO;

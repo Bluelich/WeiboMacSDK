@@ -17,6 +17,30 @@
     [super dealloc];
 }
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        self.filterQuotedStatus = YES;
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
+    }
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+}
+
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
     if (!self.keyword.length)
@@ -29,9 +53,9 @@
         return YES;
     }
     
-    if ([status.quotedBaseStatus.text rangeOfString:self.keyword].length)
+    if (self.filterQuotedStatus && status.quotedBaseStatus)
     {
-        return YES;
+        return [self validateStatus:status.quotedBaseStatus];
     }
     
     return NO;

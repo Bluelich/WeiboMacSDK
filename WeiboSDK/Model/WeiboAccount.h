@@ -140,6 +140,13 @@
 - (void)setHasNewMentions:(BOOL)hasNewMentions;
 - (void)setHasNewComments:(BOOL)hasNewComments;
 
+#pragma mark - Filter
+
+@property (nonatomic, retain) NSMutableArray * keywordFilters;
+@property (nonatomic, retain) NSMutableArray * userFilters;
+@property (nonatomic, retain) NSMutableArray * clientFilters;
+@property (nonatomic, retain) NSMutableArray * userHighlighters;
+
 @end
 
 

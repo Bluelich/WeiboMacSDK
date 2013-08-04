@@ -10,7 +10,14 @@
 
 @class WeiboBaseStatus;
 
-@interface WeiboStatusFilter : NSObject
+@interface WeiboStatusFilter : NSObject <NSCoding>
+
+@property (nonatomic, assign) NSTimeInterval createTime;
+@property (nonatomic, assign) NSTimeInterval expireTime;
+
+@property (nonatomic, assign, readonly) NSTimeInterval duration;
+
+@property (nonatomic, assign) BOOL filterQuotedStatus;
 
 - (BOOL)validateStatus:(WeiboBaseStatus *)status;
 

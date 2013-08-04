@@ -39,7 +39,8 @@
 
 #pragma mark -
 #pragma mark Life Cycle
-- (void)dealloc{
+- (void)dealloc
+{
     [username release]; 
     [password release];
     [apiRoot release];
@@ -54,10 +55,19 @@
     [favoritesStream release];
     [_profileImage release];
     [_lists release], _lists = nil;
+    
+    [_keywordFilters release], _keywordFilters = nil;
+    [_userFilters release], _userFilters = nil;
+    [_clientFilters release], _clientFilters = nil;
+    [_userHighlighters release], _userHighlighters = nil;
+    
     [super dealloc];
 }
-- (id)init{
-    if (self = [super init]) {
+
+- (id)init
+{
+    if (self = [super init])
+    {
         notificationOptions = WeiboTweetNotificationMenubar | WeiboMentionNotificationMenubar |
                               WeiboFollowerNotificationMenubar | WeiboCommentNotificationMenubar | 
                               WeiboDirectMessageNotificationMenubar;
@@ -72,18 +82,30 @@
 
         usersByUsername = [[NSMutableDictionary alloc] init];
         outbox = [[NSMutableArray alloc] init];
+        
+        self.keywordFilters = [NSMutableArray array];
+        self.userFilters = [NSMutableArray array];
+        self.userHighlighters = [NSMutableArray array];
+        self.clientFilters = [NSMutableArray array];
     }
     return self;
 }
-- (void)encodeWithCoder:(NSCoder *)encoder{
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
     [encoder encodeObject:username forKey:@"username"];
     [encoder encodeObject:oAuthToken forKey:@"oauth-token"];
     [encoder encodeObject:apiRoot forKey:@"api-root"];
     [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
     [encoder encodeObject:user forKey:@"user"];
     [encoder encodeObject:self.profileImage forKey:@"profile-image"];
+    
+    [encoder encodeObject:self.keywordFilters forKey:@"keyword-filters"];
+    [encoder encodeObject:self.userFilters forKey:@"user-filters"];
+    [encoder encodeObject:self.userHighlighters forKey:@"user-highlighters"];
+    [encoder encodeObject:self.clientFilters forKey:@"client-filters"];
 }
-- (id)initWithCoder:(NSCoder *)decoder{
+- (id)initWithCoder:(NSCoder *)decoder
+{
     if (self = [self init]) {
         username = [[decoder decodeObjectForKey:@"username"] retain];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
@@ -105,6 +127,11 @@
         {
             [self verifyCredentials:nil];
         }
+        
+        self.keywordFilters = [decoder decodeObjectForKey:@"keyword-filters"];
+        self.userFilters = [decoder decodeObjectForKey:@"user-filters"];
+        self.userHighlighters = [decoder decodeObjectForKey:@"user-highlighters"];
+        self.clientFilters = [decoder decodeObjectForKey:@"client-filters"];
     }
     return self;
 }

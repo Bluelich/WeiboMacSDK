@@ -18,6 +18,23 @@
     [super dealloc];
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        self.screenname = [aDecoder decodeObjectForKey:@"screenname"];
+        self.userID = [[aDecoder decodeObjectForKey:@"user-id"] longLongValue];
+    }
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.screenname forKey:@"screenname"];
+    [aCoder encodeObject:@(self.userID) forKey:@"user-id"];
+}
+
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
     if (!self.screenname.length && !self.userID)
@@ -34,7 +51,7 @@
         return [status.user.screenName isEqual:self.screenname];
     }
     
-    if (status.quotedBaseStatus)
+    if (self.filterQuotedStatus && status.quotedBaseStatus)
     {
         return [self validateStatus:status.quotedBaseStatus];
     }

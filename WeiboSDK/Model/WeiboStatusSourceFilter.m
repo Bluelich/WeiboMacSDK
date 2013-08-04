@@ -18,6 +18,21 @@
     [super dealloc];
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        self.source = [aDecoder decodeObjectForKey:@"source"];
+    }
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.source forKey:@"source"];
+}
+
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
     if (!self.source.length)
