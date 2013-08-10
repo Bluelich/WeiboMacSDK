@@ -23,7 +23,7 @@
     if (self = [super initWithCoder:aDecoder])
     {
         self.screenname = [aDecoder decodeObjectForKey:@"screenname"];
-        self.userID = [[aDecoder decodeObjectForKey:@"user-id"] longLongValue];
+        self.userID = [aDecoder decodeInt64ForKey:@"user-id"];
     }
     return self;
 }
@@ -32,7 +32,7 @@
     [super encodeWithCoder:aCoder];
     
     [aCoder encodeObject:self.screenname forKey:@"screenname"];
-    [aCoder encodeObject:@(self.userID) forKey:@"user-id"];
+    [aCoder encodeInt64:self.userID forKey:@"user-id"];
 }
 
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
@@ -57,6 +57,11 @@
     }
     
     return NO;
+}
+
+- (NSString *)title
+{
+    return self.screenname;
 }
 
 @end

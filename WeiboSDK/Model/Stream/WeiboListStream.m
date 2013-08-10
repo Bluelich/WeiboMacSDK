@@ -32,4 +32,9 @@
     return [[super autosaveName] stringByAppendingFormat:@"list/%@.scrollPosition",self.list.name];
 }
 
+- (BOOL)appliesStatusFilter
+{
+    return YES;
+}
+
 @end

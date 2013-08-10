@@ -8,6 +8,7 @@
 
 #import "WeiboAccountStream.h"
 #import "WeiboAccount.h"
+#import "WeiboAccount+Filters.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboUser.h"
 
@@ -33,6 +34,11 @@
 - (NSString *)autosaveName{
     return [[super autosaveName] 
             stringByAppendingFormat:@"weibo.com/%lld/",account.user.userID];
+}
+
+- (NSArray *)statusFilters
+{
+    return account.allFilters;
 }
 
 @end

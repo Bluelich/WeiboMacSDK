@@ -8,6 +8,7 @@
 
 #import "WeiboConcreteStatusesStream.h"
 #import "WeiboBaseStatus.h"
+#import "WeiboStatusFilter.h"
 #import "WeiboRequestError.h"
 #import "LocalAutocompleteDB.h"
 
@@ -35,6 +36,9 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         unsigned int isKeyStream:1;
 	} _flags;
 }
+
+// statuses filterd by -[self statusFilters];
+@property (nonatomic, retain) NSMutableArray * invalidStatuses;
 
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus;
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus;
@@ -74,6 +78,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_loadNewerError release], _loadNewerError = nil;
     [_loadOlderError release], _loadOlderError = nil;
+    [_invalidStatuses release], _invalidStatuses = nil;
     [statuses release]; statuses = nil;
     [super dealloc];
 }
@@ -82,7 +87,8 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 #pragma mark -
 #pragma mark Accessors
 
-- (NSMutableArray *)statuses{
+- (NSMutableArray *)statuses
+{
     if (!statuses) {
         statuses = [[NSMutableArray alloc] init];
     }
@@ -164,13 +170,14 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     [temp release];
     return index;
 }
-- (WeiboBaseStatus *)newestStatus{
-    if (self.statuses.count > 1)
+- (WeiboBaseStatus *)newestStatusFromArray:(NSArray *)array
+{
+    if (array.count > 1)
     {
         // Workaround for users that has a weibo stick on top.
         
-        WeiboBaseStatus * first = self.statuses[0];
-        WeiboBaseStatus * second = self.statuses[1];
+        WeiboBaseStatus * first = array[0];
+        WeiboBaseStatus * second = array[1];
         
         if (first.createdAt >= second.createdAt)
         {
@@ -180,50 +187,81 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     }
     else
     {
-        return [[self statuses] firstObject]; 
+        return [array firstObject];
     }
 }
-- (WeiboBaseStatus *)oldestStatus{
-    return [[self statuses] lastObject];
+- (WeiboBaseStatus *)newestStatus
+{
+    WeiboBaseStatus * newestValidStatus = [self newestStatusFromArray:self.statuses];
+    WeiboBaseStatus * newestInvalidStatus = [self newestStatusFromArray:self.invalidStatuses];
+    
+    return (newestValidStatus.sid > newestInvalidStatus.sid) ? newestValidStatus : newestInvalidStatus;
 }
-- (WeiboStatusID)newestStatusID{
-    if ([self newestStatus]) {
+- (WeiboBaseStatus *)oldestStatusFromArray:(NSArray *)array
+{
+    return [array lastObject];
+}
+- (WeiboBaseStatus *)oldestStatus
+{
+    WeiboBaseStatus * oldestValidStatus = [self oldestStatusFromArray:self.statuses];
+    WeiboBaseStatus * oldestInvalidStatus = [self oldestStatusFromArray:self.invalidStatuses];
+    
+    return (oldestValidStatus.sid < oldestInvalidStatus.sid) ? oldestValidStatus : oldestInvalidStatus;
+}
+- (WeiboStatusID)newestStatusID
+{
+    if ([self newestStatus])
+    {
         return [self newestStatus].sid;
     }
     return 0;
 }
-- (WeiboStatusID)oldestStatusID{
-    if ([self oldestStatus]) {
+- (WeiboStatusID)oldestStatusID
+{
+    if ([self oldestStatus])
+    {
         return [self oldestStatus].sid;
     }
     return 0;
 }
-- (NSUInteger)maxCount{
+- (NSUInteger)maxCount
+{
     return 500;
 }
-- (NSUInteger)minStatusesToConsiderBeingGap{
+- (NSUInteger)minStatusesToConsiderBeingGap
+{
     return 5;
 }
-- (BOOL)shouldIndexUsersInAutocomplete{
+- (BOOL)shouldIndexUsersInAutocomplete
+{
     return NO;
 }
-- (BOOL)isLoadingNewer{
+- (BOOL)isLoadingNewer
+{
     return _flags.isLoadingNewer;
 }
-- (NSString *)autosaveName{
+- (NSString *)autosaveName
+{
     return @"statuses/";
 }
-- (BOOL)isStreamEnded{
+- (BOOL)isStreamEnded
+{
     return _flags.isAtEnd;
+}
+- (BOOL)appliesStatusFilter
+{
+    return NO;
 }
 
 
 #pragma mark -
 #pragma mark Network Connecting
-- (void)_loadNewer{
+- (void)_loadNewer
+{
     
 }
-- (void)loadNewer{
+- (void)loadNewer
+{
     if (_flags.isLoadingNewer) {
         return;
     }
@@ -309,16 +347,109 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     [self statusesResponse:response couldBeGap:YES isFromFillingInGap:YES];
 }
 
-- (WTCallback *)loadNewerResponseCallback{
-    return WTCallbackMake(self, @selector(loadNewerResponse:info:), nil);
+- (WTCallback *)loadNewerResponseCallback
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(loadNewerResponse:info:), nil);
+    return [self filteringCallbackWithCallback:callback];
 }
-- (WTCallback *)loadOlderResponseCallback{
-    return WTCallbackMake(self, @selector(loadOlderResponse:info:), nil);
+- (WTCallback *)loadOlderResponseCallback
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(loadOlderResponse:info:), nil);
+    return [self filteringCallbackWithCallback:callback];
 }
-- (WTCallback *)fillInGapResponseCallback:(id)info{
-    return WTCallbackMake(self, @selector(fillInGapResponse:info:), info);
+- (WTCallback *)fillInGapResponseCallback:(id)info
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(fillInGapResponse:info:), info);
+    return [self filteringCallbackWithCallback:callback];
 }
 
+#pragma mark - Filtering
+
+- (WTCallback *)filteringCallbackWithCallback:(WTCallback *)actualCallback
+{
+    if (self.appliesStatusFilter)
+    {
+        return WTCallbackMake(self, @selector(filterResponse:info:), actualCallback);
+    }
+    return actualCallback;
+}
+- (void)filterResponse:(id)response info:(id)info
+{
+    WTCallback * callback = (WTCallback *)info;
+    
+    if (![callback isKindOfClass:[WTCallback class]]) return;
+    
+    if (![response isKindOfClass:[NSArray class]])
+    {
+        [callback invoke:response];
+        return;
+    }
+    
+    NSArray * statusFilters = [self statusFilters];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        NSMutableArray * remainingStatuses = [NSMutableArray array];
+        NSMutableArray * invalidStatuses = [NSMutableArray array];
+        
+        for (WeiboBaseStatus * status in response)
+        {
+            BOOL invalid = NO;
+            for (WeiboStatusFilter * filter in statusFilters)
+            {
+                if ([filter validateStatus:status])
+                {
+                    invalid = YES;
+                    break;
+                }
+            }
+            
+            if (invalid)
+            {
+                [invalidStatuses addObject:status];
+            }
+            else
+            {
+                [remainingStatuses addObject:status];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self addInvalidStatuses:invalidStatuses];
+            [callback invoke:remainingStatuses];
+        });
+    });
+}
+
+- (void)addInvalidStatuses:(NSArray *)statusesArray
+{
+    if (!statusesArray.count) return;
+    
+    WeiboBaseStatus * newestInvalidStatus = [self newestStatusFromArray:self.invalidStatuses];
+    WeiboBaseStatus * oldestInvalidStatus = [self oldestStatusFromArray:self.invalidStatuses];
+    
+    WeiboBaseStatus * start = [self newestStatusFromArray:statusesArray];
+    WeiboBaseStatus * end = [self oldestStatusFromArray:statusesArray];
+    
+    if (start.sid <= oldestInvalidStatus.sid)
+    {
+        // append
+        
+        [self.invalidStatuses addObjectsFromArray:statusesArray];
+    }
+    else if (end.sid >= newestInvalidStatus.sid)
+    {
+        // prepend
+        
+        [self.invalidStatuses insertObjects:statusesArray atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statusesArray.count)]];
+    }
+    else
+    {
+        // should never goes here.
+        
+        [self.invalidStatuses addObjectsFromArray:statusesArray];
+    }
+}
 
 #pragma mark -
 #pragma mark On Disk Caching ( Not Implemented Yet )
@@ -333,13 +464,16 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 #pragma mark -
 #pragma mark Others
 
-- (void)markAtEnd{
+- (void)markAtEnd
+{
     _flags.isAtEnd = YES;
 }
-- (void)_postError:(WeiboRequestError *)error{
+- (void)_postError:(WeiboRequestError *)error
+{
     
 }
-- (void)deleteStatusNotification:(NSNotification *)notification{
+- (void)deleteStatusNotification:(NSNotification *)notification
+{
     WeiboBaseStatus * status = notification.object;
     [self _deleteStatus:status];
 }
@@ -379,6 +513,11 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     NSDictionary * userInfo = @{WeiboStatusStreamNotificationBaseStatusKey : status,
                                 WeiboStatusStreamNotificationStatusIndexKey : [NSNumber numberWithInteger:index]};
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidRemoveStatusNotificationKey object:self userInfo:userInfo];
+}
+
+- (NSArray *)statusFilters
+{
+    return nil;
 }
 
 @end

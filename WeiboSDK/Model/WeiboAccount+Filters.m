@@ -97,9 +97,42 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     [self filterSetDidChange];
 }
 
-- (void)purgeFilters
+- (BOOL)_pruneFiltersWithMutableArray:(NSMutableArray *)array
 {
+    NSMutableArray * toRemove = [NSMutableArray array];
     
+    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    
+    for (WeiboStatusFilter * filter in array)
+    {
+        if (filter.duration <= 0)
+        {
+            continue;
+        }
+        
+        if (now > filter.expireTime)
+        {
+            [toRemove addObject:filter];
+        }
+    }
+    
+    [array removeObjectsInArray:toRemove];
+    
+    return toRemove.count > 0;
+}
+
+- (void)pruneFilters
+{
+    BOOL pruned = NO;
+    pruned |= [self _pruneFiltersWithMutableArray:self.keywordFilters];
+    pruned |= [self _pruneFiltersWithMutableArray:self.userFilters];
+    pruned |= [self _pruneFiltersWithMutableArray:self.userHighlighters];
+    pruned |= [self _pruneFiltersWithMutableArray:self.clientFilters];
+    
+    if (pruned)
+    {
+        [self filterSetDidChange];
+    }
 }
 
 @end

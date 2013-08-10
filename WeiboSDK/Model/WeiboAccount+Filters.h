@@ -26,6 +26,6 @@ extern NSString * const WeiboAccountFilterSetDidChangeNotification;
 
 - (void)removeFilter:(WeiboStatusFilter *)filter;
 
-- (void)purgeFilters;
+- (void)pruneFilters;
 
 @end

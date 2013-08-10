@@ -32,15 +32,9 @@
     return [[super autosaveName] stringByAppendingString:@"timeline.scrollPosition"];
 }
 
-- (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type
+- (BOOL)appliesStatusFilter
 {
-    NSMutableArray * result = [NSMutableArray arrayWithArray:newStatuses];
-    WeiboAccount * account = self.account;
-
-    // TODO:    remove blocked username, keyword, client with account
-    //          highlight status that mentioned account, or marked by account settings.
-    
-    [super addStatuses:result withType:type];
+    return YES;
 }
 
 @end

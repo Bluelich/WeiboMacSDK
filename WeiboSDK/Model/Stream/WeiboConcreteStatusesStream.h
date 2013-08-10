@@ -34,6 +34,7 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (void)addStatus:(WeiboBaseStatus *)newStatus;
 - (void)addStatuses:(NSArray *)newStatuses;
 - (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type;
+- (BOOL)appliesStatusFilter;
 - (WeiboBaseStatus *)newestStatus;
 - (WeiboBaseStatus *)oldestStatus;
 - (WeiboStatusID)newestStatusID;
@@ -64,5 +65,6 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (void)postStatusesChangedNotification;
 - (void)deleteStatusNotification:(NSNotification *)notification;
 
+- (NSArray *)statusFilters;
 
 @end

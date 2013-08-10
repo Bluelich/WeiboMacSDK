@@ -8,6 +8,7 @@
 
 #import "Weibo.h"
 #import "WeiboAccount.h"
+#import "WeiboAccount+Filters.h"
 #import "WeiboAPI+AccountMethods.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WTCallback.h"
@@ -45,7 +46,7 @@ static Weibo * _sharedWeibo = nil;
                                                userInfo:nil 
                                                 repeats:YES];
         [heartbeatTimer fire];
-        cachePruningTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 
+        cachePruningTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                              target:self 
                                                            selector:@selector(pruneCaches:) 
                                                            userInfo:nil 
@@ -91,23 +92,28 @@ static Weibo * _sharedWeibo = nil;
 
 - (void)heartbeat:(id)sender
 {
-    for (WeiboAccount * account in accounts) {
-        if (!account.tokenExpired) {
+    for (WeiboAccount * account in accounts)
+    {
+        if (!account.tokenExpired)
+        {
             [account refreshTimelines];
         }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDidHeartbeatNotification object:nil];
 }
-- (void)pruneCaches:(id)sender{
-    for (WeiboAccount * account in accounts) {
-        //NSLog(@"pruning cache for : %@",[account username]);
+- (void)pruneCaches:(id)sender
+{
+    for (WeiboAccount * account in accounts)
+    {
         [account pruneUserCache];
         [account pruneStatusCache];
+        [account pruneFilters];
     }
 }
 
-- (void)shutdown{
+- (void)shutdown
+{
     [heartbeatTimer invalidate];
     [cachePruningTimer invalidate];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -116,13 +122,15 @@ static Weibo * _sharedWeibo = nil;
     [defaults synchronize];
 }
 
-- (NSArray *)accounts{
+- (NSArray *)accounts
+{
     return accounts;
 }
 
 - (void)signInWithUsername:(NSString *)aUsername 
                   password:(NSString *)aPassword 
-                  callback:(WTCallback *)aCallback{
+                  callback:(WTCallback *)aCallback
+{
     WTCallback * callback = [WTCallback callbackWithTarget:self selector:@selector(didSignIn:info:) info:aCallback];
     WeiboAccount * account = [[WeiboAccount alloc] initWithUsername:aUsername password:aPassword];
     WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:account.apiRoot account:account callback:callback];

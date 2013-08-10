@@ -7,6 +7,7 @@
 //
 
 #import "WeiboAccount.h"
+#import "WeiboAccount+Filters.h"
 #import "WeiboAPI+UnreadCount.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboAPI+UserMethods.h"
@@ -82,11 +83,6 @@
 
         usersByUsername = [[NSMutableDictionary alloc] init];
         outbox = [[NSMutableArray alloc] init];
-        
-        self.keywordFilters = [NSMutableArray array];
-        self.userFilters = [NSMutableArray array];
-        self.userHighlighters = [NSMutableArray array];
-        self.clientFilters = [NSMutableArray array];
     }
     return self;
 }
@@ -97,12 +93,18 @@
     [encoder encodeObject:apiRoot forKey:@"api-root"];
     [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
     [encoder encodeObject:user forKey:@"user"];
-    [encoder encodeObject:self.profileImage forKey:@"profile-image"];
     
     [encoder encodeObject:self.keywordFilters forKey:@"keyword-filters"];
     [encoder encodeObject:self.userFilters forKey:@"user-filters"];
     [encoder encodeObject:self.userHighlighters forKey:@"user-highlighters"];
     [encoder encodeObject:self.clientFilters forKey:@"client-filters"];
+    
+//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.keywordFilters] forKey:@"keyword-filters"];
+//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userFilters] forKey:@"user-filters"];
+//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userHighlighters] forKey:@"user-highlighters"];
+//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.clientFilters] forKey:@"client-filters"];
+    
+    [encoder encodeObject:self.profileImage forKey:@"profile-image"];
 }
 - (id)initWithCoder:(NSCoder *)decoder
 {
@@ -112,6 +114,11 @@
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
+        
+        [self setFilterArray:[decoder decodeObjectForKey:@"keyword-filters"] forKeyPath:@"keywordFilters"];
+        [self setFilterArray:[decoder decodeObjectForKey:@"user-filters"] forKeyPath:@"userFilters"];
+        [self setFilterArray:[decoder decodeObjectForKey:@"user-highlighters"] forKeyPath:@"userHighlighters"];
+        [self setFilterArray:[decoder decodeObjectForKey:@"client-filters"] forKeyPath:@"clientFilters"];
         
         WeiboUserID userID = self.user.userID;
         
@@ -127,15 +134,11 @@
         {
             [self verifyCredentials:nil];
         }
-        
-        self.keywordFilters = [decoder decodeObjectForKey:@"keyword-filters"];
-        self.userFilters = [decoder decodeObjectForKey:@"user-filters"];
-        self.userHighlighters = [decoder decodeObjectForKey:@"user-highlighters"];
-        self.clientFilters = [decoder decodeObjectForKey:@"client-filters"];
     }
     return self;
 }
-- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root{
+- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root
+{
     if ((self = [self init])) {
         username = [aUsername retain];
         password = [aPassword retain];
@@ -143,7 +146,8 @@
     }
     return self;
 }
-- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword{
+- (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword
+{
     return [self initWithUsername:aUsername password:aPassword apiRoot:WEIBO_APIROOT_DEFAULT];
 }
 - (id)initWithUserID:(WeiboUserID)userID oAuth2Token:(NSString *)token
@@ -219,6 +223,60 @@
 }
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback{
     return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
+}
+
+- (NSMutableArray *)keywordFilters
+{
+    if (!_keywordFilters)
+    {
+        _keywordFilters = [[NSMutableArray alloc] init];
+    }
+    return _keywordFilters;
+}
+- (NSMutableArray *)userFilters
+{
+    if (!_userFilters)
+    {
+        _userFilters = [[NSMutableArray alloc] init];
+    }
+    return _userFilters;
+}
+- (NSMutableArray *)userHighlighters
+{
+    if (!_userHighlighters)
+    {
+        _userHighlighters = [[NSMutableArray alloc] init];
+    }
+    return _userHighlighters;
+}
+- (NSMutableArray *)clientFilters
+{
+    if (!_clientFilters)
+    {
+        _clientFilters = [[NSMutableArray alloc] init];
+    }
+    return _clientFilters;
+}
+//- (void)setFilterArray:(NSData *)filtersData forKeyPath:(NSString *)keyPath
+- (void)setFilterArray:(NSMutableArray *)filters forKeyPath:(NSString *)keyPath
+{
+    NSMutableArray * result = nil;
+//    id filters = [NSKeyedUnarchiver unarchiveObjectWithData:filtersData];
+    
+    if ([filters isKindOfClass:[NSMutableArray class]])
+    {
+        result = filters;
+    }
+    else if ([filters isKindOfClass:[NSArray class]])
+    {
+        result = [[filters mutableCopy] autorelease];
+    }
+    else if (filters)
+    {
+        NSLog(@"wrong!!");
+    }
+    
+    [self setValue:result forKeyPath:keyPath];
 }
 
 #pragma mark -

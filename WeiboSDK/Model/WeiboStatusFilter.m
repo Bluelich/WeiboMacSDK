@@ -14,18 +14,18 @@
 {
     if (self = [super init])
     {
-        self.createTime = [[aDecoder decodeObjectForKey:@"create-time"] doubleValue];
-        self.expireTime = [[aDecoder decodeObjectForKey:@"expire-time"] doubleValue];
-        self.filterQuotedStatus = [[aDecoder decodeObjectForKey:@"filter-quoted-status"] boolValue];
+        self.createTime = [aDecoder decodeDoubleForKey:@"create-time"];
+        self.expireTime = [aDecoder decodeDoubleForKey:@"expire-time"];
+        self.filterQuotedStatus = [aDecoder decodeBoolForKey:@"filter-quoted-status"];
     }
-    return nil;
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:@(self.createTime) forKey:@"create-time"];
-    [aCoder encodeObject:@(self.expireTime) forKey:@"expire-time"];
-    [aCoder encodeObject:@(self.filterQuotedStatus) forKey:@"filter-quoted-status"];
+    [aCoder encodeDouble:self.createTime forKey:@"create-time"];
+    [aCoder encodeDouble:self.expireTime forKey:@"expire-time"];
+    [aCoder encodeBool:self.filterQuotedStatus forKey:@"filter-quoted-status"];
 }
 
 - (BOOL)validateStatus:(WeiboBaseStatus *)status

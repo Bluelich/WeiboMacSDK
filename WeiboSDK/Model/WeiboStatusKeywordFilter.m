@@ -61,4 +61,9 @@
     return NO;
 }
 
+- (NSString *)title
+{
+    return self.keyword;
+}
+
 @end

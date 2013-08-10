@@ -48,4 +48,9 @@
     return NO;
 }
 
+- (NSString *)title
+{
+    return self.source;
+}
+
 @end

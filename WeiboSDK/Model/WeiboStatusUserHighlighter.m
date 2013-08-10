@@ -40,4 +40,9 @@
     return NO;
 }
 
+- (NSString *)title
+{
+    return self.screenname;
+}
+
 @end
