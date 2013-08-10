@@ -74,7 +74,7 @@
 		C67ED9AF1501B0E80059AF71 /* WeiboComment.m in Sources */ = {isa = PBXBuildFile; fileRef = C67ED9AC1501B0E80059AF71 /* WeiboComment.m */; };
 		C68009E514FE788400FA3175 /* WeiboUnread.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DC65D714FDE5D000B70E45 /* WeiboUnread.m */; };
 		C68009EA14FE788400FA3175 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
-		C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */; };
+		C6872C9A17B63F7B00AA38BF /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */; };
 		C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */ = {isa = PBXBuildFile; fileRef = C6880780174E048000FD69F4 /* WeiboComposition.h */; };
 		C68B2F6F17ACD0B7005CC80C /* WeiboStatusFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C68B2F6D17ACD0B7005CC80C /* WeiboStatusFilter.h */; };
 		C68B2F7017ACD0B7005CC80C /* WeiboStatusFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C68B2F6E17ACD0B7005CC80C /* WeiboStatusFilter.m */; };
@@ -195,7 +195,7 @@
 		C6653D901556869E00350990 /* WeiboFavoriteStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboFavoriteStatus.m; path = WeiboSDK/Model/Stream/WeiboFavoriteStatus.m; sourceTree = "<group>"; };
 		C67ED9AB1501B0E80059AF71 /* WeiboComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboComment.h; path = WeiboSDK/Model/WeiboComment.h; sourceTree = "<group>"; };
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
-		C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
+		C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
 		C6880780174E048000FD69F4 /* WeiboComposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboComposition.h; sourceTree = "<group>"; };
 		C68B2F6D17ACD0B7005CC80C /* WeiboStatusFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStatusFilter.h; path = WeiboSDK/Model/WeiboStatusFilter.h; sourceTree = "<group>"; };
 		C68B2F6E17ACD0B7005CC80C /* WeiboStatusFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboStatusFilter.m; path = WeiboSDK/Model/WeiboStatusFilter.m; sourceTree = "<group>"; };
@@ -694,7 +694,7 @@
 				C6DB909014E4EE29001DE9F5 /* Weibo.h */,
 				C6DB909114E4EE29001DE9F5 /* Weibo.m */,
 				C617C90414EB56C600CC75F5 /* WeiboConstants.h */,
-				C680AA8E157B8FE100E34853 /* WeiboAppInfo.h */,
+				C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */,
 			);
 			name = WeiboSDK;
 			sourceTree = "<group>";
@@ -721,7 +721,6 @@
 				C6094FAC155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h in Headers */,
 				C6094FB11557E95A0038C7D2 /* WeiboTrendStatusesStream.h in Headers */,
 				C620027C17A4116E00283648 /* WeiboListStream.h in Headers */,
-				C680AA8F157B8FE100E34853 /* WeiboAppInfo.h in Headers */,
 				C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */,
 				C6E0BC2415E8A222007BAA20 /* JSONKit.h in Headers */,
 				C60B51231745D6A200E99C07 /* WeiboUserList.h in Headers */,
@@ -739,6 +738,7 @@
 				C6EC37671745F33C0085E6ED /* WeiboAPI+AccountMethods.h in Headers */,
 				C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */,
 				C638914A175840400005069A /* WeiboPicture.h in Headers */,
+				C6872C9A17B63F7B00AA38BF /* WeiboAppInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

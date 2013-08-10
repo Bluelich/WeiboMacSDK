@@ -195,7 +195,19 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     WeiboBaseStatus * newestValidStatus = [self newestStatusFromArray:self.statuses];
     WeiboBaseStatus * newestInvalidStatus = [self newestStatusFromArray:self.invalidStatuses];
     
-    return (newestValidStatus.sid > newestInvalidStatus.sid) ? newestValidStatus : newestInvalidStatus;
+    if (newestValidStatus && newestInvalidStatus)
+    {
+        return (newestValidStatus.sid > newestInvalidStatus.sid) ? newestValidStatus : newestInvalidStatus;
+    }
+    else if (newestInvalidStatus)
+    {
+        return newestInvalidStatus;
+    }
+    else
+    {
+        return newestValidStatus;
+    }
+    
 }
 - (WeiboBaseStatus *)oldestStatusFromArray:(NSArray *)array
 {
@@ -206,7 +218,18 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     WeiboBaseStatus * oldestValidStatus = [self oldestStatusFromArray:self.statuses];
     WeiboBaseStatus * oldestInvalidStatus = [self oldestStatusFromArray:self.invalidStatuses];
     
-    return (oldestValidStatus.sid < oldestInvalidStatus.sid) ? oldestValidStatus : oldestInvalidStatus;
+    if (oldestValidStatus && oldestInvalidStatus)
+    {
+        return (oldestValidStatus.sid < oldestInvalidStatus.sid) ? oldestValidStatus : oldestInvalidStatus;
+    }
+    else if (oldestInvalidStatus)
+    {
+        return oldestInvalidStatus;
+    }
+    else
+    {
+        return oldestValidStatus;
+    }
 }
 - (WeiboStatusID)newestStatusID
 {
