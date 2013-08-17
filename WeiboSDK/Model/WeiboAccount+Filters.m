@@ -85,6 +85,37 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     [self filterSetDidChange];
 }
 
+- (WeiboStatusUserFilter *)filterForUser:(WeiboUser *)user_
+{
+    for (WeiboStatusUserFilter * filter in self.userFilters)
+    {
+        if (filter.userID == user_.userID)
+        {
+            return filter;
+        }
+    }
+    return nil;
+}
+- (WeiboStatusUserHighlighter *)highlighterForUser:(WeiboUser *)user_
+{
+    for (WeiboStatusUserHighlighter * filter in self.userHighlighters)
+    {
+        if (filter.userID == user_.userID)
+        {
+            return filter;
+        }
+    }
+    return nil;
+}
+- (BOOL)containsFilterForUser:(WeiboUser *)user_
+{
+    return ([self filterForUser:user_] != nil);
+}
+- (BOOL)containsHighlighterForUser:(WeiboUser *)user_
+{
+    return ([self highlighterForUser:user_] != nil);
+}
+
 - (void)removeFilter:(WeiboStatusFilter *)filter
 {
     if (!filter) return;

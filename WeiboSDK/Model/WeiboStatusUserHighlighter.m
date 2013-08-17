@@ -23,6 +23,15 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        self.highlightPosts = YES;
+    }
+    return self;
+}
+
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
     if (self.highlightPosts && [super validateStatus:status])

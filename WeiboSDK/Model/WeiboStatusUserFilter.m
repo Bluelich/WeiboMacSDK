@@ -64,4 +64,13 @@
     return self.screenname;
 }
 
+- (BOOL)isEqual:(WeiboStatusUserFilter *)object
+{
+    if (self == object) return YES;
+    
+    if (![object isKindOfClass:[WeiboStatusUserFilter class]]) return NO;
+    
+    return object.userID == self.userID;
+}
+
 @end

@@ -30,6 +30,8 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
+        self.filterQuotedStatus = YES;
+        
         self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
     }
     return self;

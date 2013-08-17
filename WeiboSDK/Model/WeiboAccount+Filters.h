@@ -24,6 +24,11 @@ extern NSString * const WeiboAccountFilterSetDidChangeNotification;
 - (void)addFilterWithClientName:(NSString *)source effectiveTime:(NSTimeInterval)time;
 - (void)addHighlighterWithUser:(WeiboUser *)user effectiveTime:(NSTimeInterval)time;
 
+- (WeiboStatusUserFilter *)filterForUser:(WeiboUser *)user;
+- (WeiboStatusUserHighlighter *)highlighterForUser:(WeiboUser *)user;
+- (BOOL)containsFilterForUser:(WeiboUser *)user;
+- (BOOL)containsHighlighterForUser:(WeiboUser *)user;
+
 - (void)removeFilter:(WeiboStatusFilter *)filter;
 
 - (void)pruneFilters;
