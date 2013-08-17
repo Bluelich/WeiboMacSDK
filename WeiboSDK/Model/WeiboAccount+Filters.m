@@ -120,10 +120,14 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
 {
     if (!filter) return;
     
+    [filter retain];
+    
     [self.keywordFilters removeObject:filter];
     [self.clientFilters removeObject:filter];
     [self.userHighlighters removeObject:filter];
     [self.userFilters removeObject:filter];
+    
+    [filter release];
     
     [self filterSetDidChange];
 }
