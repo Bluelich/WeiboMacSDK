@@ -26,6 +26,9 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 @property (nonatomic, retain) WeiboRequestError * loadNewerError;
 @property (nonatomic, retain) WeiboRequestError * loadOlderError;
 
+@property (nonatomic, assign, readonly) NSInteger topStatusesCount;
+@property (nonatomic, readonly) WeiboBaseStatus * viewedMostRecentStatus;
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -43,6 +46,8 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (NSUInteger)minStatusesToConsiderBeingGap;
 - (BOOL)shouldIndexUsersInAutocomplete;
 - (BOOL)isLoadingNewer;
+
+- (WeiboBaseStatus *)statusWithID:(WeiboStatusID)sid;
 
 #pragma mark -
 #pragma mark Network Connecting

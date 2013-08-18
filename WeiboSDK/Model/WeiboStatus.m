@@ -39,14 +39,40 @@
     WeiboStatus * status = [[self class] statusWithDictionary:dictionary];
     return status;
 }
-+ (NSArray *)statusesWithJSON:(NSString *)json{
++ (NSArray *)statusesWithJSON:(NSString *)json
+{
     NSDictionary * jsonObject = [json objectFromJSONString];
     NSArray * dictionaries = [jsonObject objectForKey:@"statuses"];
+    
     NSMutableArray * statuses = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries) {
+    for (NSDictionary * dic in dictionaries)
+    {
         WeiboStatus * status = [WeiboStatus statusWithDictionary:dic];
         [statuses addObject:status];
     }
+    
+    NSArray * marks = [jsonObject objectForKey:@"marks"];
+    if (marks.count > 0)
+    {
+        for (NSString * mark in marks)
+        {
+            if (![mark isKindOfClass:[NSString class]]) continue;
+            
+            WeiboStatusID sid = [mark longLongValue];
+            
+            if (!sid) continue;
+            
+            for (WeiboStatus * status in statuses)
+            {
+                if (status.sid == sid)
+                {
+                    status.isTopStatus = YES;
+                    break;
+                }
+            }
+        }
+    }
+    
     return statuses;
 }
 + (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback{

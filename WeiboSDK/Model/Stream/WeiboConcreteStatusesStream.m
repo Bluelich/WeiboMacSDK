@@ -137,6 +137,18 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         default:
             break;
     }
+    
+    NSInteger topStatusCount = 0;
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        if (status.isTopStatus) {
+            topStatusCount++;
+        } else {
+            break;
+        }
+    }
+    _topStatusesCount = topStatusCount;
+    
     [self noticeDidReceiveNewStatuses:statusesToAdd withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
     
     if (shouldPostNotification) {
@@ -276,6 +288,42 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     return NO;
 }
 
+- (void)updateViewedMostRecentID
+{
+    WeiboBaseStatus * lastSeened = nil;
+    
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        if (status.wasSeen)
+        {
+            lastSeened = status;
+            break;
+        }
+    }
+    
+    if (lastSeened.sid > self.viewedMostRecentID)
+    {
+        self.viewedMostRecentID = lastSeened.sid;
+    }
+}
+
+- (WeiboBaseStatus *)viewedMostRecentStatus
+{
+    [self updateViewedMostRecentID];
+    
+    if (!self.viewedMostRecentID) return nil;
+    
+    return [self statusWithID:self.viewedMostRecentID];
+}
+
+- (WeiboBaseStatus *)statusWithID:(WeiboStatusID)sid
+{
+    for (WeiboBaseStatus * status in self.statuses)
+    {
+        if (status.sid == sid) return status;
+    }
+    return nil;
+}
 
 #pragma mark -
 #pragma mark Network Connecting
