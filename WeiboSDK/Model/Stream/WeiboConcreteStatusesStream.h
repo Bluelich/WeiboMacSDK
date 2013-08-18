@@ -28,6 +28,7 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 
 @property (nonatomic, assign, readonly) NSInteger topStatusesCount;
 @property (nonatomic, readonly) WeiboBaseStatus * viewedMostRecentStatus;
+@property (nonatomic, readonly) NSInteger unreadCount;
 
 #pragma mark -
 #pragma mark Accessors

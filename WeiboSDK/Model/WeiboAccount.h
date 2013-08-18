@@ -39,16 +39,6 @@
     NSMutableArray * _lists;
     
     struct {
-        unsigned int newDirectMessages:1;
-        unsigned int newFollowers:1;
-        // When mentions stream or comments stream not loaded
-        // and account has unread mentions or comments
-        // use following flags to store and detect.
-        unsigned int newMentions:1;
-        unsigned int newCommnets:1;
-    } _notificationFlags;
-    
-    struct {
         unsigned int requestingAvatar: 1;
         unsigned int loadingLists:1;
         unsigned int listsLoaded:1;
@@ -135,10 +125,10 @@
 - (BOOL)hasFreshAnythingApplicableToDockBadge;
 - (void)deleteStatus:(WeiboBaseStatus *)status;
 
-- (void)setHasNewDirectMessages:(BOOL)hasNew;
-- (void)setHasNewFollowers:(BOOL)hasNew;
-- (void)setHasNewMentions:(BOOL)hasNewMentions;
-- (void)setHasNewComments:(BOOL)hasNewComments;
+@property (nonatomic, assign) NSInteger newMentionsCount;
+@property (nonatomic, assign) NSInteger newCommentsCount;
+@property (nonatomic, assign) NSInteger newDirectMessagesCount;
+@property (nonatomic, assign) NSInteger newFollowersCount;
 
 #pragma mark - Filter
 

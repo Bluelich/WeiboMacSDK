@@ -325,6 +325,19 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     return nil;
 }
 
+- (NSInteger)unreadCount
+{
+    WeiboBaseStatus * topStatus = [self viewedMostRecentStatus];
+    
+    if (!topStatus) return 0;
+    
+    NSInteger count = [statuses indexOfObject:topStatus];
+    
+    count -= [self topStatusesCount]; // 置顶微博不进行计算
+    
+    return count;
+}
+
 #pragma mark -
 #pragma mark Network Connecting
 - (void)_loadNewer

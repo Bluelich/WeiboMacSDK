@@ -323,11 +323,10 @@
         [commentsTimelineStream loadNewer];
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
-    [self setHasNewDirectMessages:(unread.newDirectMessages > 0)];
+    [self setNewDirectMessagesCount:unread.newDirectMessages];
     // can NOT get access to DM api yet, just post a notification
-    
-    [self setHasNewFollowers:(unread.newFollowers > 0)];
-    // Follower list not implemented yet.
+
+    [self setNewFollowersCount:unread.newFollowers];
     
     if ([_delegate respondsToSelector:@selector(account:finishCheckingUnreadCount:)]) {
         [_delegate account:self finishCheckingUnreadCount:unread];
@@ -340,10 +339,10 @@
     [api resetUnreadWithType:type];
     
     switch (type) {
-        case WeiboUnreadCountTypeDirectMessage:[self setHasNewDirectMessages:NO];break;
-        case WeiboUnreadCountTypeFollower:[self setHasNewFollowers:NO];break;
-        case WeiboUnreadCountTypeMention:[self setHasNewMentions:NO];break;
-        case WeiboUnreadCountTypeComment:[self setHasNewComments:NO];break;
+        case WeiboUnreadCountTypeDirectMessage:[self setNewDirectMessagesCount:0];break;
+        case WeiboUnreadCountTypeFollower:[self setNewFollowersCount:0];break;
+        case WeiboUnreadCountTypeMention:[self setNewMentionsCount:0];break;
+        case WeiboUnreadCountTypeComment:[self setNewCommentsCount:0];break;
         default:break;
     }
 }
@@ -568,11 +567,13 @@
     return topStatus.sid > commentsTimelineStream.viewedMostRecentID;
     //return !topStatus.wasSeen;
 }
-- (BOOL)hasFreshDirectMessages{
-    return _notificationFlags.newDirectMessages;
+- (BOOL)hasFreshDirectMessages
+{
+    return self.newDirectMessagesCount > 0;
 }
-- (BOOL)hasNewFollowers{
-    return _notificationFlags.newFollowers;
+- (BOOL)hasNewFollowers
+{
+    return self.newFollowersCount > 0;
 }
 - (BOOL)hasAnythingUnread{
     return [self hasFreshTweets] || [self hasFreshMentions] || [self hasFreshComments] || [self hasFreshDirectMessages] || [self hasNewFollowers];
@@ -626,16 +627,4 @@
     [nc postNotificationName:kWeiboStatusDeleteNotification object:status];
 }
 
-- (void)setHasNewDirectMessages:(BOOL)hasNew{
-    _notificationFlags.newDirectMessages = hasNew;
-}
-- (void)setHasNewFollowers:(BOOL)hasNew{
-    _notificationFlags.newFollowers = hasNew;
-}
-- (void)setHasNewMentions:(BOOL)hasNewMentions{
-    _notificationFlags.newMentions = hasNewMentions;
-}
-- (void)setHasNewComments:(BOOL)hasNewComments{
-    _notificationFlags.newCommnets = hasNewComments;
-}
 @end
