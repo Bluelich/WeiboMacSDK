@@ -52,5 +52,7 @@ extern NSString * const WeiboDidHeartbeatNotification;
 - (BOOL)hasFreshAnythingApplicableToDockBadge;
 - (BOOL)hasAnythingUnread;
 
+- (NSInteger)unreadCountForDockBadge;
+
 
 @end

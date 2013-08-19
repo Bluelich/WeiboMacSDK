@@ -330,4 +330,15 @@ static Weibo * _sharedWeibo = nil;
     }
     return NO;
 }
+
+- (NSInteger)unreadCountForDockBadge
+{
+    NSInteger count = 0;
+    for (WeiboAccount * account in accounts)
+    {
+        count += account.unreadCountForDockBadge;
+    }
+    return count;
+}
+
 @end

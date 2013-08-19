@@ -614,6 +614,37 @@
     }
     return NO;
 }
+- (NSInteger)unreadCountForDockBadge
+{
+    NSInteger count = 0;
+    
+    if (notificationOptions & WeiboTweetNotificationBadge)
+    {
+        count += self.timelineStream.unreadCount;
+    }
+    
+    if (notificationOptions & WeiboMentionNotificationBadge)
+    {
+        count += self.mentionsStream.unreadCount;
+    }
+    
+    if (notificationOptions & WeiboCommentNotificationBadge)
+    {
+        count += self.commentsTimelineStream.unreadCount;
+    }
+    
+    if (notificationOptions & WeiboDirectMessageNotificationBadge)
+    {
+        count += self.newDirectMessagesCount;
+    }
+    
+    if (notificationOptions & WeiboFollowerNotificationBadge)
+    {
+        count += self.newFollowersCount;
+    }
+    
+    return count;
+}
 - (void)deleteStatus:(WeiboBaseStatus *)status{
     WeiboAPI * api = [self authenticatedRequest:nil];
     if ([status isKindOfClass:[WeiboStatus class]]) {

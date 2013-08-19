@@ -123,6 +123,8 @@
 - (BOOL)hasAnythingUnread;
 - (BOOL)hasFreshAnythingApplicableToStatusItem;
 - (BOOL)hasFreshAnythingApplicableToDockBadge;
+- (NSInteger)unreadCountForDockBadge;
+
 - (void)deleteStatus:(WeiboBaseStatus *)status;
 
 @property (nonatomic, assign) NSInteger newMentionsCount;
