@@ -14,6 +14,8 @@ typedef enum {
     WeiboErrorCodeGrantTypeError = 21328,
     WeiboErrorCodeScopeAccessDenied = 21330,
     WeiboErrorCodeTokenInvalid = 21332,
+    WeiboErrorCodeAlreadyFollowed = 20506,
+    WeiboErrorCodeNotFollowing = 20522,
 } WeiboErrorCode;
 
 @interface WeiboRequestError : NSError {
