@@ -62,6 +62,8 @@
     [_clientFilters release], _clientFilters = nil;
     [_userHighlighters release], _userHighlighters = nil;
     
+    [_mentionHighlighter release], _mentionHighlighter = nil;
+    
     [super dealloc];
 }
 

@@ -8,6 +8,7 @@
 
 #import "WeiboAccount+Filters.h"
 #import "WeiboUser.h"
+#import "WeiboStatusAccountMentionFilter.h"
 
 NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilterSetDidChangeNotification";
 
@@ -21,6 +22,14 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     [array addObjectsFromArray:self.userFilters];
     [array addObjectsFromArray:self.userHighlighters];
     [array addObjectsFromArray:self.clientFilters];
+    
+    if (!self.mentionHighlighter)
+    {
+        self.mentionHighlighter = [[WeiboStatusAccountMentionFilter new] autorelease];
+        self.mentionHighlighter.account = self;
+    }
+    
+    [array addObject:self.mentionHighlighter];
     
     return array;
 }

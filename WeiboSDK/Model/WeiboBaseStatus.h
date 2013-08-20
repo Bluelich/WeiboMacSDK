@@ -43,6 +43,7 @@
 @property (readonly, nonatomic) BOOL isComment;
 @property (nonatomic, assign) BOOL isSpecial;
 @property (nonatomic, assign) BOOL isTopStatus;
+@property (nonatomic, assign) BOOL mentionedMe;
 @property (nonatomic, retain) NSMutableDictionary * layoutCaches;
 
 - (id)initWithDictionary:(NSDictionary *)dic;

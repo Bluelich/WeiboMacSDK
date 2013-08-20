@@ -14,7 +14,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboUserStream, WeiboFavoritesStream;
+@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter;
 
 @protocol WeiboAccountDelegate;
 
@@ -138,6 +138,8 @@
 @property (nonatomic, retain) NSMutableArray * userFilters;
 @property (nonatomic, retain) NSMutableArray * clientFilters;
 @property (nonatomic, retain) NSMutableArray * userHighlighters;
+
+@property (nonatomic, retain) WeiboStatusAccountMentionFilter * mentionHighlighter;
 
 @end
 
