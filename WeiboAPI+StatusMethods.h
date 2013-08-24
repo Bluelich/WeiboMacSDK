@@ -25,6 +25,9 @@
 #pragma mark -
 #pragma mark Favorites
 - (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count;
+- (void)favoriteStatusID:(WeiboStatusID)statusID;
+- (void)unfavoriteStatusID:(WeiboStatusID)statusID;
+
 #pragma mark -
 #pragma mark Trends
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count;

@@ -28,9 +28,12 @@
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
+#import "JSONKit.h"
 #import "WTHTTPRequest.h"
 
 #define CACHE_LIVETIME 600.0
+
+NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFavoriteStateDidChangeNotifiaction";
 
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
@@ -545,6 +548,71 @@
     [stream setAccount:self];
     return [stream autorelease];
 }
+
+- (void)postStatusFavoriteStateChangedNotification:(WeiboStatus *)status
+{
+    NSDictionary * userInfo = @{@"status" : status};
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusFavoriteStateDidChangeNotifiaction object:self userInfo:userInfo];
+}
+
+- (void)toggleFavoriteOfStatus:(WeiboStatus *)status
+{
+    BOOL shouldUnfavorite = status.favorited;
+    
+    NSDictionary * userInfo = @{@"status":status, @"favorite-state": @(status.favorited)};
+    
+    status.favorited = !status.favorited;
+    
+    [self postStatusFavoriteStateChangedNotification:status];
+    
+    WTCallback * callback = WTCallbackMake(self, @selector(favoriteActionResponse:info:), userInfo);
+    
+    WeiboAPI * api = [self authenticatedRequest:callback];
+    
+    if (shouldUnfavorite)
+    {
+        [api unfavoriteStatusID:status.sid];
+    }
+    else
+    {
+        [api favoriteStatusID:status.sid];
+    }
+}
+- (void)favoriteActionResponse:(id)response info:(id)info
+{
+    WeiboStatus * status = info[@"status"];
+    BOOL favoriteState = [info[@"favorite-state"] boolValue];
+    
+    if ([response isKindOfClass:[WeiboRequestError class]])
+    {
+        NSInteger code = [(WeiboRequestError *)response code];
+        
+        if (code == WeiboErrorCodeNotFavorited)
+        {
+            status.favorited = NO;
+        }
+        else if (code == WeiboErrorCodeAlreadyFavorited)
+        {
+            status.favorited = YES;
+        }
+        else
+        {
+            status.favorited = favoriteState;
+        }
+    }
+    else if ([response isKindOfClass:[NSString class]])
+    {
+        NSDictionary * dict = [(NSString *)response objectFromJSONString];
+        NSDictionary * statusDict = [dict objectForKey:@"status"];
+        
+        WeiboStatus * newStatus = [WeiboStatus statusWithDictionary:statusDict];
+        
+        status.favorited = newStatus.favorited;
+    }
+    
+    [self postStatusFavoriteStateChangedNotification:status];
+}
+
 - (BOOL)hasFreshTweets{
     WeiboBaseStatus * topStatus = [timelineStream newestStatus];
     if (!topStatus) {

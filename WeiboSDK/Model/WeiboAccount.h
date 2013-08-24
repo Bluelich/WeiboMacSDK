@@ -18,6 +18,8 @@
 
 @protocol WeiboAccountDelegate;
 
+extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
+
 @interface WeiboAccount : NSObject <NSCoding>
 {
     NSString * username;
@@ -115,6 +117,9 @@
 
 #pragma mark - Others
 - (WeiboRepliesStream *)repliesStreamForStatus:(WeiboStatus *)status;
+
+- (void)toggleFavoriteOfStatus:(WeiboStatus *)status;
+
 - (BOOL)hasFreshTweets;
 - (BOOL)hasFreshMentions;
 - (BOOL)hasFreshComments;

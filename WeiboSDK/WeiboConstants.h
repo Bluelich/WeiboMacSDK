@@ -30,6 +30,7 @@ typedef void (^WTObjectBlock)(id object);
 #define WEIBO_APIROOT_DEFAULT WEIBO_APIROOT_V2
 
 #define kWeiboStatusDeleteNotification @"WeiboStatusDeleteNotification"
+
 #define kWeiboStreamStatusChangedNotification @"WeiboStreamStatusChangedNotification"
 #define kWeiboAccountDidUpdateNotification @"WeiboAccountDidUpdateNotification"
 #define kWeiboAccountDidReceiveUnreadNotification @"WeiboAccountDidReceiveUnreadNotification" 

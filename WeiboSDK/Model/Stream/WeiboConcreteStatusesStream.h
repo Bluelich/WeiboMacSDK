@@ -71,6 +71,9 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (void)postStatusesChangedNotification;
 - (void)deleteStatusNotification:(NSNotification *)notification;
 
+- (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type;
+- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index;
+
 - (NSArray *)statusFilters;
 
 @end

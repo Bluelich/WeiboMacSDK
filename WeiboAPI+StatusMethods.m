@@ -82,6 +82,23 @@
 - (void)favoritesResponse:(id)returnValue info:(id)info{
     [WeiboFavoriteStatus parseStatusesJSON:returnValue callback:responseCallback];
 }
+
+- (void)favoriteStatusID:(WeiboStatusID)statusID
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(favoriteActionResponse:info:), @(YES));
+    [self POST:@"favorites/create.json" parameters:@{@"id":@(statusID)} callback:callback];
+}
+- (void)unfavoriteStatusID:(WeiboStatusID)statusID
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(favoriteActionResponse:info:), @(NO));
+    [self POST:@"favorites/destroy.json" parameters:@{@"id":@(statusID)} callback:callback];
+}
+
+- (void)favoriteActionResponse:(id)responseObject info:(id)info
+{
+    [responseCallback invoke:responseObject];
+}
+
 #pragma mark -
 #pragma mark Trends
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count{
