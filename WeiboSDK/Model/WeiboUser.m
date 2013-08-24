@@ -39,7 +39,8 @@
         self.createAt = [decoder decodeIntForKey:@"create-at"];
         self.following = [decoder decodeBoolForKey:@"following"];
         self.followMe = [decoder decodeBoolForKey:@"follow-me"];
-        self.verified = [decoder decodeBoolForKey:@"verified"];
+        //self.verified = [decoder decodeBoolForKey:@"verified"];
+        self.verifiedType = [decoder decodeIntegerForKey:@"verified-type"];
         //self.status = [decoder decodeObjectForKey:@"status"];
     }
     return self;
@@ -65,7 +66,8 @@
     [encoder encodeInt:(int)createAt forKey:@"create-at"];
     [encoder encodeBool:following forKey:@"following"];
     [encoder encodeBool:followMe forKey:@"follow-me"];
-    [encoder encodeBool:verified forKey:@"verified"];
+    //[encoder encodeBool:verified forKey:@"verified"];
+    [encoder encodeInteger:_verifiedType forKey:@"verified-type"];
 }
 
 - (void)dealloc{
@@ -163,7 +165,8 @@
         self.createAt = [dic timeForKey:@"create_at" defaultValue:0];
         self.following = [dic boolForKey:@"following" defaultValue:NO];
         self.followMe = [dic boolForKey:@"follow_me" defaultValue:NO];
-        self.verified = [dic boolForKey:@"verified" defaultValue:NO];
+        //self.verified = [dic boolForKey:@"verified" defaultValue:NO];
+        self.verifiedType = [dic intForKey:@"verified_type" defaultValue:-1];
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];
         if (statusDic) {
@@ -171,6 +174,19 @@
         }
     }
     return self;
+}
+
+- (BOOL)verified
+{
+    return (self.verifiedType == WeiboUserVerifiedTypeBlueMark ||
+            self.verifiedType == WeiboUserVerifiedTypeYellowMark ||
+            self.verifiedType == WeiboUserVerifiedTypeEnterprise);
+}
+
+- (BOOL)isDaren
+{
+    return (self.verifiedType == WeiboUserVerifiedTypeGrassroot ||
+            self.verifiedType == WeiboUserVerifiedTypeWeiboGirl);
 }
 
 - (BOOL)isEqual:(id)object

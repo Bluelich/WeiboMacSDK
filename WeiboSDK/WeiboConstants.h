@@ -76,3 +76,14 @@ enum {
     WeiboUnreadCountTypeFollower = 4
 };
 typedef NSUInteger WeiboUnreadCountType;
+
+
+typedef NS_ENUM(NSInteger, WeiboUserVerifiedType)
+{
+    WeiboUserVerifiedTypeNone = -1,
+    WeiboUserVerifiedTypeYellowMark = 0,
+    WeiboUserVerifiedTypeEnterprise = 2,
+    WeiboUserVerifiedTypeBlueMark = 3,
+    WeiboUserVerifiedTypeWeiboGirl = 10,
+    WeiboUserVerifiedTypeGrassroot = 220,
+};

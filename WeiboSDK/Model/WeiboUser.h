@@ -56,7 +56,11 @@
 @property (assign, readwrite) time_t createAt;
 @property (assign, readwrite) BOOL following;
 @property (assign, readwrite) BOOL followMe;
-@property (assign, readwrite) BOOL verified;
+@property (assign, readwrite) WeiboUserVerifiedType verifiedType;
+
+@property (assign, readonly) BOOL verified;
+@property (assign, readonly) BOOL isDaren;
+
 @property (assign, nonatomic) NSTimeInterval cacheTime;
 
 #pragma mark -
