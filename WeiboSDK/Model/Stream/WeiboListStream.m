@@ -20,7 +20,7 @@
 
 - (void)_loadOlder
 {
-    WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];
+    WeiboAPI * api = [account authenticatedRequest:[self loadOlderResponseCallback]];
     
     WeiboStatusID oldestID = self.oldestStatusID;
     WeiboStatusID maxID = oldestID > 0 ? (oldestID - 1) : 0;
