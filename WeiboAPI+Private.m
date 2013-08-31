@@ -28,9 +28,9 @@ multipartFormData:(NSDictionary *)parts
     {
         [request addData:[parts objectForKey:key] forKey:key];
     }
-    if (authenticateWithAccount.oAuth2Token || [method isEqualToString:@"POST"])
+    if (self.oauth2Token || [method isEqualToString:@"POST"])
     {
-        [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
+        [request setOAuth2Token:self.oauth2Token];
         [request startAuthrizedRequest];
     }else
     {
@@ -78,13 +78,12 @@ multipartFormData:(NSDictionary *)parts
 }
 
 #pragma mark Response Handling
-- (void)handleRequestError:(WeiboRequestError *)error{
+- (void)handleRequestError:(WeiboRequestError *)error
+{
     LogIt([error description]);
-    NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
     if (error.code == WeiboErrorCodeTokenExpired ||
         error.code == WeiboErrorCodeTokenInvalid) {
-        authenticateWithAccount.tokenExpired = YES;
-        [nc postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
+        [self tokenDidExpire];
     }
 }
 

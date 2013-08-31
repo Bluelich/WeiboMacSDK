@@ -8,6 +8,7 @@
 
 #import "WeiboAccount.h"
 #import "WeiboAccount+Filters.h"
+#import "WeiboAccount+Superpower.h"
 #import "WeiboAPI+UnreadCount.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboAPI+UserMethods.h"
@@ -67,6 +68,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     [_mentionHighlighter release], _mentionHighlighter = nil;
     
+    [_superpowerToken release], _superpowerToken = nil;
+    
     [super dealloc];
 }
 
@@ -110,6 +113,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.clientFilters] forKey:@"client-filters"];
     
     [encoder encodeObject:self.profileImage forKey:@"profile-image"];
+    
+    [encoder encodeBool:self.superpowerTokenExpired forKey:@"superpower-token-expired"];
 }
 - (id)initWithCoder:(NSCoder *)decoder
 {
@@ -119,6 +124,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
+        self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
         
         [self setFilterArray:[decoder decodeObjectForKey:@"keyword-filters"] forKeyPath:@"keywordFilters"];
         [self setFilterArray:[decoder decodeObjectForKey:@"user-filters"] forKeyPath:@"userFilters"];
@@ -133,7 +139,10 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
             
             self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
                                                       account:keyChainAccount];
+            
+            [self restoreSuperpowerTokenFromKeychain];
         }
+        
         
         if (self.oAuth2Token)
         {

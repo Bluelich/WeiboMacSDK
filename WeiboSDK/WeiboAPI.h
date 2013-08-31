@@ -32,6 +32,9 @@
 - (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl;
 - (WTHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl;
 
+- (NSString *)oauth2Token;
+- (void)tokenDidExpire;
+
 - (NSString *)keychainService;
 
 @end

@@ -39,6 +39,18 @@
     [super dealloc];
 }
 
+- (NSString *)oauth2Token
+{
+    return authenticateWithAccount.oAuth2Token;
+}
+
+- (void)tokenDidExpire
+{
+    authenticateWithAccount.tokenExpired = YES;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
+}
+
 - (NSString *)keychainService{
     NSString *identifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
     return identifier;

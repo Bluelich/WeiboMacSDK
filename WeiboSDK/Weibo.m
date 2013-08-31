@@ -9,6 +9,7 @@
 #import "Weibo.h"
 #import "WeiboAccount.h"
 #import "WeiboAccount+Filters.h"
+#import "WeiboAccount+Superpower.h"
 #import "WeiboAPI+AccountMethods.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WTCallback.h"

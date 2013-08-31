@@ -12,6 +12,12 @@
 		C6053FB514F24616003A581D /* WeiboBaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CC14EF75AC004DAFE9 /* WeiboBaseStatus.m */; };
 		C6053FB714F2462B003A581D /* WTActiveTextRanges.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */; };
 		C6053FEC14F382E2003A581D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6053FE914F380F1003A581D /* SSKeychain.m */; };
+		C6084B3F17D1DD1E00A667F2 /* WeiboAccount+Superpower.h in Headers */ = {isa = PBXBuildFile; fileRef = C6084B3D17D1DD1E00A667F2 /* WeiboAccount+Superpower.h */; };
+		C6084B4017D1DD1E00A667F2 /* WeiboAccount+Superpower.m in Sources */ = {isa = PBXBuildFile; fileRef = C6084B3E17D1DD1E00A667F2 /* WeiboAccount+Superpower.m */; };
+		C6084B4317D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = C6084B4117D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h */; };
+		C6084B4417D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C6084B4217D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m */; };
+		C6084B4B17D2056500A667F2 /* WeiboSuperpowerAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = C6084B4917D2056500A667F2 /* WeiboSuperpowerAPI.h */; };
+		C6084B4C17D2056500A667F2 /* WeiboSuperpowerAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6084B4A17D2056500A667F2 /* WeiboSuperpowerAPI.m */; };
 		C6094FA7155764FE0038C7D2 /* WeiboStatusStreamFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FA4155764F10038C7D2 /* WeiboStatusStreamFilter.m */; };
 		C6094FAC155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C6094FAA155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h */; };
 		C6094FAE155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6094FAB155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.m */; };
@@ -143,6 +149,12 @@
 		C6011B14151484BE00A0A49C /* LocalAutocompleteDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalAutocompleteDB.m; path = WeiboSDK/Support/LocalAutocompleteDB.m; sourceTree = "<group>"; };
 		C6053FE814F380F1003A581D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		C6053FE914F380F1003A581D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		C6084B3D17D1DD1E00A667F2 /* WeiboAccount+Superpower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WeiboAccount+Superpower.h"; path = "WeiboSDK/Model/WeiboAccount+Superpower.h"; sourceTree = "<group>"; };
+		C6084B3E17D1DD1E00A667F2 /* WeiboAccount+Superpower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WeiboAccount+Superpower.m"; path = "WeiboSDK/Model/WeiboAccount+Superpower.m"; sourceTree = "<group>"; };
+		C6084B4117D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAPI+SuperpowerAuth.h"; sourceTree = "<group>"; };
+		C6084B4217D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeiboAPI+SuperpowerAuth.m"; sourceTree = "<group>"; };
+		C6084B4917D2056500A667F2 /* WeiboSuperpowerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboSuperpowerAPI.h; path = WeiboSDK/WeiboSuperpowerAPI.h; sourceTree = "<group>"; };
+		C6084B4A17D2056500A667F2 /* WeiboSuperpowerAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboSuperpowerAPI.m; path = WeiboSDK/WeiboSuperpowerAPI.m; sourceTree = "<group>"; };
 		C6094FA3155764F10038C7D2 /* WeiboStatusStreamFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStatusStreamFilter.h; path = WeiboSDK/Utilities/WeiboStatusStreamFilter.h; sourceTree = "<group>"; };
 		C6094FA4155764F10038C7D2 /* WeiboStatusStreamFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboStatusStreamFilter.m; path = WeiboSDK/Utilities/WeiboStatusStreamFilter.m; sourceTree = "<group>"; };
 		C6094FAA155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStatusStreamFilterSimpleSearchFilter.h; path = WeiboSDK/Utilities/WeiboStatusStreamFilterSimpleSearchFilter.h; sourceTree = "<group>"; };
@@ -534,6 +546,8 @@
 				C6B8C5271514DB0900935AC5 /* AutocompleteDB */,
 				C6DB909714E4EEC8001DE9F5 /* WeiboAccount.h */,
 				C6DB909814E4EEC8001DE9F5 /* WeiboAccount.m */,
+				C6084B3D17D1DD1E00A667F2 /* WeiboAccount+Superpower.h */,
+				C6084B3E17D1DD1E00A667F2 /* WeiboAccount+Superpower.m */,
 				C620027E17A42BB800283648 /* WeiboAccount+Lists.h */,
 				C620027F17A42BB800283648 /* WeiboAccount+Lists.m */,
 				C68B2F8217AD222C005CC80C /* WeiboAccount+Filters.h */,
@@ -579,6 +593,8 @@
 			children = (
 				C6DB909314E4EE3B001DE9F5 /* WeiboAPI.h */,
 				C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */,
+				C6084B4917D2056500A667F2 /* WeiboSuperpowerAPI.h */,
+				C6084B4A17D2056500A667F2 /* WeiboSuperpowerAPI.m */,
 				C6EC37651745F33B0085E6ED /* WeiboAPI+AccountMethods.h */,
 				C6EC37661745F33C0085E6ED /* WeiboAPI+AccountMethods.m */,
 				C6EC37561745F13A0085E6ED /* WeiboAPI+StatusMethods.h */,
@@ -591,6 +607,8 @@
 				C6EC37521745EF9C0085E6ED /* WeiboAPI+UserMethods.m */,
 				C6EC374C1745EE570085E6ED /* WeiboAPI+Private.h */,
 				C6EC374D1745EE570085E6ED /* WeiboAPI+Private.m */,
+				C6084B4117D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h */,
+				C6084B4217D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -716,6 +734,7 @@
 				C620027817A407DD00283648 /* WeiboList.h in Headers */,
 				C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */,
 				C67ED9AD1501B0E80059AF71 /* WeiboComment.h in Headers */,
+				C6084B3F17D1DD1E00A667F2 /* WeiboAccount+Superpower.h in Headers */,
 				C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */,
 				C68B2F7417ACD1FA005CC80C /* WeiboStatusKeywordFilter.h in Headers */,
 				C620028017A42BB800283648 /* WeiboAccount+Lists.h in Headers */,
@@ -730,6 +749,7 @@
 				C61E986715A9921100C42FE5 /* WeiboEmotion.h in Headers */,
 				C6E0BC2415E8A222007BAA20 /* JSONKit.h in Headers */,
 				C60B51231745D6A200E99C07 /* WeiboUserList.h in Headers */,
+				C6084B4317D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h in Headers */,
 				C60B51281745D72F00E99C07 /* WeiboUserUserList.h in Headers */,
 				C60B512D1745DB7F00E99C07 /* WeiboUserRelationshipUserList.h in Headers */,
 				C68B2F6F17ACD0B7005CC80C /* WeiboStatusFilter.h in Headers */,
@@ -739,6 +759,7 @@
 				C6EC37531745EF9C0085E6ED /* WeiboAPI+UserMethods.h in Headers */,
 				C6EC37581745F13B0085E6ED /* WeiboAPI+StatusMethods.h in Headers */,
 				C68B2F7817ACD222005CC80C /* WeiboStatusUserFilter.h in Headers */,
+				C6084B4B17D2056500A667F2 /* WeiboSuperpowerAPI.h in Headers */,
 				C6EC375D1745F26D0085E6ED /* WeiboAPI+DirectMessages.h in Headers */,
 				C682BAC117C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h in Headers */,
 				C6EC37621745F2BA0085E6ED /* WeiboAPI+UnreadCount.h in Headers */,
@@ -833,6 +854,7 @@
 				C6647D3414ED638E00422998 /* ASIDownloadCache.m in Sources */,
 				C6647D3614ED638E00422998 /* ASIFormDataRequest.m in Sources */,
 				C6647D3814ED638E00422998 /* ASIHTTPRequest.m in Sources */,
+				C6084B4017D1DD1E00A667F2 /* WeiboAccount+Superpower.m in Sources */,
 				C6647D3C14ED638E00422998 /* ASIInputStream.m in Sources */,
 				C6647D3E14ED638E00422998 /* ASINetworkQueue.m in Sources */,
 				C6647D4114ED638E00422998 /* WTHTTPRequest.m in Sources */,
@@ -845,6 +867,7 @@
 				C6647D5114ED638E00422998 /* WeiboUser.m in Sources */,
 				C6647D5314ED638E00422998 /* WeiboConfiguration.m in Sources */,
 				C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */,
+				C6084B4C17D2056500A667F2 /* WeiboSuperpowerAPI.m in Sources */,
 				C6647D5914ED638E00422998 /* NSDictionary+WeiboAdditions.m in Sources */,
 				C68B2F7517ACD1FA005CC80C /* WeiboStatusKeywordFilter.m in Sources */,
 				C6647D5B14ED638E00422998 /* WTOASingnaturer.m in Sources */,
@@ -856,6 +879,7 @@
 				C6647D6B14ED638E00422998 /* OAConsumer.m in Sources */,
 				C6647D6F14ED638E00422998 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				C6647D7114ED638E00422998 /* OAPlaintextSignatureProvider.m in Sources */,
+				C6084B4417D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m in Sources */,
 				C6647D7314ED638E00422998 /* OARequestParameter.m in Sources */,
 				C6647D7B14ED638E00422998 /* RegexKitLite.m in Sources */,
 				C68B2F7017ACD0B7005CC80C /* WeiboStatusFilter.m in Sources */,

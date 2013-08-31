@@ -13,7 +13,8 @@
 
 #pragma mark -
 #pragma mark oAuth (xAuth)
-- (void)clientAuthRequestAccessToken{
+- (void)clientAuthRequestAccessToken
+{
     WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(clientAuthResponse:info:) info:nil];
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[authenticateWithAccount.username stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",authenticateWithAccount.password,@"password",@"password",@"grant_type", nil];
     

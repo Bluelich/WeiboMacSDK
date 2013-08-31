@@ -45,6 +45,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
         unsigned int loadingLists:1;
         unsigned int listsLoaded:1;
         unsigned int listsAccessDenied:1;
+        unsigned int superpowerAuthorizing:1;
     } _flags;
 }
 
@@ -55,11 +56,14 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 @property (retain, nonatomic) NSString *oAuthToken;
 @property (retain, nonatomic) NSString *oAuth2Token;
 @property (assign, nonatomic) BOOL tokenExpired;
+@property (assign, nonatomic) BOOL superpowerTokenExpired;
 @property (assign, nonatomic) NSTimeInterval expireTime;
 @property (retain, nonatomic) WeiboUser *user;
 @property (readonly, nonatomic) NSString *apiRoot;
 @property (retain, nonatomic) NSImage * profileImage;
 @property (assign, nonatomic) WeiboNotificationOptions notificationOptions;
+
+@property (nonatomic, retain) NSString * superpowerToken;
 
 #pragma mark -
 #pragma mark Life Cycle
