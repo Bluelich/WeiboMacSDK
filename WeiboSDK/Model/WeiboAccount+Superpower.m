@@ -13,6 +13,10 @@
 #import "SSKeychain.h"
 #import "WTCallback.h"
 
+extern NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
+extern NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
+extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification = @"WeiboAccountSuperpowerTokenExpiredNotification";
+
 @implementation WeiboAccount (Superpower)
 
 - (BOOL)superpowerAuthorized
@@ -41,22 +45,37 @@
     [api superpowerTokenWithUsername:aUsername password:aPassword];
 }
 
+- (void)superpowerAuthorizeFailedWithError:(WeiboRequestError *)error
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeFailedNotification object:self userInfo:@{@"error":error}];
+}
+
 - (void)superpowerAuthorizeResponse:(id)response info:(id)info
 {
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeFailedNotification object:self userInfo:@{@"error":response}];
+        [self superpowerAuthorizeFailedWithError:response];
     }
     else if ([response isKindOfClass:[NSDictionary class]])
     {
         NSString * token = [response stringForKey:@"access_token" defaultValue:nil];
+        WeiboUserID userID = [response longlongForKey:@"userid" defaultValue:0];
         
-        self.superpowerTokenExpired = NO;
-        self.superpowerToken = token;
-        
-        if (token)
+        if (userID != self.user.userID)
         {
-            [self updateSuperpowerTokenToKeychain:token];
+            WeiboRequestError * error = [WeiboRequestError errorWithCode:WeiboErrorCodeSuperpowerUserNotMatch];
+            
+            [self superpowerAuthorizeFailedWithError:error];
+        }
+        else
+        {
+            self.superpowerTokenExpired = NO;
+            self.superpowerToken = token;
+            
+            if (token)
+            {
+                [self updateSuperpowerTokenToKeychain:token];
+            }
         }
     }
     
@@ -81,7 +100,14 @@
 }
 - (void)updateSuperpowerTokenToKeychain:(NSString *)token
 {
-    [SSKeychain setPassword:token forService:self.keychainService account:[self superpowerKeychainAccount]];
+    if (!token)
+    {
+        [SSKeychain deletePasswordForService:self.keychainService account:[self superpowerKeychainAccount]];
+    }
+    else
+    {
+        [SSKeychain setPassword:token forService:self.keychainService account:[self superpowerKeychainAccount]];
+    }
 }
 
 

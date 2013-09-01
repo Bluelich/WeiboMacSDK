@@ -18,6 +18,11 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 @implementation WeiboRequestError
 @synthesize requestURLString, errorDetailCode, errorString, errorStringInChinese;
 
++ (WeiboRequestError *)errorWithCode:(NSInteger)code
+{
+    return [[[self alloc] initWithDomain:WeiboRequestErrorDomain code:code userInfo:nil] autorelease];
+}
+
 + (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(int)code{
     return [[[self alloc] initWithResponseString:responseString statusCode:(int)code] autorelease];
 }

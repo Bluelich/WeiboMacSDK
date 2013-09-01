@@ -243,7 +243,9 @@ static Weibo * _sharedWeibo = nil;
     [self addAccount:aAccount postsNotification:YES];
 }
 
-- (void)removeAccount:(WeiboAccount *)aAccount{
+- (void)removeAccount:(WeiboAccount *)aAccount
+{
+    [aAccount updateSuperpowerTokenToKeychain:nil];
     [accounts removeObject:aAccount];
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification
                                                         object:self];
