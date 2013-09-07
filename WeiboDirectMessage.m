@@ -38,6 +38,12 @@
         self.text = [dict stringForKey:@"text" defaultValue:@""];
         self.senderID = [dict longlongForKey:@"sender_id" defaultValue:0];
         self.recipientID = [dict longlongForKey:@"recipient_id" defaultValue:0];
+        
+        NSDictionary * senderDictionary = [dict objectForKey:@"sender"];
+        NSDictionary * recipientDictionary = [dict objectForKey:@"recipient"];
+        
+        if (senderDictionary) self.sender = [WeiboUser userWithDictionary:senderDictionary];
+        if (recipientDictionary) self.recipient = [WeiboUser userWithDictionary:recipientDictionary];
     }
     return self;
 }
@@ -51,6 +57,9 @@
         self.text = [aDecoder decodeObjectForKey:@"text"];
         self.senderID = [aDecoder decodeInt64ForKey:@"sender_id"];
         self.recipientID = [aDecoder decodeInt64ForKey:@"recipient_id"];
+        
+        self.sender = [aDecoder decodeObjectForKey:@"sender"];
+        self.recipient = [aDecoder decodeObjectForKey:@"recipient"];
     }
     return self;
 }
@@ -62,6 +71,9 @@
     [aCoder encodeObject:self.text forKey:@"text"];
     [aCoder encodeInt64:self.senderID forKey:@"sender_id"];
     [aCoder encodeInt64:self.recipientID forKey:@"recipient_id"];
+    
+    [aCoder encodeObject:self.sender forKey:@"sender"];
+    [aCoder encodeObject:self.recipient forKey:@"recipient"];
 }
 
 - (void)setRead:(BOOL)read

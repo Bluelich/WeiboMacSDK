@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "WeiboDirectMessage.h"
 
+extern NSString * const WeiboDirectMessageConversationDidUpdateNotification;
+
 @interface WeiboDirectMessageConversation : NSObject <NSCoding>
 
 - (WeiboDirectMessage *)newestMessageNotFrom:(WeiboUser *)user;
@@ -20,6 +22,8 @@
 - (BOOL)isRepliedTo;
 - (BOOL)hasUnreadMessages;
 - (void)markAsRead;
+
+- (NSComparisonResult)compare:(WeiboDirectMessageConversation *)other;
 
 @property (nonatomic, retain, readonly) NSArray * messages;
 @property (nonatomic, retain, readonly) WeiboDirectMessage * mostRecentMessage;

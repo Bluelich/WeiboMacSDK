@@ -14,7 +14,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter;
+@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager;
 
 @protocol WeiboAccountDelegate;
 
@@ -33,6 +33,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
     WeiboMentionsStream * mentionsStream;
     WeiboCommentsTimelineStream * commentsTimelineStream;
     WeiboFavoritesStream * favoritesStream;
+    
     NSMutableArray *outbox;
     id<WeiboAccountDelegate> _delegate;
     WeiboNotificationOptions notificationOptions;
@@ -64,6 +65,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 @property (assign, nonatomic) WeiboNotificationOptions notificationOptions;
 
 @property (nonatomic, retain) NSString * superpowerToken;
+@property (nonatomic, retain, readonly) WeiboDirectMessagesConversationManager * directMessagesManager;
 
 #pragma mark -
 #pragma mark Life Cycle

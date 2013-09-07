@@ -46,14 +46,16 @@ NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMe
 {
     if (self = [self init])
     {
-        
+        self.messages = [aDecoder decodeObjectForKey:@"messages"];
+        self.account = [aDecoder decodeObjectForKey:@"account"];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    
+    [aCoder encodeObject:self.messages forKey:@"messages"];
+    [aCoder encodeObject:self.account forKey:@"account"];
 }
 
 - (NSArray *)messages
@@ -153,7 +155,9 @@ NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMe
     
     if (messages.count)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamDidUpdateNotification object:self];
+        NSDictionary * userInfo = @{@"messages" : messages};
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamDidUpdateNotification object:self userInfo:userInfo];
     }
 }
 - (void)deleteMessage:(WeiboDirectMessage *)message

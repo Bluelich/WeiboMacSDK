@@ -10,11 +10,16 @@
 #import "WeiboReceivedDirectMessageStream.h"
 #import "WeiboSentDirectMessageStream.h"
 
+extern NSString * const WeiboDirectMessagesConversationListDidUpdateNotification;
+
 @class WeiboAccount;
 
 @interface WeiboDirectMessagesConversationManager : NSObject <NSCoding>
 
 - (instancetype)initWithAccount:(WeiboAccount *)account;
+
+- (void)refresh;
+- (void)loadOlder;
 
 @property (nonatomic, retain, readonly) WeiboReceivedDirectMessageStream * receivedStream;
 @property (nonatomic, retain, readonly) WeiboSentDirectMessageStream *sentStream;

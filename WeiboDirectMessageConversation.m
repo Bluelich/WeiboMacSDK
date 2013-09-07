@@ -8,9 +8,15 @@
 
 #import "WeiboDirectMessageConversation.h"
 
+NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDirectMessageConversationDidUpdateNotification";
+
 @interface WeiboDirectMessageConversation ()
 {
     NSMutableArray * _messages;
+    
+    struct {
+        unsigned int didAddMessage:1;
+    } _flags;
 }
 
 @end
@@ -72,19 +78,27 @@
 }
 - (void)beginAddingMessages
 {
-    
+    _flags.didAddMessage = NO;
 }
 - (void)addMessage:(WeiboDirectMessage *)message
 {
     if (!message) return;
     
-    // TODO: sort
+    NSInteger idx = [_messages indexOfObject:message inSortedRange:NSMakeRange(0, _messages.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(WeiboDirectMessage * obj1, WeiboDirectMessage * obj2) {
+        return [obj1 compare:obj2];
+    }];
     
-    [_messages addObject:message];
+    [_messages insertObject:message atIndex:idx];
+    
+    _flags.didAddMessage = YES;
 }
 - (void)endAddingMessages
 {
-    
+    if (_flags.didAddMessage)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageConversationDidUpdateNotification object:self];
+    }
+    _flags.didAddMessage = NO;
 }
 
 - (void)deleteMessage:(WeiboDirectMessage *)message
@@ -108,6 +122,25 @@
     for (WeiboDirectMessage * message in _messages)
     {
         message.read = YES;
+    }
+}
+
+- (NSComparisonResult)compare:(WeiboDirectMessageConversation *)other
+{
+    time_t mostRecentDate = self.mostRecentMessage.date;
+    time_t otherMostRecentDate = other.mostRecentMessage.date;
+    
+    if (mostRecentDate > otherMostRecentDate)
+    {
+        return NSOrderedDescending;
+    }
+    else if (mostRecentDate < otherMostRecentDate)
+    {
+        return NSOrderedAscending;
+    }
+    else
+    {
+        return NSOrderedSame;
     }
 }
 

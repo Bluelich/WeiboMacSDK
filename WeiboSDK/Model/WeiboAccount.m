@@ -25,6 +25,7 @@
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
+#import "WeiboDirectMessagesConversationManager.h"
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
@@ -35,6 +36,12 @@
 #define CACHE_LIVETIME 600.0
 
 NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFavoriteStateDidChangeNotifiaction";
+
+@interface WeiboAccount ()
+
+@property (nonatomic, retain) WeiboDirectMessagesConversationManager * directMessagesManager;
+
+@end
 
 @implementation WeiboAccount
 @synthesize username, password, oAuthToken, oAuthTokenSecret, user, apiRoot;
@@ -69,6 +76,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [_mentionHighlighter release], _mentionHighlighter = nil;
     
     [_superpowerToken release], _superpowerToken = nil;
+    [_directMessagesManager release], _directMessagesManager = nil;
     
     [super dealloc];
 }
@@ -291,6 +299,18 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     }
     
     [self setValue:result forKeyPath:keyPath];
+}
+
+- (WeiboDirectMessagesConversationManager *)directMessagesManager
+{
+    if (!self.superpowerAuthorized) return nil;
+    
+    if (!_directMessagesManager)
+    {
+        _directMessagesManager = [[WeiboDirectMessagesConversationManager alloc] initWithAccount:self];
+    }
+    
+    return _directMessagesManager;
 }
 
 #pragma mark -
