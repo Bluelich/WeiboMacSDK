@@ -10,13 +10,6 @@
 
 @implementation NSArray (WeiboAdditions)
 
-- (id)firstObject{
-    if ([self count] == 0) {
-        return nil;
-    }
-    return [self objectAtIndex:0];
-}
-
 -(NSInteger)binarySearch:(id)key usingBlock:(CompareObjects)comparator{
     if(self.count == 0 || key == nil || comparator == NULL)
         return -1;

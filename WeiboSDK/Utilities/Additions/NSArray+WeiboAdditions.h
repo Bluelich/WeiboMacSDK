@@ -10,7 +10,6 @@
 
 @interface NSArray (WeiboAdditions)
 
-- (id)firstObject;
 typedef NSComparisonResult (^CompareObjects) (id, id);
 - (NSInteger)binarySearch:(id)key usingBlock:(CompareObjects)comparator;
 

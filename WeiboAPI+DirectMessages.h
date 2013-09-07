@@ -13,5 +13,6 @@
 #pragma mark -
 #pragma mark Direct Message
 - (void)directMessagesSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)sentDirectMessagesSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 
 @end
