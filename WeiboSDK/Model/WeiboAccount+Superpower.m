@@ -13,9 +13,10 @@
 #import "SSKeychain.h"
 #import "WTCallback.h"
 
-extern NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
-extern NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
-extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification = @"WeiboAccountSuperpowerTokenExpiredNotification";
+NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
+NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
+NSString * const WeiboAccountSuperpowerTokenExpiredNotification = @"WeiboAccountSuperpowerTokenExpiredNotification";
+NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"WeiboAccountSuperpowerAuthorizeStateChangedNotification";
 
 @implementation WeiboAccount (Superpower)
 
@@ -59,7 +60,7 @@ extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification = @"Weibo
     else if ([response isKindOfClass:[NSDictionary class]])
     {
         NSString * token = [response stringForKey:@"access_token" defaultValue:nil];
-        WeiboUserID userID = [response longlongForKey:@"userid" defaultValue:0];
+        WeiboUserID userID = [response longlongForKey:@"uid" defaultValue:0];
         
         if (userID != self.user.userID)
         {
@@ -76,10 +77,22 @@ extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification = @"Weibo
             {
                 [self updateSuperpowerTokenToKeychain:token];
             }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
         }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeFinishedNotification object:self];
+}
+
+- (void)deauthorizeSuperpower
+{
+    self.superpowerToken = nil;
+    self.superpowerTokenExpired = NO;
+    
+    [self updateSuperpowerTokenToKeychain:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
 }
 
 #pragma mark - Keychain

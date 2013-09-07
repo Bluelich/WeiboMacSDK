@@ -25,6 +25,7 @@
     authenticateWithAccount.superpowerTokenExpired = YES;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerTokenExpiredNotification object:authenticateWithAccount];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:authenticateWithAccount];
 }
 
 @end

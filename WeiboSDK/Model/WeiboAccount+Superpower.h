@@ -11,6 +11,7 @@
 extern NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification;
 extern NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification;
 extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification;
+extern NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification;
 
 @interface WeiboAccount (Superpower)
 
@@ -18,6 +19,7 @@ extern NSString * const WeiboAccountSuperpowerTokenExpiredNotification;
 
 - (WeiboAPI *)authenticatedSuperpowerRequest:(WTCallback *)callback;
 - (void)authorizeSuperpowerWithUsername:(NSString *)username password:(NSString *)password;
+- (void)deauthorizeSuperpower;
 
 - (void)restoreSuperpowerTokenFromKeychain;
 - (void)updateSuperpowerTokenToKeychain:(NSString *)token;
