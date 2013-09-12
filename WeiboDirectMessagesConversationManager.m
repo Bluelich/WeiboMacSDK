@@ -12,6 +12,7 @@
 #import "WeiboAccount.h"
 
 NSString * const WeiboDirectMessagesConversationListDidUpdateNotification = @"WeiboDirectMessagesConversationListDidUpdateNotification";
+NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"WeiboDirectMessagesManagerDidFinishLoadingNotification";
 
 @interface WeiboDirectMessagesConversationManager ()
 {
@@ -101,13 +102,17 @@ NSString * const WeiboDirectMessagesConversationListDidUpdateNotification = @"We
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sentDidUpdate:) name:WeiboDirectMessageStreamDidUpdateNotification object:_sentStream];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidUpdate:) name:WeiboDirectMessageStreamDidUpdateNotification object:_receivedStream];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messagesStreamFinishedLoading:) name:WeiboDirectMessageStreamFinishedLoadingNotification object:nil];
 }
 
 - (WeiboDirectMessageConversation *)conversationWith:(WeiboUser *)user
 {
-    for (WeiboDirectMessageConversation * conversation in self.conversations)
+    for (WeiboDirectMessageConversation * conversation in _conversations)
     {
-        if (conversation.correspondent.userID == user.userID) return conversation;
+        if (conversation.correspondent.userID == user.userID)
+        {
+            return conversation;
+        }
     }
     return nil;
 }
@@ -116,45 +121,59 @@ NSString * const WeiboDirectMessagesConversationListDidUpdateNotification = @"We
 {
     if (!conversation) return;
     
-    [_conversations insertObject:conversation atIndex:0];
+    [_conversations addObject:conversation];
 }
 
 - (void)addMessages:(NSArray *)messages fromMe:(BOOL)fromMe
 {
-    if (!messages.count) return;
-    
-    [_conversations makeObjectsPerformSelector:@selector(beginAddingMessages)];
-    
-    for (WeiboDirectMessage * message in messages)
+    if (messages.count)
     {
-        WeiboUser * correspondent = fromMe ? message.recipient : message.sender;
-        WeiboDirectMessageConversation * conversation = [self conversationWith:correspondent];
-        if (!conversation)
+        [_conversations makeObjectsPerformSelector:@selector(beginAddingMessages)];
+        
+        for (WeiboDirectMessage * message in messages)
         {
-            conversation = [[WeiboDirectMessageConversation alloc] init];
-            conversation.correspondent = correspondent;
-            [self _addStubConversation:conversation];
-            [conversation beginAddingMessages];
-            [conversation release];
+            WeiboUser * correspondent = fromMe ? message.recipient : message.sender;
+            WeiboDirectMessageConversation * conversation = [self conversationWith:correspondent];
+            if (!conversation)
+            {
+                conversation = [[WeiboDirectMessageConversation alloc] init];
+                conversation.correspondent = correspondent;
+                [self _addStubConversation:conversation];
+                [conversation beginAddingMessages];
+                [conversation release];
+            }
+            
+            [conversation addMessage:message];
+            
+            // optimizing memory usage, point user to a shared object, hope this works
+            WeiboUser * me = _sentStream.account.user;
+            WeiboUser * he = conversation.correspondent;
+            
+            message.sender = fromMe ? me : he;
+            message.recipient = fromMe ? he : me;
         }
         
-        [conversation addMessage:message];
+        [_conversations makeObjectsPerformSelector:@selector(endAddingMessages)];
         
-        // optimizing memory usage, point user to a shared object, hope this works
-        WeiboUser * me = _sentStream.account.user;
-        WeiboUser * he = conversation.correspondent;
+        [_conversations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare:obj2];
+        }];
         
-        message.sender = fromMe ? me : he;
-        message.recipient = fromMe ? he : me;
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessagesConversationListDidUpdateNotification object:self];
+    }
+}
+
+- (void)messagesStreamFinishedLoading:(NSNotification *)notification
+{
+    if (notification.object != _sentStream && notification.object != _receivedStream)
+    {
+        return;
     }
     
-    [_conversations makeObjectsPerformSelector:@selector(endAddingMessages)];
-    
-    [_conversations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
-    }];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessagesConversationListDidUpdateNotification object:self];
+    if (!_sentStream.isLoading && !_receivedStream.isLoading)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessagesManagerDidFinishLoadingNotification object:self];
+    }
 }
 
 - (void)sentDidUpdate:(NSNotification *)notification
@@ -233,6 +252,19 @@ NSString * const WeiboDirectMessagesConversationListDidUpdateNotification = @"We
 - (void)clearCachedUnreadState
 {
     
+}
+
+- (BOOL)isLoadingNewer
+{
+    return _sentStream.isLoadingNewer || _receivedStream.isLoadingNewer;
+}
+- (BOOL)isLoadingOlder
+{
+    return _sentStream.isLoadingOlder || _receivedStream.isLoadingOlder;
+}
+- (BOOL)isLoading
+{
+    return self.isLoadingNewer || self.isLoadingOlder;
 }
 
 @end

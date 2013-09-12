@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboUser.h"
+#import "WTActiveTextRanges.h"
 
 typedef int64_t WeiboMessageID;
 
@@ -26,6 +27,8 @@ typedef int64_t WeiboMessageID;
 @property (nonatomic, retain) WeiboUser * sender;
 @property (nonatomic, retain) WeiboUser * recipient;
 @property (nonatomic, assign) BOOL read;
+
+@property (nonatomic, retain) WTActiveTextRanges * activeRanges;
 
 - (NSComparisonResult)compare:(WeiboDirectMessage *)object;
 

@@ -111,6 +111,8 @@ NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDi
 }
 - (BOOL)hasUnreadMessages
 {
+    return NO;
+    
     for (WeiboDirectMessage * message in _messages)
     {
         if (!message.read) return YES;
@@ -124,6 +126,10 @@ NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDi
         message.read = YES;
     }
 }
+- (WeiboDirectMessage *)mostRecentMessage
+{
+    return [self.messages lastObject];
+}
 
 - (NSComparisonResult)compare:(WeiboDirectMessageConversation *)other
 {
@@ -132,11 +138,11 @@ NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDi
     
     if (mostRecentDate > otherMostRecentDate)
     {
-        return NSOrderedDescending;
+        return NSOrderedAscending;
     }
     else if (mostRecentDate < otherMostRecentDate)
     {
-        return NSOrderedAscending;
+        return NSOrderedDescending;
     }
     else
     {

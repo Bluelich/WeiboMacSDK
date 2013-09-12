@@ -10,6 +10,7 @@
 #import "WeiboDirectMessage.h"
 
 extern NSString * const WeiboDirectMessageStreamDidUpdateNotification;
+extern NSString * const WeiboDirectMessageStreamFinishedLoadingNotification;
 
 @class WeiboAccount;
 
@@ -28,6 +29,10 @@ extern NSString * const WeiboDirectMessageStreamDidUpdateNotification;
 
 - (void)loadNewer;
 - (void)loadOlder;
+
+- (BOOL)isLoading;
+- (BOOL)isLoadingNewer;
+- (BOOL)isLoadingOlder;
 
 - (WTCallback *)loadNewerResponseCallback;
 - (WTCallback *)loaderOlderResponseCallback;

@@ -25,6 +25,7 @@
     [_sender release], _sender = nil;
     [_recipient release], _recipient = nil;
     [_text release], _text = nil;
+    [_activeRanges release], _activeRanges = nil;
     
     [super dealloc];
 }
@@ -44,6 +45,8 @@
         
         if (senderDictionary) self.sender = [WeiboUser userWithDictionary:senderDictionary];
         if (recipientDictionary) self.recipient = [WeiboUser userWithDictionary:recipientDictionary];
+        
+        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.text] autorelease];
     }
     return self;
 }

@@ -11,6 +11,7 @@
 #import "WeiboSentDirectMessageStream.h"
 
 extern NSString * const WeiboDirectMessagesConversationListDidUpdateNotification;
+extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 
 @class WeiboAccount;
 
@@ -25,5 +26,9 @@ extern NSString * const WeiboDirectMessagesConversationListDidUpdateNotification
 @property (nonatomic, retain, readonly) WeiboSentDirectMessageStream *sentStream;
 @property (nonatomic, retain, readonly) NSArray * conversations;
 @property (nonatomic, retain, readonly) NSArray * unreadConversations;
+
+@property (nonatomic, assign, readonly) BOOL isLoadingNewer;
+@property (nonatomic, assign, readonly) BOOL isLoadingOlder;
+@property (nonatomic, assign, readonly) BOOL isLoading;
 
 @end

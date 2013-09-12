@@ -11,6 +11,7 @@
 #import "WeiboRequestError.h"
 
 NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMessageStreamDidUpdateNotification";
+NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDirectMessageStreamFinishedLoadingNotification";
 
 @interface WeiboDirectMessageStream ()
 {
@@ -79,6 +80,8 @@ NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMe
 
 - (void)messagesResponse:(id)response info:(id)info
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamFinishedLoadingNotification object:self];
+    
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
         
@@ -113,6 +116,19 @@ NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMe
     [self _loadOlder];
     
     _flags.isLoadingNewer = YES;
+}
+
+- (BOOL)isLoadingNewer
+{
+    return _flags.isLoadingNewer;
+}
+- (BOOL)isLoadingOlder
+{
+    return _flags.isLoadingOlder;
+}
+- (BOOL)isLoading
+{
+    return _flags.isLoadingNewer || _flags.isLoadingOlder;
 }
 
 - (void)loadNewerResponse:(id)response info:(id)info
