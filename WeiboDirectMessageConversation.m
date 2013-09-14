@@ -9,6 +9,7 @@
 #import "WeiboDirectMessageConversation.h"
 
 NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDirectMessageConversationDidUpdateNotification";
+NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"WeiboDirectMessageConversationDidMarkAsReadNotification";
 
 @interface WeiboDirectMessageConversation ()
 {
@@ -111,19 +112,27 @@ NSString * const WeiboDirectMessageConversationDidUpdateNotification = @"WeiboDi
 }
 - (BOOL)hasUnreadMessages
 {
-    return NO;
-    
-    for (WeiboDirectMessage * message in _messages)
+    for (WeiboDirectMessage * message in [_messages reverseObjectEnumerator])
     {
-        if (!message.read) return YES;
+        if (message.senderID == self.correspondent.userID)
+        {
+            return !message.read;
+        }
     }
     return NO;
 }
 - (void)markAsRead
 {
+    BOOL postsNotification = self.hasUnreadMessages;
+    
     for (WeiboDirectMessage * message in _messages)
     {
         message.read = YES;
+    }
+    
+    if (postsNotification)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageConversationDidMarkAsReadNotification object:self];
     }
 }
 - (WeiboDirectMessage *)mostRecentMessage

@@ -19,6 +19,8 @@ extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 
 - (instancetype)initWithAccount:(WeiboAccount *)account;
 
+- (void)initialzeConversationsIfNeeded;
+
 - (void)refresh;
 - (void)loadOlder;
 
@@ -26,6 +28,8 @@ extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 @property (nonatomic, retain, readonly) WeiboSentDirectMessageStream *sentStream;
 @property (nonatomic, retain, readonly) NSArray * conversations;
 @property (nonatomic, retain, readonly) NSArray * unreadConversations;
+
+@property (nonatomic, assign) WeiboMessageID viewedMostRecentID;
 
 @property (nonatomic, assign, readonly) BOOL isLoadingNewer;
 @property (nonatomic, assign, readonly) BOOL isLoadingOlder;

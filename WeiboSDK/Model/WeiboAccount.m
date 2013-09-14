@@ -48,6 +48,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 @synthesize delegate = _delegate, notificationOptions;
 @synthesize oAuth2Token = _oAuth2Token, expireTime = _expireTime;
 @synthesize tokenExpired = _tokenExpired, profileImage = _profileImage;
+@synthesize newDirectMessagesCount = _newDirectMessagesCount;
 
 #pragma mark -
 #pragma mark Life Cycle
@@ -744,6 +745,28 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     return count;
 }
+
+- (NSInteger)newDirectMessagesCount
+{
+    if (self.directMessagesManager)
+    {
+        return self.directMessagesManager.unreadConversations.count;
+    }
+    
+    return _newDirectMessagesCount;
+}
+
+- (void)setNewDirectMessagesCount:(NSInteger)newDirectMessagesCount
+{
+    _newDirectMessagesCount = newDirectMessagesCount;
+    
+    if (newDirectMessagesCount && self.directMessagesManager)
+    {
+        [self.directMessagesManager refresh];
+        [self resetUnreadCountWithType:WeiboUnreadCountTypeDirectMessage];
+    }
+}
+
 - (void)deleteStatus:(WeiboBaseStatus *)status{
     WeiboAPI * api = [self authenticatedRequest:nil];
     if ([status isKindOfClass:[WeiboStatus class]]) {

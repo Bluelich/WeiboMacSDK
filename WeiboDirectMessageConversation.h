@@ -10,6 +10,7 @@
 #import "WeiboDirectMessage.h"
 
 extern NSString * const WeiboDirectMessageConversationDidUpdateNotification;
+extern NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification;
 
 @interface WeiboDirectMessageConversation : NSObject <NSCoding>
 

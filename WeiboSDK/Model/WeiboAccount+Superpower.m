@@ -12,6 +12,7 @@
 #import "WeiboSuperpowerAPI.h"
 #import "SSKeychain.h"
 #import "WTCallback.h"
+#import "WeiboDirectMessagesConversationManager.h"
 
 NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
 NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
@@ -77,6 +78,8 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
             {
                 [self updateSuperpowerTokenToKeychain:token];
             }
+            
+            [self.directMessagesManager refresh];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
         }

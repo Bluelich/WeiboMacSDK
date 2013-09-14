@@ -9,6 +9,7 @@
 #import "WeiboDirectMessageStream.h"
 #import "WTCallback.h"
 #import "WeiboRequestError.h"
+#import "NSArray+WeiboAdditions.h"
 
 NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMessageStreamDidUpdateNotification";
 NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDirectMessageStreamFinishedLoadingNotification";
