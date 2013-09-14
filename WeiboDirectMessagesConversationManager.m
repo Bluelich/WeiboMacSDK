@@ -70,6 +70,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
         _conversations = [[aDecoder decodeObjectForKey:@"conversations"] retain];
         _viewedMostRecentID = [aDecoder decodeInt64ForKey:@"viewed-most-recent"];
         _flags.conversationsLoaded = [aDecoder decodeBoolForKey:@"conversations-loaded"];
+        
+        [self _setupNotifications];
     }
     return self;
 }

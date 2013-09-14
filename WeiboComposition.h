@@ -26,9 +26,13 @@ typedef NSInteger WeiboCompositionType;
 @property (nonatomic, retain) WeiboBaseStatus * replyToStatus;
 @property (nonatomic, assign) WeiboCompositionType type;
 
+@property (nonatomic, assign, readonly) NSInteger characterLimit;
+
 @property (nonatomic, retain) NSData * imageData;
 
 - (void)didSend:(id)response;
 - (void)errorSending;
+
+- (BOOL)isDirectMessage;
 
 @end
