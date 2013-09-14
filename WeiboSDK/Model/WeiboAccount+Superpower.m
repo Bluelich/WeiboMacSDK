@@ -79,7 +79,7 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
                 [self updateSuperpowerTokenToKeychain:token];
             }
             
-            [self.directMessagesManager refresh];
+            [self refreshDirectMessages];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
         }

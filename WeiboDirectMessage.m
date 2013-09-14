@@ -45,8 +45,6 @@
         
         if (senderDictionary) self.sender = [WeiboUser userWithDictionary:senderDictionary];
         if (recipientDictionary) self.recipient = [WeiboUser userWithDictionary:recipientDictionary];
-        
-        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.text] autorelease];
     }
     return self;
 }
@@ -63,6 +61,8 @@
         
         self.sender = [aDecoder decodeObjectForKey:@"sender"];
         self.recipient = [aDecoder decodeObjectForKey:@"recipient"];
+        
+        self.read = [aDecoder decodeBoolForKey:@"read"];
     }
     return self;
 }
@@ -77,6 +77,8 @@
     
     [aCoder encodeObject:self.sender forKey:@"sender"];
     [aCoder encodeObject:self.recipient forKey:@"recipient"];
+    
+    [aCoder encodeBool:self.read forKey:@"read"];
 }
 
 - (void)setRead:(BOOL)read
@@ -101,6 +103,15 @@
     if (object.messageID == self.messageID) return NSOrderedSame;
     if (object.messageID > self.messageID) return NSOrderedAscending;
     return NSOrderedDescending;
+}
+
+- (WTActiveTextRanges *)activeRanges
+{
+    if (!_activeRanges)
+    {
+        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.text] autorelease];
+    }
+    return _activeRanges;
 }
 
 @end

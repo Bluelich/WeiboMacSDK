@@ -138,6 +138,10 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 
 - (void)deleteStatus:(WeiboBaseStatus *)status;
 
+- (void)willSaveToDisk;
+- (void)didRestoreFromDisk;
+- (void)refreshDirectMessages;
+
 @property (nonatomic, assign) NSInteger newMentionsCount;
 @property (nonatomic, assign) NSInteger newCommentsCount;
 @property (nonatomic, assign) NSInteger newDirectMessagesCount;

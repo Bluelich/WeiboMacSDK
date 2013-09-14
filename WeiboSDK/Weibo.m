@@ -72,6 +72,8 @@ static Weibo * _sharedWeibo = nil;
                 if (account.oAuth2Token) {
                     [self addAccount:account postsNotification:NO];
                     
+                    [account didRestoreFromDisk];
+                    
                     hasAccountRestored = YES;
                 }
             }
@@ -117,6 +119,9 @@ static Weibo * _sharedWeibo = nil;
 {
     [heartbeatTimer invalidate];
     [cachePruningTimer invalidate];
+    
+    [[self accounts] makeObjectsPerformSelector:@selector(willSaveToDisk)];
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSData * accountData = [NSKeyedArchiver archivedDataWithRootObject:[self accounts]];
     [defaults setObject:accountData forKey:@"accounts"];

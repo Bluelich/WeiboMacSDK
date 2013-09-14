@@ -9,6 +9,7 @@
 #import "WeiboAccount.h"
 #import "WeiboAccount+Filters.h"
 #import "WeiboAccount+Superpower.h"
+#import "WeiboAccount+DirectMessage.h"
 #import "WeiboAPI+UnreadCount.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboAPI+UserMethods.h"
@@ -32,6 +33,7 @@
 #import "SSKeychain.h"
 #import "JSONKit.h"
 #import "WTHTTPRequest.h"
+#import "WTFileManager.h"
 
 #define CACHE_LIVETIME 600.0
 
@@ -160,6 +162,30 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     }
     return self;
 }
+
+- (void)willSaveToDisk
+{
+    [self saveDirectMessages];
+}
+- (void)didRestoreFromDisk
+{
+    _directMessagesManager = [[self restoreDirectMessageManager] retain];
+    
+    [self refreshDirectMessages];
+}
+- (void)refreshDirectMessages
+{
+    if (self.directMessagesManager)
+    {
+        if (!self.directMessagesManager.receivedStream.isLoading)
+        {
+            [self resetUnreadCountWithType:WeiboUnreadCountTypeDirectMessage];
+        }
+        
+        [self.directMessagesManager refresh];
+    }
+}
+
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root
 {
     if ((self = [self init])) {
@@ -762,8 +788,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     if (newDirectMessagesCount && self.directMessagesManager)
     {
-        [self.directMessagesManager refresh];
-        [self resetUnreadCountWithType:WeiboUnreadCountTypeDirectMessage];
+        [self refreshDirectMessages];
     }
 }
 
