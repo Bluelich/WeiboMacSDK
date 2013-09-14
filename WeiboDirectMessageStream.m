@@ -80,8 +80,6 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 
 - (void)messagesResponse:(id)response info:(id)info
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamFinishedLoadingNotification object:self];
-    
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
         
@@ -90,6 +88,8 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     {
         [self addMessages:response];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamFinishedLoadingNotification object:self];
 }
 
 - (void)_loadNewer
