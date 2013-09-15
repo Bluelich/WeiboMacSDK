@@ -14,6 +14,8 @@ extern NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification;
 
 @interface WeiboDirectMessageConversation : NSObject <NSCoding>
 
++ (instancetype)conversationWithDictionary:(NSDictionary *)dict;
+
 - (WeiboDirectMessage *)newestMessageNotFrom:(WeiboUser *)user;
 - (void)beginAddingMessages;
 - (void)addMessage:(WeiboDirectMessage *)message;

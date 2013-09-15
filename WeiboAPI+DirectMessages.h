@@ -7,12 +7,16 @@
 //
 
 #import "WeiboAPI.h"
+#import "WeiboDirectMessage.h"
 
 @interface WeiboAPI (DirectMessages)
 
 #pragma mark -
 #pragma mark Direct Message
-- (void)directMessagesSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)sentDirectMessagesSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
+- (void)directMessagesSinceID:(WeiboMessageID)since maxID:(WeiboMessageID)max count:(NSUInteger)count;
+- (void)sentDirectMessagesSinceID:(WeiboMessageID)since maxID:(WeiboMessageID)max count:(NSUInteger)count;
+
+- (void)conversationsWithCount:(NSInteger)count cursor:(WeiboUserID)cursor; // implemented by a user_list REST API, so cursor should be a userID
+- (void)directMessagesWithUserID:(WeiboUserID)userID since:(WeiboMessageID)sinceID max:(WeiboMessageID)maxID count:(NSUInteger)count;
 
 @end

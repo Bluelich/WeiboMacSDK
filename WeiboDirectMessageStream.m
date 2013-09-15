@@ -48,7 +48,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 {
     if (self = [self init])
     {
-        self.messages = [aDecoder decodeObjectForKey:@"messages"];
+//        self.messages = [aDecoder decodeObjectForKey:@"messages"];
         self.account = [aDecoder decodeObjectForKey:@"account"];
     }
     return self;
@@ -56,7 +56,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.messages forKey:@"messages"];
+//    [aCoder encodeObject:self.messages forKey:@"messages"];
     [aCoder encodeObject:self.account forKey:@"account"];
 }
 

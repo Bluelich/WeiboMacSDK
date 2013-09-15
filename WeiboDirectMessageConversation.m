@@ -31,6 +31,19 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
     [super dealloc];
 }
 
++ (instancetype)conversationWithDictionary:(NSDictionary *)dict
+{
+    WeiboDirectMessageConversation * conversation = [[self alloc] init];
+    
+    conversation.correspondent = [WeiboUser userWithDictionary:[dict objectForKey:@"user"]];
+    
+    WeiboDirectMessage * message = [[WeiboDirectMessage alloc] initWithDictionary:[dict objectForKey:@"direct_message"]];
+    
+    [conversation addMessage:[message autorelease]];
+    
+    return [conversation autorelease];
+}
+
 - (instancetype)init
 {
     if (self = [super init])

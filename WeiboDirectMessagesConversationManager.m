@@ -67,9 +67,9 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     {
         _sentStream = [[aDecoder decodeObjectForKey:@"sent-stream"] retain];
         _receivedStream = [[aDecoder decodeObjectForKey:@"received-stream"] retain];
-        _conversations = [[aDecoder decodeObjectForKey:@"conversations"] retain];
+//        _conversations = [[aDecoder decodeObjectForKey:@"conversations"] retain];
         _viewedMostRecentID = [aDecoder decodeInt64ForKey:@"viewed-most-recent"];
-        _flags.conversationsLoaded = [aDecoder decodeBoolForKey:@"conversations-loaded"];
+//        _flags.conversationsLoaded = [aDecoder decodeBoolForKey:@"conversations-loaded"];
         
         [self _setupNotifications];
     }
@@ -80,9 +80,9 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     [aCoder encodeObject:_sentStream forKey:@"sent-stream"];
     [aCoder encodeObject:_receivedStream forKey:@"received-stream"];
-    [aCoder encodeObject:_conversations forKey:@"conversations"];
+//    [aCoder encodeObject:_conversations forKey:@"conversations"];
     [aCoder encodeInt64:_viewedMostRecentID forKey:@"viewed-most-recent"];
-    [aCoder encodeBool:_flags.conversationsLoaded forKey:@"conversations-loaded"];
+//    [aCoder encodeBool:_flags.conversationsLoaded forKey:@"conversations-loaded"];
 }
 
 - (void)setAccount:(WeiboAccount *)account

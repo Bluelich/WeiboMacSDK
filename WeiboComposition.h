@@ -14,6 +14,7 @@ enum {
 	WeiboCompositionTypeNewTweet,
 	WeiboCompositionTypeComment,
     WeiboCompositionTypeRetweet,
+    WeiboCompositionTypeDirectMessage,
 };
 typedef NSInteger WeiboCompositionType;
 
