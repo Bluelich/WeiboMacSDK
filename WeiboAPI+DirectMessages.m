@@ -116,4 +116,22 @@
     [self GET:@"direct_messages/conversation.json" parameters:params callback:callback];
 }
 
+- (void)sendDirectMessage:(NSString *)text toUserID:(WeiboUserID)userID
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(directMessageSendResponse:info:), nil);
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    
+    if (text) [params setObject:text forKey:@"text"];
+    if (userID) [params setObject:@(userID) forKey:@"uid"];
+    
+    [self POST:@"direct_messages/new.json" parameters:params callback:callback];
+}
+
+- (void)directMessageSendResponse:(id)response info:(id)info
+{
+    [authenticateWithAccount refreshTimelineForType:WeiboCompositionTypeDirectMessage];
+    [responseCallback invoke:response];
+}
+
 @end

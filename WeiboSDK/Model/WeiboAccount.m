@@ -13,6 +13,7 @@
 #import "WeiboAPI+UnreadCount.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboAPI+UserMethods.h"
+#import "WeiboAPI+DirectMessages.h"
 #import "WeiboUser.h"
 #import "WeiboUnread.h"
 #import "WeiboRequestError.h"
@@ -355,6 +356,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         case WeiboCompositionTypeComment:
             //[commentsTimelineStream loadNewer];
             break;
+        case WeiboCompositionTypeDirectMessage:
+            [self.directMessagesManager refresh];
         default:
             break;
     }
@@ -413,8 +416,17 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 - (void)sendCompletedComposition:(id<WeiboComposition>)composition
 {
     WTCallback * callback = WTCallbackMake(self, @selector(didSendCompletedComposition:info:), composition);
-    WeiboAPI * api = [self authenticatedRequest:callback];
-    [api updateWithComposition:composition];
+    
+    if (composition.type == WeiboCompositionTypeDirectMessage)
+    {
+        WeiboAPI * api = [self authenticatedSuperpowerRequest:callback];
+        [api sendDirectMessage:composition.text toUserID:composition.directMessageUser.userID];
+    }
+    else
+    {
+        WeiboAPI * api = [self authenticatedRequest:callback];
+        [api updateWithComposition:composition];
+    }
 }
 - (void)didSendCompletedComposition:(id)response info:(id)info
 {

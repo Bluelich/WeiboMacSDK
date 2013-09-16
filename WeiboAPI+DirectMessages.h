@@ -19,4 +19,6 @@
 - (void)conversationsWithCount:(NSInteger)count cursor:(WeiboUserID)cursor; // implemented by a user_list REST API, so cursor should be a userID
 - (void)directMessagesWithUserID:(WeiboUserID)userID since:(WeiboMessageID)sinceID max:(WeiboMessageID)maxID count:(NSUInteger)count;
 
+- (void)sendDirectMessage:(NSString *)text toUserID:(WeiboUserID)userID;
+
 @end
