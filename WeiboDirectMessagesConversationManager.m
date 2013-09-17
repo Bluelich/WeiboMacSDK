@@ -29,6 +29,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 @property (nonatomic, retain) WeiboSentDirectMessageStream * sentStream;
 @property (nonatomic, retain) WeiboReceivedDirectMessageStream * receivedStream;
 
+@property (nonatomic, retain) NSArray * unreadConversationUserIDsFromCache;
+
 @end
 
 @implementation WeiboDirectMessagesConversationManager
@@ -40,6 +42,9 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [_sentStream release], _sentStream = nil;
     [_receivedStream release], _receivedStream = nil;
     [_conversations release], _conversations = nil;
+    
+    [_unreadConversationUserIDsFromCache release], _unreadConversationUserIDsFromCache = nil;
+    
     [super dealloc];
 }
 
@@ -67,9 +72,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     {
         _sentStream = [[aDecoder decodeObjectForKey:@"sent-stream"] retain];
         _receivedStream = [[aDecoder decodeObjectForKey:@"received-stream"] retain];
-//        _conversations = [[aDecoder decodeObjectForKey:@"conversations"] retain];
-        _viewedMostRecentID = [aDecoder decodeInt64ForKey:@"viewed-most-recent"];
-//        _flags.conversationsLoaded = [aDecoder decodeBoolForKey:@"conversations-loaded"];
+        
+        _unreadConversationUserIDsFromCache = [[aDecoder decodeObjectForKey:@"unread-state"] retain];
         
         [self _setupNotifications];
     }
@@ -80,9 +84,16 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     [aCoder encodeObject:_sentStream forKey:@"sent-stream"];
     [aCoder encodeObject:_receivedStream forKey:@"received-stream"];
-//    [aCoder encodeObject:_conversations forKey:@"conversations"];
-    [aCoder encodeInt64:_viewedMostRecentID forKey:@"viewed-most-recent"];
-//    [aCoder encodeBool:_flags.conversationsLoaded forKey:@"conversations-loaded"];
+    
+    NSArray * unreadConversations = self.unreadConversations;
+    NSMutableArray * userIDs = [NSMutableArray array];
+    
+    for (WeiboDirectMessageConversation * conversation in unreadConversations)
+    {
+        [userIDs addObject:@(conversation.correspondent.userID)];
+    }
+    
+    [aCoder encodeObject:userIDs forKey:@"unread-state"];
 }
 
 - (void)setAccount:(WeiboAccount *)account
@@ -124,16 +135,21 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messagesStreamFinishedLoading:) name:WeiboDirectMessageStreamFinishedLoadingNotification object:nil];
 }
 
-- (WeiboDirectMessageConversation *)conversationWith:(WeiboUser *)user
+- (WeiboDirectMessageConversation *)conversationWithUserID:(WeiboUserID)userID
 {
     for (WeiboDirectMessageConversation * conversation in _conversations)
     {
-        if (conversation.correspondent.userID == user.userID)
+        if (conversation.correspondent.userID == userID)
         {
             return conversation;
         }
     }
     return nil;
+}
+
+- (WeiboDirectMessageConversation *)conversationWith:(WeiboUser *)user
+{
+    return [self conversationWithUserID:user.userID];
 }
 
 - (void)_addStubConversation:(WeiboDirectMessageConversation *)conversation
@@ -171,10 +187,9 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
             message.sender = fromMe ? me : he;
             message.recipient = fromMe ? he : me;
             
-            if (!self.viewedMostRecentID ||
-                message.messageID <= self.viewedMostRecentID)
+            if (!_flags.conversationsLoaded)
             {
-                message.read = YES;
+                message.read = YES; // first load
             }
         }
         
@@ -197,13 +212,28 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     
     if (!_sentStream.isLoading && !_receivedStream.isLoading)
     {
-        _flags.conversationsLoaded = YES;
-        
-        if (!self.viewedMostRecentID)
+        if (!_flags.conversationsLoaded)
         {
-            WeiboDirectMessageConversation * recentConversation = [_conversations firstObject];
+            // restore unread state
             
-            self.viewedMostRecentID = [[recentConversation mostRecentMessage] messageID];
+            if (self.unreadConversationUserIDsFromCache.count)
+            {
+                WeiboUser * me = _sentStream.account.user;
+                
+                for (NSNumber * userID in self.unreadConversationUserIDsFromCache)
+                {
+                    WeiboDirectMessageConversation * conversation = [self conversationWithUserID:userID.longLongValue];
+                    if (!conversation) continue;
+                    
+                    WeiboDirectMessage * message = [conversation newestMessageNotFrom:me];
+                    
+                    message.read = NO;
+                }
+                
+                self.unreadConversationUserIDsFromCache = nil;
+            }
+            
+            _flags.conversationsLoaded = YES;
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessagesManagerDidFinishLoadingNotification object:self];
