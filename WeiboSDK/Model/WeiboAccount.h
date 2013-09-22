@@ -14,7 +14,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager;
+@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter;
 
 @protocol WeiboAccountDelegate;
 
@@ -149,12 +149,15 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 
 #pragma mark - Filter
 
+@property (nonatomic, assign) BOOL filterAdvertisements;
+
 @property (nonatomic, retain) NSMutableArray * keywordFilters;
 @property (nonatomic, retain) NSMutableArray * userFilters;
 @property (nonatomic, retain) NSMutableArray * clientFilters;
 @property (nonatomic, retain) NSMutableArray * userHighlighters;
 
 @property (nonatomic, retain) WeiboStatusAccountMentionFilter * mentionHighlighter;
+@property (nonatomic, retain) WeiboStatusAdvertisementFilter * advertisementFilter;
 
 @end
 

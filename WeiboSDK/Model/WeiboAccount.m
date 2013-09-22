@@ -78,6 +78,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [_userHighlighters release], _userHighlighters = nil;
     
     [_mentionHighlighter release], _mentionHighlighter = nil;
+    [_advertisementFilter release], _advertisementFilter = nil;
     
     [_superpowerToken release], _superpowerToken = nil;
     [_directMessagesManager release], _directMessagesManager = nil;
@@ -118,6 +119,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [encoder encodeObject:self.userFilters forKey:@"user-filters"];
     [encoder encodeObject:self.userHighlighters forKey:@"user-highlighters"];
     [encoder encodeObject:self.clientFilters forKey:@"client-filters"];
+    [encoder encodeObject:@(self.filterAdvertisements) forKey:@"filter-advertisements"];
     
 //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.keywordFilters] forKey:@"keyword-filters"];
 //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userFilters] forKey:@"user-filters"];
@@ -137,6 +139,16 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
         self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
+        
+        id filterAdvertisements = [decoder decodeObjectForKey:@"filter-advertisements"];
+        if (filterAdvertisements)
+        {
+            self.filterAdvertisements = [filterAdvertisements boolValue];
+        }
+        else
+        {
+            self.filterAdvertisements = YES; // default is YES
+        }
         
         [self setFilterArray:[decoder decodeObjectForKey:@"keyword-filters"] forKeyPath:@"keywordFilters"];
         [self setFilterArray:[decoder decodeObjectForKey:@"user-filters"] forKeyPath:@"userFilters"];

@@ -26,7 +26,19 @@
     
     if (status.quotedBaseStatus)
     {
-        return [self validateStatus:status.quotedBaseStatus];
+        if (status.quotedBaseStatus.user.userID == self.account.user.userID)
+        {
+            status.mentionedMe = YES;
+            
+            return NO;
+        }
+        
+        if ([status.quotedBaseStatus.text rangeOfString:screenName].length != 0)
+        {
+            status.mentionedMe = YES;
+            
+            return NO;
+        }
     }
     
     return NO;

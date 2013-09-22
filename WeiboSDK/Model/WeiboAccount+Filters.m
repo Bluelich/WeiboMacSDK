@@ -9,6 +9,7 @@
 #import "WeiboAccount+Filters.h"
 #import "WeiboUser.h"
 #import "WeiboStatusAccountMentionFilter.h"
+#import "WeiboStatusAdvertisementFilter.h"
 
 NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilterSetDidChangeNotification";
 
@@ -30,6 +31,16 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     }
     
     [array addObject:self.mentionHighlighter];
+    
+    if (self.filterAdvertisements)
+    {
+        if (!self.advertisementFilter)
+        {
+            self.advertisementFilter = [[WeiboStatusAdvertisementFilter new] autorelease];
+        }
+        
+        [array addObject:self.advertisementFilter];
+    }
     
     return array;
 }

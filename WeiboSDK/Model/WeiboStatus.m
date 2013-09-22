@@ -39,10 +39,12 @@
     WeiboStatus * status = [[self class] statusWithDictionary:dictionary];
     return status;
 }
+
 + (NSArray *)statusesWithJSON:(NSString *)json
 {
     NSDictionary * jsonObject = [json objectFromJSONString];
     NSArray * dictionaries = [jsonObject objectForKey:@"statuses"];
+
     
     NSMutableArray * statuses = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries)
@@ -68,6 +70,27 @@
                 {
                     status.isTopStatus = YES;
                     break;
+                }
+            }
+        }
+    }
+    
+    NSArray * ads = [jsonObject objectForKey:@"ad"];
+    if (ads.count)
+    {
+        for (NSDictionary * ad in ads)
+        {
+            if (![ad isKindOfClass:[NSDictionary class]]) continue;
+            
+            WeiboStatusID statusID = [ad longlongForKey:@"id" defaultValue:0];
+            
+            if (!statusID) continue;
+            
+            for (WeiboStatus * status in statuses)
+            {
+                if (status.sid == statusID)
+                {
+                    status.isAdvertisement = YES;
                 }
             }
         }
