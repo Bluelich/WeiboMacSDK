@@ -92,7 +92,6 @@
 		C68009EA14FE788400FA3175 /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C63A182214F0CF51000F3E72 /* NSArray+WeiboAdditions.m */; };
 		C682BAC117C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C682BABF17C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h */; };
 		C682BAC217C3C0B500B3149F /* WeiboStatusAccountMentionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C682BAC017C3C0B500B3149F /* WeiboStatusAccountMentionFilter.m */; };
-		C6872C9A17B63F7B00AA38BF /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */; };
 		C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */ = {isa = PBXBuildFile; fileRef = C6880780174E048000FD69F4 /* WeiboComposition.h */; };
 		C68B2F6F17ACD0B7005CC80C /* WeiboStatusFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C68B2F6D17ACD0B7005CC80C /* WeiboStatusFilter.h */; };
 		C68B2F7017ACD0B7005CC80C /* WeiboStatusFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C68B2F6E17ACD0B7005CC80C /* WeiboStatusFilter.m */; };
@@ -111,6 +110,7 @@
 		C6AA998517E5E11D005F90E4 /* WeiboDirectMessageConversationList.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AA998317E5E11C005F90E4 /* WeiboDirectMessageConversationList.h */; };
 		C6AA998617E5E11D005F90E4 /* WeiboDirectMessageConversationList.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AA998417E5E11D005F90E4 /* WeiboDirectMessageConversationList.m */; };
 		C6B4DC1514ED347C0032A8CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
+		C6B762D917F12F0000008837 /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C6B762D817F12F0000008837 /* WeiboAppInfo.h */; };
 		C6B8C51D1514D75D00935AC5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011AFE15147B2500A0A49C /* FMDatabase.m */; };
 		C6B8C51E1514D75D00935AC5 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0015147B2500A0A49C /* FMDatabaseAdditions.m */; };
 		C6B8C51F1514D75D00935AC5 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011B0215147B2500A0A49C /* FMDatabasePool.m */; };
@@ -241,7 +241,6 @@
 		C67ED9AC1501B0E80059AF71 /* WeiboComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboComment.m; path = WeiboSDK/Model/WeiboComment.m; sourceTree = "<group>"; };
 		C682BABF17C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboStatusAccountMentionFilter.h; sourceTree = "<group>"; };
 		C682BAC017C3C0B500B3149F /* WeiboStatusAccountMentionFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboStatusAccountMentionFilter.m; sourceTree = "<group>"; };
-		C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
 		C6880780174E048000FD69F4 /* WeiboComposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboComposition.h; sourceTree = "<group>"; };
 		C68B2F6D17ACD0B7005CC80C /* WeiboStatusFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStatusFilter.h; path = WeiboSDK/Model/WeiboStatusFilter.h; sourceTree = "<group>"; };
 		C68B2F6E17ACD0B7005CC80C /* WeiboStatusFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboStatusFilter.m; path = WeiboSDK/Model/WeiboStatusFilter.m; sourceTree = "<group>"; };
@@ -261,6 +260,7 @@
 		C6AA998417E5E11D005F90E4 /* WeiboDirectMessageConversationList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboDirectMessageConversationList.m; sourceTree = "<group>"; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
+		C6B762D817F12F0000008837 /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
 		C6B8C52B1514DC1D00935AC5 /* WTAutoCompleteResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTAutoCompleteResultItem.h; path = WeiboSDK/Model/Autocomplete/WTAutoCompleteResultItem.h; sourceTree = "<group>"; };
 		C6B8C5301514DC7200935AC5 /* WeiboAutocompleteResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboAutocompleteResultItem.h; path = WeiboSDK/Model/Autocomplete/WeiboAutocompleteResultItem.h; sourceTree = "<group>"; };
 		C6B8C5311514DC7200935AC5 /* WeiboAutocompleteResultItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboAutocompleteResultItem.m; path = WeiboSDK/Model/Autocomplete/WeiboAutocompleteResultItem.m; sourceTree = "<group>"; };
@@ -786,7 +786,7 @@
 				C6DB909014E4EE29001DE9F5 /* Weibo.h */,
 				C6DB909114E4EE29001DE9F5 /* Weibo.m */,
 				C617C90414EB56C600CC75F5 /* WeiboConstants.h */,
-				C6872C9917B63F7B00AA38BF /* WeiboAppInfo.h */,
+				C6B762D817F12F0000008837 /* WeiboAppInfo.h */,
 			);
 			name = WeiboSDK;
 			sourceTree = "<group>";
@@ -801,6 +801,7 @@
 				C68B2F8017ACD257005CC80C /* WeiboStatusSourceFilter.h in Headers */,
 				C620027817A407DD00283648 /* WeiboList.h in Headers */,
 				C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */,
+				C6B762D917F12F0000008837 /* WeiboAppInfo.h in Headers */,
 				C67ED9AD1501B0E80059AF71 /* WeiboComment.h in Headers */,
 				C6084B3F17D1DD1E00A667F2 /* WeiboAccount+Superpower.h in Headers */,
 				C6ED9D1717D630D3008AA2A3 /* WeiboDirectMessagesConversationManager.h in Headers */,
@@ -844,7 +845,6 @@
 				C6EC37671745F33C0085E6ED /* WeiboAPI+AccountMethods.h in Headers */,
 				C6880781174E048000FD69F4 /* WeiboComposition.h in Headers */,
 				C638914A175840400005069A /* WeiboPicture.h in Headers */,
-				C6872C9A17B63F7B00AA38BF /* WeiboAppInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
