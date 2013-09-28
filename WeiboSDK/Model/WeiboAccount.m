@@ -775,12 +775,12 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     if (notificationOptions & WeiboMentionNotificationBadge)
     {
-        count += self.mentionsStream.unreadCount;
+        count += self.newMentionsCount;
     }
     
     if (notificationOptions & WeiboCommentNotificationBadge)
     {
-        count += self.commentsTimelineStream.unreadCount;
+        count += self.newCommentsCount;
     }
     
     if (notificationOptions & WeiboDirectMessageNotificationBadge)
@@ -804,6 +804,24 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     }
     
     return _newDirectMessagesCount;
+}
+
+- (NSInteger)newMentionsCount
+{
+    if (self.mentionsStream.statuses.count)
+    {
+        return self.mentionsStream.unreadCount;
+    }
+    return _newMentionsCount;
+}
+
+- (NSInteger)newCommentsCount
+{
+    if (self.commentsTimelineStream.statuses.count)
+    {
+        return self.commentsTimelineStream.unreadCount;
+    }
+    return _newCommentsCount;
 }
 
 - (void)setNewDirectMessagesCount:(NSInteger)newDirectMessagesCount
