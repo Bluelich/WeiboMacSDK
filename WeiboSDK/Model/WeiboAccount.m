@@ -387,7 +387,15 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     {
         return ;
     }
+    
     WeiboUnread * unread = (WeiboUnread *)response;
+    
+    self.newStatusesCount = unread.newStatus;
+    self.newMentionsCount = unread.newMentions;
+    self.newCommentsCount = unread.newComments;
+    self.newDirectMessagesCount = unread.newDirectMessages;
+    self.newFollowersCount = unread.newFollowers;
+    
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
     }
@@ -770,7 +778,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     if (notificationOptions & WeiboTweetNotificationBadge)
     {
-        count += self.timelineStream.unreadCount;
+        count += self.newStatusesCount;
     }
     
     if (notificationOptions & WeiboMentionNotificationBadge)
@@ -804,6 +812,15 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     }
     
     return _newDirectMessagesCount;
+}
+
+- (NSInteger)newStatusesCount
+{
+    if (self.timelineStream.statuses.count)
+    {
+        return self.timelineStream.unreadCount;
+    }
+    return _newStatusesCount;
 }
 
 - (NSInteger)newMentionsCount
