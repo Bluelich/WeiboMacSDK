@@ -49,3 +49,8 @@ ivar = newVar;}
 #define SetCopiedIvar(ivar, newVar) [newVar copy];\
 [ivar release];\
 ivar = newVar;
+
+static void dispatch_next(dispatch_block_t block)
+{
+    dispatch_async(dispatch_get_current_queue(), block);
+}
