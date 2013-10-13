@@ -10,6 +10,7 @@
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboStatus.h"
 #import "WeiboList.h"
+#import "NSArray+WeiboAdditions.h"
 
 @implementation WeiboAPI (StatusMethods)
 
@@ -72,6 +73,57 @@
     NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",sid] forKey:@"id"];
     [self statusesRequest:@"comments/show.json" parameters:params sinceID:since maxID:max page:1 count:count callback:callback];
 }
+- (void)commentConversationWithCommentID:(WeiboStatusID)cid
+{
+    WeiboUnimplementedMethod
+    
+    // This API is no longer exist
+    /*
+    WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), @(YES));
+    NSDictionary * params = @{@"cid":@(cid),@"count":@10};
+    
+    [self GET:@"comments/conversation.json" parameters:params callback:callback];
+     */
+}
+- (void)commentWithID:(WeiboStatusID)cid
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(commentArrayResponse:info:), nil);
+    NSDictionary * params = @{@"cids":@(cid)};
+    [self GET:@"comments/show_batch.json" parameters:params callback:callback];
+}
+- (void)commentArrayResponse:(id)response info:(id)info
+{
+    dispatch_async_low(^{
+       
+        NSArray * result = nil;
+        
+        if ([response isKindOfClass:[NSString class]])
+        {
+            NSArray * responseObject = [response objectFromJSONString];
+            
+            if ([responseObject isKindOfClass:[NSArray class]])
+            {
+                NSDictionary * dict = [responseObject firstObject];
+                
+                WeiboComment * comment = [WeiboComment commentWithDictionary:dict];
+                result = @[comment];
+            }
+            else
+            {
+                result = @[];
+            }
+        }
+        else
+        {
+            result = @[];
+        }
+        
+        dispatch_async_main(^{
+            [responseCallback invoke:result];
+        });
+    });
+}
+
 #pragma mark -
 #pragma mark Favorites
 - (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count{
@@ -172,14 +224,15 @@
 - (void)statuseResponse:(id)response info:(id)info{
     [responseCallback invoke:response];
 }
-- (void)commentResponse:(id)response info:(id)info{
+- (void)commentResponse:(id)response info:(id)info
+{
     [responseCallback invoke:response];
 }
 - (WTCallback *)statusResponseCallback{
     return WTCallbackMake(self, @selector(statuseResponse:info:), nil);
 }
 - (WTCallback *)commentResponseCallback{
-    return WTCallbackMake(self, @selector(commentResponseCallback), nil);
+    return WTCallbackMake(self, @selector(commentResponse:info:), nil);
 }
 - (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment
 {

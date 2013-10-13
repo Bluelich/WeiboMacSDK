@@ -54,3 +54,29 @@ static void dispatch_next(dispatch_block_t block)
 {
     dispatch_async(dispatch_get_current_queue(), block);
 }
+static void dispatch_async_priority(NSInteger priority, dispatch_block_t work)
+{
+    dispatch_async(dispatch_get_global_queue(priority, 0), ^{
+        work();
+    });
+}
+static void dispatch_async_default(dispatch_block_t work)
+{
+    dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_DEFAULT, work);
+}
+static void dispatch_async_low(dispatch_block_t work)
+{
+    dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_LOW, work);
+}
+static void dispatch_async_high(dispatch_block_t work)
+{
+    dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_HIGH, work);
+}
+static void dispatch_async_background(dispatch_block_t work)
+{
+    dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_BACKGROUND, work);
+}
+static void dispatch_async_main(dispatch_block_t work)
+{
+    dispatch_async(dispatch_get_main_queue(), work);
+}

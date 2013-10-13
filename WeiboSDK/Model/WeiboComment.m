@@ -11,6 +11,7 @@
 #import "WeiboUser.h"
 #import "WTCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
+#import "NSObject+AssociatedObject.h"
 #import "JSONKit.h"
 
 @implementation WeiboComment
@@ -33,12 +34,15 @@
     return comment;
 }
 + (NSArray *)commentsWithJSON:(NSString *)json{
-    NSArray * dictionaries = [[json objectFromJSONString] objectForKey:@"comments"];
+    NSDictionary * dict = [json objectFromJSONString];
+    NSArray * dictionaries = [dict objectForKey:@"comments"];
+    
     NSMutableArray * comments = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries) {
         WeiboComment * comment = [WeiboComment commentWithDictionary:dic];
         [comments addObject:comment];
     }
+    
     return comments;
 }
 + (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback{
@@ -68,6 +72,7 @@
     if (self = [super init]) {
         
         self.treatReplyingStatusAsQuoted = YES;
+        self.treatReplyingCommentAsQuoted = YES;
         
         self.sid = [dic longlongForKey:@"id" defaultValue:-1];
 		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
@@ -104,7 +109,7 @@
 
 - (WeiboBaseStatus *)quotedBaseStatus
 {
-    if (self.replyToComment)
+    if (self.replyToComment && self.treatReplyingCommentAsQuoted)
     {
         return self.replyToComment;
     }

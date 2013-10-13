@@ -20,6 +20,7 @@
 @property (readwrite,retain) WeiboComment * replyToComment;
 
 @property (nonatomic, assign) BOOL treatReplyingStatusAsQuoted;
+@property (nonatomic, assign) BOOL treatReplyingCommentAsQuoted;
 
 #pragma mark -
 #pragma mark Parse Methods
