@@ -19,6 +19,9 @@
 }
 
 - (BOOL)validStatus:(WeiboBaseStatus *)status{
+    
+    if (status.isDummy) return NO;
+    
     if ([status.text rangeOfString:self.query 
                     options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return YES;

@@ -8,12 +8,14 @@
 
 #import "WeiboConcreteStatusesStream.h"
 #import "WeiboBaseStatus.h"
+#import "WeiboDummyGapStatus.h"
 #import "WeiboStatusFilter.h"
 #import "WeiboRequestError.h"
 #import "LocalAutocompleteDB.h"
 
 #import "WTCallback.h"
 #import "NSArray+WeiboAdditions.h"
+#import "NSObject+AssociatedObject.h"
 
 NSString * const WeiboStatusStreamDidReceiveNewStatusesNotificationKey = @"WeiboStatusStreamDidReceiveNewStatusesNotificationKey";
 NSString * const WeiboStatusStreamDidReceiveRequestErrorNotificationKey = @"WeiboStatusStreamDidReceiveRequestErrorNotificationKey";
@@ -110,7 +112,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     BOOL shouldPostNotification = YES;//[self hasData];
 
     BOOL shouldForceToAppend = ![self hasData];
-    
+        
     NSMutableArray * statusesToAdd = [[newStatuses mutableCopy] autorelease];
     
     for (WeiboBaseStatus * status in self.statuses)

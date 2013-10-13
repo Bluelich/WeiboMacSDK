@@ -47,6 +47,9 @@
 @property (nonatomic, assign) BOOL mentionedMe;
 @property (nonatomic, retain) NSMutableDictionary * layoutCaches;
 
+@property (nonatomic, assign, readonly) BOOL isDummy;
+@property (nonatomic, assign, readonly) BOOL isGap;
+
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus;
 

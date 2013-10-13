@@ -138,4 +138,14 @@
     return NO;
 }
 
+- (BOOL)isDummy
+{
+    return NO;
+}
+
+- (BOOL)isGap
+{
+    return NO;
+}
+
 @end
