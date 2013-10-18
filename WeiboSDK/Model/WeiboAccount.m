@@ -221,6 +221,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         
         self.user = dummyUser;
         self.oAuth2Token = token;
+        self.filterAdvertisements = YES;
         
         apiRoot = [WEIBO_APIROOT_DEFAULT retain];
     }
