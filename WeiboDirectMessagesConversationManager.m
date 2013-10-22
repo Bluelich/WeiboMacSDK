@@ -208,7 +208,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
         return;
     }
     
-    if (!_sentStream.isLoading && !_receivedStream.isLoading)
+    if (_sentStream.messagesLoaded && _receivedStream.messagesLoaded)
     {
         if (!_flags.conversationsLoaded)
         {

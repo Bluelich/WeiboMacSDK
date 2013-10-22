@@ -34,6 +34,8 @@ extern NSString * const WeiboDirectMessageStreamFinishedLoadingNotification;
 - (BOOL)isLoadingNewer;
 - (BOOL)isLoadingOlder;
 
+- (BOOL)messagesLoaded;
+
 - (WTCallback *)loadNewerResponseCallback;
 - (WTCallback *)loaderOlderResponseCallback;
 

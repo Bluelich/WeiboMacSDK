@@ -21,6 +21,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
         unsigned int isLoadingNewer:1;
         unsigned int isLoadingOlder:1;
         unsigned int isAtEnd:1;
+        unsigned int messagesLoaded:1;
     } _flags;
 }
 
@@ -88,6 +89,8 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     else if ([response isKindOfClass:[NSArray class]])
     {
         [self addMessages:response];
+        
+        _flags.messagesLoaded = YES;
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamFinishedLoadingNotification object:self];
@@ -130,6 +133,10 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 - (BOOL)isLoading
 {
     return _flags.isLoadingNewer || _flags.isLoadingOlder;
+}
+- (BOOL)messagesLoaded
+{
+    return _flags.messagesLoaded;
 }
 
 - (void)loadNewerResponse:(id)response info:(id)info
