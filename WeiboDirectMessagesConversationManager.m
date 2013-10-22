@@ -20,9 +20,10 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     WeiboSentDirectMessageStream * _sentStream;
     WeiboReceivedDirectMessageStream * _receivedStream;
     NSMutableArray * _conversations;
-    
+    NSInteger streamingRequestCount;
     struct {
         unsigned int conversationsLoaded : 1;
+        unsigned int streaming : 1;
     } _flags;
 }
 
@@ -30,6 +31,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 @property (nonatomic, retain) WeiboReceivedDirectMessageStream * receivedStream;
 
 @property (nonatomic, retain) NSArray * unreadConversationUserIDsFromCache;
+
+@property (nonatomic, retain) NSTimer * pollTimer;
 
 @end
 
@@ -39,6 +42,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [self _stopStreaming];
     [_sentStream release], _sentStream = nil;
     [_receivedStream release], _receivedStream = nil;
     [_conversations release], _conversations = nil;
@@ -69,10 +73,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [self init])
-    {
-        _sentStream = [[aDecoder decodeObjectForKey:@"sent-stream"] retain];
-        _receivedStream = [[aDecoder decodeObjectForKey:@"received-stream"] retain];
-        
+    {        
         _unreadConversationUserIDsFromCache = [[aDecoder decodeObjectForKey:@"unread-state"] retain];
         
         [self _setupNotifications];
@@ -82,9 +83,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:_sentStream forKey:@"sent-stream"];
-    [aCoder encodeObject:_receivedStream forKey:@"received-stream"];
-    
     NSArray * unreadConversations = self.unreadConversations;
     NSMutableArray * userIDs = [NSMutableArray array];
     
@@ -329,6 +327,52 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 - (BOOL)isLoading
 {
     return self.isLoadingNewer || self.isLoadingOlder;
+}
+
+#pragma mark - Streaming
+
+- (void)_startStreaming
+{
+    if (!_flags.streaming)
+    {
+        self.pollTimer = [NSTimer scheduledTimerWithTimeInterval:15.0
+                                                          target:self
+                                                        selector:@selector(refresh)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        [self.pollTimer fire];
+
+        
+        _flags.streaming = YES;
+    }
+}
+- (void)_stopStreaming
+{
+    if (_flags.streaming)
+    {
+        [self.pollTimer invalidate];
+        [self setPollTimer:nil];
+        
+        _flags.streaming = NO;
+    }
+}
+
+- (void)requestStreaming
+{
+    streamingRequestCount++;
+    
+    [self _startStreaming];
+}
+- (void)endStreaming
+{
+    streamingRequestCount--;
+    
+    if (streamingRequestCount <= 0)
+    {
+        [self _stopStreaming];
+        
+        streamingRequestCount = 0;
+    }
 }
 
 @end

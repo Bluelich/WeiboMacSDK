@@ -33,4 +33,7 @@ extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 @property (nonatomic, assign, readonly) BOOL isLoadingOlder;
 @property (nonatomic, assign, readonly) BOOL isLoading;
 
+- (void)requestStreaming; // poll间隔提到15秒一次
+- (void)endStreaming;
+
 @end

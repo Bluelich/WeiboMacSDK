@@ -30,6 +30,8 @@
     
     if ([object isKindOfClass:[WeiboDirectMessagesConversationManager class]])
     {
+        [object setAccount:self];
+        
         return (WeiboDirectMessagesConversationManager *)object;
     }
     

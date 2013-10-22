@@ -65,7 +65,13 @@ enum {
     WeiboDirectMessageNotificationMenubar   = 1 << 6,
     WeiboDirectMessageNotificationBadge     = 1 << 7,
     WeiboFollowerNotificationMenubar        = 1 << 8,
-    WeiboFollowerNotificationBadge          = 1 << 9
+    WeiboFollowerNotificationBadge          = 1 << 9,
+    
+//    WeiboTweetNotificationSystemCenter      = 1 << 10,
+    WeiboMentionNotificationSystemCenter    = 1 << 11,
+    WeiboCommentNotificationSystemCenter    = 1 << 12,
+    WeiboDirectMessageNotificationSystemCenter = 1 << 13,
+    WeiboFollowerNotificatioSystemCenter    = 1 << 14,
 };
 typedef NSUInteger WeiboNotificationOptions;
 
