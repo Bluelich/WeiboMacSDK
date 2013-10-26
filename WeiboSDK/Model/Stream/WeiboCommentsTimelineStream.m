@@ -9,6 +9,7 @@
 #import "WeiboCommentsTimelineStream.h"
 #import "WeiboAccount.h"
 #import "WeiboAPI+StatusMethods.h"
+#import "WeiboUserNotificationCenter.h"
 
 @implementation WeiboCommentsTimelineStream
 
@@ -31,4 +32,15 @@
 - (NSString *)autosaveName{
     return [[super autosaveName] stringByAppendingString:@"comment.scrollPosition"];
 }
+
+- (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
+{
+    [super noticeDidReceiveNewStatuses:newStatuses withAddingType:type];
+    
+    if (type == WeiboStatusesAddingTypePrepend)
+    {
+        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForComments:newStatuses forAccount:self.account];
+    }
+}
+
 @end

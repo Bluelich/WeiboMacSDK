@@ -404,6 +404,14 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
             break;
     }
 }
+- (void)refreshMentions
+{
+    [commentsTimelineStream loadNewer];
+}
+- (void)refreshComments
+{
+    [mentionsStream loadNewer];
+}
 - (void)refreshTimelines{
     WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];

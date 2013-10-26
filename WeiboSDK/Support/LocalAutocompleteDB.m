@@ -21,24 +21,27 @@ static LocalAutocompleteDB * sharedDB = nil;
 @implementation LocalAutocompleteDB
 @synthesize db;
 
-+ (void)verifyDatabase{
-    LocalAutocompleteDB * sharedDB = [self sharedAutocompleteDB];
-    if (![sharedDB isReady]) {
-        [sharedDB loadSchema];
-    }
-}
 + (NSString *)databasePath{
     NSString * databaseCacheDirectory = [WTFileManager databaseCacheDirectory];
     NSString * databasePath = [databaseCacheDirectory stringByAppendingPathComponent:@"AutocompleteDB.sqlite3"];
     return databasePath;
 }
-+ (LocalAutocompleteDB *)sharedAutocompleteDB{
-    if (!sharedDB) {
++ (LocalAutocompleteDB *)sharedAutocompleteDB
+{
+    if (!sharedDB)
+    {
         sharedDB = [[[self class] alloc] init];
+        
+        if (![sharedDB isReady])
+        {
+            [sharedDB loadSchema];
+        }
     }
+    
     return sharedDB;
 }
-+ (void)resetDatabase{
++ (void)resetDatabase
+{
     [self shutdown];
     [sharedDB release];
     sharedDB = nil;
@@ -54,9 +57,9 @@ static LocalAutocompleteDB * sharedDB = nil;
         BOOL success = [fileManager removeItemAtPath:path error:&error];
         if (!success) NSLog(@"Error: %@", [error localizedDescription]);
     }
-    [self verifyDatabase];
 }
-+ (void)shutdown{
++ (void)shutdown
+{
     [[self sharedAutocompleteDB] close];
     // NO need to release singleton
     //[[self sharedAutocompleteDB] release];

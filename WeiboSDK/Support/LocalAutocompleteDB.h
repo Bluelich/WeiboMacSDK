@@ -18,7 +18,6 @@
 
 @property (readonly, nonatomic) FMDatabase *db;
 
-+ (void)verifyDatabase;
 + (NSString *)databasePath;
 + (LocalAutocompleteDB *)sharedAutocompleteDB;
 + (void)resetDatabase;

@@ -235,6 +235,8 @@ static Weibo * _sharedWeibo = nil;
     {
         [accounts addObject:aAccount];
         [aAccount refreshTimelines];
+        [aAccount refreshMentions];
+        [aAccount refreshComments];
         
         if (post)
         {

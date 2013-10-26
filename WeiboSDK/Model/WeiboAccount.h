@@ -94,6 +94,8 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 #pragma mark Timeline
 - (void)forceRefreshTimelines;
 - (void)refreshTimelineForType:(WeiboCompositionType)type;
+- (void)refreshMentions;
+- (void)refreshComments;
 - (void)refreshTimelines;
 - (void)resetUnreadCountWithType:(WeiboUnreadCountType)type;
 

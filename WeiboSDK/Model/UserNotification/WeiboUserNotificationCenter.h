@@ -10,6 +10,22 @@
 
 @class WeiboAccount;
 
+typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
+{
+    WeiboUserNotificationItemTypeMention,
+    WeiboUserNotificationItemTypeComment,
+    WeiboUserNotificationItemTypeDirectMessage,
+    
+    WeiboUserNotificationItemTypeMentions,
+    WeiboUserNotificationItemTypeComments,
+    WeiboUserNotificationItemTypeDirectMessages,
+};
+
+extern NSString * const WeiboUserNotificationUserInfoItemTypeKey;
+extern NSString * const WeiboUserNotificationUserInfoItemUserIDKey;
+extern NSString * const WeiboUserNotificationUserInfoItemIDKey;
+extern NSString * const WeiboUserNotificationUserInfoAccountUserIDKey;
+
 @interface WeiboUserNotificationCenter : NSObject
 
 + (instancetype)defaultUserNotificationCenter;
