@@ -90,9 +90,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 {
     if (self = [super init])
     {
-        notificationOptions = WeiboTweetNotificationMenubar | WeiboMentionNotificationMenubar |
-                              WeiboFollowerNotificationMenubar | WeiboCommentNotificationMenubar | 
-                              WeiboDirectMessageNotificationMenubar;
+        notificationOptions = WeiboNotificationDefaults;
         timelineStream = [[WeiboTimelineStream alloc] init];
         timelineStream.account = self;
         mentionsStream = [[WeiboMentionsStream alloc] init];
@@ -112,7 +110,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [encoder encodeObject:username forKey:@"username"];
     [encoder encodeObject:oAuthToken forKey:@"oauth-token"];
     [encoder encodeObject:apiRoot forKey:@"api-root"];
-    [encoder encodeInteger:notificationOptions forKey:@"notification-options"];
+    [encoder encodeInt64:notificationOptions forKey:@"notification-options"];
     [encoder encodeObject:user forKey:@"user"];
     
     [encoder encodeObject:self.keywordFilters forKey:@"keyword-filters"];
@@ -135,7 +133,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     if (self = [self init]) {
         username = [[decoder decodeObjectForKey:@"username"] retain];
         apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
-        notificationOptions = [decoder decodeIntegerForKey:@"notification-options"];
+        notificationOptions = [decoder decodeInt64ForKey:@"notification-options"];
+        notificationOptions = [self versionNotificationOptions:notificationOptions];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
         self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
@@ -254,6 +253,36 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [user release];
     user = newUser;
     [self requestProfileImageWithCallback:nil];
+}
+- (WeiboNotificationOptions)versionNotificationOptions:(WeiboNotificationOptions)options
+{
+    if (!(options & WeiboNotificationVersionSystemCenterIntegrated))
+    {
+        NSMutableArray * bits = [NSMutableArray array];
+        
+        NSInteger userBitsCount = 24;
+        
+        for (int i = 0; i < userBitsCount; i++)
+        {
+            [bits addObject:@((options & (1 << i)) ? 1 : 0)];
+        }
+        
+        [bits insertObject:@0 atIndex:2];
+        [bits insertObject:@1 atIndex:5];
+        [bits insertObject:@1 atIndex:8];
+        [bits insertObject:@1 atIndex:11];
+        [bits insertObject:@1 atIndex:14];
+        
+        options = 0;
+        
+        for (int i = 0; i < userBitsCount; i++)
+        {
+            options |= [bits[i] longLongValue] << i;
+        }
+        
+        options |= WeiboNotificationVersionSystemCenterIntegrated;
+    }
+    return options;
 }
 
 #pragma mark -

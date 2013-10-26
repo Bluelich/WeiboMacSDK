@@ -56,24 +56,32 @@ typedef NSInteger WeiboStatusesAddingType;
 
 enum {
     WeiboNotificationNone                   = 0,
+    
     WeiboTweetNotificationMenubar           = 1 << 0,
     WeiboTweetNotificationBadge             = 1 << 1,
-    WeiboMentionNotificationMenubar         = 1 << 2,
-    WeiboMentionNotificationBadge           = 1 << 3,
-    WeiboCommentNotificationMenubar         = 1 << 4,
-    WeiboCommentNotificationBadge           = 1 << 5,
-    WeiboDirectMessageNotificationMenubar   = 1 << 6,
-    WeiboDirectMessageNotificationBadge     = 1 << 7,
-    WeiboFollowerNotificationMenubar        = 1 << 8,
-    WeiboFollowerNotificationBadge          = 1 << 9,
-    
-//    WeiboTweetNotificationSystemCenter      = 1 << 10,
-    WeiboMentionNotificationSystemCenter    = 1 << 11,
-    WeiboCommentNotificationSystemCenter    = 1 << 12,
-    WeiboDirectMessageNotificationSystemCenter = 1 << 13,
+    WeiboTweetNotificationSystemCenter      = 1 << 2,
+
+    WeiboMentionNotificationMenubar         = 1 << 3,
+    WeiboMentionNotificationBadge           = 1 << 4,
+    WeiboMentionNotificationSystemCenter    = 1 << 5,
+
+    WeiboCommentNotificationMenubar         = 1 << 6,
+    WeiboCommentNotificationBadge           = 1 << 7,
+    WeiboCommentNotificationSystemCenter    = 1 << 8,
+
+    WeiboDirectMessageNotificationMenubar   = 1 << 9,
+    WeiboDirectMessageNotificationBadge     = 1 << 10,
+    WeiboDirectMessageNotificationSystemCenter = 1 << 11,
+
+    WeiboFollowerNotificationMenubar        = 1 << 12,
+    WeiboFollowerNotificationBadge          = 1 << 13,
     WeiboFollowerNotificatioSystemCenter    = 1 << 14,
+    
+    WeiboNotificationVersionSystemCenterIntegrated = 1 << 31,
+    
+    WeiboNotificationDefaults               = 0b0101101101101101 | WeiboNotificationVersionSystemCenterIntegrated,
 };
-typedef NSUInteger WeiboNotificationOptions;
+typedef int64_t WeiboNotificationOptions;
 
 enum {
     WeiboUnreadCountTypeStatus = 0,

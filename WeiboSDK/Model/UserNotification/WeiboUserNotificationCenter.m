@@ -88,8 +88,9 @@ static BOOL AtLeastMountainLion = NO;
     notification.title = @"这是标题这是标题这是标题这是标题这是标题这是标题这是标题";
     notification.subtitle = @"这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题";
     notification.informativeText = @"这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容";
-    notification.actionButtonTitle = @"回复";
-    notification.otherButtonTitle = @"查看";
+//    notification.actionButtonTitle = @"回复";
+//    notification.otherButtonTitle = @"查看";
+    notification.hasReplyButton = YES;
     
     [self _scheduleUserNotification:notification];
 }
