@@ -10,21 +10,26 @@
 #import "WeiboAccount.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboDirectMessage.h"
+#import "Weibo.h"
 
 NSString * const WeiboUserNotificationUserInfoItemTypeKey = @"WeiboUserNotificationUserInfoItemTypeKey";
 NSString * const WeiboUserNotificationUserInfoItemUserIDKey = @"WeiboUserNotificationUserInfoItemUserIDKey";
 NSString * const WeiboUserNotificationUserInfoItemIDKey = @"WeiboUserNotificationUserInfoItemIDKey";
+
 NSString * const WeiboUserNotificationUserInfoAccountUserIDKey = @"WeiboUserNotificationUserInfoAccountUserIDKey";
 
-@interface WeiboUserNotificationCenter () <NSUserNotificationCenterDelegate>
+NSString * const WeiboUserNotificationCenterActivatedNotificationNotification = @"WeiboUserNotificationCenterActivatedNotificationNotification";
+NSString * const WeiboUserNotificationCenterUserInfoNSUserNotificationKey = @"WeiboUserNotificationCenterUserInfoNSUserNotificationKey";
+NSString * const WeiboUserNotificationCenterUserInfoAccountKey = @"WeiboUserNotificationCenterUserInfoAccountKey";
 
-@property (nonatomic, assign, readonly) BOOL supportsDirectlyReply;
+@interface WeiboUserNotificationCenter () <NSUserNotificationCenterDelegate>
 
 @end
 
 @implementation WeiboUserNotificationCenter
 
 static BOOL AtLeastMountainLion = NO;
+static BOOL AtLeaseMavericks    = NO;
 
 + (void)initialize
 {
@@ -34,6 +39,7 @@ static BOOL AtLeastMountainLion = NO;
     Gestalt(gestaltSystemVersionMinor, &minor);
     
     AtLeastMountainLion = (major == 10 && minor >= 8);
+    AtLeaseMavericks    = (major == 10 && minor >= 9);
 }
 
 + (instancetype)defaultUserNotificationCenter
@@ -50,6 +56,11 @@ static BOOL AtLeastMountainLion = NO;
     return instance;
 }
 
++ (BOOL)supportsDirectlyReply
+{
+    return AtLeaseMavericks;
+}
+
 - (void)applicationLaunchingFinishedWithNotification:(NSNotification *)notification
 {
     if (!AtLeastMountainLion) return;
@@ -64,18 +75,39 @@ static BOOL AtLeastMountainLion = NO;
     }
 }
 
-- (BOOL)supportsDirectlyReply
+- (NSArray *)itemsNotAuthoredByAccount:(WeiboAccount *)account fromItems:(NSArray *)items
 {
-    return [NSUserNotification instancesRespondToSelector:@selector(setHasReplyButton:)];
+    NSMutableArray * result = [NSMutableArray array];
+    
+    for (id item in items)
+    {
+        BOOL valid = NO;
+        
+        if ([item isKindOfClass:[WeiboBaseStatus class]])
+        {
+            valid = ![account.user isEqual:[item user]];
+        }
+        else if ([item isKindOfClass:[WeiboDirectMessage class]])
+        {
+            valid = ![account.user isEqual:[item sender]];
+        }
+        
+        if (valid) [result addObject:item];
+    }
+    return result;
 }
 
 - (void)_scheduleUserNotification:(NSUserNotification *)notification
 {
-    [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:notification];
+    notification.soundName = NSUserNotificationDefaultSoundName;
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 - (void)scheduleNotificationForMentions:(NSArray *)mentions forAccount:(WeiboAccount *)account
 {
+    mentions = [self itemsNotAuthoredByAccount:account fromItems:mentions];
+    
     if (!mentions.count) return;
     
     if (account.notificationOptions & WeiboMentionNotificationSystemCenter)
@@ -97,7 +129,7 @@ static BOOL AtLeastMountainLion = NO;
             notification.title = [NSString stringWithFormat:NSLocalizedString(@"@%@ mentioned you in a status", nil), user.screenName];
             notification.informativeText = status.text;
             
-            if ([notification respondsToSelector:@selector(setHasReplyButton:)])
+            if ([[self class] supportsDirectlyReply])
             {
                 notification.hasReplyButton = YES;
             }
@@ -119,6 +151,8 @@ static BOOL AtLeastMountainLion = NO;
 }
 - (void)scheduleNotificationForComments:(NSArray *)comments forAccount:(WeiboAccount *)account
 {
+    comments = [self itemsNotAuthoredByAccount:account fromItems:comments];
+    
     if (!comments.count) return;
     
     if (account.notificationOptions & WeiboCommentNotificationSystemCenter)
@@ -162,6 +196,8 @@ static BOOL AtLeastMountainLion = NO;
 }
 - (void)scheduleNotificationForDirectMessages:(NSArray *)messages forAccount:(WeiboAccount *)account
 {
+    messages = [self itemsNotAuthoredByAccount:account fromItems:messages];
+    
     if (!messages.count) return;
     
     if (account.notificationOptions & WeiboDirectMessageNotificationSystemCenter)
@@ -208,7 +244,23 @@ static BOOL AtLeastMountainLion = NO;
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
+    if (!notification) return;
     
+    NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+    
+    WeiboUserID accountUserID = [notification.userInfo[WeiboUserNotificationUserInfoAccountUserIDKey] longLongValue];
+    if (accountUserID)
+    {
+        WeiboAccount * account = [[Weibo sharedWeibo] accountWithUserID:accountUserID];
+        
+        if (!account) return; // if there is a account userID but account object, it's unnecessary to handle this activation.
+        
+        [userInfo setObject:account forKey:WeiboUserNotificationCenterUserInfoAccountKey];
+    }
+    
+    [userInfo setObject:notification forKey:WeiboUserNotificationCenterUserInfoNSUserNotificationKey];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserNotificationCenterActivatedNotificationNotification object:self userInfo:userInfo];
 }
 
 @end

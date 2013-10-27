@@ -24,7 +24,10 @@ typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
 extern NSString * const WeiboUserNotificationUserInfoItemTypeKey;
 extern NSString * const WeiboUserNotificationUserInfoItemUserIDKey;
 extern NSString * const WeiboUserNotificationUserInfoItemIDKey;
-extern NSString * const WeiboUserNotificationUserInfoAccountUserIDKey;
+
+extern NSString * const WeiboUserNotificationCenterActivatedNotificationNotification;
+extern NSString * const WeiboUserNotificationCenterUserInfoNSUserNotificationKey;
+extern NSString * const WeiboUserNotificationCenterUserInfoAccountKey;
 
 @interface WeiboUserNotificationCenter : NSObject
 
@@ -36,5 +39,7 @@ extern NSString * const WeiboUserNotificationUserInfoAccountUserIDKey;
 - (void)scheduleNotificationForMentions:(NSArray *)mentions forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForComments:(NSArray *)comments forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForDirectMessages:(NSArray *)messages forAccount:(WeiboAccount *)account;
+
++ (BOOL)supportsDirectlyReply;
 
 @end
