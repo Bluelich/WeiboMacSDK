@@ -45,29 +45,34 @@
     }
     return self;
 }
-- (void)encodeWithCoder:(NSCoder *)encoder{
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
     [encoder encodeInt64:userID forKey:@"user-id"];
     [encoder encodeObject:screenName forKey:@"screenname"];
-    [encoder encodeObject:name forKey:@"name"];
-    [encoder encodeObject:province forKey:@"province"];
-    [encoder encodeObject:city forKey:@"city"];
-    [encoder encodeObject:location forKey:@"location"];
-    [encoder encodeObject:description forKey:@"description"];
-    [encoder encodeObject:url forKey:@"url"];
     [encoder encodeObject:profileImageUrl forKey:@"profile-image-url"];
     [encoder encodeObject:profileLargeImageUrl forKey:@"profile-large-image-url"];
-    [encoder encodeObject:domain forKey:@"domain"];
-    //[encoder encodeObject:status forKey:@"status"];
-    [encoder encodeInteger:gender forKey:@"gender"];
-    [encoder encodeInt:followersCount forKey:@"followers-count"];
-    [encoder encodeInt:friendsCount forKey:@"friends-count"];
-    [encoder encodeInt:statusesCount forKey:@"statuses-count"];
-    [encoder encodeInt:favouritesCount forKey:@"favourites-count"];
-    [encoder encodeInt:(int)createAt forKey:@"create-at"];
-    [encoder encodeBool:following forKey:@"following"];
-    [encoder encodeBool:followMe forKey:@"follow-me"];
-    //[encoder encodeBool:verified forKey:@"verified"];
-    [encoder encodeInteger:_verifiedType forKey:@"verified-type"];
+    
+    if (!self.simplifiedCoding)
+    {
+        [encoder encodeObject:name forKey:@"name"];
+        [encoder encodeObject:province forKey:@"province"];
+        [encoder encodeObject:city forKey:@"city"];
+        [encoder encodeObject:location forKey:@"location"];
+        [encoder encodeObject:description forKey:@"description"];
+        [encoder encodeObject:url forKey:@"url"];
+        [encoder encodeObject:domain forKey:@"domain"];
+        //[encoder encodeObject:status forKey:@"status"];
+        [encoder encodeInteger:gender forKey:@"gender"];
+        [encoder encodeInt:followersCount forKey:@"followers-count"];
+        [encoder encodeInt:friendsCount forKey:@"friends-count"];
+        [encoder encodeInt:statusesCount forKey:@"statuses-count"];
+        [encoder encodeInt:favouritesCount forKey:@"favourites-count"];
+        [encoder encodeInt:(int)createAt forKey:@"create-at"];
+        [encoder encodeBool:following forKey:@"following"];
+        [encoder encodeBool:followMe forKey:@"follow-me"];
+        //[encoder encodeBool:verified forKey:@"verified"];
+        [encoder encodeInteger:_verifiedType forKey:@"verified-type"];
+    }
 }
 
 - (void)dealloc{

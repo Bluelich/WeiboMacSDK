@@ -63,6 +63,8 @@
 
 @property (assign, nonatomic) NSTimeInterval cacheTime;
 
+@property (assign, nonatomic) BOOL simplifiedCoding;
+
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboUser *)userWithDictionary:(NSDictionary *)dic;

@@ -13,6 +13,7 @@
 #import "SSKeychain.h"
 #import "WTCallback.h"
 #import "WeiboDirectMessagesConversationManager.h"
+#import "Weibo.h"
 
 NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
 NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
@@ -82,6 +83,8 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
             [self refreshDirectMessages];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
+            
+            [[Weibo sharedWeibo] saveCurrentState];
         }
     }
     

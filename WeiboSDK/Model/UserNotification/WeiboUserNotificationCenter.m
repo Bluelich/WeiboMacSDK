@@ -9,12 +9,16 @@
 #import "WeiboUserNotificationCenter.h"
 #import "WeiboAccount.h"
 #import "WeiboBaseStatus.h"
+#import "WeiboComment.h"
+#import "WeiboStatus.h"
 #import "WeiboDirectMessage.h"
 #import "Weibo.h"
 
 NSString * const WeiboUserNotificationUserInfoItemTypeKey = @"WeiboUserNotificationUserInfoItemTypeKey";
 NSString * const WeiboUserNotificationUserInfoItemUserIDKey = @"WeiboUserNotificationUserInfoItemUserIDKey";
+NSString * const WeiboUserNotificationUserInfoItemUserDataKey = @"WeiboUserNotificationUserInfoItemUserDataKey";
 NSString * const WeiboUserNotificationUserInfoItemIDKey = @"WeiboUserNotificationUserInfoItemIDKey";
+NSString * const WeiboUserNotificationUserInfoCommentIDKey = @"WeiboUserNotificationUserInfoCommentIDKey";
 
 NSString * const WeiboUserNotificationUserInfoAccountUserIDKey = @"WeiboUserNotificationUserInfoAccountUserIDKey";
 
@@ -159,7 +163,7 @@ static BOOL AtLeaseMavericks    = NO;
     {
         NSUserNotification * notification = [[NSUserNotification alloc] init];
         
-        WeiboBaseStatus * status = comments.firstObject;
+        WeiboComment * status = comments.firstObject;
         WeiboUser * user = status.user;
         WeiboUserNotificationItemType type = 0;
         
@@ -185,8 +189,9 @@ static BOOL AtLeaseMavericks    = NO;
         
         [userInfo setObject:@(type) forKey:WeiboUserNotificationUserInfoItemTypeKey];
         [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
-        [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
+        [userInfo setObject:@(status.replyToStatus.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
         [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
+        [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoCommentIDKey];
         
         [notification setUserInfo:userInfo];
         
@@ -232,6 +237,20 @@ static BOOL AtLeaseMavericks    = NO;
         [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
         [userInfo setObject:@(message.messageID) forKey:WeiboUserNotificationUserInfoItemIDKey];
         [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
+        
+        if (user)
+        {
+            [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
+            
+            BOOL simplifiedCoding = user.simplifiedCoding;
+            
+            user.simplifiedCoding = YES;
+            
+            NSData * userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+            [userInfo setObject:userData forKey:WeiboUserNotificationUserInfoItemUserDataKey];
+            
+            user.simplifiedCoding = simplifiedCoding;
+        }
         
         [notification setUserInfo:userInfo];
         

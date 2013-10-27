@@ -9,6 +9,7 @@
 #import "WeiboReceivedDirectMessageStream.h"
 #import "WeiboAPI+DirectMessages.h"
 #import "WeiboAccount+Superpower.h"
+#import "WeiboUserNotificationCenter.h"
 
 @implementation WeiboReceivedDirectMessageStream
 
@@ -24,6 +25,18 @@
     WeiboAPI * api = [self.account authenticatedSuperpowerRequest:[self loaderOlderResponseCallback]];
     
     [api directMessagesSinceID:0 maxID:[self oldestMessageID]-1 count:200];
+}
+
+- (void)addMessages:(NSArray *)messages
+{
+    BOOL deriveUserNotification = self.messagesLoaded;
+    
+    [super addMessages:messages];
+    
+    if (deriveUserNotification && messages.count)
+    {
+        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForDirectMessages:messages forAccount:self.account];
+    }
 }
 
 @end

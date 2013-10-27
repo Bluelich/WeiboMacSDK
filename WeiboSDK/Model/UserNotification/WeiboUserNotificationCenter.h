@@ -23,7 +23,9 @@ typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
 
 extern NSString * const WeiboUserNotificationUserInfoItemTypeKey;
 extern NSString * const WeiboUserNotificationUserInfoItemUserIDKey;
+extern NSString * const WeiboUserNotificationUserInfoItemUserDataKey;
 extern NSString * const WeiboUserNotificationUserInfoItemIDKey;
+extern NSString * const WeiboUserNotificationUserInfoCommentIDKey;
 
 extern NSString * const WeiboUserNotificationCenterActivatedNotificationNotification;
 extern NSString * const WeiboUserNotificationCenterUserInfoNSUserNotificationKey;
