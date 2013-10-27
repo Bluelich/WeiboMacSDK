@@ -477,8 +477,16 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     if (composition.type == WeiboCompositionTypeDirectMessage)
     {
+        [self.directMessagesManager requestStreaming];
+        
         WeiboAPI * api = [self authenticatedSuperpowerRequest:callback];
         [api sendDirectMessage:composition.text toUserID:composition.directMessageUser.userID];
+        
+        double delayInSeconds = 90.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){            
+            [self.directMessagesManager endStreaming];
+        });
     }
     else
     {
