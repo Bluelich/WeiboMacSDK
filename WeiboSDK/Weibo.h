@@ -25,6 +25,7 @@ extern NSString * const WeiboDidHeartbeatNotification;
 - (void)heartbeat:(id)sender;
 - (void)pruneCaches:(id)sender;
 - (void)shutdown;
+- (void)saveCurrentState;
 - (NSMutableArray *)accounts;
 
 // Use When Grant Type == Password

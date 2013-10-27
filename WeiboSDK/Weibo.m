@@ -41,7 +41,7 @@ static Weibo * _sharedWeibo = nil;
     if ((self = [super init])) {
         accounts = [[NSMutableArray alloc] init];
         
-        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
+        heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval:30.0
                                                  target:self
                                                selector:@selector(heartbeat:) 
                                                userInfo:nil 
@@ -122,6 +122,10 @@ static Weibo * _sharedWeibo = nil;
     
     [[self accounts] makeObjectsPerformSelector:@selector(willSaveToDisk)];
     
+    [self saveCurrentState];
+}
+- (void)saveCurrentState
+{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSData * accountData = [NSKeyedArchiver archivedDataWithRootObject:[self accounts]];
     [defaults setObject:accountData forKey:@"accounts"];
@@ -200,6 +204,8 @@ static Weibo * _sharedWeibo = nil;
                 [[account retain] autorelease];
                 [self.accounts removeObjectAtIndex:existIndex];
                 [self.accounts insertObject:account atIndex:existIndex];
+                
+                [self saveCurrentState];
             }
             else
             {
@@ -248,6 +254,7 @@ static Weibo * _sharedWeibo = nil;
 - (void)addAccount:(WeiboAccount *)aAccount
 {
     [self addAccount:aAccount postsNotification:YES];
+    [self saveCurrentState];
 }
 
 - (void)removeAccount:(WeiboAccount *)aAccount
