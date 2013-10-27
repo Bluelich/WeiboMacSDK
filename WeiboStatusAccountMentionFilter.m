@@ -15,6 +15,8 @@
 
 - (BOOL)validateStatus:(WeiboBaseStatus *)status
 {
+    if (status.user.userID == self.account.user.userID) return NO;
+    
     NSString * screenName = [NSString stringWithFormat:@"@%@", self.account.user.screenName];
     
     if ([status.text rangeOfString:screenName].length != 0)
@@ -24,7 +26,8 @@
         return NO;
     }
     
-    if (status.quotedBaseStatus)
+    if (status.quotedBaseStatus &&
+        status.quotedBaseStatus.user.userID != self.account.user.userID)
     {
         if (status.quotedBaseStatus.user.userID == self.account.user.userID)
         {
