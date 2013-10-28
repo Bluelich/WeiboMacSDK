@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
     WeiboUserNotificationItemTypeMention,
     WeiboUserNotificationItemTypeComment,
     WeiboUserNotificationItemTypeDirectMessage,
+    WeiboUserNotificationItemTypeFollower,
     
     WeiboUserNotificationItemTypeMentions,
     WeiboUserNotificationItemTypeComments,
@@ -41,6 +42,7 @@ extern NSString * const WeiboUserNotificationCenterUserInfoAccountKey;
 - (void)scheduleNotificationForMentions:(NSArray *)mentions forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForComments:(NSArray *)comments forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForDirectMessages:(NSArray *)messages forAccount:(WeiboAccount *)account;
+- (void)scheduleNotificationForNewFollowersCount:(NSInteger)count forAccount:(WeiboAccount *)account;
 
 + (BOOL)supportsDirectlyReply;
 

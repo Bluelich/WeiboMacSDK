@@ -75,7 +75,7 @@ enum {
 
     WeiboFollowerNotificationMenubar        = 1 << 12,
     WeiboFollowerNotificationBadge          = 1 << 13,
-    WeiboFollowerNotificatioSystemCenter    = 1 << 14,
+    WeiboFollowerNotificationSystemCenter    = 1 << 14,
     
     WeiboNotificationVersionSystemCenterIntegrated = 1 << 31,
     

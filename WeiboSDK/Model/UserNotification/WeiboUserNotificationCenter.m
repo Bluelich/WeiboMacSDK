@@ -259,6 +259,27 @@ static BOOL AtLeaseMavericks    = NO;
     }
 }
 
+- (void)scheduleNotificationForNewFollowersCount:(NSInteger)count forAccount:(WeiboAccount *)account
+{
+    if (account.notificationOptions & WeiboFollowerNotificationSystemCenter)
+    {
+        NSUserNotification * notification = [[NSUserNotification alloc] init];
+        
+        notification.title = [NSString stringWithFormat:NSLocalizedString(@"You have %d new followers", nil), count];
+        notification.informativeText = NSLocalizedString(@"Click here to view it now.", nil);
+        
+        NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+        
+        [userInfo setObject:@(WeiboUserNotificationItemTypeFollower) forKey:WeiboUserNotificationUserInfoItemTypeKey];
+        [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
+        
+        [notification setUserInfo:userInfo];
+        
+        [self _scheduleUserNotification:notification];
+        [notification autorelease];
+    }
+}
+
 #pragma mark - NSUserNotificationCenter Delegate
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification

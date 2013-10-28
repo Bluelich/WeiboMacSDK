@@ -28,6 +28,8 @@
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
 #import "WeiboDirectMessagesConversationManager.h"
+#import "WeiboUserNotificationCenter.h"
+
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
 #import "WTFoundationUtilities.h"
@@ -432,7 +434,13 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     self.newMentionsCount = unread.newMentions;
     self.newCommentsCount = unread.newComments;
     self.newDirectMessagesCount = unread.newDirectMessages;
+    
+    if (unread.newFollowers > self.newFollowersCount)
+    {
+        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForNewFollowersCount:unread.newFollowers forAccount:self];
+    }
     self.newFollowersCount = unread.newFollowers;
+    
     
     if (unread.newStatus > 0) {
         [timelineStream loadNewer];
