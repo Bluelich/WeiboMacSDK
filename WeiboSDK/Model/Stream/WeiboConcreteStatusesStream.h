@@ -49,6 +49,7 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (BOOL)isLoadingNewer;
 
 - (WeiboBaseStatus *)statusWithID:(WeiboStatusID)sid;
+- (void)markStatusWithIDAsRead:(WeiboStatusID)statusID;
 
 #pragma mark -
 #pragma mark Network Connecting

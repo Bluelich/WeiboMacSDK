@@ -311,6 +311,11 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [self.conversations makeObjectsPerformSelector:@selector(markAsRead)];
 }
 
+- (void)markConversationWithUserIDAsRead:(WeiboUserID)userID
+{
+    [[self conversationWithUserID:userID] markAsRead];
+}
+
 - (void)clearCachedUnreadState
 {
     

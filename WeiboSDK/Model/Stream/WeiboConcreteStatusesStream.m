@@ -340,6 +340,21 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     return count;
 }
 
+- (void)markStatusWithIDAsRead:(WeiboStatusID)statusID
+{
+    WeiboBaseStatus * topStatus = [self viewedMostRecentStatus];
+    WeiboBaseStatus * statusToMark = [self statusWithID:statusID];
+    
+    NSInteger viewedMostRecentIndex = [statuses indexOfObject:topStatus];
+    NSInteger indexToMark = [self statuseIndex:statusToMark];
+    
+    if (indexToMark == viewedMostRecentIndex + 1)
+    {
+        statusToMark.wasSeen = YES;
+        self.viewedMostRecentID = statusID;
+    }
+}
+
 #pragma mark -
 #pragma mark Network Connecting
 - (void)_loadNewer
