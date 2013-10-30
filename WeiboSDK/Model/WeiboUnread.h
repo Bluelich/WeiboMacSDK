@@ -15,14 +15,16 @@
     NSUInteger newStatus;
     NSUInteger newFollowers;
     NSUInteger newDirectMessages;
-    NSUInteger newMentions;
+    NSUInteger newStatusMentions;
+    NSUInteger newCommentMentions;
     NSUInteger newComments;
 }
 
 @property (assign, nonatomic) NSUInteger newStatus;
 @property (assign, nonatomic) NSUInteger newFollowers;
 @property (assign, nonatomic) NSUInteger newDirectMessages;
-@property (assign, nonatomic) NSUInteger newMentions;
+@property (assign, nonatomic) NSUInteger newStatusMentions;
+@property (assign, nonatomic) NSUInteger newCommentMentions;
 @property (assign, nonatomic) NSUInteger newComments;
 
 #pragma mark -

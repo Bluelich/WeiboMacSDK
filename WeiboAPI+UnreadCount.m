@@ -66,9 +66,11 @@
         case WeiboUnreadCountTypeDirectMessage:
             typeString = @"dm";
             break;
-        case WeiboUnreadCountTypeMention:
+        case WeiboUnreadCountTypeStatusMention:
             typeString = @"mention_status";
             break;
+        case WeiboUnreadCountTypeCommentMention:
+            typeString = @"mention_cmt";
         default:{
             [callback dissociateTarget];
             return;

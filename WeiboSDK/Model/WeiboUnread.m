@@ -12,7 +12,7 @@
 #import "JSONKit.h"
 
 @implementation WeiboUnread
-@synthesize newStatus, newMentions, newComments, newDirectMessages, newFollowers;
+@synthesize newStatus, newStatusMentions, newCommentMentions, newComments, newDirectMessages, newFollowers;
 
 #pragma mark -
 #pragma mark Parse Methods
@@ -42,7 +42,8 @@
 - (WeiboUnread *)initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
         self.newStatus = [dic intForKey:@"status" defaultValue:0];
-        self.newMentions = [dic intForKey:@"mention_status" defaultValue:0];
+        self.newStatusMentions = [dic intForKey:@"mention_status" defaultValue:0];
+        self.newCommentMentions = [dic intForKey:@"mention_cmt" defaultValue:0];
         self.newComments = [dic intForKey:@"cmt" defaultValue:0];
         self.newDirectMessages = [dic intForKey:@"dm" defaultValue:0];
         self.newFollowers = [dic intForKey:@"follower" defaultValue:0];
@@ -55,7 +56,8 @@
 - (NSString *)description{
     NSMutableString * string = [NSMutableString string];
     [string appendFormat:@"\nnew status:%ld, ",self.newStatus];
-    [string appendFormat:@"\nnew mentions:%ld, ",self.newMentions];
+    [string appendFormat:@"\nnew status mentions:%ld, ",self.newStatusMentions];
+    [string appendFormat:@"\nnew comment mentions:%ld, ",self.newCommentMentions];
     [string appendFormat:@"\nnew comments:%ld, ",self.newComments];
     [string appendFormat:@"\nnew dms:%ld, ",self.newDirectMessages];
     [string appendFormat:@"\nnew followers:%ld. ",self.newFollowers];
