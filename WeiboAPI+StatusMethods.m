@@ -50,10 +50,26 @@
 - (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     [self statusesRequest:@"statuses/mentions.json" parameters:nil sinceID:since maxID:max count:count];
 }
+- (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
+    [self statusesRequest:@"comments/mentions.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+}
 - (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
     [self statusesRequest:@"comments/timeline.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
 }
+- (void)commentsToMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
+    [self statusesRequest:@"comments/to_me.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+}
+- (void)commentsByMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
+    [self statusesRequest:@"comments/by_me.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+}
+
 - (void)userTimelineForUserID:(WeiboUserID)uid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",uid] forKey:@"user_id"];
     [self statusesRequest:@"statuses/user_timeline.json" parameters:params sinceID:since maxID:max count:count];
