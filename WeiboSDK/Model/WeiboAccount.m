@@ -70,7 +70,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [user release];
     [usersByUsername release];
     [timelineStream release];
-    [mentionsStream release];
+    [statusMentionsStream release];
     [commentMentionsStream release];
     [commentsToMeStream release];
     [commentsByMeStream release];
@@ -101,8 +101,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         timelineStream = [[WeiboTimelineStream alloc] init];
         timelineStream.account = self;
         
-        mentionsStream = [[WeiboMentionsStream alloc] init];
-        mentionsStream.account = self;
+        statusMentionsStream = [[WeiboMentionsStream alloc] init];
+        statusMentionsStream.account = self;
         
         commentMentionsStream = [[WeiboCommentMentionsStream alloc] init];
         commentMentionsStream.account = self;
@@ -252,11 +252,13 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     return [NSString stringWithFormat:@"AccessToken:%lld",userID];
 }
 
-- (WeiboTimelineStream *) timelineStream{
+- (WeiboTimelineStream *)timelineStream
+{
     return timelineStream;
 }
-- (WeiboMentionsStream *) mentionsStream{
-    return mentionsStream;
+- (WeiboMentionsStream *)statusMentionsStream
+{
+    return statusMentionsStream;
 }
 - (WeiboCommentMentionsStream *)commentMentionsStream
 {
@@ -413,7 +415,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 - (void)forceRefreshTimelines
 {
     [timelineStream loadNewer];
-    [mentionsStream loadNewer];
+    [statusMentionsStream loadNewer];
     [commentMentionsStream loadNewer];
     [commentsToMeStream loadNewer];
 }
@@ -433,7 +435,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 }
 - (void)refreshMentions
 {
-    [mentionsStream loadNewer];
+    [statusMentionsStream loadNewer];
     [commentMentionsStream loadNewer];
 }
 - (void)refreshComments
@@ -476,7 +478,7 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     }
     if (unread.newStatusMentions > 0)
     {
-        [mentionsStream loadNewer];
+        [statusMentionsStream loadNewer];
         [self resetUnreadCountWithType:WeiboUnreadCountTypeStatusMention];
     }
     if (unread.newCommentMentions)
@@ -792,21 +794,30 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     [self postStatusFavoriteStateChangedNotification:status];
 }
-
-- (BOOL)hasFreshTweets{
-    WeiboBaseStatus * topStatus = [timelineStream newestStatus];
-    if (!topStatus) {
+- (BOOL)hasFreshItemsInStream:(WeiboConcreteStatusesStream *)stream
+{
+    WeiboBaseStatus * topStatus = [stream newestStatus];
+    if (!topStatus)
+    {
         return NO;
     }
-    return topStatus.sid > timelineStream.viewedMostRecentID;
-    //return !topStatus.wasSeen;
+    return topStatus.sid > stream.viewedMostRecentID;
 }
-- (BOOL)hasFreshMentions{
-    WeiboBaseStatus * topStatus = [mentionsStream newestStatus];
-    if (!topStatus) {
-        return NO;
-    }
-    return topStatus.sid > mentionsStream.viewedMostRecentID;
+- (BOOL)hasFreshTweets
+{
+    return [self hasFreshItemsInStream:timelineStream];
+}
+- (BOOL)hasFreshMentions
+{
+    return [self hasFreshStatusMentions] || [self hasFreshCommentMentions];
+}
+- (BOOL)hasFreshStatusMentions
+{
+    return [self hasFreshItemsInStream:statusMentionsStream];
+}
+- (BOOL)hasFreshCommentMentions
+{
+    return [self hasFreshItemsInStream:commentMentionsStream];
 }
 - (BOOL)hasFreshComments
 {
@@ -921,9 +932,9 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 }
 - (NSInteger)newStatusMentionsCount
 {
-    if (self.mentionsStream.hasData)
+    if (self.statusMentionsStream.hasData)
     {
-        return self.mentionsStream.unreadCount;
+        return self.statusMentionsStream.unreadCount;
     }
     return _newStatusMentionsCount;
 }

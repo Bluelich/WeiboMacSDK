@@ -30,7 +30,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
     NSString * apiRoot;
     WeiboUser * user;
     WeiboTimelineStream * timelineStream;
-    WeiboMentionsStream * mentionsStream;
+    WeiboMentionsStream * statusMentionsStream;
     WeiboCommentMentionsStream * commentMentionsStream;
     WeiboCommentsToMeStream * commentsToMeStream;
     WeiboCommentsByMeStream * commentsByMeStream;
@@ -81,7 +81,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 + (NSString *)keyChainAccountForUserID:(WeiboUserID)userID;
 
 - (WeiboTimelineStream *)timelineStream;
-- (WeiboMentionsStream *)mentionsStream;
+- (WeiboMentionsStream *)statusMentionsStream;
 - (WeiboCommentMentionsStream *)commentMentionsStream;
 - (WeiboCommentsByMeStream *)commentsByMeStream;
 - (WeiboCommentsToMeStream *)commentsToMeStream;
@@ -134,6 +134,8 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 
 - (BOOL)hasFreshTweets;
 - (BOOL)hasFreshMentions;
+- (BOOL)hasFreshStatusMentions;
+- (BOOL)hasFreshCommentMentions;
 - (BOOL)hasFreshComments;
 - (BOOL)hasFreshDirectMessages;
 - (BOOL)hasNewFollowers;
