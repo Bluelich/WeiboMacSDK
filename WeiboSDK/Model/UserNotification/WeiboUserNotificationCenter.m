@@ -122,29 +122,50 @@ static BOOL AtLeaseMavericks    = NO;
         WeiboUser * user = status.user;
         WeiboUserNotificationItemType type = 0;
         
+        BOOL isCommentMention = [status isKindOfClass:[WeiboComment class]];
+        
         if (mentions.count > 1)
         {
             notification.title = [NSString stringWithFormat:NSLocalizedString(@"%zd new mentions from @%@ and others", nil), mentions.count, user.screenName];
             notification.informativeText = NSLocalizedString(@"Click here to view it now.", nil);
-            type = WeiboUserNotificationItemTypeMentions;
+            type = isCommentMention ? WeiboUserNotificationItemTypeCommentMentions :  WeiboUserNotificationItemTypeStatusMentions;
         }
         else
         {
-            notification.title = [NSString stringWithFormat:NSLocalizedString(@"@%@ mentioned you in a status", nil), user.screenName];
+            if (isCommentMention)
+            {
+                notification.title = [NSString stringWithFormat:NSLocalizedString(@"@%@ mentioned you in a comment", nil), user.screenName];
+            }
+            else
+            {
+                notification.title = [NSString stringWithFormat:NSLocalizedString(@"@%@ mentioned you in a status", nil), user.screenName];
+            }
             notification.informativeText = status.text;
             
             if ([[self class] supportsDirectlyReply])
             {
                 notification.hasReplyButton = YES;
             }
-            type = WeiboUserNotificationItemTypeMention;
+            type = isCommentMention ? WeiboUserNotificationItemTypeCommentMention :  WeiboUserNotificationItemTypeStatusMention;
         }
         
         NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
         
         [userInfo setObject:@(type) forKey:WeiboUserNotificationUserInfoItemTypeKey];
         [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
-        [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
+        
+        if (isCommentMention)
+        {
+            WeiboComment * comment = (WeiboComment *)status;
+            
+            [userInfo setObject:@(comment.replyToStatus.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
+            [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoCommentIDKey];
+        }
+        else
+        {
+            [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
+        }
+        
         [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
         
         [notification setUserInfo:userInfo];
@@ -190,8 +211,8 @@ static BOOL AtLeaseMavericks    = NO;
         [userInfo setObject:@(type) forKey:WeiboUserNotificationUserInfoItemTypeKey];
         [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
         [userInfo setObject:@(status.replyToStatus.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
-        [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
         [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoCommentIDKey];
+        [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
         
         [notification setUserInfo:userInfo];
         

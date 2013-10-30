@@ -20,7 +20,9 @@
 #import "WeiboStream.h"
 #import "WeiboTimelineStream.h"
 #import "WeiboMentionsStream.h"
-#import "WeiboCommentsTimelineStream.h"
+#import "WeiboCommentMentionsStream.h"
+#import "WeiboCommentsToMeStream.h"
+#import "WeiboCommentsByMeStream.h"
 #import "WeiboFavoritesStream.h"
 #import "WeiboUserTimelineStream.h"
 #import "WeiboRepliesStream.h"
@@ -69,7 +71,9 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [usersByUsername release];
     [timelineStream release];
     [mentionsStream release];
-    [commentsTimelineStream release];
+    [commentMentionsStream release];
+    [commentsToMeStream release];
+    [commentsByMeStream release];
     [favoritesStream release];
     [_profileImage release];
     [_lists release], _lists = nil;
@@ -93,12 +97,22 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     if (self = [super init])
     {
         notificationOptions = WeiboNotificationDefaults;
+        
         timelineStream = [[WeiboTimelineStream alloc] init];
         timelineStream.account = self;
+        
         mentionsStream = [[WeiboMentionsStream alloc] init];
         mentionsStream.account = self;
-        commentsTimelineStream = [[WeiboCommentsTimelineStream alloc] init];
-        commentsTimelineStream.account = self;
+        
+        commentMentionsStream = [[WeiboCommentMentionsStream alloc] init];
+        commentMentionsStream.account = self;
+        
+        commentsToMeStream = [[WeiboCommentsToMeStream alloc] init];
+        commentsToMeStream.account = self;
+        
+        commentsByMeStream = [[WeiboCommentsByMeStream alloc] init];
+        commentsByMeStream.account = self;
+        
         favoritesStream = [[WeiboFavoritesStream alloc] init];
         favoritesStream.account = self;
 
@@ -244,8 +258,17 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 - (WeiboMentionsStream *) mentionsStream{
     return mentionsStream;
 }
-- (WeiboCommentsTimelineStream *) commentsTimelineStream{
-    return commentsTimelineStream;
+- (WeiboCommentMentionsStream *)commentMentionsStream
+{
+    return commentMentionsStream;
+}
+- (WeiboCommentsToMeStream *)commentsToMeStream
+{
+    return commentsToMeStream;
+}
+- (WeiboCommentsByMeStream *)commentsByMeStream
+{
+    return commentsByMeStream;
 }
 - (WeiboFavoritesStream *) favoritesStream{
     return favoritesStream;
@@ -387,10 +410,12 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 
 #pragma mark -
 #pragma mark Timeline
-- (void)forceRefreshTimelines{
+- (void)forceRefreshTimelines
+{
     [timelineStream loadNewer];
     [mentionsStream loadNewer];
-    [commentsTimelineStream loadNewer];
+    [commentMentionsStream loadNewer];
+    [commentsToMeStream loadNewer];
 }
 - (void)refreshTimelineForType:(WeiboCompositionType)type{
     switch (type) {
@@ -408,11 +433,13 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 }
 - (void)refreshMentions
 {
-    [commentsTimelineStream loadNewer];
+    [mentionsStream loadNewer];
+    [commentMentionsStream loadNewer];
 }
 - (void)refreshComments
 {
-    [mentionsStream loadNewer];
+    [commentsToMeStream loadNewer];
+    [commentsByMeStream loadNewer];
 }
 - (void)refreshTimelines{
     WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
@@ -431,7 +458,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     WeiboUnread * unread = (WeiboUnread *)response;
     
     self.newStatusesCount = unread.newStatus;
-    self.newMentionsCount = unread.newMentions;
+    self.newStatusMentionsCount = unread.newStatusMentions;
+    self.newCommentMentionsCount = unread.newCommentMentions;
     self.newCommentsCount = unread.newComments;
     self.newDirectMessagesCount = unread.newDirectMessages;
     
@@ -442,15 +470,23 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     self.newFollowersCount = unread.newFollowers;
     
     
-    if (unread.newStatus > 0) {
+    if (unread.newStatus > 0)
+    {
         [timelineStream loadNewer];
     }
-    if (unread.newMentions > 0) {
+    if (unread.newStatusMentions > 0)
+    {
         [mentionsStream loadNewer];
-        [self resetUnreadCountWithType:WeiboUnreadCountTypeMention];
+        [self resetUnreadCountWithType:WeiboUnreadCountTypeStatusMention];
     }
-    if (unread.newComments > 0) {
-        [commentsTimelineStream loadNewer];
+    if (unread.newCommentMentions)
+    {
+        [commentMentionsStream loadNewer];
+        [self resetUnreadCountWithType:WeiboUnreadCountTypeCommentMention];
+    }
+    if (unread.newComments > 0)
+    {
+        [commentsToMeStream loadNewer];
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
     [self setNewDirectMessagesCount:unread.newDirectMessages];
@@ -468,10 +504,12 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api resetUnreadWithType:type];
     
-    switch (type) {
+    switch (type)
+    {
         case WeiboUnreadCountTypeDirectMessage:[self setNewDirectMessagesCount:0];break;
         case WeiboUnreadCountTypeFollower:[self setNewFollowersCount:0];break;
-        case WeiboUnreadCountTypeMention:[self setNewMentionsCount:0];break;
+        case WeiboUnreadCountTypeStatusMention:[self setNewStatusMentionsCount:0];break;
+        case WeiboUnreadCountTypeCommentMention:[self setNewCommentMentionsCount:0];break;
         case WeiboUnreadCountTypeComment:[self setNewCommentsCount:0];break;
         default:break;
     }
@@ -769,15 +807,15 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         return NO;
     }
     return topStatus.sid > mentionsStream.viewedMostRecentID;
-    //return !topStatus.wasSeen;
 }
-- (BOOL)hasFreshComments{
-    WeiboBaseStatus * topStatus = [commentsTimelineStream newestStatus];
-    if (!topStatus) {
+- (BOOL)hasFreshComments
+{
+    WeiboBaseStatus * topStatus = [commentsToMeStream newestStatus];
+    if (!topStatus)
+    {
         return NO;
     }
-    return topStatus.sid > commentsTimelineStream.viewedMostRecentID;
-    //return !topStatus.wasSeen;
+    return topStatus.sid > commentsToMeStream.viewedMostRecentID;
 }
 - (BOOL)hasFreshDirectMessages
 {
@@ -879,18 +917,30 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 
 - (NSInteger)newMentionsCount
 {
-    if (self.mentionsStream.statuses.count)
+    return self.newStatusMentionsCount + self.newCommentMentionsCount;
+}
+- (NSInteger)newStatusMentionsCount
+{
+    if (self.mentionsStream.hasData)
     {
         return self.mentionsStream.unreadCount;
     }
-    return _newMentionsCount;
+    return _newStatusMentionsCount;
+}
+- (NSInteger)newCommentMentionsCount
+{
+    if (self.commentMentionsStream.hasData)
+    {
+        return self.commentMentionsStream.unreadCount;
+    }
+    return _newCommentMentionsCount;
 }
 
 - (NSInteger)newCommentsCount
 {
-    if (self.commentsTimelineStream.statuses.count)
+    if (self.commentsToMeStream.hasData)
     {
-        return self.commentsTimelineStream.unreadCount;
+        return self.commentsToMeStream.unreadCount;
     }
     return _newCommentsCount;
 }

@@ -86,9 +86,10 @@ typedef int64_t WeiboNotificationOptions;
 enum {
     WeiboUnreadCountTypeStatus = 0,
 	WeiboUnreadCountTypeComment = 1,
-    WeiboUnreadCountTypeMention = 2,
+    WeiboUnreadCountTypeStatusMention = 2,
     WeiboUnreadCountTypeDirectMessage = 3,
-    WeiboUnreadCountTypeFollower = 4
+    WeiboUnreadCountTypeFollower = 4,
+    WeiboUnreadCountTypeCommentMention = 5
 };
 typedef NSUInteger WeiboUnreadCountType;
 

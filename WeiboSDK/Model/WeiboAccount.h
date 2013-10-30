@@ -11,7 +11,7 @@
 #import "WeiboComposition.h"
 
 @class WeiboUser, WeiboRequestError, WeiboAPI, WTCallback;
-@class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentsTimelineStream;
+@class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentMentionsStream, WeiboCommentsToMeStream, WeiboCommentsByMeStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
 @class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter;
@@ -31,7 +31,9 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
     WeiboUser * user;
     WeiboTimelineStream * timelineStream;
     WeiboMentionsStream * mentionsStream;
-    WeiboCommentsTimelineStream * commentsTimelineStream;
+    WeiboCommentMentionsStream * commentMentionsStream;
+    WeiboCommentsToMeStream * commentsToMeStream;
+    WeiboCommentsByMeStream * commentsByMeStream;
     WeiboFavoritesStream * favoritesStream;
     
     NSMutableArray *outbox;
@@ -78,10 +80,12 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 
 + (NSString *)keyChainAccountForUserID:(WeiboUserID)userID;
 
-- (WeiboTimelineStream *) timelineStream;
-- (WeiboMentionsStream *) mentionsStream;
-- (WeiboCommentsTimelineStream *) commentsTimelineStream;
-- (WeiboFavoritesStream *) favoritesStream;
+- (WeiboTimelineStream *)timelineStream;
+- (WeiboMentionsStream *)mentionsStream;
+- (WeiboCommentMentionsStream *)commentMentionsStream;
+- (WeiboCommentsByMeStream *)commentsByMeStream;
+- (WeiboCommentsToMeStream *)commentsToMeStream;
+- (WeiboFavoritesStream *)favoritesStream;
 
 #pragma mark -
 #pragma mark Core Methods
@@ -145,7 +149,9 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 - (void)refreshDirectMessages;
 
 @property (nonatomic, assign) NSInteger newStatusesCount;
-@property (nonatomic, assign) NSInteger newMentionsCount;
+@property (nonatomic, assign, readonly) NSInteger newMentionsCount;
+@property (nonatomic, assign) NSInteger newStatusMentionsCount;
+@property (nonatomic, assign) NSInteger newCommentMentionsCount;
 @property (nonatomic, assign) NSInteger newCommentsCount;
 @property (nonatomic, assign) NSInteger newDirectMessagesCount;
 @property (nonatomic, assign) NSInteger newFollowersCount;

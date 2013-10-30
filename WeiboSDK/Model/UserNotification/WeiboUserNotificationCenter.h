@@ -12,12 +12,14 @@
 
 typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
 {
-    WeiboUserNotificationItemTypeMention,
+    WeiboUserNotificationItemTypeStatusMention,
+    WeiboUserNotificationItemTypeCommentMention,
     WeiboUserNotificationItemTypeComment,
     WeiboUserNotificationItemTypeDirectMessage,
     WeiboUserNotificationItemTypeFollower,
     
-    WeiboUserNotificationItemTypeMentions,
+    WeiboUserNotificationItemTypeStatusMentions,
+    WeiboUserNotificationItemTypeCommentMentions,
     WeiboUserNotificationItemTypeComments,
     WeiboUserNotificationItemTypeDirectMessages,
 };
