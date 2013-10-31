@@ -34,4 +34,6 @@
 - (void)friendsForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor;
 - (void)friendsForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor;
 
+- (void)usersWithKeyword:(NSString *)keyword page:(NSInteger)page;
+
 @end

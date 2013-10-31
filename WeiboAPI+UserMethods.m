@@ -142,6 +142,10 @@
     });
 }
 
+- (WTCallback *)userlistResponseCallback
+{
+    return [self userlistCallbackWithCursor:0];
+}
 - (WTCallback *)userlistCallbackWithCursor:(WeiboUserID)cursor
 {
     return WTCallbackMake(self, @selector(userlistResponse:info:), nil);
@@ -176,5 +180,11 @@
     [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
 
+- (void)usersWithKeyword:(NSString *)keyword page:(NSInteger)page
+{
+    NSDictionary * params = @{@"q":keyword, @"page": @(page), @"count": @20};
+    
+    [self GET:@"search/users.json" parameters:params callback:[self userlistResponseCallback]];
+}
 
 @end
