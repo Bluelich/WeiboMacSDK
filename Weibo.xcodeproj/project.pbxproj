@@ -44,6 +44,10 @@
 		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
 		C638914A175840400005069A /* WeiboPicture.h in Headers */ = {isa = PBXBuildFile; fileRef = C63891481758403E0005069A /* WeiboPicture.h */; };
 		C638914B175840400005069A /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
+		C6422F7B18228FEE0036B7F3 /* WeiboSearchStatusesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6422F7918228FEE0036B7F3 /* WeiboSearchStatusesStream.h */; };
+		C6422F7C18228FEE0036B7F3 /* WeiboSearchStatusesStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6422F7A18228FEE0036B7F3 /* WeiboSearchStatusesStream.m */; };
+		C6422F7F182296560036B7F3 /* WeiboSearchUserList.h in Headers */ = {isa = PBXBuildFile; fileRef = C6422F7D182296560036B7F3 /* WeiboSearchUserList.h */; };
+		C6422F80182296560036B7F3 /* WeiboSearchUserList.m in Sources */ = {isa = PBXBuildFile; fileRef = C6422F7E182296560036B7F3 /* WeiboSearchUserList.m */; };
 		C643871717D7769F0097FB72 /* WeiboDirectMessageStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C643871517D7769F0097FB72 /* WeiboDirectMessageStream.h */; };
 		C643871817D7769F0097FB72 /* WeiboDirectMessageStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C643871617D7769F0097FB72 /* WeiboDirectMessageStream.m */; };
 		C643871B17D77BD00097FB72 /* WeiboSentDirectMessageStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C643871917D77BD00097FB72 /* WeiboSentDirectMessageStream.h */; };
@@ -234,6 +238,10 @@
 		C641275314F1EBF000D47925 /* WeiboUserStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboUserStream.m; path = WeiboSDK/Model/Stream/WeiboUserStream.m; sourceTree = "<group>"; };
 		C641275514F1EC2700D47925 /* WeiboUserTimelineStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboUserTimelineStream.h; path = WeiboSDK/Model/Stream/WeiboUserTimelineStream.h; sourceTree = "<group>"; };
 		C641275614F1EC2700D47925 /* WeiboUserTimelineStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboUserTimelineStream.m; path = WeiboSDK/Model/Stream/WeiboUserTimelineStream.m; sourceTree = "<group>"; };
+		C6422F7918228FEE0036B7F3 /* WeiboSearchStatusesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSearchStatusesStream.h; sourceTree = "<group>"; };
+		C6422F7A18228FEE0036B7F3 /* WeiboSearchStatusesStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSearchStatusesStream.m; sourceTree = "<group>"; };
+		C6422F7D182296560036B7F3 /* WeiboSearchUserList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSearchUserList.h; sourceTree = "<group>"; };
+		C6422F7E182296560036B7F3 /* WeiboSearchUserList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSearchUserList.m; sourceTree = "<group>"; };
 		C643871517D7769F0097FB72 /* WeiboDirectMessageStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboDirectMessageStream.h; sourceTree = "<group>"; };
 		C643871617D7769F0097FB72 /* WeiboDirectMessageStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboDirectMessageStream.m; sourceTree = "<group>"; };
 		C643871917D77BD00097FB72 /* WeiboSentDirectMessageStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSentDirectMessageStream.h; sourceTree = "<group>"; };
@@ -449,6 +457,8 @@
 				C60B51221745D6A200E99C07 /* WeiboUserList.m */,
 				C60B51261745D72D00E99C07 /* WeiboUserUserList.h */,
 				C60B51271745D72E00E99C07 /* WeiboUserUserList.m */,
+				C6422F7D182296560036B7F3 /* WeiboSearchUserList.h */,
+				C6422F7E182296560036B7F3 /* WeiboSearchUserList.m */,
 				C60B512B1745DB7D00E99C07 /* WeiboUserRelationshipUserList.h */,
 				C60B512C1745DB7E00E99C07 /* WeiboUserRelationshipUserList.m */,
 				C60B51301745DBAE00E99C07 /* WeiboUserFollowersList.h */,
@@ -562,6 +572,8 @@
 				C6E0BFA8180A65A900168C6B /* WeiboCommentConversationStream.m */,
 				C6094FAF1557E95A0038C7D2 /* WeiboTrendStatusesStream.h */,
 				C6094FB01557E95A0038C7D2 /* WeiboTrendStatusesStream.m */,
+				C6422F7918228FEE0036B7F3 /* WeiboSearchStatusesStream.h */,
+				C6422F7A18228FEE0036B7F3 /* WeiboSearchStatusesStream.m */,
 				C620027A17A4116E00283648 /* WeiboListStream.h */,
 				C620027B17A4116E00283648 /* WeiboListStream.m */,
 			);
@@ -874,7 +886,9 @@
 				C643871B17D77BD00097FB72 /* WeiboSentDirectMessageStream.h in Headers */,
 				C68B2F7C17ACD23A005CC80C /* WeiboStatusUserHighlighter.h in Headers */,
 				C6094FAC155766500038C7D2 /* WeiboStatusStreamFilterSimpleSearchFilter.h in Headers */,
+				C6422F7F182296560036B7F3 /* WeiboSearchUserList.h in Headers */,
 				C6A1662F18213FA0002C0B4B /* WeiboCommentMentionsStream.h in Headers */,
+				C6422F7B18228FEE0036B7F3 /* WeiboSearchStatusesStream.h in Headers */,
 				C6ED9CAE17D4D83A008AA2A3 /* WeiboDirectMessage.h in Headers */,
 				C6094FB11557E95A0038C7D2 /* WeiboTrendStatusesStream.h in Headers */,
 				C620027C17A4116E00283648 /* WeiboListStream.h in Headers */,
@@ -974,6 +988,7 @@
 				C6AA998217E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m in Sources */,
 				C6B8C51F1514D75D00935AC5 /* FMDatabasePool.m in Sources */,
 				C6B8C5201514D75D00935AC5 /* FMDatabaseQueue.m in Sources */,
+				C6422F80182296560036B7F3 /* WeiboSearchUserList.m in Sources */,
 				C6B8C5221514D75D00935AC5 /* FMResultSet.m in Sources */,
 				C6DC00DF150DC4C500E95B58 /* WeiboRepliesStream.m in Sources */,
 				C643872017D77BF20097FB72 /* WeiboReceivedDirectMessageStream.m in Sources */,
@@ -1001,6 +1016,7 @@
 				C6ED9D1817D630D3008AA2A3 /* WeiboDirectMessagesConversationManager.m in Sources */,
 				C643871C17D77BD00097FB72 /* WeiboSentDirectMessageStream.m in Sources */,
 				C669030517E427EC005A859D /* WeiboAccount+DirectMessage.m in Sources */,
+				C6422F7C18228FEE0036B7F3 /* WeiboSearchStatusesStream.m in Sources */,
 				C6647D3214ED638E00422998 /* ASIDataDecompressor.m in Sources */,
 				C6647D3414ED638E00422998 /* ASIDownloadCache.m in Sources */,
 				C6647D3614ED638E00422998 /* ASIFormDataRequest.m in Sources */,

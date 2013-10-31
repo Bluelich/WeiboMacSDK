@@ -10,7 +10,8 @@
 
 enum {
     WeiboAutocompleteTypeUser       = 1,
-    WeiboAutocompleteTypeHashtag    = 2
+    WeiboAutocompleteTypeHashtag    = 2,
+    WeiboAutocompleteTypeCustom     = 99,
 };
 typedef NSInteger WeiboAutocompleteType;
 

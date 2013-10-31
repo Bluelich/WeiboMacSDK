@@ -22,6 +22,6 @@
     NSString *_derivedSearchableText;
 }
 
-
+@property (nonatomic, assign) NSInteger tag;
 
 @end
