@@ -174,6 +174,19 @@
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:keyword,@"q",nil];
     [self statusesRequest:@"search/topics.json" parameters:params sinceID:0 maxID:0 page:page count:count callback:callback];
 }
+- (void)statusesWithKeyword:(NSString *)keyword startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime count:(NSUInteger)count
+{
+    WTCallback * callback = [self statusesResponseCallback];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params setObject:keyword forKey:@"q"];
+    
+    if (startTime) [params setObject:@(startTime) forKey:@"starttime"];
+    if (endTime) [params setObject:@(endTime) forKey:@"endtime"];
+    if (count) [params setObject:@(count) forKey:@"count"];
+    
+    [self GET:@"search/statuses.json" parameters:params callback:callback];
+}
+
 - (void)trendsInHourly{
     WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(trendsResponse:info:) info:nil];
     [self GET:@"trends/hourly.json" parameters:nil callback:callback];

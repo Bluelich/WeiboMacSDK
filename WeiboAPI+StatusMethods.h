@@ -37,9 +37,11 @@
 - (void)unfavoriteStatusID:(WeiboStatusID)statusID;
 
 #pragma mark -
-#pragma mark Trends
+#pragma mark Search
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count;
 - (void)trendsInHourly;
+- (void)statusesWithKeyword:(NSString *)keyword startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime count:(NSUInteger)count;
+
 #pragma mark -
 #pragma mark Lists
 - (void)lists;
