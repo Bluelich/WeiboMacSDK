@@ -33,7 +33,7 @@
     {
         loadedPage++;
     }
-    loadedPage = MIN(1, loadedPage);
+    loadedPage = MAX(1, loadedPage);
     
     [super addStatuses:newStatuses withType:type];
 }
