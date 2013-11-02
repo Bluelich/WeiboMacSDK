@@ -50,6 +50,8 @@ ivar = newVar;}
 [ivar release];\
 ivar = newVar;
 
+#define BETWEEN(min, x, max) MIN(MAX(min, x), max)
+
 static void dispatch_next(dispatch_block_t block)
 {
     dispatch_async(dispatch_get_current_queue(), block);
