@@ -500,6 +500,13 @@
 			name = UserStream;
 			sourceTree = "<group>";
 		};
+		C6422FA81824DC450036B7F3 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		C68B2F7117ACD1CA005CC80C /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -851,6 +858,7 @@
 				C6DB909A14E4EF52001DE9F5 /* API */,
 				C6DB909614E4EE7C001DE9F5 /* Model */,
 				C6DB908C14E4E139001DE9F5 /* Utilities */,
+				C6422FA81824DC450036B7F3 /* Managers */,
 				C6DB909014E4EE29001DE9F5 /* Weibo.h */,
 				C6DB909114E4EE29001DE9F5 /* Weibo.m */,
 				C617C90414EB56C600CC75F5 /* WeiboConstants.h */,

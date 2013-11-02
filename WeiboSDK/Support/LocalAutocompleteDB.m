@@ -8,6 +8,7 @@
 
 #import "LocalAutocompleteDB.h"
 #import "FMDatabase.h"
+#import "FMDatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 #import "WTFoundationUtilities.h"
 #import "WTFileManager.h"
@@ -15,11 +16,18 @@
 #import "WeiboUser.h"
 #import "WeiboBaseStatus.h"
 #import "sqlite3.h"
+#import "WTCallback.h"
+#import "WeiboAPI+UserMethods.h"
 
 static LocalAutocompleteDB * sharedDB = nil;
 
+@interface LocalAutocompleteDB ()
+
+@property (nonatomic, retain) FMDatabaseQueue * dbQueue;
+
+@end
+
 @implementation LocalAutocompleteDB
-@synthesize db;
 
 + (NSString *)databasePath{
     NSString * databaseCacheDirectory = [WTFileManager databaseCacheDirectory];
@@ -67,66 +75,125 @@ static LocalAutocompleteDB * sharedDB = nil;
 
 #pragma mark -
 #pragma mark Database Life Cycle
-- (id)init{
+
+- (void)dealloc
+{
+    [self close];
+    [_dbQueue release], _dbQueue = nil;
+    
+    [super dealloc];
+}
+- (void)close
+{
+    [self.dbQueue close];
+}
+
+- (id)init
+{
     return [self initWithPath:[[self class] databasePath]];
 }
-- (id)initWithPath:(NSString *)path{
-    if (self = [super init]) {
-        db = [[FMDatabase databaseWithPath:path] retain];
-        if (![db open]) {
-            [db release];
-            return nil;
-        }
+- (id)initWithPath:(NSString *)path
+{
+    if (self = [super init])
+    {
+        self.dbQueue = [FMDatabaseQueue databaseQueueWithPath:path];
     }
     return self;
 }
-- (void)dealloc{
-    [self close];
-    [super dealloc];
-}
-- (void)close{
-    [db close];
-}
-- (void)loadSchema{
+- (void)loadSchema
+{
     NSString * filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:@"/autocomplete_schema.sql"];
     NSString * schema = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    sqlite3 * sqliteDB = [db sqliteHandle];
-    sqlite3_exec(sqliteDB, [schema UTF8String], NULL, NULL, NULL);
-    [schema release];
+    
+    dispatch_async_background(^{
+        [self.dbQueue inDatabase:^(FMDatabase *db) {
+            sqlite3 * sqliteDB = [db sqliteHandle];
+            sqlite3_exec(sqliteDB, [schema UTF8String], NULL, NULL, NULL);
+            [schema release];
+        }];
+    });
 }
 
 #pragma mark - Accessor
-- (BOOL)isReady{
-    return [db tableExists:@"names"];
+- (BOOL)isReady
+{
+    __block BOOL result = NO;
+    
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        
+        result = [db tableExists:@"names"];
+        
+    }];
+
+    return result;
 }
 
 #pragma mark - Data Fetching
-- (void)seedAccount:(WeiboAccount *)account{
+
+- (NSString *)accountSeedUserDefaultsKeyForUserID:(WeiboUserID)userID
+{
+    return [NSString stringWithFormat:@"friends_seeded_%lld", userID];
 }
-- (void)didReceiveFriends:(id)response info:(id)info{
+
+- (BOOL)accountSeeded:(WeiboAccount *)account
+{
+    NSString * key = [self accountSeedUserDefaultsKeyForUserID:account.user.userID];
+    
+    return [[NSUserDefaults standardUserDefaults] boolForKey:key];
 }
-- (void)loadFromDisk{
+- (void)setSeededForAccount:(WeiboAccount *)account
+{
+    NSString * key = [self accountSeedUserDefaultsKeyForUserID:account.user.userID];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+}
+
+- (void)seedAccount:(WeiboAccount *)account
+{
+    WTCallback * callback = WTCallbackMake(self, @selector(didReceiveFriends:info:), account);
+    WeiboAPI * api = [account authenticatedRequest:callback];
+    
+    [api bilateralFriendsForUserID:account.user.userID count:200 page:1];
+}
+- (void)didReceiveFriends:(id)responseObject info:(id)info
+{
+    if ([responseObject isKindOfClass:[WeiboRequestError class]])
+    {
+        
+    }
+    else if ([responseObject isKindOfClass:[NSDictionary class]])
+    {
+        [self setSeededForAccount:info];
+        [self addUsers:responseObject[@"users"]];
+    }
+}
+- (void)loadFromDisk
+{
     
 }
-- (void)saveToDisk{
+- (void)saveToDisk
+{
     
 }
 
 #pragma mark - 
 #pragma mark Data Access
-- (void)beginTransaction
-{
-    [db beginTransaction];
-}
-- (void)endTransaction
-{
-    [db commit];
-}
+
 - (void)addUser:(WeiboUser *)user
 {
-    [self addUserID:user.userID username:user.screenName avatarURL:user.profileImageUrl];
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        
+        [self _addUser:user inDatabase:db];
+        
+    }];
 }
-- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url
+
+- (void)_addUser:(WeiboUser *)user inDatabase:(FMDatabase *)db
+{
+    [self addUserID:user.userID username:user.screenName avatarURL:user.profileImageUrl database:db];
+}
+
+- (void)addUserID:(WeiboUserID)userID username:(NSString *)screenname avatarURL:(NSString *)url database:(FMDatabase *)db
 {
     NSString * ID = [NSString stringWithFormat:@"%lld",userID];
     NSNumber * priority = [NSNumber numberWithInteger:1];
@@ -135,23 +202,29 @@ static LocalAutocompleteDB * sharedDB = nil;
     NSString * avatar_url = url;
     NSNumber * updated_at = [NSNumber numberWithInteger:[[NSDate date] 
                                                         timeIntervalSince1970]];
+    
     [db executeUpdate:@"insert or replace into names values (?,?,?,?,?,?)",ID,priority,username,fullname,avatar_url,updated_at];
 }
 - (void)addUsers:(NSArray *)users
 {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul);
-    dispatch_async(queue, ^{
-        NSMutableDictionary * userDict = [NSMutableDictionary dictionary];
-        [self beginTransaction];
-        for (WeiboUser * user in users)
-        {
-            if (user.screenName && ![userDict valueForKey:user.screenName])
+    if (!users.count) return;
+    
+    dispatch_async_low(^{
+        [self.dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+            
+            for (WeiboUser * user in users)
             {
-                [userDict setValue:@"" forKey:user.screenName];
-                [self addUser:user];
+                NSMutableSet * derepeater = [NSMutableSet set];
+
+                if (user.screenName && ![derepeater containsObject:user.screenName])
+                {
+                    [derepeater addObject:user.screenName];
+                    
+                    [self _addUser:user inDatabase:db];
+                }
             }
-        }
-        [self endTransaction];
+            
+        }];
     });
 }
 - (NSString *)stylizedPinyinFromString:(NSString *)string
@@ -193,24 +266,32 @@ static LocalAutocompleteDB * sharedDB = nil;
 }
 - (NSArray *)resultsForPartialText:(NSString *)text type:(WeiboAutocompleteType)type
 {
-    if (![self isReady]) {
+    if (![self isReady])
+    {
         return nil;
     }
-    NSMutableArray * resultArray = [NSMutableArray array];
-    NSString * pattern = [[text stringByAppendingString:@"%"] lowercaseString];
-    FMResultSet *rs = [db executeQuery:@"select * from names where id like ? or full_name like ? or username like ? order by full_name asc",pattern,pattern,pattern];
-    while ([rs next]) {
-        WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
-        [item setPriority:[rs intForColumn:@"priority"]];
-        [item setAutocompleteText:[rs stringForColumn:@"username"]];
-        [item setAutocompleteSubtext:[rs stringForColumn:@"full_name"]];
-        NSURL * avatarURL = [NSURL URLWithString:[rs stringForColumn:@"avatar_url"]];
-        [item setAutocompleteImageURL:avatarURL];
-        [item setItemID:[rs stringForColumn:@"id"]];
-        [resultArray addObject:item];
-        [item release];
-    }
-    [rs close];
+    
+    __block NSMutableArray * resultArray = [NSMutableArray array];
+    
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        
+        NSString * pattern = [[text stringByAppendingString:@"%"] lowercaseString];
+        FMResultSet *rs = [db executeQuery:@"select * from names where id like ? or full_name like ? or username like ? order by full_name asc",pattern,pattern,pattern];
+        while ([rs next]) {
+            WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
+            [item setPriority:[rs intForColumn:@"priority"]];
+            [item setAutocompleteText:[rs stringForColumn:@"username"]];
+            [item setAutocompleteSubtext:[rs stringForColumn:@"full_name"]];
+            NSURL * avatarURL = [NSURL URLWithString:[rs stringForColumn:@"avatar_url"]];
+            [item setAutocompleteImageURL:avatarURL];
+            [item setItemID:[rs stringForColumn:@"id"]];
+            [resultArray addObject:item];
+            [item release];
+        }
+        [rs close];
+        
+    }];
+    
     return [NSArray arrayWithArray:resultArray];
 }
 

@@ -14,6 +14,7 @@
 #import "WeiboAPI+UserMethods.h"
 #import "WTCallback.h"
 #import "SSKeychain.h"
+#import "LocalAutocompleteDB.h"
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
 
@@ -247,6 +248,12 @@ static Weibo * _sharedWeibo = nil;
         if (post)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification object:self];
+        }
+        
+        LocalAutocompleteDB * db = [LocalAutocompleteDB sharedAutocompleteDB];
+        if (![db accountSeeded:aAccount])
+        {
+            [db seedAccount:aAccount];
         }
     }
 }
