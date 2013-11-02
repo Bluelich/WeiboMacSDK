@@ -179,6 +179,14 @@
                               @"count":@"200"};
     [self GET:@"friendships/friends.json" parameters:params callback:[self userlistCallbackWithCursor:cursor]];
 }
+- (void)bilateralFriendsForUserID:(WeiboUserID)userID count:(NSInteger)count page:(NSInteger)page
+{
+    count = BETWEEN(0, count, 200);
+    page  = MAX(1, page);
+    NSDictionary * params = @{@"uid": @(userID), @"count": @(count), @"page": @(page)};
+    
+    [self GET:@"friendships/friends/bilateral.json" parameters:params callback:[self userlistResponseCallback]];
+}
 
 - (void)usersWithKeyword:(NSString *)keyword page:(NSInteger)page
 {

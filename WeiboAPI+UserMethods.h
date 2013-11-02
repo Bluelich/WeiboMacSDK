@@ -33,6 +33,7 @@
 - (void)followersForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor;
 - (void)friendsForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor;
 - (void)friendsForUserID:(WeiboUserID)userid cursor:(WeiboUserID)cursor;
+- (void)bilateralFriendsForUserID:(WeiboUserID)userID count:(NSInteger)count page:(NSInteger)page;
 
 - (void)usersWithKeyword:(NSString *)keyword page:(NSInteger)page;
 
