@@ -27,7 +27,8 @@
     return [[[self alloc] initWithURL:url] autorelease];
 }
 
-- (id)initWithURL:(NSURL *)newURL{
+- (id)initWithURL:(NSURL *)newURL
+{
     if ((self = [super initWithURL:newURL])) {
         [self setDelegate:self];
         [self setValidatesSecureCertificate:NO];
@@ -45,7 +46,8 @@
     return responseEncoding;
 }
 
-- (void)prepareAuthrize{
+- (void)prepareAuthrize
+{
     if ([[self requestMethod] isEqualToString:@"GET"]) {
         NSURL * urlWithQuery = [NSURL URLWithString:[self _parameterStringByDictionary:parameters] 
                                       relativeToURL:[self url]];
@@ -59,12 +61,14 @@
         }
     }
 }
-- (void)v1_startAuthrizedRequest{
+- (void)v1_startAuthrizedRequest
+{
     [self prepareAuthrize];
     [self addRequestHeader:@"Authorization" value:[self v1_oAuthAuthorizationHeader]];
     [self startAsynchronous];
 }
-- (void)startAuthrizedRequest{
+- (void)startAuthrizedRequest
+{
     // Two ways to complete OAuth.
     /*
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithDictionary:self.parameters];
@@ -134,36 +138,49 @@
 	return [result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (void)postFailWithError:(NSError *)aError{
+- (void)postFailWithError:(NSError *)aError
+{
     NSLog(@"error response:%@",[self responseString]);
     [responseCallback invoke:aError];
 }
 
 #pragma mark -
 #pragma mark Request delegates
-- (void)requestFinished:(ASIHTTPRequest *)request{
-    int statusCode = [self responseStatusCode];
-    if (statusCode == 200) {
-        NSString * responseString = [self responseString];
-        [responseCallback invoke:responseString];
-    }else{
-        WeiboRequestError * requestError = [WeiboRequestError 
-                                            errorWithResponseString:[self responseString] statusCode:statusCode];
-        [self postFailWithError:requestError];
+
+- (void)requestError:(ASIHTTPRequest *)request
+{
+    WeiboRequestError * requestError = [WeiboRequestError
+                                        errorWithResponseString:[self responseString] statusCode:self.responseStatusCode];
+    [self postFailWithError:requestError];
+}
+- (void)requestSuccess:(ASIHTTPRequest *)request
+{
+    NSString * responseString = [self responseString];
+    [responseCallback invoke:responseString];
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)aRequest
+{
+    if (responseStatusCode == 200)
+    {
+        [self requestSuccess:aRequest];
+    }
+    else
+    {
+        [self requestError:aRequest];
     }
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)aRequest{
-    WeiboRequestError * requestError = [WeiboRequestError 
-                                        errorWithResponseString:[self responseString] statusCode:self.responseStatusCode];
-    [self postFailWithError:requestError];
-    
-    // In weibo api v2, error response has currect status code.
-    // For more information, use WeiboRequestError instead.
-    /*
-    WeiboRequestError * requestError = [WeiboRequestError errorWithHttpRequestError:[self error]];
-    [self postFailWithError:requestError];
-     */
+- (void)requestFailed:(ASIHTTPRequest *)aRequest
+{
+    if (responseStatusCode == 200)
+    {
+        [self requestSuccess:aRequest];
+    }
+    else
+    {
+        [self requestError:aRequest];
+    }
 }
 
 @end

@@ -83,7 +83,8 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     [super dealloc];
 }
 
-- (NSString *)description{
+- (NSString *)description
+{
     NSMutableString * string = [NSMutableString string];
     [string appendFormat:@"There is a error in %@",self.domain];
     if (requestURLString) {
