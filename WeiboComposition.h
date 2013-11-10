@@ -36,4 +36,7 @@ typedef NSInteger WeiboCompositionType;
 
 - (BOOL)isDirectMessage;
 
+- (BOOL)canPostImage;
+- (BOOL)requiresUserInput;
+
 @end
