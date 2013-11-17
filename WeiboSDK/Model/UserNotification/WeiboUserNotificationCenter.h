@@ -12,6 +12,8 @@
 
 typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
 {
+    WeiboUserNotificationItemTypeStatus,
+    
     WeiboUserNotificationItemTypeStatusMention,
     WeiboUserNotificationItemTypeCommentMention,
     WeiboUserNotificationItemTypeComment,
@@ -41,6 +43,7 @@ extern NSString * const WeiboUserNotificationCenterUserInfoAccountKey;
 // call this when your appDelegate's applicationDidFinishLaunching: get called
 - (void)applicationLaunchingFinishedWithNotification:(NSNotification *)notification;
 
+- (void)scheduleNotificationForStatuses:(NSArray *)statuses forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForMentions:(NSArray *)mentions forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForComments:(NSArray *)comments forAccount:(WeiboAccount *)account;
 - (void)scheduleNotificationForDirectMessages:(NSArray *)messages forAccount:(WeiboAccount *)account;

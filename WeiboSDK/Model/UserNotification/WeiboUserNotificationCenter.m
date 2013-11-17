@@ -32,6 +32,11 @@ NSString * const WeiboUserNotificationCenterUserInfoAccountKey = @"WeiboUserNoti
 
 @implementation WeiboUserNotificationCenter
 
+- (void)dealloc
+{
+    [super dealloc];
+}
+
 static BOOL AtLeastMountainLion = NO;
 static BOOL AtLeaseMavericks    = NO;
 
@@ -103,9 +108,53 @@ static BOOL AtLeaseMavericks    = NO;
 
 - (void)_scheduleUserNotification:(NSUserNotification *)notification
 {
-    notification.soundName = NSUserNotificationDefaultSoundName;
+    [self _scheduleUserNotification:notification playSound:YES];
+}
+- (void)_scheduleUserNotification:(NSUserNotification *)notification playSound:(BOOL)playSound
+{
+    if (playSound)
+    {
+        notification.soundName = NSUserNotificationDefaultSoundName;
+    }
     
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
+- (void)scheduleNotificationForStatuses:(NSArray *)statuses forAccount:(WeiboAccount *)account
+{
+    NSMutableArray * result = [NSMutableArray array];
+    
+    WeiboUser * accountUser = account.user;
+    
+    for (WeiboBaseStatus * status in statuses)
+    {
+        if ([accountUser isEqual:status.user]) continue;
+        if (status.quotedBaseStatus) continue;
+        if (!status.user.followMe) continue;
+        
+        [result addObject:status];
+    }
+    
+    if (YES)
+    {
+        for (WeiboBaseStatus * status in [result reverseObjectEnumerator])
+        {
+            NSUserNotification * notification = [[NSUserNotification alloc] init];
+            
+            notification.title = status.user.screenName;
+            notification.informativeText = status.text;
+            
+            NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+            
+            [userInfo setObject:@(WeiboUserNotificationItemTypeStatus) forKey:WeiboUserNotificationUserInfoItemTypeKey];
+            [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
+            [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
+            
+            [notification setUserInfo:userInfo];
+            
+            [self _scheduleUserNotification:notification playSound:NO];
+        }
+    }
 }
 
 - (void)scheduleNotificationForMentions:(NSArray *)mentions forAccount:(WeiboAccount *)account

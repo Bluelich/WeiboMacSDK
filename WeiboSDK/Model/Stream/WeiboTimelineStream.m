@@ -9,6 +9,7 @@
 #import "WeiboTimelineStream.h"
 #import "WeiboAccount.h"
 #import "WeiboAPI+StatusMethods.h"
+#import "WeiboUserNotificationCenter.h"
 
 @implementation WeiboTimelineStream
 
@@ -35,6 +36,16 @@
 - (BOOL)appliesStatusFilter
 {
     return YES;
+}
+
+- (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
+{
+    [super noticeDidReceiveNewStatuses:newStatuses withAddingType:type];
+    
+    if (type == WeiboStatusesAddingTypePrepend)
+    {
+        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForStatuses:newStatuses forAccount:self.account];
+    }
 }
 
 @end
