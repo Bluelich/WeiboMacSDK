@@ -34,6 +34,7 @@
 
 #pragma mark - 
 #pragma mark Data Access
+- (void)addUser:(WeiboUser *)user;
 - (void)addUsers:(NSArray *)users;
 - (void)assimilateFromStatuses:(NSArray *)statuses;
 
