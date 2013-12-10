@@ -41,6 +41,19 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
         
         [_lists removeAllObjects];
         [_lists addObjectsFromArray:response];
+        
+        {
+            // Add Special Lists
+            WeiboList * friendCircleList = [[WeiboList new] autorelease];
+            
+            friendCircleList.listID = WeiboDummyListIDFirendCircle;
+            friendCircleList.name = @"好友圈";
+            friendCircleList.description = @"最新好友动态";
+            friendCircleList.memberCount = NSNotFound;
+            
+            [_lists insertObject:friendCircleList atIndex:0];
+        }
+        
         [_lists makeObjectsPerformSelector:@selector(setAccount:) withObject:self];
     }
     else if ([response isKindOfClass:[WeiboRequestError class]])
