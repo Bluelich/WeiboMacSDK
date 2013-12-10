@@ -432,6 +432,8 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     }
     else
     {
+        _loadOlderSuccessTimes++;
+        
         [self setLoadOlderError:nil];
         [self addStatuses:response withType:WeiboStatusesAddingTypeAppend];
     }

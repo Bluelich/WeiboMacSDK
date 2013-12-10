@@ -47,27 +47,28 @@
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     [self statusesRequest:@"statuses/friends_timeline.json" parameters:nil sinceID:since maxID:max count:count];
 }
-- (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
-    [self statusesRequest:@"statuses/mentions.json" parameters:nil sinceID:since maxID:max count:count];
+- (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count{
+    WTCallback * callback = [self statusesResponseCallback];
+    [self statusesRequest:@"statuses/mentions.json" parameters:nil sinceID:since maxID:max page:page count:count callback:callback];
 }
-- (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+- (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count
 {
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
-    [self statusesRequest:@"comments/mentions.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+    [self statusesRequest:@"comments/mentions.json" parameters:nil sinceID:since maxID:max page:page count:count callback:callback];
 }
-- (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
+- (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count{
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
-    [self statusesRequest:@"comments/timeline.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+    [self statusesRequest:@"comments/timeline.json" parameters:nil sinceID:since maxID:max page:page count:count callback:callback];
 }
-- (void)commentsToMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+- (void)commentsToMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count
 {
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
-    [self statusesRequest:@"comments/to_me.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+    [self statusesRequest:@"comments/to_me.json" parameters:nil sinceID:since maxID:max page:page count:count callback:callback];
 }
-- (void)commentsByMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+- (void)commentsByMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count
 {
     WTCallback * callback = WTCallbackMake(self, @selector(commentsResponse:info:), nil);
-    [self statusesRequest:@"comments/by_me.json" parameters:nil sinceID:since maxID:max count:count callback:callback];
+    [self statusesRequest:@"comments/by_me.json" parameters:nil sinceID:since maxID:max page:page count:count callback:callback];
 }
 
 - (void)userTimelineForUserID:(WeiboUserID)uid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
@@ -243,10 +244,22 @@
 
 - (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSInteger)count page:(NSInteger)page
 {
-    WTCallback * callback = [self statusesResponseCallback];
-    NSDictionary * params = @{@"list_id" : listID};
-    [self statusesRequest:@"friendships/groups/timeline.json" parameters:params sinceID:sinceID maxID:maxID page:page count:count callback:callback];
+    if ([listID isEqual:WeiboDummyListIDFirendCircle])
+    {
+        [self friendCircleTimelineSinceID:sinceID maxID:maxID count:count];
+    }
+    else
+    {
+        WTCallback * callback = [self statusesResponseCallback];
+        NSDictionary * params = @{@"list_id" : listID};
+        [self statusesRequest:@"friendships/groups/timeline.json" parameters:params sinceID:sinceID maxID:maxID page:page count:count callback:callback];
+    }
 }
+- (void)friendCircleTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+{
+    [self statusesRequest:@"statuses/bilateral_timeline.json" parameters:@{@"feature": @"1"} sinceID:since maxID:max count:count];
+}
+
 
 #pragma mark -
 #pragma mark Weibo Access

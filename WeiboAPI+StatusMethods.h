@@ -8,6 +8,8 @@
 
 #import "WeiboAPI.h"
 
+#define WeiboDummyListIDFirendCircle @"__friend_circle__"
+
 @interface WeiboAPI (StatusMethods)
 
 #pragma mark -
@@ -16,12 +18,11 @@
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 - (WTCallback *)statusesResponseCallback;
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)commentsToMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (void)commentsByMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-
+- (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
+- (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
+- (void)commentsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
+- (void)commentsToMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
+- (void)commentsByMeSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
 
 - (void)userTimelineForUserID:(WeiboUserID)uid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 - (void)userTimelineForUsername:(NSString *)screenname sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
@@ -46,6 +47,7 @@
 #pragma mark Lists
 - (void)lists;
 - (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSInteger)count page:(NSInteger)page;
+- (void)friendCircleTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 
 #pragma mark -
 #pragma mark Weibo Access

@@ -19,12 +19,16 @@
 - (void)_loadNewer{
     WTCallback * callback = [self loadNewerResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
-    [api mentionsSinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20];
+    [api mentionsSinceID:[self newestStatusID] maxID:0 page:1 count:100];
 }
 - (void)_loadOlder{
     WTCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
-    [api mentionsSinceID:0 maxID:[self oldestStatusID]-1 count:100];
+    [api mentionsSinceID:0 maxID:0 page:self.loadOlderSuccessTimes + 2 count:100];
+}
+- (NSUInteger)maxCount
+{
+    return 3000;
 }
 - (NSUInteger)minStatusesToConsiderBeingGap{
     return NSUIntegerMax;
