@@ -13,7 +13,7 @@
 @class WeiboUser, WeiboRequestError, WeiboAPI, WTCallback;
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentMentionsStream, WeiboCommentsToMeStream, WeiboCommentsByMeStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
-@class WeiboRepliesStream, WeiboStatus, WeiboBaseStatus;
+@class WeiboRepliesStream, WeiboRepostsStream, WeiboStatus, WeiboBaseStatus;
 @class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter;
 
 @protocol WeiboAccountDelegate;
@@ -129,6 +129,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 
 #pragma mark - Others
 - (WeiboRepliesStream *)repliesStreamForStatus:(WeiboStatus *)status;
+- (WeiboRepostsStream *)repostsStreamForStatus:(WeiboStatus *)status;
 
 - (void)toggleFavoriteOfStatus:(WeiboStatus *)status;
 

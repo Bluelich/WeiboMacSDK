@@ -124,6 +124,8 @@
 
 - (WeiboStatus *)_initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
+        
+        self.treatRetweetedStatusAsQuoted = YES;
         self.sid = [dic longlongForKey:@"id" defaultValue:-1];
 		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
 		self.text = [dic stringForKey:@"text" defaultValue:@""];
@@ -223,7 +225,11 @@
 
 - (WeiboBaseStatus *)quotedBaseStatus
 {
-    return self.retweetedStatus;
+    if (self.treatRetweetedStatusAsQuoted)
+    {
+        return self.retweetedStatus;
+    }
+    return nil;
 }
 
 + (NSString *)base62FromDouble:(double)value

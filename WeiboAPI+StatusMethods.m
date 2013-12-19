@@ -90,6 +90,11 @@
     NSDictionary * params = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",sid] forKey:@"id"];
     [self statusesRequest:@"comments/show.json" parameters:params sinceID:since maxID:max page:1 count:count callback:callback];
 }
+- (void)repostsForStatusID:(WeiboStatusID)sid sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count
+{
+    NSDictionary * params = @{@"id": @(sid)};
+    [self statusesRequest:@"statuses/repost_timeline.json" parameters:params sinceID:since maxID:max count:count];
+}
 - (void)commentConversationWithCommentID:(WeiboStatusID)cid
 {
     WeiboUnimplementedMethod

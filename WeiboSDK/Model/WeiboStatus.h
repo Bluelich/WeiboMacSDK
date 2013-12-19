@@ -35,6 +35,8 @@
 @property (retain, nonatomic) NSString * sourceUrl;
 @property (retain, nonatomic, readonly) NSURL * webLink;
 
+@property (nonatomic, assign) BOOL treatRetweetedStatusAsQuoted;
+
 #pragma mark -
 #pragma mark Parse Methods
 + (id)statusWithDictionary:(NSDictionary *)dic;

@@ -26,6 +26,7 @@
 #import "WeiboFavoritesStream.h"
 #import "WeiboUserTimelineStream.h"
 #import "WeiboRepliesStream.h"
+#import "WeiboRepostsStream.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
@@ -729,6 +730,13 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [stream setBaseStatus:status];
     [stream setAccount:self];
     return [stream autorelease];
+}
+- (WeiboRepostsStream *)repostsStreamForStatus:(WeiboStatus *)status
+{
+    WeiboRepostsStream * stream = [[WeiboRepostsStream new] autorelease];
+    [stream setBaseStatus:status];
+    [stream setAccount:self];
+    return stream;
 }
 
 - (void)postStatusFavoriteStateChangedNotification:(WeiboStatus *)status

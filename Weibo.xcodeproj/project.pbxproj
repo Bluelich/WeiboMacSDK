@@ -123,6 +123,8 @@
 		C6AA998217E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AA998017E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m */; };
 		C6AA998517E5E11D005F90E4 /* WeiboDirectMessageConversationList.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AA998317E5E11C005F90E4 /* WeiboDirectMessageConversationList.h */; };
 		C6AA998617E5E11D005F90E4 /* WeiboDirectMessageConversationList.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AA998417E5E11D005F90E4 /* WeiboDirectMessageConversationList.m */; };
+		C6B043FA18632B5400318F69 /* WeiboRepostsStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6B043F818632B5400318F69 /* WeiboRepostsStream.h */; };
+		C6B043FB18632B5400318F69 /* WeiboRepostsStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B043F918632B5400318F69 /* WeiboRepostsStream.m */; };
 		C6B4DC1514ED347C0032A8CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
 		C6B762D917F12F0000008837 /* WeiboAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C6B762D817F12F0000008837 /* WeiboAppInfo.h */; };
 		C6B8C51D1514D75D00935AC5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C6011AFE15147B2500A0A49C /* FMDatabase.m */; };
@@ -292,6 +294,8 @@
 		C6AA998017E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboConversationDirectMessageStream.m; sourceTree = "<group>"; };
 		C6AA998317E5E11C005F90E4 /* WeiboDirectMessageConversationList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboDirectMessageConversationList.h; sourceTree = "<group>"; };
 		C6AA998417E5E11D005F90E4 /* WeiboDirectMessageConversationList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboDirectMessageConversationList.m; sourceTree = "<group>"; };
+		C6B043F818632B5400318F69 /* WeiboRepostsStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboRepostsStream.h; path = WeiboSDK/Model/Stream/WeiboRepostsStream.h; sourceTree = "<group>"; };
+		C6B043F918632B5400318F69 /* WeiboRepostsStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboRepostsStream.m; path = WeiboSDK/Model/Stream/WeiboRepostsStream.m; sourceTree = "<group>"; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
 		C6B762D817F12F0000008837 /* WeiboAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAppInfo.h; sourceTree = "<group>"; };
@@ -575,6 +579,8 @@
 				C6A1663618214178002C0B4B /* WeiboCommentsByMeStream.m */,
 				C6DC00D9150DADC700E95B58 /* WeiboRepliesStream.h */,
 				C6DC00DA150DADC700E95B58 /* WeiboRepliesStream.m */,
+				C6B043F818632B5400318F69 /* WeiboRepostsStream.h */,
+				C6B043F918632B5400318F69 /* WeiboRepostsStream.m */,
 				C6E0BFA7180A65A900168C6B /* WeiboCommentConversationStream.h */,
 				C6E0BFA8180A65A900168C6B /* WeiboCommentConversationStream.m */,
 				C6094FAF1557E95A0038C7D2 /* WeiboTrendStatusesStream.h */,
@@ -884,6 +890,7 @@
 				C6ED9D1717D630D3008AA2A3 /* WeiboDirectMessagesConversationManager.h in Headers */,
 				C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */,
 				C66E57961806F59F00C80A99 /* WeiboDummyStatus.h in Headers */,
+				C6B043FA18632B5400318F69 /* WeiboRepostsStream.h in Headers */,
 				C68B2F7417ACD1FA005CC80C /* WeiboStatusKeywordFilter.h in Headers */,
 				C620028017A42BB800283648 /* WeiboAccount+Lists.h in Headers */,
 				C6B8C52D1514DC1D00935AC5 /* WTAutoCompleteResultItem.h in Headers */,
@@ -1050,6 +1057,7 @@
 				C6647D5B14ED638E00422998 /* WTOASingnaturer.m in Sources */,
 				C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */,
 				C6647D6114ED638E00422998 /* NSString+URLEncoding.m in Sources */,
+				C6B043FB18632B5400318F69 /* WeiboRepostsStream.m in Sources */,
 				C6647D6514ED638E00422998 /* NSURL+Base.m in Sources */,
 				C6647D6914ED638E00422998 /* OAToken.m in Sources */,
 				C620027D17A4116E00283648 /* WeiboListStream.m in Sources */,
