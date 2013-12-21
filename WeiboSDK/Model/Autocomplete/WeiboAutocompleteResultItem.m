@@ -24,8 +24,11 @@
     [_derivedSearchableText release];
     [super dealloc];
 }
-- (BOOL)isEqual:(id)object{
-    return NO;
+- (BOOL)isEqual:(WeiboAutocompleteResultItem *)object
+{
+    if (self == object) return YES;
+    if (![object isKindOfClass:[WeiboAutocompleteResultItem class]]) return NO;
+    return [self.itemID isEqual:object.itemID];
 }
 
 - (NSString *)description{
