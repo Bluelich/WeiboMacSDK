@@ -40,8 +40,24 @@
     ? defaultValue : [[self objectForKey:key] longLongValue];
 }
 - (NSString *)stringForKey:(NSString *)key defaultValue:(NSString *)defaultValue{
-    return [self objectForKey:key] == nil || [self objectForKey:key] == [NSNull null] 
-    ? defaultValue : [self objectForKey:key];
+    
+    if ([self objectForKey:key] == nil || [self objectForKey:key] == [NSNull null])
+    {
+        return defaultValue;
+    }
+    
+    id result = [self objectForKey:key];
+    
+    if ([result isKindOfClass:[NSString class]])
+    {
+        return result;
+    }
+    else if ([result isKindOfClass:[NSNumber class]])
+    {
+        return [result stringValue];
+    }
+    
+    return defaultValue;
 }
 
 @end
