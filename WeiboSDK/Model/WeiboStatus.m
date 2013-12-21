@@ -44,7 +44,7 @@
 {
     NSDictionary * jsonObject = [json objectFromJSONString];
     NSArray * dictionaries = [jsonObject objectForKey:@"statuses"];
-
+    if (!dictionaries) dictionaries = [jsonObject objectForKey:@"reposts"];
     
     NSMutableArray * statuses = [NSMutableArray array];
     for (NSDictionary * dic in dictionaries)
