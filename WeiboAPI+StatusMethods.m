@@ -285,9 +285,9 @@
 {
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeNewTweet];
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
-    NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             text, @"status",
-                             [NSString stringWithFormat:@"%lld",repostID], @"id", nil];
+    NSDictionary * params = @{@"status" : text,
+                              @"id": @(repostID),
+                              @"is_comment": @(comment ? 1 : 0)};
     NSString * url = @"statuses/repost.json";
     [self POST:url parameters:params callback:callback];
 }
@@ -350,7 +350,15 @@
 }
 - (void)updateWithComposition:(id<WeiboComposition>)composition
 {
-    if (composition.replyToStatus)
+    if (composition.retweetingStatus)
+    {
+        WeiboStatus * status = (WeiboStatus *)composition.retweetingStatus;
+        
+        BOOL shouldComment = [composition.replyToStatus isEqual:composition.retweetingStatus];
+        
+        [self repost:composition.text repostingID:status.sid shouldComment:shouldComment];
+    }
+    else if (composition.replyToStatus)
     {
         WeiboStatusID toSID = composition.replyToStatus.sid, toCID = 0;
         if ([composition.replyToStatus isKindOfClass:[WeiboComment class]])
@@ -360,20 +368,6 @@
             toSID = comment.replyToStatus.sid;
         }
         [self reply:composition.text toStatusID:toSID toCommentID:toCID];
-    }
-    else if (composition.retweetingStatus)
-    {
-        WeiboStatus * status = (WeiboStatus *)composition.retweetingStatus;
-        
-        if ([status isKindOfClass:[WeiboStatus class]])
-        {
-            if (status.retweetedStatus)
-            {
-                status = status.retweetedStatus;
-            }
-        }
-        
-        [self repost:composition.text repostingID:status.sid shouldComment:NO];
     }
     else
     {
