@@ -18,6 +18,8 @@
 #import "sqlite3.h"
 #import "WTCallback.h"
 #import "WeiboAPI+UserMethods.h"
+#import "WeiboUserMentionSuggestion.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 static LocalAutocompleteDB * sharedDB = nil;
 
@@ -281,10 +283,11 @@ static LocalAutocompleteDB * sharedDB = nil;
             WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
             [item setPriority:[rs intForColumn:@"priority"]];
             [item setAutocompleteText:[rs stringForColumn:@"username"]];
-            [item setAutocompleteSubtext:[rs stringForColumn:@"full_name"]];
+            //[item setAutocompleteSubtext:[rs stringForColumn:@"full_name"]];
             NSURL * avatarURL = [NSURL URLWithString:[rs stringForColumn:@"avatar_url"]];
             [item setAutocompleteImageURL:avatarURL];
             [item setItemID:[rs stringForColumn:@"id"]];
+            [item setAutocompleteType:type];
             [resultArray addObject:item];
             [item release];
         }
@@ -293,6 +296,56 @@ static LocalAutocompleteDB * sharedDB = nil;
     }];
     
     return [NSArray arrayWithArray:resultArray];
+}
+
+- (NSArray *)autoCompleteItemsWithMentionSuggestionJSONArray:(NSArray *)array
+{
+    NSMutableArray * result = [NSMutableArray array];
+    
+    for (NSDictionary * dict in array)
+    {
+        WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
+
+        item.itemID = [dict stringForKey:@"uid" defaultValue:nil];
+        item.autocompleteText = [dict stringForKey:@"nickname" defaultValue:@""];
+        item.autocompleteSubtext = [dict stringForKey:@"remark" defaultValue:@""];
+        item.autocompleteType = WeiboAutocompleteTypeUser;
+        
+        if (item.itemID.length)
+        {
+            [result addObject:item];
+        }
+        
+        [item release];
+    }
+    
+    return result;
+}
+
+- (NSArray *)resultsForPartialText:(NSString *)text serverMentionSuggestionJSONArray:(NSArray *)suggestionJSONArray
+{
+    NSMutableArray * results = [[[self resultsForPartialText:text type:WeiboAutocompleteTypeUser] mutableCopy] autorelease];
+    
+    if ([suggestionJSONArray isKindOfClass:[NSArray class]] && suggestionJSONArray.count)
+    {
+        NSArray * localItems = [self autoCompleteItemsWithMentionSuggestionJSONArray:suggestionJSONArray];
+        
+        for (WeiboAutocompleteResultItem * item in localItems)
+        {
+            NSInteger existIdx = [results indexOfObject:item];
+            if (existIdx != NSNotFound)
+            {
+                WeiboAutocompleteResultItem * exist = results[existIdx];
+                item.autocompleteImageURL = exist.autocompleteImageURL;
+                
+                [results removeObjectAtIndex:existIdx];
+            }
+        }
+        
+        [results insertObjects:localItems atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, localItems.count)]];
+    }
+    
+    return results;
 }
 
 @end

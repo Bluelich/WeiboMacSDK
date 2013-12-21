@@ -40,4 +40,6 @@
 
 - (NSArray *)defaultResultsForType:(WeiboAutocompleteType)type;
 - (NSArray *)resultsForPartialText:(NSString *)text type:(WeiboAutocompleteType)type;
+- (NSArray *)resultsForPartialText:(NSString *)text serverMentionSuggestionJSONArray:(NSArray *)suggestions;
+
 @end
