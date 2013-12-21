@@ -36,5 +36,6 @@
 - (void)bilateralFriendsForUserID:(WeiboUserID)userID count:(NSInteger)count page:(NSInteger)page;
 
 - (void)usersWithKeyword:(NSString *)keyword page:(NSInteger)page;
+- (void)userMentionSuggestionsWithKeyword:(NSString *)keyword;
 
 @end

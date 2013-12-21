@@ -195,4 +195,31 @@
     [self GET:@"search/users.json" parameters:params callback:[self userlistResponseCallback]];
 }
 
+- (void)userMentionSuggestionsResponse:(id)response info:(id)info
+{
+    NSString * keyword = nil;
+    if ([info isKindOfClass:[NSDictionary class]])
+    {
+        keyword = [info objectForKey:@"keyword"];
+    }
+    NSMutableDictionary * result = [NSMutableDictionary dictionary];
+    if (keyword)
+    {
+        [result setObject:keyword forKey:@"keyword"];
+    }
+    if (response)
+    {
+        [result setObject:response forKey:@"response"];
+    }
+
+    [responseCallback invoke:result];
+}
+- (void)userMentionSuggestionsWithKeyword:(NSString *)keyword
+{
+    if (!keyword) keyword = @"";
+    NSDictionary * params = @{@"q": keyword, @"type": @"0"};
+    
+    [self GET:@"search/suggestions/at_users.json" parameters:params callback:WTCallbackMake(self, @selector(userMentionSuggestionsResponse:info:), @{@"keyword": keyword})];
+}
+
 @end
