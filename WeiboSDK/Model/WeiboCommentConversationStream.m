@@ -46,7 +46,11 @@
 {
     WeiboComment * replyingComment = [self oldestReplyingComment];
     
-    if (!replyingComment) return;
+    if (!replyingComment)
+    {
+        [self markAtEnd];
+        return;
+    }
 
     [super loadOlder];
 }
