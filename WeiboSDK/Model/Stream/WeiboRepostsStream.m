@@ -22,7 +22,7 @@
 {
     WTCallback * callback = [self loadNewerResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
-    [api repliesForStatusID:self.baseStatus.sid sinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20];
+    [api repostsForStatusID:self.baseStatus.sid sinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20];
 }
 - (void)_loadOlder
 {
@@ -34,7 +34,7 @@
     if (maxID > 0) {
         maxID -= 1;
     }
-    [api repliesForStatusID:self.baseStatus.sid sinceID:0 maxID:maxID count:100];
+    [api repostsForStatusID:self.baseStatus.sid sinceID:0 maxID:maxID count:100];
 }
 - (BOOL)supportsFillingInGaps
 {
