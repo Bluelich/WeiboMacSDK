@@ -27,6 +27,9 @@ typedef NSInteger WeiboCompositionType;
 @property (nonatomic, retain) WeiboBaseStatus * replyToStatus;
 @property (nonatomic, assign) WeiboCompositionType type;
 
+@property (nonatomic, assign) CLLocationDegrees latitude;
+@property (nonatomic, assign) CLLocationDegrees longitude;
+
 @property (nonatomic, assign, readonly) NSInteger characterLimit;
 
 @property (nonatomic, retain) NSData * imageData;
