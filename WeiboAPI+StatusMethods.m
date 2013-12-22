@@ -298,8 +298,8 @@
     WTCallback * callback = WTCallbackMake(self, @selector(updated:info:), type);
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
     if (latValue > 0 || longValue > 0) {
-        [params setObject:[NSString stringWithFormat:@"%f",latValue] forKey:@"lat"];
-        [params setObject:[NSString stringWithFormat:@"%f",longValue] forKey:@"long"];
+        [params setObject:@(latValue) forKey:@"lat"];
+        [params setObject:@(longValue) forKey:@"long"];
     }
     NSDictionary * parts = nil;
     NSString * url = @"statuses/update.json";
@@ -371,7 +371,7 @@
     }
     else
     {
-        [self update:composition.text imageData:composition.imageData latitude:0 longitude:0];
+        [self update:composition.text imageData:composition.imageData latitude:composition.latitude longitude:composition.longitude];
     }
 }
 
