@@ -21,6 +21,8 @@ extern NSString * const WeiboDidHeartbeatNotification;
     NSTimer *cachePruningTimer;
 }
 
++ (NSString *)globalKeychainService;
++ (void)setGlobalKeychainService:(NSString *)service;
 + (Weibo *)sharedWeibo;
 - (void)heartbeat:(id)sender;
 - (void)pruneCaches:(id)sender;

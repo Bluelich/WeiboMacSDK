@@ -17,8 +17,18 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [account release], account = nil;
     [super dealloc];
+}
+
+- (instancetype)init
+{
+    if (self = [super init])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRemarkDidUpdateNotification:) name:WeiboUserRemarkDidUpdateNotification object:nil];
+    }
+    return self;
 }
 
 - (WeiboBaseStatus *)newestStatusThatIsNotMine{
@@ -39,6 +49,23 @@
 - (NSArray *)statusFilters
 {
     return account.allFilters;
+}
+
+- (void)userRemarkDidUpdateNotification:(NSNotification *)notification
+{
+    if (notification.object == self.account)
+    {
+        WeiboUserID userID = [notification.userInfo[@"userID"] longLongValue];
+        NSString * remark = notification.userInfo[@"remark"];
+        
+        for (WeiboBaseStatus * status in self.statuses)
+        {
+            if (status.user.userID == userID)
+            {
+                status.user.remark = remark;
+            }
+        }
+    }
 }
 
 @end

@@ -9,16 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
 #import "WeiboComposition.h"
+#import "WTCallback.h"
 
 @class WeiboUser, WeiboRequestError, WeiboAPI, WTCallback;
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentMentionsStream, WeiboCommentsToMeStream, WeiboCommentsByMeStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboRepostsStream, WeiboStatus, WeiboBaseStatus;
-@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter;
+@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter, WeiboSavedSearch;
 
 @protocol WeiboAccountDelegate;
 
 extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
+extern NSString * const WeiboAccountSavedSearchesDidChangeNotification;
+extern NSString * const WeiboUserRemarkDidUpdateNotification;
 
 @interface WeiboAccount : NSObject <NSCoding>
 {
@@ -93,6 +96,7 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount;
 - (WeiboAPI *)request:(WTCallback *)callback;
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback;
+- (WeiboAPI *)authenticatedRequestWithCallback:(WTCallbackBlock)block;
 
 #pragma mark -
 #pragma mark Timeline
@@ -158,6 +162,29 @@ extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 @property (nonatomic, assign) NSInteger newCommentsCount;
 @property (nonatomic, assign) NSInteger newDirectMessagesCount;
 @property (nonatomic, assign) NSInteger newFollowersCount;
+
+#pragma mark - Saved Searches
+
+- (NSArray *)savedSearches;
+
+- (NSString *)searchKeyForKeyword:(NSString *)keyword;
+- (NSString *)searchKeyForUsername:(NSString *)aUsername;
+- (NSString *)searchKeyForTopicName:(NSString *)aTopicname;
+
+- (NSString *)searchKeywordForSearchKey:(NSString *)searchKey;
+
+- (BOOL)isUserSearch:(NSString *)searchKey;
+- (BOOL)isTopicSearch:(NSString *)searchKey;
+- (BOOL)isKeywordSearch:(NSString *)searchKey;
+
+- (void)saveSearchWithSearchKey:(NSString *)searchKey;
+- (void)saveSearchWithKeyword:(NSString *)keyword;
+- (void)saveSearchWithTopicName:(NSString *)topicName;
+- (void)saveSearchWithUsername:(NSString *)username;
+- (void)removeSavedSearchWithSearchKey:(NSString *)searchKey;
+- (void)removeSavedSearchWithKeyword:(NSString *)keyword;
+- (void)removeSavedSearchWithTopicName:(NSString *)topicName;
+- (void)removeSavedSearchWithUsername:(NSString *)username;
 
 #pragma mark - Filter
 

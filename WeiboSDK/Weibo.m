@@ -365,4 +365,20 @@ static Weibo * _sharedWeibo = nil;
     return count;
 }
 
+static NSString * _keychainService = nil;
+
++ (NSString *)globalKeychainService
+{
+    if (_keychainService.length) return _keychainService;
+    
+    NSString *identifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    return identifier;
+}
++ (void)setGlobalKeychainService:(NSString *)service
+{
+    [service copy];
+    [_keychainService release];
+    _keychainService = service;
+}
+
 @end

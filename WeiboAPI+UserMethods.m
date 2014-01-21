@@ -52,6 +52,16 @@
     WTCallback * callback = [self userResponseCallback];
     [self GET:@"users/show.json" parameters:param callback:callback];
 }
+
+- (void)updateRemark:(NSString *)remark forUserID:(WeiboUserID)uid
+{
+    if (!remark) remark = @"";
+    
+    NSDictionary * params = @{@"uid":@(uid), @"remark":remark};
+    
+    [self POST:@"friendships/remark/update.json" parameters:params callback:[self userResponseCallback]];
+}
+
 #pragma mark ( User Response Handling )
 - (void)userResponse:(id)response info:(id)info
 {

@@ -8,6 +8,7 @@
 
 #import "WeiboAPI.h"
 #import "WeiboAPI+Private.h"
+#import "Weibo.h"
 
 @implementation WeiboAPI
 
@@ -51,9 +52,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboAccessTokenExpriedNotification object:authenticateWithAccount];
 }
 
-- (NSString *)keychainService{
-    NSString *identifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    return identifier;
+- (NSString *)keychainService
+{
+    return [Weibo globalKeychainService];
 }
 
 - (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{

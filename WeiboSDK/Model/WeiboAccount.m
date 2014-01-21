@@ -32,6 +32,7 @@
 #import "WeiboComment.h"
 #import "WeiboDirectMessagesConversationManager.h"
 #import "WeiboUserNotificationCenter.h"
+#import "Weibo.h"
 
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
@@ -44,10 +45,14 @@
 #define CACHE_LIVETIME 600.0
 
 NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFavoriteStateDidChangeNotifiaction";
+NSString * const WeiboAccountSavedSearchesDidChangeNotification = @"WeiboAccountSavedSearchesDidChangeNotification";
+NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpdateNotification";
+
 
 @interface WeiboAccount ()
 
 @property (nonatomic, retain) WeiboDirectMessagesConversationManager * directMessagesManager;
+@property (nonatomic, retain) NSMutableArray * savedSearchKeywords;
 
 @end
 
@@ -89,6 +94,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     [_superpowerToken release], _superpowerToken = nil;
     [_directMessagesManager release], _directMessagesManager = nil;
+    
+    [_savedSearchKeywords release], _savedSearchKeywords = nil;
     
     [super dealloc];
 }
@@ -144,6 +151,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     [encoder encodeObject:self.profileImage forKey:@"profile-image"];
     
     [encoder encodeBool:self.superpowerTokenExpired forKey:@"superpower-token-expired"];
+    
+    [encoder encodeObject:self.savedSearchKeywords forKey:@"saved-searches"];
 }
 - (id)initWithCoder:(NSCoder *)decoder
 {
@@ -155,6 +164,8 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
         self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
+        
+        self.savedSearchKeywords = [[[decoder decodeObjectForKey:@"saved-searches"] mutableCopy] autorelease];
         
         id filterAdvertisements = [decoder decodeObjectForKey:@"filter-advertisements"];
         if (filterAdvertisements)
@@ -315,9 +326,9 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 
 #pragma mark -
 #pragma mark Core Methods
-- (NSString *)keychainService{
-    NSString *identifier = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    return identifier;
+- (NSString *)keychainService
+{
+    return [Weibo globalKeychainService];
 }                                                            
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount
 {
@@ -343,6 +354,10 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 }
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback{
     return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
+}
+- (WeiboAPI *)authenticatedRequestWithCallback:(WTCallbackBlock)block
+{
+    return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:WTBlockCallback(block, nil)];
 }
 
 - (NSMutableArray *)keywordFilters
@@ -688,6 +703,100 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     return stream;
 }
 
+#pragma mark - Saved Searches
+
+- (NSArray *)savedSearches
+{
+    return _savedSearchKeywords;
+}
+- (NSMutableArray *)savedSearchKeywords
+{
+    if (!_savedSearchKeywords)
+    {
+        _savedSearchKeywords = [[NSMutableArray alloc] init];
+    }
+    return _savedSearchKeywords;
+}
+
+- (NSString *)searchKeywordForSearchKey:(NSString *)searchKey
+{
+    if ([self isUserSearch:searchKey])
+    {
+        return [searchKey substringFromIndex:1];
+    }
+    else if ([self isTopicSearch:searchKey])
+    {
+        return [searchKey substringWithRange:NSMakeRange(1, searchKey.length - 2)];
+    }
+    return searchKey;
+}
+
+- (BOOL)isUserSearch:(NSString *)searchKey
+{
+    return [searchKey hasPrefix:@"@"];
+}
+- (BOOL)isTopicSearch:(NSString *)searchKey
+{
+    return [searchKey hasPrefix:@"#"] && [searchKey hasSuffix:@"#"];
+}
+- (BOOL)isKeywordSearch:(NSString *)searchKey
+{
+    return ![self isUserSearch:searchKey] && ![self isTopicSearch:searchKey];
+}
+
+- (NSString *)searchKeyForKeyword:(NSString *)keyword
+{
+    return keyword;
+}
+- (NSString *)searchKeyForUsername:(NSString *)aUsername
+{
+    return [NSString stringWithFormat:@"@%@", aUsername];
+}
+- (NSString *)searchKeyForTopicName:(NSString *)aTopicname
+{
+    return [NSString stringWithFormat:@"#%@#", aTopicname];
+}
+
+- (void)saveSearchWithKeyword:(NSString *)keyword
+{
+    [self saveSearchWithSearchKey:[self searchKeyForKeyword:keyword]];
+}
+- (void)saveSearchWithTopicName:(NSString *)topicName
+{
+    [self saveSearchWithSearchKey:[self searchKeyForTopicName:topicName]];
+}
+- (void)saveSearchWithUsername:(NSString *)aUsername
+{
+    [self saveSearchWithSearchKey:[self searchKeyForUsername:aUsername]];
+}
+- (void)saveSearchWithSearchKey:(NSString *)searchKey
+{
+    [self.savedSearchKeywords insertObject:searchKey atIndex:0];
+    [self notifiesSavedSearchChanged];
+}
+- (void)removeSavedSearchWithKeyword:(NSString *)keyword
+{
+    [self removeSavedSearchWithSearchKey:[self searchKeyForKeyword:keyword]];
+}
+- (void)removeSavedSearchWithTopicName:(NSString *)topicName
+{
+    [self removeSavedSearchWithSearchKey:[self searchKeyForTopicName:topicName]];
+}
+- (void)removeSavedSearchWithUsername:(NSString *)aUsername
+{
+    [self removeSavedSearchWithSearchKey:[self searchKeyForUsername:aUsername]];
+}
+
+- (void)removeSavedSearchWithSearchKey:(NSString *)searchKey
+{
+    [self.savedSearchKeywords removeObject:searchKey];
+    [self notifiesSavedSearchChanged];
+}
+- (void)notifiesSavedSearchChanged
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSavedSearchesDidChangeNotification object:self];
+}
+
 #pragma mark - Cache
 - (void)pruneStatusCache
 {
@@ -802,18 +911,9 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
     
     [self postStatusFavoriteStateChangedNotification:status];
 }
-- (BOOL)hasFreshItemsInStream:(WeiboConcreteStatusesStream *)stream
-{
-    WeiboBaseStatus * topStatus = [stream newestStatus];
-    if (!topStatus)
-    {
-        return NO;
-    }
-    return topStatus.sid > stream.viewedMostRecentID;
-}
 - (BOOL)hasFreshTweets
 {
-    return [self hasFreshItemsInStream:timelineStream];
+    return self.newStatusesCount > 0;
 }
 - (BOOL)hasFreshMentions
 {
@@ -821,20 +921,15 @@ NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFa
 }
 - (BOOL)hasFreshStatusMentions
 {
-    return [self hasFreshItemsInStream:statusMentionsStream];
+    return self.newStatusMentionsCount > 0;
 }
 - (BOOL)hasFreshCommentMentions
 {
-    return [self hasFreshItemsInStream:commentMentionsStream];
+    return self.newCommentMentionsCount > 0;
 }
 - (BOOL)hasFreshComments
 {
-    WeiboBaseStatus * topStatus = [commentsToMeStream newestStatus];
-    if (!topStatus)
-    {
-        return NO;
-    }
-    return topStatus.sid > commentsToMeStream.viewedMostRecentID;
+    return self.newCommentsCount > 0;
 }
 - (BOOL)hasFreshDirectMessages
 {

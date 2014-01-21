@@ -23,6 +23,7 @@
         self.userID = [decoder decodeInt64ForKey:@"user-id"];
         self.screenName = [decoder decodeObjectForKey:@"screenname"];
         self.name = [decoder decodeObjectForKey:@"name"];
+        self.remark = [decoder decodeObjectForKey:@"remark"];
         self.province = [decoder decodeObjectForKey:@"province"];
         self.city = [decoder decodeObjectForKey:@"city"];
         self.location = [decoder decodeObjectForKey:@"location"];
@@ -49,6 +50,7 @@
 {
     [encoder encodeInt64:userID forKey:@"user-id"];
     [encoder encodeObject:screenName forKey:@"screenname"];
+    [encoder encodeObject:_remark forKey:@"remark"];
     [encoder encodeObject:profileImageUrl forKey:@"profile-image-url"];
     [encoder encodeObject:profileLargeImageUrl forKey:@"profile-large-image-url"];
     
@@ -78,6 +80,7 @@
 - (void)dealloc{
     [screenName release]; screenName = nil;
     [name release]; name = nil;
+    [_remark release], _remark = nil;
     [province release]; province = nil;
     [city release]; city = nil;
     [location release]; location = nil;
@@ -149,6 +152,8 @@
         self.userID = [dic longlongForKey:@"id" defaultValue:0];
         self.screenName = [dic stringForKey:@"screen_name" defaultValue:@""];
         self.name = [dic stringForKey:@"name" defaultValue:@""];
+        self.remark = [dic stringForKey:@"remark" defaultValue:nil];
+        
         self.province = @""; // Not implemented yet.
         self.city = @""; // Not implemented yet.
         self.location = [dic stringForKey:@"location" defaultValue:@""];

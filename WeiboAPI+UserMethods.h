@@ -15,6 +15,7 @@
 - (void)verifyCredentials;
 - (void)userWithID:(WeiboUserID)uid;
 - (void)userWithUsername:(NSString *)screenname;
+- (void)updateRemark:(NSString *)remark forUserID:(WeiboUserID)uid;
 
 #pragma mark -
 #pragma mark User Relationship

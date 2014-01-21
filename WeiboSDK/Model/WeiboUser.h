@@ -39,6 +39,7 @@
 @property (assign, readwrite) WeiboUserID userID;
 @property (retain, readwrite) NSString * screenName;
 @property (retain, readwrite) NSString * name;
+@property (retain, readwrite) NSString * remark;
 @property (retain, readwrite) NSString * province;
 @property (retain, readwrite) NSString * city;
 @property (retain, readwrite) NSString * location;

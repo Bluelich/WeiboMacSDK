@@ -135,7 +135,7 @@ static BOOL AtLeaseMavericks    = NO;
         [result addObject:status];
     }
     
-    if (YES)
+    if (account.notificationOptions & WeiboTweetNotificationSystemCenter)
     {
         for (WeiboBaseStatus * status in [result reverseObjectEnumerator])
         {

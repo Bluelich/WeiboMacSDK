@@ -41,6 +41,8 @@
 		C620027D17A4116E00283648 /* WeiboListStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C620027B17A4116E00283648 /* WeiboListStream.m */; };
 		C620028017A42BB800283648 /* WeiboAccount+Lists.h in Headers */ = {isa = PBXBuildFile; fileRef = C620027E17A42BB800283648 /* WeiboAccount+Lists.h */; };
 		C620028117A42BB800283648 /* WeiboAccount+Lists.m in Sources */ = {isa = PBXBuildFile; fileRef = C620027F17A42BB800283648 /* WeiboAccount+Lists.m */; };
+		C62B76E5186B34FF00152B31 /* WeiboSavedSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */; };
+		C62B76E6186B34FF00152B31 /* WeiboSavedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */; };
 		C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WTFileManager.m */; };
 		C638914A175840400005069A /* WeiboPicture.h in Headers */ = {isa = PBXBuildFile; fileRef = C63891481758403E0005069A /* WeiboPicture.h */; };
 		C638914B175840400005069A /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
@@ -228,6 +230,8 @@
 		C620027B17A4116E00283648 /* WeiboListStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboListStream.m; path = WeiboSDK/Model/Stream/WeiboListStream.m; sourceTree = "<group>"; };
 		C620027E17A42BB800283648 /* WeiboAccount+Lists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WeiboAccount+Lists.h"; path = "WeiboSDK/Model/WeiboAccount+Lists.h"; sourceTree = "<group>"; };
 		C620027F17A42BB800283648 /* WeiboAccount+Lists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WeiboAccount+Lists.m"; path = "WeiboSDK/Model/WeiboAccount+Lists.m"; sourceTree = "<group>"; };
+		C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSavedSearch.h; sourceTree = "<group>"; };
+		C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSavedSearch.m; sourceTree = "<group>"; };
 		C630CC6B152ABDED00A5AF7A /* WTFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTFileManager.h; path = WeiboSDK/Support/WTFileManager.h; sourceTree = "<group>"; };
 		C630CC6C152ABDED00A5AF7A /* WTFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTFileManager.m; path = WeiboSDK/Support/WTFileManager.m; sourceTree = "<group>"; };
 		C63891481758403E0005069A /* WeiboPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboPicture.h; sourceTree = "<group>"; };
@@ -700,6 +704,8 @@
 				C6DC65D714FDE5D000B70E45 /* WeiboUnread.m */,
 				C620027617A407DD00283648 /* WeiboList.h */,
 				C620027717A407DD00283648 /* WeiboList.m */,
+				C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */,
+				C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */,
 				C6DE37CE14EF7922004DAFE9 /* WTActiveTextRanges.h */,
 				C6DE37CF14EF7922004DAFE9 /* WTActiveTextRanges.m */,
 				C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */,
@@ -897,6 +903,7 @@
 				C6011B15151484BE00A0A49C /* LocalAutocompleteDB.h in Headers */,
 				C66E57961806F59F00C80A99 /* WeiboDummyStatus.h in Headers */,
 				C6B043FA18632B5400318F69 /* WeiboRepostsStream.h in Headers */,
+				C62B76E5186B34FF00152B31 /* WeiboSavedSearch.h in Headers */,
 				C68B2F7417ACD1FA005CC80C /* WeiboStatusKeywordFilter.h in Headers */,
 				C620028017A42BB800283648 /* WeiboAccount+Lists.h in Headers */,
 				C6B8C52D1514DC1D00935AC5 /* WTAutoCompleteResultItem.h in Headers */,
@@ -1096,6 +1103,7 @@
 				C60B512F1745DB7F00E99C07 /* WeiboUserRelationshipUserList.m in Sources */,
 				C6A1663018213FA0002C0B4B /* WeiboCommentMentionsStream.m in Sources */,
 				C60B51341745DBB100E99C07 /* WeiboUserFollowersList.m in Sources */,
+				C62B76E6186B34FF00152B31 /* WeiboSavedSearch.m in Sources */,
 				C60B51391745DBCA00E99C07 /* WeiboUserFollowingList.m in Sources */,
 				C6EC37501745EE570085E6ED /* WeiboAPI+Private.m in Sources */,
 				C6EC37551745EF9C0085E6ED /* WeiboAPI+UserMethods.m in Sources */,
@@ -1113,6 +1121,45 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		C6AC071818704E6700D20556 /* MacAppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = MacAppStore;
+		};
+		C6AC071918704E6700D20556 /* MacAppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = MAC_APP_STORE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = MacAppStore;
+		};
 		C6B4DC1D14ED347C0032A8CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1120,6 +1167,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1130,6 +1178,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboSDK/WeiboSDK-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1202,6 +1251,7 @@
 			buildConfigurations = (
 				C6B4DC1D14ED347C0032A8CF /* Debug */,
 				C6B4DC1E14ED347C0032A8CF /* Release */,
+				C6AC071918704E6700D20556 /* MacAppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1211,6 +1261,7 @@
 			buildConfigurations = (
 				C6FC9E5E14E3C3F400094A8F /* Debug */,
 				C6FC9E5F14E3C3F400094A8F /* Release */,
+				C6AC071818704E6700D20556 /* MacAppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

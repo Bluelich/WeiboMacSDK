@@ -79,7 +79,7 @@ enum {
     
     WeiboNotificationVersionSystemCenterIntegrated = 1 << 31,
     
-    WeiboNotificationDefaults               = 0b0101101101101101 | WeiboNotificationVersionSystemCenterIntegrated,
+    WeiboNotificationDefaults               = 0b0101101101101001 | WeiboNotificationVersionSystemCenterIntegrated,
 };
 typedef int64_t WeiboNotificationOptions;
 
