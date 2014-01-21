@@ -8,6 +8,12 @@
 
 #import "WTCallback.h"
 
+@interface WTCallback ()
+
+@property (nonatomic, copy) WTCallbackBlock block;
+
+@end
+
 @implementation WTCallback
 @synthesize target, selector, info;
 
@@ -17,6 +23,10 @@
 WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo){
     return [WTCallback callbackWithTarget:aTarget selector:aSelector info:aInfo];
 }
+WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
+{
+    return [[[WTCallback alloc] initWithBlock:block info:aInfo] autorelease];
+}
 - (WTCallback *)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
     if ((self = [super init])) {
         target = [aTarget retain];
@@ -25,15 +35,34 @@ WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo){
     }
     return self;
 }
+- (id)initWithBlock:(WTCallbackBlock)block info:(id)aInfo
+{
+    if (self = [super init])
+    {
+        self.block = block;
+        info = [aInfo retain];
+    }
+    return self;
+}
 - (void)dealloc{
     [info release]; info = nil;
+    [_block release], _block = nil;
     [super dealloc];
 }
 - (void)invoke:(id)returnValue{
-    [target performSelector:selector withObject:returnValue withObject:info];
+    if (self.block)
+    {
+        self.block(returnValue, info);
+    }
+    
+    if (self.target && selector)
+    {
+        [target performSelector:selector withObject:returnValue withObject:info];
+    }
     [self dissociateTarget];
 }
 - (void)dissociateTarget{
+    [_block release], _block = nil;
     [target release];
     target = nil;
 }
