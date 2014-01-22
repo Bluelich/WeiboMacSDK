@@ -25,6 +25,7 @@ NSString * const WeiboUserNotificationUserInfoAccountUserIDKey = @"WeiboUserNoti
 NSString * const WeiboUserNotificationCenterActivatedNotificationNotification = @"WeiboUserNotificationCenterActivatedNotificationNotification";
 NSString * const WeiboUserNotificationCenterUserInfoNSUserNotificationKey = @"WeiboUserNotificationCenterUserInfoNSUserNotificationKey";
 NSString * const WeiboUserNotificationCenterUserInfoAccountKey = @"WeiboUserNotificationCenterUserInfoAccountKey";
+NSString * const WeiboUserNotificationCenterUserInfoImportantFlagKey = @"WeiboUserNotificationCenterUserInfoImportantFlagKey";
 
 @interface WeiboUserNotificationCenter () <NSUserNotificationCenterDelegate>
 
@@ -371,6 +372,15 @@ static BOOL AtLeaseMavericks    = NO;
     [userInfo setObject:notification forKey:WeiboUserNotificationCenterUserInfoNSUserNotificationKey];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserNotificationCenterActivatedNotificationNotification object:self userInfo:userInfo];
+}
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
+{
+    if ([[notification.userInfo objectForKey:WeiboUserNotificationCenterUserInfoImportantFlagKey] boolValue])
+    {
+        return YES;
+    }
+    return NO;
 }
 
 @end

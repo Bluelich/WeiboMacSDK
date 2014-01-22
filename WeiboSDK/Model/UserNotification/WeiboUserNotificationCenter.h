@@ -35,6 +35,7 @@ extern NSString * const WeiboUserNotificationUserInfoCommentIDKey;
 extern NSString * const WeiboUserNotificationCenterActivatedNotificationNotification;
 extern NSString * const WeiboUserNotificationCenterUserInfoNSUserNotificationKey;
 extern NSString * const WeiboUserNotificationCenterUserInfoAccountKey;
+extern NSString * const WeiboUserNotificationCenterUserInfoImportantFlagKey;
 
 @interface WeiboUserNotificationCenter : NSObject
 
