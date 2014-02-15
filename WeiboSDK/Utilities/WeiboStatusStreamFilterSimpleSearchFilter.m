@@ -22,23 +22,37 @@
     
     if (status.isDummy) return NO;
     
-    if ([status.text rangeOfString:self.query 
+    WeiboUser * user = status.user;
+    NSString * query = self.query;
+    
+    if (status.text && [status.text rangeOfString:query
                     options:NSCaseInsensitiveSearch].location != NSNotFound) {
         return YES;
     }
-    if ([status.user.screenName rangeOfString:self.query
+    if (user.screenName && [user.screenName rangeOfString:query
                                            options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        return YES;
+    }
+    if (user.remark && [user.remark rangeOfString:query options:NSCaseInsensitiveSearch].location != NSNotFound)
+    {
         return YES;
     }
     
     if (status.quotedBaseStatus)
     {
-        if ([status.quotedBaseStatus.text rangeOfString:self.query
+        WeiboBaseStatus * quotedStatus = status.quotedBaseStatus;
+        WeiboUser * quotedUser = quotedStatus.user;
+        
+        if (quotedStatus.text && [quotedStatus.text rangeOfString:query
                                                options:NSCaseInsensitiveSearch].location != NSNotFound) {
             return YES;
         }
-        if ([status.quotedBaseStatus.user.screenName rangeOfString:self.query
+        if (quotedUser.screenName && [quotedUser.screenName rangeOfString:query
                                                           options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return YES;
+        }
+        if (quotedUser.remark && [quotedUser.remark rangeOfString:query options:NSCaseInsensitiveSearch].location != NSNotFound)
+        {
             return YES;
         }
     }
