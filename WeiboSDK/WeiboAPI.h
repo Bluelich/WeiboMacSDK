@@ -25,6 +25,9 @@
 + (id)authenticatedRequestWithAPIRoot:(NSString *)root 
                               account:(WeiboAccount *)account 
                              callback:(WTCallback *)callback;
++ (instancetype)authenticatedRequestWithAPIRoot:(NSString *)root
+                                        account:(WeiboAccount *)account
+                                     completion:(WTCallbackBlock)completion;
 - (id)initWithAccount:(WeiboAccount *)account
               apiRoot:(NSString *)root 
              callback:(WTCallback *)callback;

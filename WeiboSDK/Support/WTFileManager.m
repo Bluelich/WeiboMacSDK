@@ -22,15 +22,23 @@
 + (NSString *)cachesDirectory{
     return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES) objectAtIndex:0];
 }
++ (NSString *)cachesApplicationDirectory
+{
+    return [[self cachesDirectory] stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]];
+}
 + (NSString *)documentsDirectory{
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) objectAtIndex:0];
 }
++ (NSString *)documentsApplicationDirectory
+{
+    return [[self documentsDirectory] stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]];
+}
 + (NSString *)subCacheDirectory:(NSString *)name{
-    NSString * path = [[[self cachesDirectory] stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]] stringByAppendingPathComponent:name];
+    NSString * path = [[self cachesApplicationDirectory] stringByAppendingPathComponent:name];
     return [self createDirectoryIfNonExistent:path];
 }
 + (NSString *)subDocumentsDirectory:(NSString *)name{
-    NSString * path = [[[self documentsDirectory] stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]] stringByAppendingPathComponent:name];
+    NSString * path = [[self documentsApplicationDirectory] stringByAppendingPathComponent:name];
     return [self createDirectoryIfNonExistent:path];
 }
 + (NSString *)databaseCacheDirectory{

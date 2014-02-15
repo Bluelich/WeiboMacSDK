@@ -23,6 +23,12 @@
                                   apiRoot:root 
                                  callback:callback] autorelease];
 }
++ (instancetype)authenticatedRequestWithAPIRoot:(NSString *)root
+                                        account:(WeiboAccount *)account
+                                     completion:(WTCallbackBlock)completion
+{
+    return [self authenticatedRequestWithAPIRoot:root account:account callback:WTBlockCallback(completion, nil)];
+}
 - (id)initWithAccount:(WeiboAccount *)account
               apiRoot:(NSString *)root 
              callback:(WTCallback *)callback{

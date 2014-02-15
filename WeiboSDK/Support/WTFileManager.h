@@ -12,7 +12,9 @@
 
 + (NSString *)createDirectoryIfNonExistent:(NSString *)path;
 + (NSString *)cachesDirectory;
++ (NSString *)cachesApplicationDirectory;
 + (NSString *)documentsDirectory;
++ (NSString *)documentsApplicationDirectory;
 + (NSString *)subCacheDirectory:(NSString *)name;
 + (NSString *)subDocumentsDirectory:(NSString *)name;
 + (NSString *)databaseCacheDirectory;

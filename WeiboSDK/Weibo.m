@@ -13,7 +13,7 @@
 #import "WeiboAPI+AccountMethods.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WTCallback.h"
-#import "SSKeychain.h"
+#import "WTFileManager.h"
 #import "LocalAutocompleteDB.h"
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
@@ -60,8 +60,8 @@ static Weibo * _sharedWeibo = nil;
 
 - (void)restoreAccounts
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSData * accountData = [defaults dataForKey:@"accounts"];
+    NSData * accountData = [self accountData];
+
     BOOL hasAccountRestored = NO;
     if (accountData) {
         NSArray * restoredAccounts = [NSKeyedUnarchiver unarchiveObjectWithData:accountData];
@@ -125,12 +125,38 @@ static Weibo * _sharedWeibo = nil;
     
     [self saveCurrentState];
 }
+- (NSURL *)accountDataPathURL
+{
+    NSURL * url = [NSURL fileURLWithPath:[WTFileManager cachesApplicationDirectory]];
+    url = [url URLByAppendingPathComponent:@"accounts.dat"];
+    return url;
+}
+- (NSData *)accountData
+{
+    NSData * accountData = [NSData dataWithContentsOfURL:[self accountDataPathURL]];
+    
+    if (!accountData)
+    {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        accountData = [defaults dataForKey:@"accounts"];
+    }
+    
+    return accountData;
+}
+- (void)saveAccountData:(NSData *)accountData
+{
+    [accountData writeToURL:[self accountDataPathURL] atomically:YES];
+}
 - (void)saveCurrentState
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSData * accountData = [NSKeyedArchiver archivedDataWithRootObject:[self accounts]];
-    [defaults setObject:accountData forKey:@"accounts"];
-    [defaults synchronize];
+    [self saveAccountData:accountData];
+    
+    
+//    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//
+//    [defaults setObject:accountData forKey:@"accounts"];
+//    [defaults synchronize];
 }
 
 - (NSArray *)accounts
@@ -213,8 +239,6 @@ static Weibo * _sharedWeibo = nil;
                 // account not exist, add it to our set.
                 [self addAccount:account];
             }
-            
-            [SSKeychain setPassword:account.oAuth2Token forService:[account keychainService] account:[WeiboAccount keyChainAccountForUserID:account.user.userID]];
         }
     }
     
@@ -268,6 +292,7 @@ static Weibo * _sharedWeibo = nil;
 {
     [aAccount updateSuperpowerTokenToKeychain:nil];
     [accounts removeObject:aAccount];
+    [self saveCurrentState];
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification
                                                         object:self];
 }

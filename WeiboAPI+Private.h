@@ -22,7 +22,6 @@
 #import "WTOASingnaturer.h"
 
 #import "WTFoundationUtilities.h"
-#import "SSKeychain.h"
 #import "JSONKit.h"
 
 @interface WeiboAPI (Private)

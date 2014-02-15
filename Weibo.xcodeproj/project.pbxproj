@@ -123,6 +123,12 @@
 		C6A1663418214168002C0B4B /* WeiboCommentsToMeStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A1663218214168002C0B4B /* WeiboCommentsToMeStream.m */; };
 		C6A1663718214178002C0B4B /* WeiboCommentsByMeStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A1663518214178002C0B4B /* WeiboCommentsByMeStream.h */; };
 		C6A1663818214178002C0B4B /* WeiboCommentsByMeStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A1663618214178002C0B4B /* WeiboCommentsByMeStream.m */; };
+		C6A4718F18AE558800B3CB48 /* WeiboCryptographer.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */; };
+		C6A4719018AE558800B3CB48 /* WeiboCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A4718E18AE558800B3CB48 /* WeiboCryptographer.m */; };
+		C6A471A118AF344300B3CB48 /* CocoaSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4719F18AF344300B3CB48 /* CocoaSecurity.h */; };
+		C6A471A218AF344300B3CB48 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A471A018AF344300B3CB48 /* CocoaSecurity.m */; };
+		C6A471A518AF355B00B3CB48 /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A471A318AF355B00B3CB48 /* Base64.h */; };
+		C6A471A618AF355B00B3CB48 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A471A418AF355B00B3CB48 /* Base64.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		C6AA998117E5E06A005F90E4 /* WeiboConversationDirectMessageStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AA997F17E5E06A005F90E4 /* WeiboConversationDirectMessageStream.h */; };
 		C6AA998217E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AA998017E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m */; };
 		C6AA998517E5E11D005F90E4 /* WeiboDirectMessageConversationList.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AA998317E5E11C005F90E4 /* WeiboDirectMessageConversationList.h */; };
@@ -298,6 +304,12 @@
 		C6A1663218214168002C0B4B /* WeiboCommentsToMeStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCommentsToMeStream.m; sourceTree = "<group>"; };
 		C6A1663518214178002C0B4B /* WeiboCommentsByMeStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboCommentsByMeStream.h; sourceTree = "<group>"; };
 		C6A1663618214178002C0B4B /* WeiboCommentsByMeStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCommentsByMeStream.m; sourceTree = "<group>"; };
+		C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboCryptographer.h; sourceTree = "<group>"; };
+		C6A4718E18AE558800B3CB48 /* WeiboCryptographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCryptographer.m; sourceTree = "<group>"; };
+		C6A4719F18AF344300B3CB48 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSecurity.h; sourceTree = "<group>"; };
+		C6A471A018AF344300B3CB48 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
+		C6A471A318AF355B00B3CB48 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		C6A471A418AF355B00B3CB48 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		C6AA997F17E5E06A005F90E4 /* WeiboConversationDirectMessageStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboConversationDirectMessageStream.h; sourceTree = "<group>"; };
 		C6AA998017E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboConversationDirectMessageStream.m; sourceTree = "<group>"; };
 		C6AA998317E5E11C005F90E4 /* WeiboDirectMessageConversationList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboDirectMessageConversationList.h; sourceTree = "<group>"; };
@@ -751,6 +763,12 @@
 				C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */,
 				C630CC6B152ABDED00A5AF7A /* WTFileManager.h */,
 				C630CC6C152ABDED00A5AF7A /* WTFileManager.m */,
+				C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */,
+				C6A4718E18AE558800B3CB48 /* WeiboCryptographer.m */,
+				C6A4719F18AF344300B3CB48 /* CocoaSecurity.h */,
+				C6A471A018AF344300B3CB48 /* CocoaSecurity.m */,
+				C6A471A318AF355B00B3CB48 /* Base64.h */,
+				C6A471A418AF355B00B3CB48 /* Base64.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -892,6 +910,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6A471A118AF344300B3CB48 /* CocoaSecurity.h in Headers */,
 				C6E0BFBF180AF6AD00168C6B /* WeiboUserNotificationCenter.h in Headers */,
 				C68B2F8017ACD257005CC80C /* WeiboStatusSourceFilter.h in Headers */,
 				C620027817A407DD00283648 /* WeiboList.h in Headers */,
@@ -936,6 +955,7 @@
 				C6A1663318214168002C0B4B /* WeiboCommentsToMeStream.h in Headers */,
 				C60B51321745DBB100E99C07 /* WeiboUserFollowersList.h in Headers */,
 				C60B51371745DBCA00E99C07 /* WeiboUserFollowingList.h in Headers */,
+				C6A471A518AF355B00B3CB48 /* Base64.h in Headers */,
 				C6EC374E1745EE570085E6ED /* WeiboAPI+Private.h in Headers */,
 				C6EC37531745EF9C0085E6ED /* WeiboAPI+UserMethods.h in Headers */,
 				C6EC37581745F13B0085E6ED /* WeiboAPI+StatusMethods.h in Headers */,
@@ -943,6 +963,7 @@
 				C68B2F7817ACD222005CC80C /* WeiboStatusUserFilter.h in Headers */,
 				C6084B4B17D2056500A667F2 /* WeiboSuperpowerAPI.h in Headers */,
 				C6AA998517E5E11D005F90E4 /* WeiboDirectMessageConversationList.h in Headers */,
+				C6A4718F18AE558800B3CB48 /* WeiboCryptographer.h in Headers */,
 				C6EC375D1745F26D0085E6ED /* WeiboAPI+DirectMessages.h in Headers */,
 				C682BAC117C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h in Headers */,
 				C643871F17D77BF20097FB72 /* WeiboReceivedDirectMessageStream.h in Headers */,
@@ -1062,12 +1083,15 @@
 				C6647D4D14ED638E00422998 /* WeiboAccount.m in Sources */,
 				C6647D4F14ED638E00422998 /* WeiboStatus.m in Sources */,
 				C6647D5114ED638E00422998 /* WeiboUser.m in Sources */,
+				C6A471A618AF355B00B3CB48 /* Base64.m in Sources */,
 				C6647D5314ED638E00422998 /* WeiboConfiguration.m in Sources */,
+				C6A4719018AE558800B3CB48 /* WeiboCryptographer.m in Sources */,
 				C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */,
 				C6084B4C17D2056500A667F2 /* WeiboSuperpowerAPI.m in Sources */,
 				C6A1663818214178002C0B4B /* WeiboCommentsByMeStream.m in Sources */,
 				C6647D5914ED638E00422998 /* NSDictionary+WeiboAdditions.m in Sources */,
 				C68B2F7517ACD1FA005CC80C /* WeiboStatusKeywordFilter.m in Sources */,
+				C6A471A218AF344300B3CB48 /* CocoaSecurity.m in Sources */,
 				C68782901865663300FD3712 /* WeiboUserMentionSuggestion.m in Sources */,
 				C6647D5B14ED638E00422998 /* WTOASingnaturer.m in Sources */,
 				C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */,

@@ -75,11 +75,6 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
             self.superpowerTokenExpired = NO;
             self.superpowerToken = token;
             
-            if (token)
-            {
-                [self updateSuperpowerTokenToKeychain:token];
-            }
-            
             [self refreshDirectMessages];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
@@ -97,6 +92,7 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     self.superpowerTokenExpired = NO;
     
     [self updateSuperpowerTokenToKeychain:nil];
+    [[Weibo sharedWeibo] saveCurrentState];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeStateChangedNotification object:self];
 }

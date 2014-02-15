@@ -61,7 +61,6 @@
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
     [authenticateWithAccount setOAuth2Token:token];
     [authenticateWithAccount setExpireTime:expiresIn];
-    [SSKeychain setPassword:token forService:[self keychainService] account:authenticateWithAccount.username];
     [authenticateWithAccount verifyCredentials:responseCallback];
 }
 

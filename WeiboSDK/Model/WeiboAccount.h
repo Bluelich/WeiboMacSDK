@@ -96,7 +96,7 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount;
 - (WeiboAPI *)request:(WTCallback *)callback;
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback;
-- (WeiboAPI *)authenticatedRequestWithCallback:(WTCallbackBlock)block;
+- (WeiboAPI *)authenticatedRequestWithCompletion:(WTCallbackBlock)completion;
 
 #pragma mark -
 #pragma mark Timeline

@@ -33,6 +33,7 @@
 #import "WeiboDirectMessagesConversationManager.h"
 #import "WeiboUserNotificationCenter.h"
 #import "Weibo.h"
+#import "WeiboCryptographer.h"
 
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
@@ -153,6 +154,12 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [encoder encodeBool:self.superpowerTokenExpired forKey:@"superpower-token-expired"];
     
     [encoder encodeObject:self.savedSearchKeywords forKey:@"saved-searches"];
+    
+    NSString * token = [[WeiboCryptographer sharedCryptographer] encryptText:self.oAuth2Token salt:[@(user.userID) stringValue]];
+    [encoder encodeObject:token forKey:@"token"];
+    
+    NSString * superpowerToken = [[WeiboCryptographer sharedCryptographer] encryptText:self.superpowerToken salt:[@(user.userID) stringValue]];
+    [encoder encodeObject:superpowerToken forKey:@"superpower-token"];
 }
 - (id)initWithCoder:(NSCoder *)decoder
 {
@@ -186,12 +193,31 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         
         if (userID)
         {
-            NSString * keyChainAccount = [[self class] keyChainAccountForUserID:userID];
+            NSString * token = [decoder decodeObjectForKey:@"token"];
+            token = [[WeiboCryptographer sharedCryptographer] decryptText:token salt:[@(userID) stringValue]];
+            self.oAuth2Token = token;
             
-            self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
-                                                      account:keyChainAccount];
+            if (!self.oAuth2Token.length)
+            {
+                // old versions migration
+                NSString * keyChainAccount = [[self class] keyChainAccountForUserID:userID];
+                
+                self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
+                                                          account:keyChainAccount];
+            }
+            if (!self.oAuth2Token.length)
+            {
+                self.oAuth2Token = @"can_not_restore_token"; // fake value, we should treat this situation like token is expired.
+            }
             
-            [self restoreSuperpowerTokenFromKeychain];
+            NSString * superpowerToken = [decoder decodeObjectForKey:@"superpower-token"];;
+            superpowerToken = [[WeiboCryptographer sharedCryptographer] decryptText:superpowerToken salt:[@(userID) stringValue]];
+            self.superpowerToken = superpowerToken;
+            
+            if (!self.superpowerToken)
+            {
+                [self restoreSuperpowerTokenFromKeychain];
+            }
         }
         
         
@@ -355,9 +381,9 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback{
     return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
 }
-- (WeiboAPI *)authenticatedRequestWithCallback:(WTCallbackBlock)block
+- (WeiboAPI *)authenticatedRequestWithCompletion:(WTCallbackBlock)completion
 {
-    return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:WTBlockCallback(block, nil)];
+    return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self completion:completion];
 }
 
 - (NSMutableArray *)keywordFilters
