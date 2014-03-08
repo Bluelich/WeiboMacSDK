@@ -306,6 +306,13 @@ static Weibo * _sharedWeibo = nil;
     return NO;
 }
 
+- (WeiboAccount *)accountAtIndex:(NSUInteger)index
+{
+    if (index >= accounts.count) return nil;
+    
+    return accounts[index];
+}
+
 - (WeiboAccount *)accountWithUsername:(NSString *)aUsername{
     for (WeiboAccount * account in accounts) {
         if ([account.username isEqualToString:aUsername]) {

@@ -44,6 +44,7 @@ extern NSString * const WeiboDidHeartbeatNotification;
 - (void)addAccount:(WeiboAccount *)aAccount;
 - (void)removeAccount:(WeiboAccount *)aAccount;
 - (BOOL)containsAccount:(WeiboAccount *)aAccount;
+- (WeiboAccount *)accountAtIndex:(NSUInteger)index;
 - (WeiboAccount *)accountWithUsername:(NSString *)aUsername;
 - (WeiboAccount *)accountWithUserID:(WeiboUserID)userID;
 
