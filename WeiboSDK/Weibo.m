@@ -227,11 +227,9 @@ static Weibo * _sharedWeibo = nil;
             if (existIndex != NSNotFound)
             {
                 // account exist, update it.
-                
-                [[account retain] autorelease];
-                [self.accounts removeObjectAtIndex:existIndex];
-                [self.accounts insertObject:account atIndex:existIndex];
-                
+                WeiboAccount * existAccount = self.accounts[existIndex];
+                [existAccount updateWithAccount:account];
+                [existAccount forceRefreshTimelines];
                 [self saveCurrentState];
             }
             else

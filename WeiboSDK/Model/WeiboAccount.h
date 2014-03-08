@@ -94,6 +94,7 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 #pragma mark Core Methods
 - (NSString *)keychainService;
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount;
+- (void)updateWithAccount:(WeiboAccount *)account;
 - (WeiboAPI *)request:(WTCallback *)callback;
 - (WeiboAPI *)authenticatedRequest:(WTCallback *)callback;
 - (WeiboAPI *)authenticatedRequestWithCompletion:(WTCallbackBlock)completion;

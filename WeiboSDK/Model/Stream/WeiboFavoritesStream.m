@@ -64,22 +64,21 @@
 }
 
 - (void)_loadNewer{
-    // This should not be called
-}
-- (void)loadNewer{
-    [self loadOlder];
+    WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];
+    [api favoritesForPage:1 count:50];
 }
 - (void)_loadOlder{
     WeiboAPI * api = [account authenticatedRequest:[self loadOlderResponseCallback]];
-    [api favoritesForPage:loadedPage+1 count:[self hasData]?100:20];
+    [api favoritesForPage:loadedPage+1 count:50];
 }
 
 - (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type{
-    loadedPage++;
+    if ((!self.hasData && type == WeiboStatusesAddingTypePrepend) ||
+        type == WeiboStatusesAddingTypeAppend)
+    {
+        loadedPage++;
+    }
     [super addStatuses:newStatuses withType:type];
-}
-- (BOOL)canLoadNewer{
-    return NO;
 }
 - (BOOL)supportsFillingInGaps{
     return NO;

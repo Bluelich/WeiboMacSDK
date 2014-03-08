@@ -229,6 +229,18 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     return self;
 }
 
+- (void)updateWithAccount:(WeiboAccount *)account
+{
+    if (![self.user isEqual:account.user]) return;
+    
+    self.oAuth2Token = account.oAuth2Token;
+    self.user = account.user;
+    self.oAuthToken = account.oAuthToken;
+    self.oAuthTokenSecret = account.oAuthTokenSecret;
+    self.tokenExpired = account.tokenExpired;
+    self.expireTime = account.expireTime;
+}
+
 - (void)willSaveToDisk
 {
     [self saveDirectMessages];
