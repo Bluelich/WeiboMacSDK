@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
+#import "WeiboTextAttributes.h"
 
-@class WTActiveTextRanges, WeiboUser, WeiboLayoutCache;
+@class WeiboUser, WeiboLayoutCache;
 
 @interface WeiboBaseStatus : NSObject {
     time_t createdAt;
@@ -37,7 +38,7 @@
 @property (nonatomic, retain) NSArray * pics;
 
 @property (nonatomic, readonly) NSString * displayText;
-@property (retain, nonatomic) WTActiveTextRanges * activeRanges;
+@property (nonatomic, retain, readonly) WeiboTextAttributes * textAttributes;
 
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;

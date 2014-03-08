@@ -7,13 +7,13 @@
 //
 
 #import "WeiboBaseStatus.h"
-#import "WTActiveTextRanges.h"
 #import "ABActiveRange.h"
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
 
 @interface WeiboBaseStatus ()
 
+@property (nonatomic, retain) WeiboTextAttributes * textAttributes;
 
 @end
 
@@ -21,19 +21,18 @@
 @synthesize createdAt, text, sid, user;
 @synthesize thumbnailPic, originalPic, middlePic;
 @synthesize wasSeen, isComment;
-@synthesize activeRanges = _activeRanges;
 @synthesize quoted = _quoted;
 
 - (void)dealloc
 {
     [text release]; text = nil;
-    [_activeRanges release], _activeRanges = nil;
     [user release], user = nil;
     [_layoutCaches release], _layoutCaches = nil;
     [thumbnailPic release], thumbnailPic = nil;
     [middlePic release], middlePic = nil;
     [originalPic release], originalPic = nil;
     [_pics release], _pics = nil;
+    [_textAttributes release], _textAttributes = nil;
     [super dealloc];
 }
 
@@ -52,10 +51,11 @@
     self = [self _initWithDictionary:dic];
     if (self)
     {
-        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.displayText] autorelease];
+        self.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.displayText] autorelease];
+        
         if (!self.quoted && self.quotedBaseStatus)
         {
-            self.quotedBaseStatus.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.quotedBaseStatus.displayText] autorelease];
+            self.quotedBaseStatus.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.quotedBaseStatus.displayText] autorelease];
         }
     }
     return self;

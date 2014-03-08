@@ -40,7 +40,7 @@
     }
     else if (self.highlightMentions)
     {
-        if ([status.activeRanges.usernames containsObject:self.screenname])
+        if ([status.textAttributes.activeRanges.usernames containsObject:self.screenname])
         {
             status.isSpecial = YES;
         }
