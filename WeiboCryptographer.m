@@ -41,18 +41,32 @@
     if (!text) return nil;
     
     NSString * key = [self cryptoKeyWithSalt:salt];
+    NSString * resultString = nil;
     
-    CocoaSecurityResult * result = [CocoaSecurity aesEncrypt:text key:key];
-    return result.base64;
+    @try {
+        CocoaSecurityResult * result = [CocoaSecurity aesEncrypt:text key:key];
+        resultString = result.base64;
+    }
+    @catch (NSException *exception) {
+        resultString = nil;
+    }
+    return resultString;
 }
 - (NSString *)decryptText:(NSString *)text salt:(NSString *)salt
 {
     if (!text) return nil;
     
     NSString * key = [self cryptoKeyWithSalt:salt];
+    NSString * resultString = nil;
     
-    CocoaSecurityResult * result = [CocoaSecurity aesDecryptWithBase64:text key:key];
-    return result.utf8String;
+    @try {
+        CocoaSecurityResult * result = [CocoaSecurity aesDecryptWithBase64:text key:key];
+        resultString = result.utf8String;
+    }
+    @catch (NSException *exception) {
+        resultString = nil;
+    }
+    return resultString;
 }
 
 @end
