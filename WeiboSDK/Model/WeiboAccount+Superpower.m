@@ -38,6 +38,10 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
 {
     return [WeiboSuperpowerAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
 }
+- (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WTCallbackBlock)completion
+{
+    return [self authenticatedSuperpowerRequest:WTBlockCallback(completion, nil)];
+}
 
 - (void)authorizeSuperpowerWithUsername:(NSString *)aUsername password:(NSString *)aPassword
 {
