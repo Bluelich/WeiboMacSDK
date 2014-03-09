@@ -174,13 +174,19 @@
 }
 
 #pragma mark - Like
+- (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count
+{
+    [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WTBlockCallback(^(id responseObject, id info) {
+#warning parse statuses here
+    }, nil)];
+}
 - (void)likeStatusID:(WeiboStatusID)statusID
 {
-    [self POST:@"attitudes/create.json" parameters:@{@"id": @(statusID)} callback:[self likeActionCallback]];
+    [self POST:@"attitudes/create.json" parameters:@{@"id": @(statusID), @"attitude": @"heart"} callback:[self likeActionCallback]];
 }
 - (void)unlikeStatusID:(WeiboStatusID)statusID
 {
-    [self POST:@"attitudes/destroy.json" parameters:@{@"id": @(statusID)} callback:[self likeActionCallback]];
+    [self POST:@"attitudes/destroy.json" parameters:@{@"id": @(statusID), @"attitude": @"heart"} callback:[self likeActionCallback]];
 }
 - (WTCallback *)likeActionCallback
 {

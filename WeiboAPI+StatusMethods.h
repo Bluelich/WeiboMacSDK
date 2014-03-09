@@ -40,6 +40,7 @@
 
 #pragma mark - 
 #pragma mark Like
+- (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count;
 - (void)likeStatusID:(WeiboStatusID)statusID;
 - (void)unlikeStatusID:(WeiboStatusID)statusID;
 
