@@ -170,6 +170,7 @@
         
         
         self.favorited = [dic boolForKey:@"favorited" defaultValue:NO];
+        self.liked = NO; // we don't have like state
         self.truncated = [dic boolForKey:@"truncated" defaultValue:NO];
         self.inReplyToStatusID = [dic longlongForKey:@"in_reply_to_status_id" defaultValue:-1];
 		self.inReplyToUserID = [dic intForKey:@"in_reply_to_user_id" defaultValue:-1];

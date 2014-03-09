@@ -915,6 +915,31 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [api favoriteStatusID:status.sid];
     }
 }
+
+- (void)toggleLikeOfStatus:(WeiboStatus *)status
+{
+    BOOL shouldUnlike = status.liked;
+    
+    status.liked = !status.liked;
+    
+    WeiboAPI * api = [self authenticatedSuperpowerRequestWithCompletion:^(id responseObject, id info) {
+        if ([responseObject isKindOfClass:[WeiboRequestError class]])
+        {
+            status.liked = shouldUnlike;
+#warning Posts notification here
+        }
+    }];
+    
+    if (shouldUnlike)
+    {
+        [api unlikeStatusID:status.sid];
+    }
+    else
+    {
+        [api likeStatusID:status.sid];
+    }
+}
+
 - (void)favoriteActionResponse:(id)response info:(id)info
 {
     WeiboStatus * status = info[@"status"];

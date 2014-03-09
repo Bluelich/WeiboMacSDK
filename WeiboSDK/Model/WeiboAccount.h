@@ -137,6 +137,7 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 - (WeiboRepostsStream *)repostsStreamForStatus:(WeiboStatus *)status;
 
 - (void)toggleFavoriteOfStatus:(WeiboStatus *)status;
+- (void)toggleLikeOfStatus:(WeiboStatus *)status;
 
 - (BOOL)hasFreshTweets;
 - (BOOL)hasFreshMentions;

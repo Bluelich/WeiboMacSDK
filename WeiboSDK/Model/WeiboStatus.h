@@ -29,6 +29,7 @@
 @property (assign, nonatomic) WeiboStatusID inReplyToStatusID;
 @property (retain, nonatomic) WeiboGeotag * geo;
 @property (assign, nonatomic) BOOL favorited;
+@property (assign, nonatomic) BOOL liked;
 @property (assign, nonatomic) WeiboUserID inReplyToUserID;
 @property (assign, nonatomic) NSString * inReplyToScreenname;
 @property (retain, nonatomic) NSString * source;

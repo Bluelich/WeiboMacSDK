@@ -38,6 +38,11 @@
 - (void)favoriteStatusID:(WeiboStatusID)statusID;
 - (void)unfavoriteStatusID:(WeiboStatusID)statusID;
 
+#pragma mark - 
+#pragma mark Like
+- (void)likeStatusID:(WeiboStatusID)statusID;
+- (void)unlikeStatusID:(WeiboStatusID)statusID;
+
 #pragma mark -
 #pragma mark Search
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count;

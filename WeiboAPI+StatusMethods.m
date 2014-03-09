@@ -173,6 +173,22 @@
     [responseCallback invoke:responseObject];
 }
 
+#pragma mark - Like
+- (void)likeStatusID:(WeiboStatusID)statusID
+{
+    [self POST:@"attitudes/create.json" parameters:@{@"id": @(statusID)} callback:[self likeActionCallback]];
+}
+- (void)unlikeStatusID:(WeiboStatusID)statusID
+{
+    [self POST:@"attitudes/destroy.json" parameters:@{@"id": @(statusID)} callback:[self likeActionCallback]];
+}
+- (WTCallback *)likeActionCallback
+{
+    return WTBlockCallback(^(id responseObject, id info) {
+        [responseCallback invoke:responseObject];
+    }, nil);
+}
+
 #pragma mark -
 #pragma mark Trends
 - (void)trendStatusesWithTrend:(NSString *)keyword page:(NSUInteger)page count:(NSUInteger)count{
