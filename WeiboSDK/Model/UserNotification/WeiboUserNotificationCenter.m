@@ -172,7 +172,7 @@ static BOOL AtLeaseMavericks    = NO;
         WeiboUser * user = status.user;
         WeiboUserNotificationItemType type = 0;
         
-        BOOL isCommentMention = [status isKindOfClass:[WeiboComment class]];
+        BOOL isCommentMention = status.isComment;
         
         if (mentions.count > 1)
         {

@@ -26,7 +26,6 @@
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic;
 + (WeiboComment *)commentWithJSON:(NSString *)json;
-+ (NSArray *)commentsWithJSON:(NSString *)json;
 + (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback;
 + (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback;
 

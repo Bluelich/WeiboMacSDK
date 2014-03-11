@@ -98,17 +98,14 @@
     
     return statuses;
 }
+
++ (NSArray *)objectsWithJSON:(NSString *)json
+{
+    return [self statusesWithJSON:json];
+}
+
 + (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback{
-    [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSArray * statuses = [self statusesWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:statuses];
-            [json release];
-            [NSString clearStringCache];
-        });
-    });
+    [self parseObjectsJSON:json callback:callback];
 }
 + (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
@@ -122,13 +119,12 @@
     });
 }
 
-- (WeiboStatus *)_initWithDictionary:(NSDictionary *)dic{
-    if (self = [super init]) {
+- (WeiboStatus *)_initWithDictionary:(NSDictionary *)dic
+{
+    if ((self = [super _initWithDictionary:dic]))
+    {
         
         self.treatRetweetedStatusAsQuoted = YES;
-        self.sid = [dic longlongForKey:@"id" defaultValue:-1];
-		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
-		self.text = [dic stringForKey:@"text" defaultValue:@""];
         
         // parse source parameter
 		NSString *src = [dic stringForKey:@"source" defaultValue:nil];
@@ -209,10 +205,6 @@
             [picture release];
         }
         
-        NSDictionary* userDic = [dic objectForKey:@"user"];
-		if (userDic && ![userDic isKindOfClass:[NSNull class]]) {
-			self.user = [WeiboUser userWithDictionary:userDic];
-		}
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];
 		if (retweetedStatusDic) {
             WeiboStatus * retweeted = [[WeiboStatus alloc] _initWithDictionary:retweetedStatusDic];

@@ -26,35 +26,19 @@
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic{
-    return [[[WeiboComment alloc] initWithDictionary:dic] autorelease];
+    return [[[self alloc] initWithDictionary:dic] autorelease];
 }
 + (WeiboComment *)commentWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
     WeiboComment * comment = [WeiboComment commentWithDictionary:dictionary];
     return comment;
 }
-+ (NSArray *)commentsWithJSON:(NSString *)json{
-    NSDictionary * dict = [json objectFromJSONString];
-    NSArray * dictionaries = [dict objectForKey:@"comments"];
-    
-    NSMutableArray * comments = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries) {
-        WeiboComment * comment = [WeiboComment commentWithDictionary:dic];
-        [comments addObject:comment];
-    }
-    
-    return comments;
++ (NSString *)objectsJSONKey
+{
+    return @"comments";
 }
 + (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback{
-    [json retain];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSArray * comments = [self commentsWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:comments];
-            [json release];
-        });
-    });
+    [self parseObjectsJSON:json callback:callback];
 }
 + (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback{
     [json retain];
@@ -68,20 +52,14 @@
     });
 }
 
-- (id)_initWithDictionary:(NSDictionary *)dic{
-    if (self = [super init]) {
+- (id)_initWithDictionary:(NSDictionary *)dic
+{
+    if ((self = [super _initWithDictionary:dic]))
+    {
         
         self.treatReplyingStatusAsQuoted = YES;
         self.treatReplyingCommentAsQuoted = YES;
         
-        self.sid = [dic longlongForKey:@"id" defaultValue:-1];
-		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
-		self.text = [dic stringForKey:@"text" defaultValue:@""];
-        
-        NSDictionary* userDic = [dic objectForKey:@"user"];
-		if (userDic) {
-			self.user = [WeiboUser userWithDictionary:userDic];
-		}
 		NSDictionary* statusDic = [dic objectForKey:@"status"];
         WeiboStatus * status = [[WeiboStatus alloc] initWithDictionary:statusDic];
 		if (statusDic)
@@ -103,6 +81,10 @@
 }
 
 - (BOOL)isComment
+{
+    return YES;
+}
+- (BOOL)canHaveConversation
 {
     return YES;
 }

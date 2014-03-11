@@ -27,6 +27,7 @@
 #import "WeiboUserTimelineStream.h"
 #import "WeiboRepliesStream.h"
 #import "WeiboRepostsStream.h"
+#import "WeiboLikesStream.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
@@ -194,29 +195,49 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         if (userID)
         {
             NSString * token = [decoder decodeObjectForKey:@"token"];
+            
+            NSLog(@"<Token> decoder中存储的token为: %@", token);
+            
             token = [[WeiboCryptographer sharedCryptographer] decryptText:token salt:[@(userID) stringValue]];
+            
+            NSLog(@"<Token> 解密后的token为: %@", token);
+            
             self.oAuth2Token = token;
             
             if (!self.oAuth2Token.length)
             {
+                NSLog(@"<Token> 将从keyChain恢复token");
+                
                 // old versions migration
                 NSString * keyChainAccount = [[self class] keyChainAccountForUserID:userID];
                 
                 self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
                                                           account:keyChainAccount];
+                
+                NSLog(@"<Token> keychain恢复的token为:%@", self.oAuth2Token);
             }
             if (!self.oAuth2Token.length)
             {
                 self.oAuth2Token = @"can_not_restore_token"; // fake value, we should treat this situation like token is expired.
+                NSLog(@"<Token> 已使用过期token:%@", self.oAuth2Token);
             }
             
             NSString * superpowerToken = [decoder decodeObjectForKey:@"superpower-token"];;
+            NSLog(@"<Token> decoder中存储的superpower-token为: %@", superpowerToken);
+
             superpowerToken = [[WeiboCryptographer sharedCryptographer] decryptText:superpowerToken salt:[@(userID) stringValue]];
+            
+            NSLog(@"<Token> 解密后的superpower-token为: %@", superpowerToken);
+            
             self.superpowerToken = superpowerToken;
             
             if (!self.superpowerToken)
             {
+                NSLog(@"<Token> 将尝试从keychain恢复superpower-token");
+                
                 [self restoreSuperpowerTokenFromKeychain];
+                
+                NSLog(@"<Token> 恢复后的superpower-token为: %@", superpowerToken);
             }
         }
         
@@ -885,6 +906,13 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [stream setAccount:self];
     return stream;
 }
+- (WeiboLikesStream *)likesStreamForStatus:(WeiboStatus *)status
+{
+    WeiboLikesStream * stream = [[WeiboLikesStream new] autorelease];
+    [stream setBaseStatus:status];
+    [stream setAccount:self];
+    return stream;
+}
 
 - (void)postStatusFavoriteStateChangedNotification:(WeiboStatus *)status
 {
@@ -1136,7 +1164,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     WeiboAPI * api = [self authenticatedRequest:nil];
     if ([status isKindOfClass:[WeiboStatus class]]) {
         [api destoryStatus:status.sid];
-    }else if ([status isKindOfClass:[WeiboComment class]]) {
+    }else if (status.isComment) {
         [api destoryComment:status.sid];
     }else {
         return;

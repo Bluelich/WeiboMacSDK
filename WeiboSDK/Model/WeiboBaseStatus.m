@@ -10,6 +10,9 @@
 #import "ABActiveRange.h"
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
+#import "WTCallback.h"
+#import "JSONKit.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 @interface WeiboBaseStatus ()
 
@@ -36,15 +39,30 @@
     [super dealloc];
 }
 
-- (id)init{
-    if (self = [super init]) {
+- (id)init
+{
+    if (self = [super init])
+    {
         wasSeen = NO;
         self.layoutCaches = [NSMutableDictionary dictionary];
     }
     return self;
 }
-- (id)_initWithDictionary:(NSDictionary *)dic{
-    return [self init];
+- (id)_initWithDictionary:(NSDictionary *)dic
+{
+    if (self = [self init])
+    {
+        self.sid = [dic longlongForKey:@"id" defaultValue:-1];
+		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
+		self.text = [dic stringForKey:@"text" defaultValue:@""];
+        
+        NSDictionary* userDic = [dic objectForKey:@"user"];
+		if (userDic && [userDic isKindOfClass:[NSDictionary class]])
+        {
+			self.user = [WeiboUser userWithDictionary:userDic];
+		}
+    }
+    return self;
 }
 - (id)initWithDictionary:(NSDictionary *)dic
 {
@@ -71,8 +89,17 @@
     }
 }
 
-- (BOOL)isComment{
+- (BOOL)isComment
+{
     return NO;
+}
+- (BOOL)canHaveConversation
+{
+    return NO;
+}
+- (BOOL)canReply
+{
+    return YES;
 }
 
 - (WeiboBaseStatus *)quotedBaseStatus
@@ -146,6 +173,36 @@
 - (BOOL)isGap
 {
     return NO;
+}
+
++ (NSString *)objectsJSONKey
+{
+    return @"statuses";
+}
+
++ (NSArray *)objectsWithJSON:(NSString *)json
+{
+    NSDictionary * jsonObject = [json objectFromJSONString];
+    NSArray * dictionaries = [jsonObject objectForKey:[self objectsJSONKey]];
+    
+    NSMutableArray * statuses = [NSMutableArray array];
+    for (NSDictionary * dic in dictionaries)
+    {
+        WeiboBaseStatus * status = [[[self class] alloc] initWithDictionary:dic];
+        [statuses addObject:status];
+    }
+    
+    return statuses;
+}
++ (void)parseObjectsJSON:(NSString *)json callback:(WTCallback *)callback
+{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
+        NSArray * statuses = [self objectsWithJSON:json];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [callback invoke:statuses];
+        });
+    });
 }
 
 @end

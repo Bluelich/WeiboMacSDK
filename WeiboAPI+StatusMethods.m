@@ -10,6 +10,7 @@
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboStatus.h"
 #import "WeiboList.h"
+#import "WeiboLikeStatus.h"
 #import "NSArray+WeiboAdditions.h"
 
 @implementation WeiboAPI (StatusMethods)
@@ -177,7 +178,7 @@
 - (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count
 {
     [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WTBlockCallback(^(id responseObject, id info) {
-#warning parse statuses here
+        [WeiboLikeStatus parseObjectsJSON:responseObject callback:responseCallback];
     }, nil)];
 }
 - (void)likeStatusID:(WeiboStatusID)statusID
@@ -383,7 +384,7 @@
     else if (composition.replyToStatus)
     {
         WeiboStatusID toSID = composition.replyToStatus.sid, toCID = 0;
-        if ([composition.replyToStatus isKindOfClass:[WeiboComment class]])
+        if ([composition.replyToStatus isComment])
         {
             WeiboComment * comment = (WeiboComment *)composition.replyToStatus;
             toCID = toSID;

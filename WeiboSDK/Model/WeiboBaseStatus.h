@@ -10,7 +10,7 @@
 #import "WeiboConstants.h"
 #import "WeiboTextAttributes.h"
 
-@class WeiboUser, WeiboLayoutCache;
+@class WeiboUser, WeiboLayoutCache, WTCallback;
 
 @interface WeiboBaseStatus : NSObject {
     time_t createdAt;
@@ -42,6 +42,8 @@
 
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;
+@property (readonly, nonatomic) BOOL canHaveConversation;
+@property (readonly, nonatomic) BOOL canReply;
 @property (nonatomic, assign) BOOL isSpecial;
 @property (nonatomic, assign) BOOL isTopStatus;
 @property (nonatomic, assign) BOOL isAdvertisement;
@@ -56,5 +58,11 @@
 
 - (WeiboLayoutCache *)layoutCacheWithIdentifier:(NSString *)identifier;
 - (void)removeLayoutCacheWithIdentifier:(NSString *)identifier;
+
+- (id)_initWithDictionary:(NSDictionary *)dic;
+
++ (NSString *)objectsJSONKey;
++ (NSArray *)objectsWithJSON:(NSString *)json;
++ (void)parseObjectsJSON:(NSString *)json callback:(WTCallback *)callback;
 
 @end
