@@ -68,4 +68,25 @@
     }
 }
 
+#pragma mark - WeiboModelPersistence
+
++ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
+{
+    WeiboAccountStream * stream = [[[self class] new] autorelease];
+    
+    stream.account = account;
+    
+    return stream;
+}
+
+- (id)persistenceInfo
+{
+    return nil;
+}
+
+- (WeiboUserID)persistenceAccountID
+{
+    return self.account.user.userID;
+}
+
 @end

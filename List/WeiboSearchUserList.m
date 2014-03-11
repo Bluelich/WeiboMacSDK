@@ -47,4 +47,24 @@
     [super didAddUsers:users prepend:prepend];
 }
 
+#pragma mark - WeiboModelPersistence
+
++ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
+{
+    WeiboSearchUserList * list = [[[self class] new] autorelease];
+    
+    list.user = [[WeiboUser new] autorelease];
+    list.user.userID = [info[@"userID"] longLongValue];
+    list.keyword = info[@"keyword"];
+    list.account = account;
+    
+    return list;
+}
+
+- (id)persistenceInfo
+{
+    NSString * keyword = self.keyword ? : @"";
+    return @{@"userID": @(self.user.userID), @"keyword": keyword};
+}
+
 @end

@@ -37,4 +37,22 @@
     return YES;
 }
 
++ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
+{
+    WeiboListStream * stream = [super objectWithPersistenceInfo:info forAccount:account];
+    
+    WeiboList * list = [[WeiboList new] autorelease];
+    list.listID = info[@"listID"];
+    list.name = info[@"name"];
+    
+    stream.list = list;
+    
+    return stream;
+}
+
+- (id)persistenceInfo
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:self.list.listID, @"listID", self.list.name, @"name", nil];
+}
+
 @end

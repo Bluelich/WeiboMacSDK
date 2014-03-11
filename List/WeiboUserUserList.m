@@ -216,4 +216,27 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     [self didAddUsers:toAdd prepend:loadingNew];
 }
 
+#pragma mark - WeiboModelPersistence
+
++ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
+{
+    WeiboUserUserList * list = [[[self class] new] autorelease];
+    
+    list.user = [[WeiboUser new] autorelease];
+    list.user.userID = [info longLongValue];
+    list.account = account;
+    
+    return list;
+}
+
+- (id)persistenceInfo
+{
+    return @(self.user.userID);
+}
+
+- (WeiboUserID)persistenceAccountID
+{
+    return self.account.user.userID;
+}
+
 @end

@@ -17,7 +17,7 @@ extern NSString * const WeiboUserUserListDidAddUserNotificationUsersKey;
 extern NSString * const WeiboUserUserListDidAddUserNotificationPrependKey;
 extern NSString * const WeiboUserUserListNotificationRequestErrorKey;
 
-@interface WeiboUserUserList : WeiboUserList
+@interface WeiboUserUserList : WeiboUserList <WeiboModelPersistence>
 
 @property (nonatomic, assign, readonly) WeiboUserID cursor;
 @property (nonatomic, retain) WeiboUser * user;

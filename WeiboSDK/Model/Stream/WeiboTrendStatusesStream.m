@@ -44,7 +44,20 @@
     return [[super autosaveName] stringByAppendingFormat:@"trend/%@.scrollPosition",self.trendName];
 }
 
+#pragma mark - WeiboModelPersistence
 
++ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
+{
+    WeiboTrendStatusesStream * stream = [super objectWithPersistenceInfo:info forAccount:account];
+    
+    stream.trendName = info;
+    
+    return stream;
+}
 
+- (id)persistenceInfo
+{
+    return self.trendName;
+}
 
 @end

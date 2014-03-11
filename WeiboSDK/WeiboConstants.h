@@ -103,3 +103,5 @@ typedef NS_ENUM(NSInteger, WeiboUserVerifiedType)
     WeiboUserVerifiedTypeWeiboGirl = 10,
     WeiboUserVerifiedTypeGrassroot = 220,
 };
+
+#import "WeiboModelPersistence.h"
