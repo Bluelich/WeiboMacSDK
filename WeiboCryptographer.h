@@ -18,3 +18,9 @@
 - (NSString *)decryptText:(NSString *)text salt:(NSString *)salt;
 
 @end
+
+@interface NSString (WeiboCryptographer)
+
+@property (nonatomic, readonly) NSString * stringForLogging;
+
+@end

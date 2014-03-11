@@ -41,6 +41,9 @@
     if (!text) return nil;
     
     NSString * key = [self cryptoKeyWithSalt:salt];
+    
+    NSLog(@"<Token> 将进行加密 text:%@, salt:%@, key:%@", text.stringForLogging, salt, key);
+    
     NSString * resultString = nil;
     
     @try {
@@ -50,6 +53,9 @@
     @catch (NSException *exception) {
         resultString = nil;
     }
+    
+    NSLog(@"<Token> 加密的结果为: %@", resultString);
+    
     return resultString;
 }
 - (NSString *)decryptText:(NSString *)text salt:(NSString *)salt
@@ -59,6 +65,8 @@
     NSString * key = [self cryptoKeyWithSalt:salt];
     NSString * resultString = nil;
     
+    NSLog(@"<Token> 将进行解密 text:%@, salt:%@, key:%@", text, salt, key);
+    
     @try {
         CocoaSecurityResult * result = [CocoaSecurity aesDecryptWithBase64:text key:key];
         resultString = result.utf8String;
@@ -66,7 +74,21 @@
     @catch (NSException *exception) {
         resultString = nil;
     }
+        
     return resultString;
+}
+
+@end
+
+@implementation NSString (WeiboCryptographer)
+
+- (NSString *)stringForLogging
+{
+    if (self.length > 8)
+    {
+        return [NSString stringWithFormat:@"%@****%@", [self substringToIndex:4], [self substringFromIndex:self.length - 4]];
+    }
+    return self;
 }
 
 @end

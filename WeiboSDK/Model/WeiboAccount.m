@@ -200,7 +200,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             
             token = [[WeiboCryptographer sharedCryptographer] decryptText:token salt:[@(userID) stringValue]];
             
-            NSLog(@"<Token> 解密后的token为: %@", token);
+            NSLog(@"<Token> 解密后的token为: %@", token.stringForLogging);
             
             self.oAuth2Token = token;
             
@@ -214,7 +214,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
                 self.oAuth2Token = [SSKeychain passwordForService:[self keychainService]
                                                           account:keyChainAccount];
                 
-                NSLog(@"<Token> keychain恢复的token为:%@", self.oAuth2Token);
+                NSLog(@"<Token> keychain恢复的token为:%@", self.oAuth2Token.stringForLogging);
             }
             if (!self.oAuth2Token.length)
             {
@@ -227,7 +227,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
             superpowerToken = [[WeiboCryptographer sharedCryptographer] decryptText:superpowerToken salt:[@(userID) stringValue]];
             
-            NSLog(@"<Token> 解密后的superpower-token为: %@", superpowerToken);
+            NSLog(@"<Token> 解密后的superpower-token为: %@", superpowerToken.stringForLogging);
             
             self.superpowerToken = superpowerToken;
             
@@ -237,7 +237,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
                 
                 [self restoreSuperpowerTokenFromKeychain];
                 
-                NSLog(@"<Token> 恢复后的superpower-token为: %@", superpowerToken);
+                NSLog(@"<Token> 恢复后的superpower-token为: %@", superpowerToken.stringForLogging);
             }
         }
         

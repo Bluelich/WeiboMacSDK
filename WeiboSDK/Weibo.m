@@ -15,6 +15,7 @@
 #import "WTCallback.h"
 #import "WTFileManager.h"
 #import "LocalAutocompleteDB.h"
+#import "WeiboCryptographer.h"
 
 NSString * const WeiboAccountSetDidChangeNotification = @"WeiboAccountSetDidChangeNotification";
 
@@ -61,16 +62,27 @@ static Weibo * _sharedWeibo = nil;
 - (void)restoreAccounts
 {
     NSData * accountData = [self accountData];
-
+    
+    NSLog(@"<Token> 恢复的accountData为: %@", accountData);
+    
     BOOL hasAccountRestored = NO;
     if (accountData) {
         NSArray * restoredAccounts = [NSKeyedUnarchiver unarchiveObjectWithData:accountData];
+        
+        NSLog(@"<Token> 恢复的account数组为: %@", restoredAccounts);
+        
         if ([restoredAccounts isKindOfClass:[NSArray class]]) {
             for (WeiboAccount * account in restoredAccounts) {
+                
+                NSLog(@"<Token> 正在验证account: %@", account);
+                
                 if (![account isKindOfClass:[WeiboAccount class]]) {
+                    NSLog(@"<Token> account类不正确");
                     continue;
                 }
                 if (account.oAuth2Token) {
+                    NSLog(@"<Token> account正在添加, token: %@", account.oAuth2Token.stringForLogging);
+                    
                     [self addAccount:account postsNotification:NO];
                     
                     [account didRestoreFromDisk];
