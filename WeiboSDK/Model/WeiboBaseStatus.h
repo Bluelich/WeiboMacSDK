@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
+#import "WeiboModel.h"
 #import "WeiboTextAttributes.h"
 
 @class WeiboUser, WeiboLayoutCache, WTCallback;
 
-@interface WeiboBaseStatus : NSObject {
+@interface WeiboBaseStatus : WeiboModel {
     time_t createdAt;
     NSString * text;
     WeiboStatusID sid;

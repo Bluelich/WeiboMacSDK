@@ -79,6 +79,22 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        self.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.displayText] autorelease];
+    }
+    return self;
+}
+
++ (NSMutableArray *)ignoredCodingProperties
+{
+    return [[@[@"textAttributes",
+               @"displayText",
+               @"layoutCaches"] mutableCopy] autorelease];
+}
+
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus{
     if (self.sid == otherStatus.sid) {
         return NSOrderedSame;
