@@ -14,8 +14,7 @@
 
 - (void)dealloc
 {
-    [_baseStatus release], _baseStatus = nil;
-    [super dealloc];
+    _baseStatus = nil;
 }
 
 - (void)_loadNewer

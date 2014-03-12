@@ -25,7 +25,7 @@ static LocalAutocompleteDB * sharedDB = nil;
 
 @interface LocalAutocompleteDB ()
 
-@property (nonatomic, retain) FMDatabaseQueue * dbQueue;
+@property (nonatomic, strong) FMDatabaseQueue * dbQueue;
 
 @end
 
@@ -53,7 +53,6 @@ static LocalAutocompleteDB * sharedDB = nil;
 + (void)resetDatabase
 {
     [self shutdown];
-    [sharedDB release];
     sharedDB = nil;
     NSString * path = [self databasePath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -81,9 +80,8 @@ static LocalAutocompleteDB * sharedDB = nil;
 - (void)dealloc
 {
     [self close];
-    [_dbQueue release], _dbQueue = nil;
+    _dbQueue = nil;
     
-    [super dealloc];
 }
 - (void)close
 {
@@ -111,7 +109,6 @@ static LocalAutocompleteDB * sharedDB = nil;
         [self.dbQueue inDatabase:^(FMDatabase *db) {
             sqlite3 * sqliteDB = [db sqliteHandle];
             sqlite3_exec(sqliteDB, [schema UTF8String], NULL, NULL, NULL);
-            [schema release];
         }];
     });
 }
@@ -273,7 +270,7 @@ static LocalAutocompleteDB * sharedDB = nil;
         return nil;
     }
     
-    __block NSMutableArray * resultArray = [NSMutableArray array];
+    __weak NSMutableArray * resultArray = [NSMutableArray array];
     
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         
@@ -289,7 +286,6 @@ static LocalAutocompleteDB * sharedDB = nil;
             [item setItemID:[rs stringForColumn:@"id"]];
             [item setAutocompleteType:type];
             [resultArray addObject:item];
-            [item release];
         }
         [rs close];
         
@@ -316,7 +312,6 @@ static LocalAutocompleteDB * sharedDB = nil;
             [result addObject:item];
         }
         
-        [item release];
     }
     
     return result;
@@ -324,7 +319,7 @@ static LocalAutocompleteDB * sharedDB = nil;
 
 - (NSArray *)resultsForPartialText:(NSString *)text serverMentionSuggestionJSONArray:(NSArray *)suggestionJSONArray
 {
-    NSMutableArray * results = [[[self resultsForPartialText:text type:WeiboAutocompleteTypeUser] mutableCopy] autorelease];
+    NSMutableArray * results = [[self resultsForPartialText:text type:WeiboAutocompleteTypeUser] mutableCopy];
     
     if ([suggestionJSONArray isKindOfClass:[NSArray class]] && suggestionJSONArray.count)
     {

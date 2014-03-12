@@ -18,8 +18,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [account release], account = nil;
-    [super dealloc];
+    account = nil;
 }
 
 - (instancetype)init
@@ -72,7 +71,7 @@
 
 + (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
 {
-    WeiboAccountStream * stream = [[[self class] new] autorelease];
+    WeiboAccountStream * stream = [[self class] new];
     
     stream.account = account;
     

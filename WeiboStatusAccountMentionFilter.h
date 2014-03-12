@@ -12,6 +12,6 @@
 
 @interface WeiboStatusAccountMentionFilter : WeiboStatusFilter
 
-@property (nonatomic, assign) WeiboAccount * account;
+@property (nonatomic, weak) WeiboAccount * account;
 
 @end

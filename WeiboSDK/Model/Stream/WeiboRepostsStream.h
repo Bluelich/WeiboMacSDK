@@ -12,6 +12,6 @@
 
 @interface WeiboRepostsStream : WeiboAccountStream
 
-@property (nonatomic, retain) WeiboStatus * baseStatus;
+@property (nonatomic, strong) WeiboStatus * baseStatus;
 
 @end

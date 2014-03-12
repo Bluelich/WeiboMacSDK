@@ -10,6 +10,6 @@
 
 @interface WeiboSearchUserList : WeiboUserUserList <WeiboModelPersistence>
 
-@property (nonatomic, retain) NSString * keyword;
+@property (nonatomic, strong) NSString * keyword;
 
 @end

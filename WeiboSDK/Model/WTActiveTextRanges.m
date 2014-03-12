@@ -16,36 +16,33 @@
 
 - (id)initWithString:(NSString *)string{
     if (self = [super init]) {
-        __block NSMutableArray * linksArray = [NSMutableArray array];
-        __block NSMutableArray * hashtagsArray = [NSMutableArray array];
-        __block NSMutableArray * usernamesArray = [NSMutableArray array];
-        __block NSMutableArray * rangesArray = [NSMutableArray array];
-        [string enumerateStringsMatchedByRegex:SHORT_LINK_REGEX usingBlock:^(NSInteger captureCount, NSString *const *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        __weak NSMutableArray * linksArray = [NSMutableArray array];
+        __weak NSMutableArray * hashtagsArray = [NSMutableArray array];
+        __weak NSMutableArray * usernamesArray = [NSMutableArray array];
+        __weak NSMutableArray * rangesArray = [NSMutableArray array];
+        [string enumerateStringsMatchedByRegex:SHORT_LINK_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
             ABFlavoredRange * range = [[ABFlavoredRange alloc] init];
             [range setRangeValue:capturedRanges[0]];
             //[range setDisplayString:capturedStrings[0]];
             [range setRangeFlavor:ABActiveTextRangeFlavorURL];
             [linksArray addObject:range];
             [rangesArray addObject:range];
-            [range release];
         }];
-        [string enumerateStringsMatchedByRegex:MENTION_REGEX usingBlock:^(NSInteger captureCount, NSString *const *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [string enumerateStringsMatchedByRegex:MENTION_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
             ABFlavoredRange * range = [[ABFlavoredRange alloc] init];
             [range setRangeValue:capturedRanges[0]];
             //[range setDisplayString:capturedStrings[1]];
             [range setRangeFlavor:ABActiveTextRangeFlavorTwitterUsername];
             [usernamesArray addObject:range];
             [rangesArray addObject:range];
-            [range release];
         }];
-        [string enumerateStringsMatchedByRegex:HASHTAG_REGEX usingBlock:^(NSInteger captureCount, NSString *const *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [string enumerateStringsMatchedByRegex:HASHTAG_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
             ABFlavoredRange * range = [[ABFlavoredRange alloc] init];
             [range setRangeValue:capturedRanges[0]];
             //[range setDisplayString:capturedStrings[1]];
             [range setRangeFlavor:ABActiveTextRangeFlavorTwitterHashtag];
             [hashtagsArray addObject:range];
             [rangesArray addObject:range];
-            [range release];
         }];
         links = [[NSArray alloc] initWithArray:linksArray];
         hashtags = [[NSArray alloc] initWithArray:hashtagsArray];
@@ -56,12 +53,5 @@
     return self;
 }
 
-- (void)dealloc{
-    [links release]; links = nil;
-    [hashtags release]; hashtags = nil;
-    [usernames release]; usernames = nil;
-    [activeRanges release]; activeRanges = nil;
-    [super dealloc];
-}
 
 @end

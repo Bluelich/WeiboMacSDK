@@ -40,7 +40,7 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
     WeiboFavoritesStream * favoritesStream;
     
     NSMutableArray *outbox;
-    id<WeiboAccountDelegate> _delegate;
+    id<WeiboAccountDelegate> __unsafe_unretained _delegate;
     WeiboNotificationOptions notificationOptions;
     NSMutableDictionary * userDetailsStreamsCache;
     
@@ -55,22 +55,22 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
     } _flags;
 }
 
-@property (assign, nonatomic) id<WeiboAccountDelegate> delegate;
+@property (unsafe_unretained, nonatomic) id<WeiboAccountDelegate> delegate;
 @property (readonly, nonatomic) NSString *username;
-@property (retain, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString *password;
 @property (copy, nonatomic) NSString *oAuthTokenSecret;
-@property (retain, nonatomic) NSString *oAuthToken;
-@property (retain, nonatomic) NSString *oAuth2Token;
+@property (strong, nonatomic) NSString *oAuthToken;
+@property (strong, nonatomic) NSString *oAuth2Token;
 @property (assign, nonatomic) BOOL tokenExpired;
 @property (assign, nonatomic) BOOL superpowerTokenExpired;
 @property (assign, nonatomic) NSTimeInterval expireTime;
-@property (retain, nonatomic) WeiboUser *user;
+@property (strong, nonatomic) WeiboUser *user;
 @property (readonly, nonatomic) NSString *apiRoot;
-@property (retain, nonatomic) NSImage * profileImage;
+@property (strong, nonatomic) NSImage * profileImage;
 @property (assign, nonatomic) WeiboNotificationOptions notificationOptions;
 
-@property (nonatomic, retain) NSString * superpowerToken;
-@property (nonatomic, retain, readonly) WeiboDirectMessagesConversationManager * directMessagesManager;
+@property (nonatomic, strong) NSString * superpowerToken;
+@property (nonatomic, strong, readonly) WeiboDirectMessagesConversationManager * directMessagesManager;
 
 #pragma mark -
 #pragma mark Life Cycle
@@ -193,13 +193,13 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 
 @property (nonatomic, assign) BOOL filterAdvertisements;
 
-@property (nonatomic, retain) NSMutableArray * keywordFilters;
-@property (nonatomic, retain) NSMutableArray * userFilters;
-@property (nonatomic, retain) NSMutableArray * clientFilters;
-@property (nonatomic, retain) NSMutableArray * userHighlighters;
+@property (nonatomic, strong) NSMutableArray * keywordFilters;
+@property (nonatomic, strong) NSMutableArray * userFilters;
+@property (nonatomic, strong) NSMutableArray * clientFilters;
+@property (nonatomic, strong) NSMutableArray * userHighlighters;
 
-@property (nonatomic, retain) WeiboStatusAccountMentionFilter * mentionHighlighter;
-@property (nonatomic, retain) WeiboStatusAdvertisementFilter * advertisementFilter;
+@property (nonatomic, strong) WeiboStatusAccountMentionFilter * mentionHighlighter;
+@property (nonatomic, strong) WeiboStatusAdvertisementFilter * advertisementFilter;
 
 @end
 

@@ -11,14 +11,14 @@
 
 @interface WeiboList : NSObject
 
-@property (nonatomic, retain) NSString * listID;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * mode;
+@property (nonatomic, strong) NSString * listID;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSString * mode;
 @property (nonatomic, assign) NSInteger memberCount;
-@property (nonatomic, retain) NSString * description;
+@property (nonatomic, strong) NSString * description;
 
-@property (nonatomic, assign) WeiboAccount * account;
-@property (nonatomic, retain, readonly) WeiboListStream * stream;
+@property (nonatomic, unsafe_unretained) WeiboAccount * account;
+@property (nonatomic, strong, readonly) WeiboListStream * stream;
 
 + (id)listWithDictionary:(NSDictionary *)dict;
 - (id)initWithDictionary:(NSDictionary *)dict;

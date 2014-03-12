@@ -15,7 +15,7 @@
     WeiboAccount * account;
 }
 
-@property (retain, nonatomic) WeiboAccount * account;
+@property (strong, nonatomic) WeiboAccount * account;
 
 - (WeiboBaseStatus *)newestStatusThatIsNotMine;
 

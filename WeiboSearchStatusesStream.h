@@ -10,6 +10,6 @@
 
 @interface WeiboSearchStatusesStream : WeiboAccountStream
 
-@property (nonatomic, retain) NSString * keyword;
+@property (nonatomic, strong) NSString * keyword;
 
 @end

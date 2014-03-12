@@ -14,8 +14,7 @@
 
 - (void)dealloc
 {
-    [_keyword release], _keyword = nil;
-    [super dealloc];
+    _keyword = nil;
 }
 
 - (void)_loadNewer

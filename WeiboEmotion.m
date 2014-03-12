@@ -14,16 +14,9 @@
 @synthesize phrase = _phrase, type = _type, url = _url;
 @synthesize hot = _hot, common = _common, category = _category;
 
-- (void)dealloc{
-    [_phrase release];
-    [_type release];
-    [_url release];
-    [_category release];
-    [super dealloc];
-}
 
 + (WeiboEmotion *)emotionWithDictionary:(NSDictionary *)dic{
-    return [[[[self class] alloc] initWithDictionary:dic] autorelease];
+    return [[[self class] alloc] initWithDictionary:dic];
 }
 + (WeiboEmotion *)emotionWithJSON:(NSString *)json{
     NSDictionary * dic = [json objectFromJSONString];
@@ -39,13 +32,11 @@
     return emotions;
 }
 + (void)parseEmotionsJSON:(NSString *)json callback:(WTCallback *)callback{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSArray * emotions = [self emotionsWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{
             [callback invoke:emotions];
-            [json release];
         });
     });
 }

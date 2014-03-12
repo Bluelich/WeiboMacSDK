@@ -18,7 +18,7 @@
 }
 
 @property (assign, nonatomic) NSTimeInterval cacheTime;
-@property (retain, nonatomic) NSMutableArray * statuses;
+@property (strong, nonatomic) NSMutableArray * statuses;
 @property (assign) NSUInteger savedCellIndex;
 @property (assign) double savedRelativeOffset;
 @property (assign) WeiboStatusID viewedMostRecentID;

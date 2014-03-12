@@ -27,7 +27,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     } _flags;
 }
 
-@property (nonatomic, retain) NSMutableArray * users;
+@property (nonatomic, strong) NSMutableArray * users;
 @property (nonatomic, assign) WeiboUserID cursor;
 
 @end
@@ -37,10 +37,9 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 
 - (void)dealloc
 {
-    [_users release], _users = nil;
-    [_user release], _user = nil;
-    [_account release], _account = nil;
-    [super dealloc];
+    _users = nil;
+    _user = nil;
+    _account = nil;
 }
 
 - (id)init
@@ -182,7 +181,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 
 - (void)_addUsers:(NSArray *)newUsers loadingNew:(BOOL)loadingNew totalCount:(NSInteger)totalCount
 {
-    NSMutableArray * toAdd = [[newUsers mutableCopy] autorelease];
+    NSMutableArray * toAdd = [newUsers mutableCopy];
     
     for (WeiboUser * user in _users)
     {
@@ -220,9 +219,9 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 
 + (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
 {
-    WeiboUserUserList * list = [[[self class] new] autorelease];
+    WeiboUserUserList * list = [[self class] new];
     
-    list.user = [[WeiboUser new] autorelease];
+    list.user = [WeiboUser new];
     list.user.userID = [info longLongValue];
     list.account = account;
     

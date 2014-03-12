@@ -63,7 +63,6 @@
         {
             WeiboDirectMessage * message = [[WeiboDirectMessage alloc] initWithDictionary:messageDict];
             [messages addObject:message];
-            [message release];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{

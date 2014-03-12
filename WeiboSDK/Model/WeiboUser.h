@@ -37,18 +37,18 @@
 }
 
 @property (assign, readwrite) WeiboUserID userID;
-@property (retain, readwrite) NSString * screenName;
-@property (retain, readwrite) NSString * name;
-@property (retain, readwrite) NSString * remark;
-@property (retain, readwrite) NSString * province;
-@property (retain, readwrite) NSString * city;
-@property (retain, readwrite) NSString * location;
-@property (retain, readwrite) NSString * description;
-@property (retain, readwrite) NSString * url;
-@property (retain, readwrite) NSString * profileImageUrl;
-@property (retain, readwrite) NSString * profileLargeImageUrl;
-@property (retain, readwrite) NSString * domain;
-@property (retain, readwrite) WeiboStatus * status;
+@property (strong, readwrite) NSString * screenName;
+@property (strong, readwrite) NSString * name;
+@property (strong, readwrite) NSString * remark;
+@property (strong, readwrite) NSString * province;
+@property (strong, readwrite) NSString * city;
+@property (strong, readwrite) NSString * location;
+@property (strong, readwrite) NSString * description;
+@property (strong, readwrite) NSString * url;
+@property (strong, readwrite) NSString * profileImageUrl;
+@property (strong, readwrite) NSString * profileLargeImageUrl;
+@property (strong, readwrite) NSString * domain;
+@property (strong, readwrite) WeiboStatus * status;
 @property (assign, readwrite) WeiboGender gender;
 @property (assign, readwrite) int followersCount;
 @property (assign, readwrite) int friendsCount;

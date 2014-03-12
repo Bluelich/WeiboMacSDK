@@ -20,11 +20,6 @@
 
 @implementation WeiboLikesStream
 
-- (void)dealloc
-{
-    self.baseStatus = nil;
-    [super dealloc];
-}
 
 - (void)_loadNewer
 {

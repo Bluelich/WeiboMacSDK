@@ -17,9 +17,9 @@
 
 - (id)initWithString:(NSString *)string;
 
-@property(readonly, nonatomic) NSArray * links;
-@property(readonly, nonatomic) NSArray * hashtags;
-@property(readonly, nonatomic) NSArray * usernames;
-@property(readonly, nonatomic) NSArray * activeRanges;
+@property(readonly, nonatomic, strong) NSArray * links;
+@property(readonly, nonatomic, strong) NSArray * hashtags;
+@property(readonly, nonatomic, strong) NSArray * usernames;
+@property(readonly, nonatomic, strong) NSArray * activeRanges;
 
 @end

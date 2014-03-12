@@ -16,7 +16,7 @@
 
 @interface WeiboBaseStatus ()
 
-@property (nonatomic, retain) WeiboTextAttributes * textAttributes;
+@property (nonatomic, strong) WeiboTextAttributes * textAttributes;
 
 @end
 
@@ -28,15 +28,13 @@
 
 - (void)dealloc
 {
-    [text release]; text = nil;
-    [user release], user = nil;
-    [_layoutCaches release], _layoutCaches = nil;
-    [thumbnailPic release], thumbnailPic = nil;
-    [middlePic release], middlePic = nil;
-    [originalPic release], originalPic = nil;
-    [_pics release], _pics = nil;
-    [_textAttributes release], _textAttributes = nil;
-    [super dealloc];
+    user = nil;
+    _layoutCaches = nil;
+    thumbnailPic = nil;
+    middlePic = nil;
+    originalPic = nil;
+    _pics = nil;
+    _textAttributes = nil;
 }
 
 - (id)init
@@ -69,11 +67,11 @@
     self = [self _initWithDictionary:dic];
     if (self)
     {
-        self.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.displayText] autorelease];
+        self.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.displayText];
         
         if (!self.quoted && self.quotedBaseStatus)
         {
-            self.quotedBaseStatus.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.quotedBaseStatus.displayText] autorelease];
+            self.quotedBaseStatus.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.quotedBaseStatus.displayText];
         }
     }
     return self;
@@ -83,16 +81,16 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        self.textAttributes = [[[WeiboTextAttributes alloc] initWithText:self.displayText] autorelease];
+        self.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.displayText];
     }
     return self;
 }
 
 + (NSMutableArray *)ignoredCodingProperties
 {
-    return [[@[@"textAttributes",
+    return [@[@"textAttributes",
                @"displayText",
-               @"layoutCaches"] mutableCopy] autorelease];
+               @"layoutCaches"] mutableCopy];
 }
 
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus{
@@ -147,7 +145,7 @@
     WeiboLayoutCache * cache = self.layoutCaches[identifier];
     if (!cache)
     {
-        cache = [[[WeiboLayoutCache alloc] init] autorelease];
+        cache = [[WeiboLayoutCache alloc] init];
         self.layoutCaches[identifier] = cache;
     }
     return cache;

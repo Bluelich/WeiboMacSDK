@@ -12,13 +12,13 @@
 
 @interface WeiboEmotion : NSObject
 
-@property (nonatomic, retain) NSString * phrase;
-@property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic, strong) NSString * phrase;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) NSString * url;
 @property (nonatomic, assign) BOOL hot;
 @property (nonatomic, assign) BOOL common;
-@property (nonatomic, retain) NSString * category;
-@property (nonatomic, readonly) NSString * fileName;
+@property (nonatomic, strong) NSString * category;
+@property (weak, nonatomic, readonly) NSString * fileName;
 
 + (WeiboEmotion *)emotionWithDictionary:(NSDictionary *)dic;
 + (WeiboEmotion *)emotionWithJSON:(NSString *)json;

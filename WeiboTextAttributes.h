@@ -12,9 +12,9 @@
 
 @interface WeiboTextAttributes : NSObject
 
-@property (nonatomic, retain, readonly) NSString * text;
-@property (nonatomic, retain, readonly) WTActiveTextRanges * activeRanges;
-@property (nonatomic, retain, readonly) NSAttributedString * attributedString;
+@property (nonatomic, strong, readonly) NSString * text;
+@property (nonatomic, strong, readonly) WTActiveTextRanges * activeRanges;
+@property (nonatomic, strong, readonly) NSAttributedString * attributedString;
 
 - (instancetype)initWithText:(NSString *)text;
 

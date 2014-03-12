@@ -14,8 +14,7 @@
 
 - (void)dealloc
 {
-    [_source release], _source = nil;
-    [super dealloc];
+    _source = nil;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder

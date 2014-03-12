@@ -13,10 +13,6 @@
 @implementation WeiboTrendStatusesStream
 @synthesize trendName = _trendName;
 
-- (void)dealloc{
-    [_trendName release];
-    [super dealloc];
-}
 
 - (void)_loadNewer{
     WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];

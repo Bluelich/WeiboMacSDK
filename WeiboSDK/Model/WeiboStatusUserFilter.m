@@ -14,8 +14,7 @@
 
 - (void)dealloc
 {
-    [_screenname release], _screenname = nil;
-    [super dealloc];
+    _screenname = nil;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder

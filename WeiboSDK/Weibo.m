@@ -102,8 +102,6 @@ static Weibo * _sharedWeibo = nil;
 - (void)dealloc{
     [heartbeatTimer invalidate];
     [cachePruningTimer invalidate];
-    [accounts release];
-    [super dealloc];
 }
 
 - (void)heartbeat:(id)sender
@@ -184,7 +182,6 @@ static Weibo * _sharedWeibo = nil;
     WeiboAccount * account = [[WeiboAccount alloc] initWithUsername:aUsername password:aPassword];
     WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:account.apiRoot account:account callback:callback];
     [api clientAuthRequestAccessToken];
-    [account autorelease];
 }
 - (void)didSignIn:(id)response info:(id)info
 {
@@ -197,7 +194,7 @@ static Weibo * _sharedWeibo = nil;
 #define kWeiboAccessTokenVerifingCallbackKey @"kWeiboAccessTokenVerifingCallbackKey"
 - (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WTCallback *)aCallback
 {
-    WeiboAccount * account = [[[WeiboAccount alloc] initWithUserID:userID oAuth2Token:accessToken] autorelease];
+    WeiboAccount * account = [[WeiboAccount alloc] initWithUserID:userID oAuth2Token:accessToken];
     
     account.expireTime = expireTime;
     
@@ -354,10 +351,9 @@ static Weibo * _sharedWeibo = nil;
     if (fromIndex >= [accounts count] || toIndex >= [accounts count]) {
         return;
     }
-    WeiboAccount * accountToMove = [[accounts objectAtIndex:fromIndex] retain];
+    WeiboAccount * accountToMove = [accounts objectAtIndex:fromIndex];
     [accounts removeObject:accountToMove];
     [accounts insertObject:accountToMove atIndex:toIndex];
-    [accountToMove release];
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSetDidChangeNotification object:nil];
 }
 
@@ -419,7 +415,6 @@ static NSString * _keychainService = nil;
 + (void)setGlobalKeychainService:(NSString *)service
 {
     [service copy];
-    [_keychainService release];
     _keychainService = service;
 }
 

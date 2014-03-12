@@ -16,7 +16,7 @@
 @property (nonatomic, assign) NSTimeInterval expireTime;
 
 @property (nonatomic, assign, readonly) NSTimeInterval duration;
-@property (nonatomic, retain, readonly) NSString * title;
+@property (nonatomic, strong, readonly) NSString * title;
 
 @property (nonatomic, assign) BOOL filterQuotedStatus;
 

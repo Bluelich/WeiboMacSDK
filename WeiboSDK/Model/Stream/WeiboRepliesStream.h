@@ -14,6 +14,6 @@
     WeiboStatus * baseStatus;
 }
 
-@property (retain, nonatomic) WeiboStatus * baseStatus;
+@property (strong, nonatomic) WeiboStatus * baseStatus;
 
 @end

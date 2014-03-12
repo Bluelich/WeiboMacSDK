@@ -35,6 +35,8 @@
 #import "WeiboUserNotificationCenter.h"
 #import "Weibo.h"
 #import "WeiboCryptographer.h"
+#import "WeiboStatusAdvertisementFilter.h"
+#import "WeiboStatusAccountMentionFilter.h"
 
 #import "NSArray+WeiboAdditions.h"
 #import "WTCallback.h"
@@ -53,8 +55,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
 @interface WeiboAccount ()
 
-@property (nonatomic, retain) WeiboDirectMessagesConversationManager * directMessagesManager;
-@property (nonatomic, retain) NSMutableArray * savedSearchKeywords;
+@property (nonatomic, strong) WeiboDirectMessagesConversationManager * directMessagesManager;
+@property (nonatomic, strong) NSMutableArray * savedSearchKeywords;
 
 @end
 
@@ -69,37 +71,21 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 #pragma mark Life Cycle
 - (void)dealloc
 {
-    [username release]; 
-    [password release];
-    [apiRoot release];
-    [oAuthToken release];
-    [oAuthTokenSecret release];
-    [_oAuth2Token release];
-    [user release];
-    [usersByUsername release];
-    [timelineStream release];
-    [statusMentionsStream release];
-    [commentMentionsStream release];
-    [commentsToMeStream release];
-    [commentsByMeStream release];
-    [favoritesStream release];
-    [_profileImage release];
-    [_lists release], _lists = nil;
+    _lists = nil;
     
-    [_keywordFilters release], _keywordFilters = nil;
-    [_userFilters release], _userFilters = nil;
-    [_clientFilters release], _clientFilters = nil;
-    [_userHighlighters release], _userHighlighters = nil;
+    _keywordFilters = nil;
+    _userFilters = nil;
+    _clientFilters = nil;
+    _userHighlighters = nil;
     
-    [_mentionHighlighter release], _mentionHighlighter = nil;
-    [_advertisementFilter release], _advertisementFilter = nil;
+    _mentionHighlighter = nil;
+    _advertisementFilter = nil;
     
-    [_superpowerToken release], _superpowerToken = nil;
-    [_directMessagesManager release], _directMessagesManager = nil;
+    _superpowerToken = nil;
+    _directMessagesManager = nil;
     
-    [_savedSearchKeywords release], _savedSearchKeywords = nil;
+    _savedSearchKeywords = nil;
     
-    [super dealloc];
 }
 
 - (id)init
@@ -165,15 +151,15 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (id)initWithCoder:(NSCoder *)decoder
 {
     if (self = [self init]) {
-        username = [[decoder decodeObjectForKey:@"username"] retain];
-        apiRoot = [[decoder decodeObjectForKey:@"api-root"] retain];
+        username = [decoder decodeObjectForKey:@"username"];
+        apiRoot = [decoder decodeObjectForKey:@"api-root"];
         notificationOptions = [decoder decodeInt64ForKey:@"notification-options"];
         notificationOptions = [self versionNotificationOptions:notificationOptions];
         self.user = [decoder decodeObjectForKey:@"user"];
         self.profileImage = [decoder decodeObjectForKey:@"profile-image"];
         self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
         
-        self.savedSearchKeywords = [[[decoder decodeObjectForKey:@"saved-searches"] mutableCopy] autorelease];
+        self.savedSearchKeywords = [[decoder decodeObjectForKey:@"saved-searches"] mutableCopy];
         
         id filterAdvertisements = [decoder decodeObjectForKey:@"filter-advertisements"];
         if (filterAdvertisements)
@@ -268,7 +254,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 }
 - (void)didRestoreFromDisk
 {
-    _directMessagesManager = [[self restoreDirectMessageManager] retain];
+    _directMessagesManager = [self restoreDirectMessageManager];
     
     [self refreshDirectMessages];
 }
@@ -288,9 +274,9 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root
 {
     if ((self = [self init])) {
-        username = [aUsername retain];
-        password = [aPassword retain];
-        apiRoot  = [root retain];
+        username = aUsername;
+        password = aPassword;
+        apiRoot  = root;
     }
     return self;
 }
@@ -302,14 +288,14 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self = [self init])
     {
-        WeiboUser * dummyUser = [[WeiboUser new] autorelease];
+        WeiboUser * dummyUser = [WeiboUser new];
         dummyUser.userID = userID;
         
         self.user = dummyUser;
         self.oAuth2Token = token;
         self.filterAdvertisements = YES;
         
-        apiRoot = [WEIBO_APIROOT_DEFAULT retain];
+        apiRoot = WEIBO_APIROOT_DEFAULT;
     }
     return self;
 }
@@ -347,8 +333,6 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     return favoritesStream;
 }
 - (void)setUser:(WeiboUser *)newUser{
-    [newUser retain];
-    [user release];
     user = newUser;
     [self requestProfileImageWithCallback:nil];
 }
@@ -463,7 +447,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     }
     else if ([filters isKindOfClass:[NSArray class]])
     {
-        result = [[filters mutableCopy] autorelease];
+        result = [filters mutableCopy];
     }
     else if (filters)
     {
@@ -694,7 +678,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [image drawInRect:NSMakeRect(xoff, yoff, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	[icon unlockFocus];
 	
-	return [icon autorelease];
+	return icon;
 }
 
 - (NSImage *)profileImage
@@ -712,7 +696,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     WTCallback * callback = (WTCallback *)info;
     
-    NSImage * image = [[[NSImage alloc] initWithData:response] autorelease];
+    NSImage * image = [[NSImage alloc] initWithData:response];
     if (image) {
         if (image.size.width > 50 || image.size.height > 50)
         {
@@ -730,7 +714,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     WTCallback * callback = WTCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
     NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
-    ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
+    __weak ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
     [request setCompletionBlock:^{
         [callback invoke:request.responseData];
     }];
@@ -757,7 +741,6 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [stream setAccount:self];
         [stream setUser:aUser];
         [userDetailsStreamsCache setObject:stream forKey:key];
-        [stream release];
     }
     return stream;
 }
@@ -897,18 +880,18 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     WeiboRepliesStream * stream = [[WeiboRepliesStream alloc] init];
     [stream setBaseStatus:status];
     [stream setAccount:self];
-    return [stream autorelease];
+    return stream;
 }
 - (WeiboRepostsStream *)repostsStreamForStatus:(WeiboStatus *)status
 {
-    WeiboRepostsStream * stream = [[WeiboRepostsStream new] autorelease];
+    WeiboRepostsStream * stream = [WeiboRepostsStream new];
     [stream setBaseStatus:status];
     [stream setAccount:self];
     return stream;
 }
 - (WeiboLikesStream *)likesStreamForStatus:(WeiboStatus *)status
 {
-    WeiboLikesStream * stream = [[WeiboLikesStream new] autorelease];
+    WeiboLikesStream * stream = [WeiboLikesStream new];
     [stream setBaseStatus:status];
     [stream setAccount:self];
     return stream;

@@ -15,23 +15,22 @@
 @end
 
 @implementation WTCallback
-@synthesize target, selector, info;
 
 + (WTCallback *)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
-    return [[[WTCallback alloc] initWithTarget:aTarget selector:aSelector info:aInfo] autorelease];
+    return [[WTCallback alloc] initWithTarget:aTarget selector:aSelector info:aInfo];
 }
 WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo){
     return [WTCallback callbackWithTarget:aTarget selector:aSelector info:aInfo];
 }
 WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
 {
-    return [[[WTCallback alloc] initWithBlock:block info:aInfo] autorelease];
+    return [[WTCallback alloc] initWithBlock:block info:aInfo];
 }
 - (WTCallback *)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
     if ((self = [super init])) {
-        target = [aTarget retain];
-        selector = aSelector;
-        info = [aInfo retain];
+        _target = aTarget;
+        _selector = aSelector;
+        _info = aInfo;
     }
     return self;
 }
@@ -40,35 +39,32 @@ WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
     if (self = [super init])
     {
         self.block = block;
-        info = [aInfo retain];
+        _info = aInfo;
     }
     return self;
 }
 - (void)dealloc{
-    [info release]; info = nil;
-    [_block release], _block = nil;
-    [super dealloc];
+    _block = nil;
 }
 - (void)invoke:(id)returnValue{
     if (self.block)
     {
-        self.block(returnValue, info);
+        self.block(returnValue, _info);
     }
     
-    if (self.target && selector)
+    if (self.target && _selector)
     {
-        [target performSelector:selector withObject:returnValue withObject:info];
+        [_target performSelector:_selector withObject:returnValue withObject:_info];
     }
     [self dissociateTarget];
 }
 - (void)dissociateTarget{
-    [_block release], _block = nil;
-    [target release];
-    target = nil;
+    _block = nil;
+    _target = nil;
 }
 - (NSString *)description{
     return [NSString stringWithFormat:
-            @"Callback to %@'s %@ method, with info:%@",target,NSStringFromSelector(selector),info];
+            @"Callback to %@'s %@ method, with info:%@",_target,NSStringFromSelector(_selector),_info];
 }
 
 @end

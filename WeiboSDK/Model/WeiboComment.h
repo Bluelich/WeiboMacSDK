@@ -16,8 +16,8 @@
     WeiboComment * replyToComment;
 }
 
-@property (readwrite,retain) WeiboStatus * replyToStatus;
-@property (readwrite,retain) WeiboComment * replyToComment;
+@property (readwrite,strong) WeiboStatus * replyToStatus;
+@property (readwrite,strong) WeiboComment * replyToComment;
 
 @property (nonatomic, assign) BOOL treatReplyingStatusAsQuoted;
 @property (nonatomic, assign) BOOL treatReplyingCommentAsQuoted;

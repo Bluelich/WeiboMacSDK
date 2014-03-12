@@ -13,12 +13,12 @@
 
 - (id)objectWithAssociatedKey:(NSString *)key
 {
-    return objc_getAssociatedObject(self, key);
+    return objc_getAssociatedObject(self, (__bridge const void *)(key));
 }
 
 - (void)setObject:(id)object forAssociatedKey:(NSString *)key retained:(BOOL)retain
 {
-    objc_setAssociatedObject(self, key, object, retain?OBJC_ASSOCIATION_RETAIN_NONATOMIC:OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, (__bridge const void *)(key), object, retain?OBJC_ASSOCIATION_RETAIN_NONATOMIC:OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end

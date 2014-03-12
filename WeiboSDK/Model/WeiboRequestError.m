@@ -20,15 +20,15 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 
 + (WeiboRequestError *)errorWithCode:(NSInteger)code
 {
-    return [[[self alloc] initWithDomain:WeiboRequestErrorDomain code:code userInfo:nil] autorelease];
+    return [[self alloc] initWithDomain:WeiboRequestErrorDomain code:code userInfo:nil];
 }
 
 + (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(int)code{
-    return [[[self alloc] initWithResponseString:responseString statusCode:(int)code] autorelease];
+    return [[self alloc] initWithResponseString:responseString statusCode:(int)code];
 }
 
 + (WeiboRequestError *)errorWithHttpRequestError:(NSError *)error{
-    return [[[self alloc] initWithHttpRequestError:error] autorelease];
+    return [[self alloc] initWithHttpRequestError:error];
 }
 
 /*
@@ -49,20 +49,19 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     }
     if ((self = [super initWithDomain:WeiboRequestErrorDomain code:error_code userInfo:nil])) {
         NSDictionary * resultDictionary = [self parseResponseToDictionaryWithString:responseString];
-        requestURLString = [[resultDictionary valueForKey:@"request"] retain];
+        requestURLString = [resultDictionary valueForKey:@"request"];
         errorDetailCode = [[resultDictionary valueForKey:@"error_detail_code"] intValue];
-        errorString = [[resultDictionary valueForKey:@"error"] retain];
+        errorString = [resultDictionary valueForKey:@"error"];
         NSString * errorDescription = [resultDictionary valueForKey:@"error_description"];
         if (errorDescription) {
-            [errorString release];
-            errorString = [errorDescription retain];
+            errorString = errorDescription;
         }
         
         NSString * errorInCN = [resultDictionary valueForKey:@"error_CN"];
         if (errorInCN) {
-            errorStringInChinese = [errorInCN retain];
+            errorStringInChinese = errorInCN;
         }else {
-            errorStringInChinese = [errorString retain];
+            errorStringInChinese = errorString;
         }
     }
     return self;
@@ -71,17 +70,11 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 - (id)initWithHttpRequestError:(NSError *)error{
     NSString * eString = [[error userInfo] valueForKey:NSLocalizedDescriptionKey];
     if ((self = [super initWithDomain:[error domain] code:[error code] userInfo:nil])) {
-        errorString = [eString retain];
+        errorString = eString;
     }
     return self;
 }
 
-- (void)dealloc{
-    [requestURLString release]; requestURLString = nil;
-    [errorString release]; errorString = nil;
-    [errorStringInChinese release]; errorStringInChinese = nil;
-    [super dealloc];
-}
 
 - (NSString *)description
 {
@@ -131,7 +124,7 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     NSString * eString = [resultDictionary valueForKey:@"error"];
     if (eString) {
         NSString * detailCodeString = [eString substringToIndex:5];
-        NSNumberFormatter* numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
+        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
         NSNumber* number = [numberFormatter numberFromString:detailCodeString];
         if (number) {
             eString = [eString substringFromIndex:6];
@@ -147,7 +140,7 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     NSString * eString = [resultDictionary valueForKey:@"error"];
     if (eString) {
         NSString * detailCodeString = [eString substringToIndex:5];
-        NSNumberFormatter* numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
+        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
         NSNumber* number = [numberFormatter numberFromString:detailCodeString];
         if (number) {
             eString = [eString substringFromIndex:6];

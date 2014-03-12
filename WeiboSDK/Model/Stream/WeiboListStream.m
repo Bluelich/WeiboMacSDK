@@ -41,7 +41,7 @@
 {
     WeiboListStream * stream = [super objectWithPersistenceInfo:info forAccount:account];
     
-    WeiboList * list = [[WeiboList new] autorelease];
+    WeiboList * list = [WeiboList new];
     list.listID = info[@"listID"];
     list.name = info[@"name"];
     

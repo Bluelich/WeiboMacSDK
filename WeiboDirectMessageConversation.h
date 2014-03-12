@@ -28,8 +28,8 @@ extern NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification;
 
 - (NSComparisonResult)compare:(WeiboDirectMessageConversation *)other;
 
-@property (nonatomic, retain, readonly) NSArray * messages;
-@property (nonatomic, retain, readonly) WeiboDirectMessage * mostRecentMessage;
-@property (nonatomic, retain) WeiboUser * correspondent;
+@property (nonatomic, strong, readonly) NSArray * messages;
+@property (nonatomic, strong, readonly) WeiboDirectMessage * mostRecentMessage;
+@property (nonatomic, strong) WeiboUser * correspondent;
 
 @end

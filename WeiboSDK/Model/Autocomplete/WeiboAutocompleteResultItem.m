@@ -15,15 +15,6 @@
 - (NSString *)searchableSortableText{
     return nil;
 }
-- (void)dealloc{
-    self.itemID = nil;
-    self.autocompleteText = nil;
-    self.autocompleteSubtext = nil;
-    self.autocompleteImageURL = nil;
-    self.userInfo = nil;
-    [_derivedSearchableText release];
-    [super dealloc];
-}
 - (BOOL)isEqual:(WeiboAutocompleteResultItem *)object
 {
     if (self == object) return YES;

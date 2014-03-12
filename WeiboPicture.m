@@ -13,10 +13,9 @@
 
 - (void)dealloc
 {
-    [_thumbnailImage release], _thumbnailImage = nil;
-    [_middleImage release], _middleImage = nil;
-    [_originalImage release], _originalImage = nil;
-    [super dealloc];
+    _thumbnailImage = nil;
+    _middleImage = nil;
+    _originalImage = nil;
 }
 
 + (id)pictureWithDictionary:(NSDictionary *)dict
@@ -26,7 +25,7 @@
         return nil;
     }
     
-    return [[[self alloc] initWithDictionary:dict] autorelease];
+    return [[self alloc] initWithDictionary:dict];
 }
 
 - (id)initWithDictionary:(NSDictionary *)dict

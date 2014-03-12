@@ -11,8 +11,8 @@
 static void QuietLog (NSString *format, ...) {
     va_list argList;
     va_start (argList, format);
-    NSString *message = [[[NSString alloc] initWithFormat: format
-                                                arguments: argList] autorelease];
+    NSString *message = [[NSString alloc] initWithFormat: format
+                                                arguments: argList];
     fprintf (stderr, "%s\n", [message UTF8String]);
     va_end  (argList);
 }
@@ -24,7 +24,6 @@ static void LogIt (id format, ...) {
     string = [[NSString alloc] initWithFormat: format  arguments: args];
     va_end (args);
     fprintf (stderr, "%s\n", [string UTF8String]);
-    [string release];
 }
 
 static void LogBinary (NSUInteger theNumber,NSInteger bits) {
@@ -38,6 +37,7 @@ static void LogBinary (NSUInteger theNumber,NSInteger bits) {
     NSLog(@"Binary version: %@", str);
 }
 
+#if !__has_feature(objc_arc)
 #define SetRetainedIvar(ivar, newVar) [newVar retain];\
 [ivar release];\
 ivar = newVar;
@@ -49,6 +49,11 @@ ivar = newVar;}
 #define SetCopiedIvar(ivar, newVar) [newVar copy];\
 [ivar release];\
 ivar = newVar;
+#else
+#define SetRetainedIvar(ivar, newVar) ivar = newVar;
+#define SetAtomicRetainedIvar(ivar, newVar) ivar = newVar;
+#define SetCopiedIvar(ivar, newVar) ivar = newVar;
+#endif
 
 #define BETWEEN(min, x, max) MIN(MAX(min, x), max)
 

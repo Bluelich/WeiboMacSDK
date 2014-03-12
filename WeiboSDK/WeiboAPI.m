@@ -14,14 +14,14 @@
 
 #pragma mark Object Lifecycle
 + (id)requestWithAPIRoot:(NSString *)root callback:(WTCallback *)callback{
-    return [[[self alloc] initWithAccount:nil apiRoot:root callback:callback] autorelease];
+    return [[self alloc] initWithAccount:nil apiRoot:root callback:callback];
 }
 + (id)authenticatedRequestWithAPIRoot:(NSString *)root 
                               account:(WeiboAccount *)account 
                              callback:(WTCallback *)callback{
-    return [[[self alloc] initWithAccount:account 
+    return [[self alloc] initWithAccount:account 
                                   apiRoot:root 
-                                 callback:callback] autorelease];
+                                 callback:callback];
 }
 + (instancetype)authenticatedRequestWithAPIRoot:(NSString *)root
                                         account:(WeiboAccount *)account
@@ -33,17 +33,16 @@
               apiRoot:(NSString *)root 
              callback:(WTCallback *)callback{
     if ((self = [super init])) {
-        apiRoot = [root retain];
-        authenticateWithAccount = [account retain];
-        responseCallback = [callback retain];
+        apiRoot = root;
+        authenticateWithAccount = account;
+        responseCallback = callback;
     }
     return self;
 }
 - (void)dealloc{
-    [apiRoot release]; apiRoot = nil;
-    [authenticateWithAccount release]; authenticateWithAccount = nil;
-    [responseCallback release]; responseCallback = nil;
-    [super dealloc];
+     apiRoot = nil;
+     authenticateWithAccount = nil;
+     responseCallback = nil;
 }
 
 - (NSString *)oauth2Token

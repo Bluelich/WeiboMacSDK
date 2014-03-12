@@ -20,8 +20,7 @@
 
 - (void)dealloc
 {
-    [_keyword release], _keyword = nil;
-    [super dealloc];
+    _keyword = nil;
 }
 
 - (void)_loadNewer
@@ -51,9 +50,9 @@
 
 + (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
 {
-    WeiboSearchUserList * list = [[[self class] new] autorelease];
+    WeiboSearchUserList * list = [[self class] new];
     
-    list.user = [[WeiboUser new] autorelease];
+    list.user = [WeiboUser new];
     list.user.userID = [info[@"userID"] longLongValue];
     list.keyword = info[@"keyword"];
     list.account = account;

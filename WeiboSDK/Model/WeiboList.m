@@ -11,7 +11,7 @@
 
 @interface WeiboList ()
 
-@property (nonatomic, retain) WeiboListStream * stream;
+@property (nonatomic, strong) WeiboListStream * stream;
 
 @end
 
@@ -19,12 +19,11 @@
 
 - (void)dealloc
 {
-    [_listID release], _listID = nil;
-    [_name release], _name = nil;
-    [_mode release], _mode = nil;
-    [_description release], _description = nil;
-    [_stream release], _stream = nil;
-    [super dealloc];
+    _listID = nil;
+    _name = nil;
+    _mode = nil;
+    _description = nil;
+    _stream = nil;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
@@ -42,7 +41,7 @@
 
 + (instancetype)listWithDictionary:(NSDictionary *)dict
 {
-    return [[[[self class] alloc] initWithDictionary:dict] autorelease];
+    return [[[self class] alloc] initWithDictionary:dict];
 }
 
 - (BOOL)isPrivate

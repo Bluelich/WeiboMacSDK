@@ -14,8 +14,7 @@
 
 - (void)dealloc
 {
-    [_user release], _user = nil;
-    [super dealloc];
+    _user = nil;
 }
 
 - (NSString *)autosaveName{

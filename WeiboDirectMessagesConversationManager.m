@@ -27,12 +27,12 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     } _flags;
 }
 
-@property (nonatomic, retain) WeiboSentDirectMessageStream * sentStream;
-@property (nonatomic, retain) WeiboReceivedDirectMessageStream * receivedStream;
+@property (nonatomic, strong) WeiboSentDirectMessageStream * sentStream;
+@property (nonatomic, strong) WeiboReceivedDirectMessageStream * receivedStream;
 
-@property (nonatomic, retain) NSArray * unreadConversationUserIDsFromCache;
+@property (nonatomic, strong) NSArray * unreadConversationUserIDsFromCache;
 
-@property (nonatomic, retain) NSTimer * pollTimer;
+@property (nonatomic, strong) NSTimer * pollTimer;
 
 @end
 
@@ -43,13 +43,12 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self _stopStreaming];
-    [_sentStream release], _sentStream = nil;
-    [_receivedStream release], _receivedStream = nil;
-    [_conversations release], _conversations = nil;
+    _sentStream = nil;
+    _receivedStream = nil;
+    _conversations = nil;
     
-    [_unreadConversationUserIDsFromCache release], _unreadConversationUserIDsFromCache = nil;
+    _unreadConversationUserIDsFromCache = nil;
     
-    [super dealloc];
 }
 
 - (instancetype)init
@@ -74,7 +73,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     if (self = [self init])
     {        
-        _unreadConversationUserIDsFromCache = [[aDecoder decodeObjectForKey:@"unread-state"] retain];
+        _unreadConversationUserIDsFromCache = [aDecoder decodeObjectForKey:@"unread-state"];
         
         [self _setupNotifications];
     }
@@ -98,8 +97,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    self.sentStream = [[[WeiboSentDirectMessageStream alloc] init] autorelease];
-    self.receivedStream = [[[WeiboReceivedDirectMessageStream alloc] init] autorelease];
+    self.sentStream = [[WeiboSentDirectMessageStream alloc] init];
+    self.receivedStream = [[WeiboReceivedDirectMessageStream alloc] init];
     
     self.sentStream.account = account;
     self.receivedStream.account = account;
@@ -173,7 +172,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
                 conversation.correspondent = correspondent;
                 [self _addStubConversation:conversation];
                 [conversation beginAddingMessages];
-                [conversation release];
             }
             
             [conversation addMessage:message];

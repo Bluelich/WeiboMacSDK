@@ -22,12 +22,11 @@
 
 - (void)dealloc
 {
-    [_sender release], _sender = nil;
-    [_recipient release], _recipient = nil;
-    [_text release], _text = nil;
-    [_activeRanges release], _activeRanges = nil;
+    _sender = nil;
+    _recipient = nil;
+    _text = nil;
+    _activeRanges = nil;
     
-    [super dealloc];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
@@ -109,7 +108,7 @@
 {
     if (!_activeRanges)
     {
-        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:self.text] autorelease];
+        self.activeRanges = [[WTActiveTextRanges alloc] initWithString:self.text];
     }
     return _activeRanges;
 }

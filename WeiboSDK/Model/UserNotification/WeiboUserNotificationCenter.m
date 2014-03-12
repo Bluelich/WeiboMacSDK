@@ -33,10 +33,6 @@ NSString * const WeiboUserNotificationCenterUserInfoImportantFlagKey = @"WeiboUs
 
 @implementation WeiboUserNotificationCenter
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 static BOOL AtLeastMountainLion = NO;
 static BOOL AtLeaseMavericks    = NO;
@@ -221,7 +217,6 @@ static BOOL AtLeaseMavericks    = NO;
         [notification setUserInfo:userInfo];
         
         [self _scheduleUserNotification:notification];
-        [notification autorelease];
     }
 }
 - (void)scheduleNotificationForComments:(NSArray *)comments forAccount:(WeiboAccount *)account
@@ -267,7 +262,6 @@ static BOOL AtLeaseMavericks    = NO;
         [notification setUserInfo:userInfo];
         
         [self _scheduleUserNotification:notification];
-        [notification autorelease];
     }
 }
 - (void)scheduleNotificationForDirectMessages:(NSArray *)messages forAccount:(WeiboAccount *)account
@@ -326,7 +320,6 @@ static BOOL AtLeaseMavericks    = NO;
         [notification setUserInfo:userInfo];
         
         [self _scheduleUserNotification:notification];
-        [notification autorelease];
     }
 }
 
@@ -347,7 +340,6 @@ static BOOL AtLeaseMavericks    = NO;
         [notification setUserInfo:userInfo];
         
         [self _scheduleUserNotification:notification];
-        [notification autorelease];
     }
 }
 

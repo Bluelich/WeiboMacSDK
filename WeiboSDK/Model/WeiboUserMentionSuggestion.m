@@ -13,9 +13,8 @@
 
 - (void)dealloc
 {
-    [_screenName release], _screenName = nil;
-    [_remark release], _remark = nil;
-    [super dealloc];
+    _screenName = nil;
+    _remark = nil;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict
@@ -42,7 +41,6 @@
             [result addObject:suggestion];
         }
         
-        [suggestion release];
     }
     
     return result;

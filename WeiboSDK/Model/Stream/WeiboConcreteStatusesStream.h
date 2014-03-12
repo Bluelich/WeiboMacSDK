@@ -23,11 +23,11 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 
 @interface WeiboConcreteStatusesStream : WeiboStream
 
-@property (nonatomic, retain) WeiboRequestError * loadNewerError;
-@property (nonatomic, retain) WeiboRequestError * loadOlderError;
+@property (nonatomic, strong) WeiboRequestError * loadNewerError;
+@property (nonatomic, strong) WeiboRequestError * loadOlderError;
 
 @property (nonatomic, assign, readonly) NSInteger topStatusesCount;
-@property (nonatomic, readonly) WeiboBaseStatus * viewedMostRecentStatus;
+@property (weak, nonatomic, readonly) WeiboBaseStatus * viewedMostRecentStatus;
 @property (nonatomic, readonly) NSInteger unreadCount;
 
 @property (nonatomic, readonly) NSInteger loadOlderSuccessTimes;

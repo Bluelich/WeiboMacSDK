@@ -11,9 +11,9 @@
 
 @interface WeiboUserList : NSObject
 
-@property (nonatomic, readonly) NSArray *users;
-@property (nonatomic, retain) WeiboRequestError * loadNewerError;
-@property (nonatomic, retain) WeiboRequestError * loadOlderError;
+@property (weak, nonatomic, readonly) NSArray *users;
+@property (nonatomic, strong) WeiboRequestError * loadNewerError;
+@property (nonatomic, strong) WeiboRequestError * loadOlderError;
 
 - (void)loadNewer;
 - (void)loadOlder;

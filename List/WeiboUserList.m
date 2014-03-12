@@ -12,9 +12,8 @@
 
 - (void)dealloc
 {
-    [_loadNewerError release], _loadNewerError = nil;
-    [_loadOlderError release], _loadOlderError = nil;
-    [super dealloc];
+    _loadNewerError = nil;
+    _loadOlderError = nil;
 }
 
 - (NSArray *)users

@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboUnread *)unreadWithDictionary:(NSDictionary *)dic{
-    return [[[WeiboUnread alloc] initWithDictionary:dic] autorelease];
+    return [[WeiboUnread alloc] initWithDictionary:dic];
 }
 + (WeiboUnread *)unreadWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -29,11 +29,9 @@
     }];
 }
 + (void)parseUnreadJSON:(NSString *)json onComplete:(WTObjectBlock)block{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboUnread * unread = [self unreadWithJSON:json];
-        [json release];
         dispatch_sync(dispatch_get_main_queue(), ^{
             block(unread);
         });

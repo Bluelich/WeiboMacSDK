@@ -21,7 +21,6 @@ static NSMutableDictionary *keyNames = nil;
 	}
 
 	NSMutableArray *names = [[NSMutableArray alloc] init];
-	NSMutableArray *nillableNames = [[NSMutableArray alloc] init];
 	
 	for (Class class = self; class != [WeiboModel class]; class = [class superclass])
 	{
@@ -34,7 +33,6 @@ static NSMutableDictionary *keyNames = nil;
 			NSString *name = [[NSString alloc] initWithUTF8String:property_getName(property)];
 			[names addObject:name];
 			
-			[name release];
 		}
 		
 		free(properties);
@@ -49,8 +47,6 @@ static NSMutableDictionary *keyNames = nil;
 	
 	[keyNames setObject:names forKey:NSStringFromClass(self)];
 	
-	[names release];
-	[nillableNames release];
 }
 
 

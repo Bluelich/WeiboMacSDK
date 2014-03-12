@@ -26,7 +26,7 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     
     if (!self.mentionHighlighter)
     {
-        self.mentionHighlighter = [[WeiboStatusAccountMentionFilter new] autorelease];
+        self.mentionHighlighter = [WeiboStatusAccountMentionFilter new];
         self.mentionHighlighter.account = self;
     }
     
@@ -36,7 +36,7 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     {
         if (!self.advertisementFilter)
         {
-            self.advertisementFilter = [[WeiboStatusAdvertisementFilter new] autorelease];
+            self.advertisementFilter = [WeiboStatusAdvertisementFilter new];
         }
         
         [array addObject:self.advertisementFilter];
@@ -65,7 +65,6 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     WeiboStatusKeywordFilter * filter = [WeiboStatusKeywordFilter new];
     [filter setKeyword:keyword];
     [self _addFilter:filter toArray:self.keywordFilters withEffectiveTime:time];
-    [filter release];
     
     [self filterSetDidChange];
 }
@@ -77,7 +76,6 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     [filter setUserID:user_.userID];
     [filter setScreenname:user_.screenName];
     [self _addFilter:filter toArray:self.userFilters withEffectiveTime:time];
-    [filter release];
     
     [self filterSetDidChange];
 }
@@ -88,7 +86,6 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     WeiboStatusSourceFilter * filter = [WeiboStatusSourceFilter new];
     [filter setSource:source];
     [self _addFilter:filter toArray:self.clientFilters withEffectiveTime:time];
-    [filter release];
     
     [self filterSetDidChange];
 }
@@ -100,7 +97,6 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     [filter setUserID:user_.userID];
     [filter setScreenname:user_.screenName];
     [self _addFilter:filter toArray:self.userHighlighters withEffectiveTime:time];
-    [filter release];
     
     [self filterSetDidChange];
 }
@@ -140,14 +136,12 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
 {
     if (!filter) return;
     
-    [filter retain];
     
     [self.keywordFilters removeObject:filter];
     [self.clientFilters removeObject:filter];
     [self.userHighlighters removeObject:filter];
     [self.userFilters removeObject:filter];
     
-    [filter release];
     
     [self filterSetDidChange];
 }

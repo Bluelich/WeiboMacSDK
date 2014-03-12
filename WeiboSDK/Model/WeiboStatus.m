@@ -21,18 +21,13 @@
 @synthesize inReplyToScreenname;
 
 - (void)dealloc{
-    [retweetedStatus release]; retweetedStatus = nil;
-    [geo release]; geo = nil;
-    [source release]; source = nil;
-    [sourceUrl release]; sourceUrl = nil;
-    [inReplyToScreenname release]; inReplyToScreenname = nil;
-    [super dealloc];
+     inReplyToScreenname = nil;
 }
 
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboStatus *)statusWithDictionary:(NSDictionary *)dic{
-    return [[[[self class] alloc] initWithDictionary:dic] autorelease];
+    return [[[self class] alloc] initWithDictionary:dic];
 }
 + (WeiboStatus *)statusWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -108,13 +103,11 @@
     [self parseObjectsJSON:json callback:callback];
 }
 + (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboStatus * status = [self statusWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{
             [callback invoke:status];
-            [json release];
         });
     });
 }
@@ -202,7 +195,6 @@
             
             self.pics = @[picture];
             
-            [picture release];
         }
         
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];
@@ -210,7 +202,6 @@
             WeiboStatus * retweeted = [[WeiboStatus alloc] _initWithDictionary:retweetedStatusDic];
 			self.retweetedStatus = retweeted;
             self.retweetedStatus.quoted = YES;
-            [retweeted release];
 		}
     }
     return self;

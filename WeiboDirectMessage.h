@@ -24,11 +24,11 @@ typedef int64_t WeiboMessageID;
 @property (nonatomic, assign) WeiboUserID recipientID;
 
 
-@property (nonatomic, retain) WeiboUser * sender;
-@property (nonatomic, retain) WeiboUser * recipient;
+@property (nonatomic, strong) WeiboUser * sender;
+@property (nonatomic, strong) WeiboUser * recipient;
 @property (nonatomic, assign) BOOL read;
 
-@property (nonatomic, retain) WTActiveTextRanges * activeRanges;
+@property (nonatomic, strong) WTActiveTextRanges * activeRanges;
 
 - (NSComparisonResult)compare:(WeiboDirectMessage *)object;
 

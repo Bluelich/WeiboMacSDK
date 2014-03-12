@@ -31,10 +31,10 @@ typedef enum {
     NSString * errorStringInChinese;
 }
 
-@property (readonly, retain) NSString * requestURLString;
+@property (readonly, strong) NSString * requestURLString;
 @property (readonly, assign) NSInteger  errorDetailCode;
-@property (readonly, retain) NSString * errorString;
-@property (readonly, retain) NSString * errorStringInChinese;
+@property (readonly, strong) NSString * errorString;
+@property (readonly, strong) NSString * errorStringInChinese;
 
 + (WeiboRequestError *)errorWithCode:(NSInteger)code;
 + (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(int)code;

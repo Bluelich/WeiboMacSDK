@@ -17,16 +17,11 @@
 @implementation WeiboComment
 @synthesize replyToStatus, replyToComment;
 
-- (void)dealloc{
-    self.replyToStatus = nil;
-    self.replyToComment = nil;
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboComment *)commentWithDictionary:(NSDictionary *)dic{
-    return [[[self alloc] initWithDictionary:dic] autorelease];
+    return [[self alloc] initWithDictionary:dic];
 }
 + (WeiboComment *)commentWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -41,13 +36,11 @@
     [self parseObjectsJSON:json callback:callback];
 }
 + (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboComment * comment = [self commentWithJSON:json];
         dispatch_sync(dispatch_get_main_queue(), ^{
             [callback invoke:comment];
-            [json release];
         });
     });
 }
@@ -67,14 +60,12 @@
 			self.replyToStatus = status;
             self.replyToStatus.quoted = YES;
 		}
-        [status release];
 
         NSDictionary* commentDic = [dic objectForKey:@"reply_comment"];
         if (commentDic) {
             WeiboComment * comment = [[WeiboComment alloc] initWithDictionary:commentDic];
             self.replyToComment = comment;
             self.replyToComment.quoted = YES;
-            [comment release];
         }
     }
     return self;

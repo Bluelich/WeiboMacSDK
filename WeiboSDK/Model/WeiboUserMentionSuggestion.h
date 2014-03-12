@@ -12,8 +12,8 @@
 @interface WeiboUserMentionSuggestion : NSObject
 
 @property (nonatomic, assign) WeiboUserID userID;
-@property (nonatomic, retain) NSString * screenName;
-@property (nonatomic, retain) NSString * remark;
+@property (nonatomic, strong) NSString * screenName;
+@property (nonatomic, strong) NSString * remark;
 
 + (NSArray *)suggestionsWithJSONArray:(NSArray *)array;
 

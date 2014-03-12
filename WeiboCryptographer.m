@@ -13,8 +13,7 @@
 
 - (void)dealloc
 {
-    [_keyGeneration release], _keyGeneration = nil;
-    [super dealloc];
+    _keyGeneration = nil;
 }
 
 + (instancetype)sharedCryptographer

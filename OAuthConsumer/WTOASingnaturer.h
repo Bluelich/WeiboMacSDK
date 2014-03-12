@@ -16,20 +16,20 @@
     OAConsumer *consumer;
     OAToken *token;
     NSString *realm;
-    NSString *signature;
+    NSString *__weak signature;
     id<OASignatureProviding> signatureProvider;
     NSString *nonce;
     NSString *timestamp;
 	NSArray *parameters;
 	NSMutableDictionary *extraOAuthParameters;
 	NSString *urlStringWithoutQuery;
-    NSString *method;
+    NSString *__weak method;
 }
-@property(readonly) NSString *signature;
+@property(weak, readonly) NSString *signature;
 @property(readonly) NSString *nonce;
-@property(retain) NSString * urlStringWithoutQuery;
-@property(retain) NSArray * parameters;
-@property(assign) NSString * method;
+@property(strong) NSString * urlStringWithoutQuery;
+@property(strong) NSArray * parameters;
+@property(weak) NSString * method;
 
 - (id)initWithURL:(NSString *)urlString
 		 consumer:(OAConsumer *)aConsumer

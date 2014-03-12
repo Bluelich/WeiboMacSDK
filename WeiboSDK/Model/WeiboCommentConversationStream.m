@@ -16,8 +16,7 @@
 
 - (void)dealloc
 {
-    [_sourceComment release], _sourceComment = nil;
-    [super dealloc];
+    _sourceComment = nil;
 }
 
 - (WeiboComment *)oldestReplyingComment

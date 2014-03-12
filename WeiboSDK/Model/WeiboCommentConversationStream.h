@@ -12,6 +12,6 @@
 
 @interface WeiboCommentConversationStream : WeiboAccountStream
 
-@property (nonatomic, retain) WeiboComment * sourceComment;
+@property (nonatomic, strong) WeiboComment * sourceComment;
 
 @end

@@ -16,8 +16,8 @@ extern NSString * const WeiboDirectMessageStreamFinishedLoadingNotification;
 
 @interface WeiboDirectMessageStream : WeiboStream <NSCoding>
 
-@property (nonatomic, retain) NSArray * messages;
-@property (nonatomic, assign) WeiboAccount * account;
+@property (nonatomic, strong) NSArray * messages;
+@property (nonatomic, unsafe_unretained) WeiboAccount * account;
 
 - (BOOL)forceReadBit;
 

@@ -12,6 +12,6 @@
 
 @interface WeiboUserStream : WeiboAccountStream
 
-@property (retain,nonatomic) WeiboUser * user;
+@property (strong,nonatomic) WeiboUser * user;
 
 @end

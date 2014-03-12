@@ -31,9 +31,8 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 
 - (void)dealloc
 {
-    [_messages release], _messages = nil;
+    _messages = nil;
     
-    [super dealloc];
 }
 
 - (instancetype)init

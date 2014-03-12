@@ -24,7 +24,7 @@
 @synthesize oAuth2Token = _oAuth2Token;
 
 + (WTHTTPRequest *)requestWithURL:(NSURL *)url{
-    return [[[self alloc] initWithURL:url] autorelease];
+    return [[self alloc] initWithURL:url];
 }
 
 - (id)initWithURL:(NSURL *)newURL
@@ -80,13 +80,6 @@
     [self startAsynchronous];
 }
 
-- (void)dealloc{
-    [responseCallback release]; responseCallback = nil;
-    [oAuthToken release]; oAuthToken = nil;
-    [oAuthTokenSecret release]; oAuthTokenSecret = nil;
-    [parameters release]; parameters = nil;
-    [super dealloc];
-}
 
 - (NSString *)oAuthAuthorizationHeader{
     return [NSString stringWithFormat:@"OAuth2 %@",self.oAuth2Token];
@@ -100,23 +93,18 @@
                                                               token:token
                                                               realm:nil
                                                   signatureProvider:nil];
-    [consumer release];
-    [token release];
     
     NSArray * keys = [parameters allKeys];
     NSMutableArray * parameter = [[NSMutableArray alloc] initWithCapacity:[keys count]];
     for (id key in keys) {
         OARequestParameter * requestParameter = [[OARequestParameter alloc] initWithName:key value:[parameters valueForKey:key]];
         [parameter addObject:requestParameter];
-        [requestParameter release];
     }
     
     [singnaturer setParameters:parameter];
-    [parameter release];
 	[singnaturer setMethod:[self requestMethod]];
     [singnaturer setUrlStringWithoutQuery:[[[[self url] absoluteString] componentsSeparatedByString:@"?"] objectAtIndex:0]];
     NSString *authString = [NSString stringWithString:[singnaturer getSingnatureString]];
-    [singnaturer release];
     
     return authString;
 }

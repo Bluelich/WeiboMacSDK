@@ -12,6 +12,6 @@
 
 @interface WeiboListStream : WeiboAccountStream
 
-@property (nonatomic, assign) WeiboList * list;
+@property (nonatomic, weak) WeiboList * list;
 
 @end

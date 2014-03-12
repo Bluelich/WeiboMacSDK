@@ -11,8 +11,8 @@
 
 @interface WeiboTextAttributes ()
 
-@property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) WTActiveTextRanges * activeRanges;
+@property (nonatomic, strong) NSString * text;
+@property (nonatomic, strong) WTActiveTextRanges * activeRanges;
 
 @end
 
@@ -20,10 +20,9 @@
 
 - (void)dealloc
 {
-    [_text release], _text = nil;
-    [_activeRanges release], _activeRanges = nil;
-    [_attributedString release], _attributedString = nil;
-    [super dealloc];
+    _text = nil;
+    _activeRanges = nil;
+    _attributedString = nil;
 }
 
 - (instancetype)initWithText:(NSString *)text
@@ -31,7 +30,7 @@
     if (self = [self init])
     {
         self.text = text;
-        self.activeRanges = [[[WTActiveTextRanges alloc] initWithString:text] autorelease];
+        self.activeRanges = [[WTActiveTextRanges alloc] initWithString:text];
     }
     return self;
 }

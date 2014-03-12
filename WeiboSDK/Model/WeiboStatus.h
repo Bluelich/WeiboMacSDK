@@ -19,22 +19,22 @@
     WeiboGeotag * geo;
     BOOL favorited;
     WeiboUserID inReplyToUserID;
-    NSString * inReplyToScreenname;
+    NSString * __weak inReplyToScreenname;
     NSString * source;
     NSString * sourceUrl;
 }
 
 @property (assign, nonatomic) BOOL truncated;
-@property (retain, atomic) WeiboStatus * retweetedStatus;
+@property (strong, atomic) WeiboStatus * retweetedStatus;
 @property (assign, nonatomic) WeiboStatusID inReplyToStatusID;
-@property (retain, nonatomic) WeiboGeotag * geo;
+@property (strong, nonatomic) WeiboGeotag * geo;
 @property (assign, nonatomic) BOOL favorited;
 @property (assign, nonatomic) BOOL liked;
 @property (assign, nonatomic) WeiboUserID inReplyToUserID;
-@property (assign, nonatomic) NSString * inReplyToScreenname;
-@property (retain, nonatomic) NSString * source;
-@property (retain, nonatomic) NSString * sourceUrl;
-@property (retain, nonatomic, readonly) NSURL * webLink;
+@property (weak, nonatomic) NSString * inReplyToScreenname;
+@property (strong, nonatomic) NSString * source;
+@property (strong, nonatomic) NSString * sourceUrl;
+@property (strong, nonatomic, readonly) NSURL * webLink;
 
 @property (nonatomic, assign) BOOL treatRetweetedStatusAsQuoted;
 

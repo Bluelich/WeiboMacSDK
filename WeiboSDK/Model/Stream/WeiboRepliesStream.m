@@ -15,10 +15,6 @@
 @implementation WeiboRepliesStream
 @synthesize baseStatus;
 
-- (void)dealloc{
-    self.baseStatus = nil;
-    [super dealloc];
-}
 
 - (void)_loadNewer
 {

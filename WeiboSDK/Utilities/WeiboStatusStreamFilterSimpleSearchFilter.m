@@ -13,10 +13,6 @@
 @implementation WeiboStatusStreamFilterSimpleSearchFilter
 @synthesize query = _query;
 
-- (void)dealloc{
-    [_query release];
-    [super dealloc];
-}
 
 - (BOOL)validStatus:(WeiboBaseStatus *)status{
     

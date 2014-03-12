@@ -40,7 +40,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 }
 
 // statuses filterd by -[self statusFilters];
-@property (nonatomic, retain) NSMutableArray * invalidStatuses;
+@property (nonatomic, strong) NSMutableArray * invalidStatuses;
 
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus;
 - (void)_deleteStatus:(WeiboBaseStatus *)theStatus;
@@ -78,11 +78,10 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_loadNewerError release], _loadNewerError = nil;
-    [_loadOlderError release], _loadOlderError = nil;
-    [_invalidStatuses release], _invalidStatuses = nil;
-    [statuses release]; statuses = nil;
-    [super dealloc];
+    _loadNewerError = nil;
+    _loadOlderError = nil;
+    _invalidStatuses = nil;
+     statuses = nil;
 }
 
 
@@ -98,8 +97,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 }
 - (void)setStatuses:(NSArray *)newStatuses{
     NSMutableArray * mutableStatuses = [NSMutableArray arrayWithArray:newStatuses];
-    [statuses release];
-    statuses = [mutableStatuses retain];
+    statuses = mutableStatuses;
 }
 - (void)addStatus:(WeiboBaseStatus *)newStatus{
     NSArray * array = [NSArray arrayWithObject:newStatus];
@@ -113,7 +111,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 
     BOOL shouldForceToAppend = ![self hasData];
         
-    NSMutableArray * statusesToAdd = [[newStatuses mutableCopy] autorelease];
+    NSMutableArray * statusesToAdd = [newStatuses mutableCopy];
     
     for (WeiboBaseStatus * status in self.statuses)
     {
@@ -169,10 +167,9 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     if (index >= [[self statuses] count]) {
         return;
     }
-    [theStatus retain];
     [[self statuses] removeObjectAtIndex:index];
     
-    [self noticeDidRemoveStatus:[theStatus autorelease] atIndex:index];
+    [self noticeDidRemoveStatus:theStatus atIndex:index];
 }
 - (NSUInteger)statuseIndex:(WeiboBaseStatus *)theStatus{
     return [statuses indexOfObject:theStatus];
@@ -181,7 +178,6 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     WeiboBaseStatus * temp = [[WeiboBaseStatus alloc] init];
     temp.sid = theID;
     NSUInteger index = [self statuseIndex:temp];
-    [temp release];
     return index;
 }
 - (WeiboBaseStatus *)newestStatusFromArray:(NSArray *)array

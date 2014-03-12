@@ -26,9 +26,8 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
 
 - (void)dealloc
 {
-    [_correspondent release], _correspondent = nil;
-    [_messages release], _messages = nil;
-    [super dealloc];
+    _correspondent = nil;
+    _messages = nil;
 }
 
 + (instancetype)conversationWithDictionary:(NSDictionary *)dict
@@ -39,9 +38,9 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
     
     WeiboDirectMessage * message = [[WeiboDirectMessage alloc] initWithDictionary:[dict objectForKey:@"direct_message"]];
     
-    [conversation addMessage:[message autorelease]];
+    [conversation addMessage:message];
     
-    return [conversation autorelease];
+    return conversation;
 }
 
 - (instancetype)init

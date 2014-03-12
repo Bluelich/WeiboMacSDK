@@ -44,7 +44,7 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
         
         {
             // Add Special Lists
-            WeiboList * friendCircleList = [[WeiboList new] autorelease];
+            WeiboList * friendCircleList = [WeiboList new];
             
             friendCircleList.listID = WeiboDummyListIDFirendCircle;
             friendCircleList.name = @"好友圈";

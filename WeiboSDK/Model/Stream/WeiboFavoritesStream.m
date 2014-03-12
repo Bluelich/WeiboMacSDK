@@ -17,7 +17,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WeiboStatusFavoriteStateDidChangeNotifiaction object:nil];
     
-    [super dealloc];
 }
 
 - (id)init

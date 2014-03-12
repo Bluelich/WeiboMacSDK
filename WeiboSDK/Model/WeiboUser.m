@@ -32,7 +32,7 @@
         self.profileImageUrl = [decoder decodeObjectForKey:@"profile-image-url"];
         self.profileLargeImageUrl = [decoder decodeObjectForKey:@"profile-large-image-url"];
         self.domain = [decoder decodeObjectForKey:@"domain"];
-        self.gender = [decoder decodeIntegerForKey:@"gender"];
+        self.gender = (WeiboGender)[decoder decodeIntegerForKey:@"gender"];
         self.followersCount = [decoder decodeIntForKey:@"followers-count"];
         self.friendsCount = [decoder decodeIntForKey:@"friends-count"];
         self.statusesCount = [decoder decodeIntForKey:@"statuses-count"];
@@ -78,25 +78,13 @@
 }
 
 - (void)dealloc{
-    [screenName release]; screenName = nil;
-    [name release]; name = nil;
-    [_remark release], _remark = nil;
-    [province release]; province = nil;
-    [city release]; city = nil;
-    [location release]; location = nil;
-    [description release]; description = nil;
-    [url release]; url = nil;
-    [profileImageUrl release]; profileImageUrl = nil;
-    [profileLargeImageUrl release]; profileLargeImageUrl = nil;
-    [domain release]; domain = nil;
-    [status release]; status = nil;
-    [super dealloc];
+    _remark = nil;
 }
 
 #pragma mark -
 #pragma mark Parse Methods
 + (WeiboUser *)userWithDictionary:(NSDictionary *)dic{
-    return [[[WeiboUser alloc] initWithDictionary:dic] autorelease];
+    return [[WeiboUser alloc] initWithDictionary:dic];
 }
 + (WeiboUser *)userWithJSON:(NSString *)json{
     NSDictionary * dictionary = [json objectFromJSONString];
@@ -116,22 +104,18 @@
     return users;
 }
 + (void)parseUserJSON:(NSString *)json onComplete:(WTObjectBlock)block{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         WeiboUser * user = [self userWithJSON:json];
-        [json release];
         dispatch_sync(dispatch_get_main_queue(), ^{
             block(user);
         });
     });
 }
 + (void)parseUsersJSON:(NSString *)json onComplete:(WTArrayBlock)block{
-    [json retain];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSArray * users = [self usersWithJSON:json];
-        [json release];
         dispatch_sync(dispatch_get_main_queue(), ^{
             block(users);
         });
