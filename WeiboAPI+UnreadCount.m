@@ -71,6 +71,7 @@
             break;
         case WeiboUnreadCountTypeCommentMention:
             typeString = @"mention_cmt";
+            break;
         default:{
             [callback dissociateTarget];
             return;

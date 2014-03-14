@@ -137,7 +137,7 @@
 		C6A4718F18AE558800B3CB48 /* WeiboCryptographer.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */; };
 		C6A4719018AE558800B3CB48 /* WeiboCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A4718E18AE558800B3CB48 /* WeiboCryptographer.m */; };
 		C6A471A118AF344300B3CB48 /* CocoaSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4719F18AF344300B3CB48 /* CocoaSecurity.h */; };
-		C6A471A218AF344300B3CB48 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A471A018AF344300B3CB48 /* CocoaSecurity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C6A471A218AF344300B3CB48 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A471A018AF344300B3CB48 /* CocoaSecurity.m */; };
 		C6A471A518AF355B00B3CB48 /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A471A318AF355B00B3CB48 /* Base64.h */; };
 		C6A471A618AF355B00B3CB48 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A471A418AF355B00B3CB48 /* Base64.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		C6AA998117E5E06A005F90E4 /* WeiboConversationDirectMessageStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AA997F17E5E06A005F90E4 /* WeiboConversationDirectMessageStream.h */; };
