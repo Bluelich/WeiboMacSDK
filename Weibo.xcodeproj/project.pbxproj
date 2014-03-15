@@ -15,9 +15,6 @@
 		C60B6FFD18CF50E4004358E5 /* WeiboModelPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = C60B6FFC18CF50E4004358E5 /* WeiboModelPersistence.h */; };
 		C60B700018CF5ADE004358E5 /* WeiboModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C60B6FFE18CF5ADE004358E5 /* WeiboModel.h */; };
 		C60B700118CF5ADE004358E5 /* WeiboModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */; };
-		C6146F1618D4378B00C672F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6146ED118D4342C00C672F1 /* CoreFoundation.framework */; };
-		C6146F1C18D4378B00C672F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6146F1A18D4378B00C672F1 /* InfoPlist.strings */; };
-		C6146F2218D437A800C672F1 /* autocomplete_schema.sql in Resources */ = {isa = PBXBuildFile; fileRef = C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */; };
 		C6188FD518CC95D0004ED7D1 /* WeiboLikeStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = C6188FD318CC95D0004ED7D1 /* WeiboLikeStatus.h */; };
 		C6188FD618CC95D0004ED7D1 /* WeiboLikeStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6188FD418CC95D0004ED7D1 /* WeiboLikeStatus.m */; };
 		C618900918CE0988004ED7D1 /* WeiboLikesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C618900718CE0988004ED7D1 /* WeiboLikesStream.h */; };
@@ -258,10 +255,6 @@
 		C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboModel.m; sourceTree = "<group>"; };
 		C6146ED118D4342C00C672F1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autocomplete_schema.sql; sourceTree = "<group>"; };
-		C6146F1518D4378B00C672F1 /* WeiboSDKResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeiboSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6146F1918D4378B00C672F1 /* WeiboSDKResources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeiboSDKResources-Info.plist"; sourceTree = "<group>"; };
-		C6146F1B18D4378B00C672F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C6146F1D18D4378B00C672F1 /* WeiboSDKResources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDKResources-Prefix.pch"; sourceTree = "<group>"; };
 		C617C91914EBAB1D00CC75F5 /* WeiboGeotag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboGeotag.h; sourceTree = "<group>"; };
 		C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboGeotag.m; sourceTree = "<group>"; };
 		C6188FD318CC95D0004ED7D1 /* WeiboLikeStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboLikeStatus.h; sourceTree = "<group>"; };
@@ -503,14 +496,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C6146F1218D4378B00C672F1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6146F1618D4378B00C672F1 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C6B4DC1114ED347C0032A8CF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -571,19 +556,8 @@
 			isa = PBXGroup;
 			children = (
 				C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */,
-				C6146F1818D4378B00C672F1 /* Supporting Files */,
 			);
 			path = WeiboSDKResources;
-			sourceTree = "<group>";
-		};
-		C6146F1818D4378B00C672F1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C6146F1918D4378B00C672F1 /* WeiboSDKResources-Info.plist */,
-				C6146F1A18D4378B00C672F1 /* InfoPlist.strings */,
-				C6146F1D18D4378B00C672F1 /* WeiboSDKResources-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		C6146F3B18D4580100C672F1 /* Vendors */ = {
@@ -968,7 +942,6 @@
 			isa = PBXGroup;
 			children = (
 				C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */,
-				C6146F1518D4378B00C672F1 /* WeiboSDKResources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1123,23 +1096,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C6146F1418D4378B00C672F1 /* WeiboSDKResources */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C6146F1E18D4378B00C672F1 /* Build configuration list for PBXNativeTarget "WeiboSDKResources" */;
-			buildPhases = (
-				C6146F1118D4378B00C672F1 /* Sources */,
-				C6146F1218D4378B00C672F1 /* Frameworks */,
-				C6146F1318D4378B00C672F1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = WeiboSDKResources;
-			productName = WeiboSDKResources;
-			productReference = C6146F1518D4378B00C672F1 /* WeiboSDKResources.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
 		C6B4DC1314ED347C0032A8CF /* WeiboSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */;
@@ -1181,7 +1137,6 @@
 			projectRoot = "";
 			targets = (
 				C6B4DC1314ED347C0032A8CF /* WeiboSDK */,
-				C6146F1418D4378B00C672F1 /* WeiboSDKResources */,
 			);
 		};
 /* End PBXProject section */
@@ -1194,25 +1149,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C6146F1318D4378B00C672F1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6146F1C18D4378B00C672F1 /* InfoPlist.strings in Resources */,
-				C6146F2218D437A800C672F1 /* autocomplete_schema.sql in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C6146F1118D4378B00C672F1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C6B4DC1014ED347C0032A8CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1339,93 +1278,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		C6146F1A18D4378B00C672F1 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C6146F1B18D4378B00C672F1 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		C6146F1F18D4378B00C672F1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKResources/WeiboSDKResources-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "WeiboSDKResources/WeiboSDKResources-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		C6146F2018D4378B00C672F1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKResources/WeiboSDKResources-Prefix.pch";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "WeiboSDKResources/WeiboSDKResources-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		C6146F2118D4378B00C672F1 /* MacAppStore */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "WeiboSDKResources/WeiboSDKResources-Prefix.pch";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "WeiboSDKResources/WeiboSDKResources-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = MacAppStore;
-		};
 		C6AC071818704E6700D20556 /* MacAppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1554,16 +1407,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C6146F1E18D4378B00C672F1 /* Build configuration list for PBXNativeTarget "WeiboSDKResources" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C6146F1F18D4378B00C672F1 /* Debug */,
-				C6146F2018D4378B00C672F1 /* Release */,
-				C6146F2118D4378B00C672F1 /* MacAppStore */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
