@@ -54,7 +54,10 @@ WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
     
     if (self.target && _selector)
     {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [_target performSelector:_selector withObject:returnValue withObject:_info];
+#pragma clang diagnostic pop
     }
     [self dissociateTarget];
 }
