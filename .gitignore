@@ -4,8 +4,23 @@
 ehthumbs.db
 Icon?
 Thumbs.db
-WeiboAppInfo.h
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
 
-Weibo.xcodeproj/xcuserdata/Stephen.xcuserdatad/xcschemes/WeiboSDK.xcscheme
-
-Weibo.xcodeproj/xcuserdata/Stephen.xcuserdatad/xcschemes/xcschememanagement.plist
+# CocoaPods
+Pods

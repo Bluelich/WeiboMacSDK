@@ -9,13 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ASIFormDataRequest.h"
 
-#import "WeiboAppInfo.h"
-/*
- TODO: Create your own WeiboAppInfo.h , contains:
- #define WEIBO_CONSUMER_KEY @"12345"
- #define WEIBO_CONSUMER_SECRET @"1234567890"
-*/
-
 @class WTMutableMultiDictionary, WTCallback;
 
 @interface WTHTTPRequest : ASIFormDataRequest <ASIHTTPRequestDelegate> {

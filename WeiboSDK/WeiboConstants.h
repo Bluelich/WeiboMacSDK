@@ -104,4 +104,6 @@ typedef NS_ENUM(NSInteger, WeiboUserVerifiedType)
     WeiboUserVerifiedTypeGrassroot = 220,
 };
 
+static NSString * WEIBO_CONSUMER_KEY = nil;
+static NSString * WEIBO_CONSUMER_SECRET = nil;
 
