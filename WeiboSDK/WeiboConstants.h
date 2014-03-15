@@ -107,3 +107,5 @@ typedef NS_ENUM(NSInteger, WeiboUserVerifiedType)
 static NSString * WEIBO_CONSUMER_KEY = nil;
 static NSString * WEIBO_CONSUMER_SECRET = nil;
 
+#import "WeiboModelPersistence.h"
+
