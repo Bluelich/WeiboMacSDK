@@ -31,5 +31,9 @@ Pod::Spec.new do |s|
   s.resources = 'WeiboSDKResources'
 
   s.dependency 'libextobjc'
+  s.dependency 'JSONKit-NoWarning', '~> 1.1'
+  s.dependency 'SSKeychain', '~> 1.2'
+  s.dependency 'FMDB', '~> 2.2'
+  s.dependency 'RegexKitLite'
 
 end
