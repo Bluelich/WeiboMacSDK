@@ -102,7 +102,14 @@ static LocalAutocompleteDB * sharedDB = nil;
 }
 - (void)loadSchema
 {
-    NSString * filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:@"/autocomplete_schema.sql"];
+    NSURL * bundleURL = [[NSBundle mainBundle] URLForResource:@"WeiboSDKResources" withExtension:@"bundle"];
+    
+    if (!bundleURL)
+    {
+        return;
+    }
+    
+    NSString * filePath = [[[NSBundle bundleWithURL:bundleURL] resourcePath] stringByAppendingPathComponent:@"autocomplete_schema.sql"];
     NSString * schema = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     
     dispatch_async_background(^{
