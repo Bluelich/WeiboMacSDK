@@ -15,16 +15,16 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
 
   s.subspec 'Vendors' do |sp|
-    sp.source_files = 'WeiboSDK/Vendors/**/*.{h,m}'
+    sp.source_files = 'WeiboSDK/Vendors/**/*.{h,m,c}'
     sp.requires_arc = false
     sp.compiler_flags = '-fno-objc-arc'
   end
 
   s.subspec 'Classes' do |sp|
     sp.prefix_header_file = "WeiboSDK/SupportingFiles/WeiboSDK-Prefix.pch"
-    sp.source_files = 'WeiboSDK/**/*.{h,m}'
+    sp.source_files = 'WeiboSDK/**/*.{h,m,c}'
     sp.requires_arc = true,
-    sp.exclude_files = 'WeiboSDK/Vendors/**/*.{h,m}'
+    sp.exclude_files = 'WeiboSDK/Vendors/**/*.{h,m,c}'
     sp.dependency 'WeiboMacSDK/Vendors'
   end
 
