@@ -588,6 +588,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C6146F3B18D4580100C672F1 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				C6011AFC15147B2500A0A49C /* fmdb */,
+				C6053FE614F380F1003A581D /* SSKeyChain */,
+				C617C91214EBA90000CC75F5 /* JSONKit */,
+				C6CED17014E665F60033CA45 /* OAuthConsumer */,
+				C6E2D05C14E6BF02000D3507 /* ASIHTTPRequest */,
+				C6DB908D14E4E14C001DE9F5 /* RegexKitLite.h */,
+				C6DB908E14E4E14C001DE9F5 /* RegexKitLite.m */,
+			);
+			path = Vendors;
+			sourceTree = "<group>";
+		};
 		C617C91214EBA90000CC75F5 /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -750,13 +764,7 @@
 		C6DB908C14E4E139001DE9F5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				C6011AFC15147B2500A0A49C /* fmdb */,
-				C6053FE614F380F1003A581D /* SSKeyChain */,
 				C617C92014EBDF4300CC75F5 /* Additions */,
-				C617C91214EBA90000CC75F5 /* JSONKit */,
-				C6CED17014E665F60033CA45 /* OAuthConsumer */,
-				C6DB908D14E4E14C001DE9F5 /* RegexKitLite.h */,
-				C6DB908E14E4E14C001DE9F5 /* RegexKitLite.m */,
 				C6D3101B180286A3008EAFA2 /* NSObject+AssociatedObject.h */,
 				C6D3101C180286A3008EAFA2 /* NSObject+AssociatedObject.m */,
 				C6F3E04918D42E8B0055131A /* WeiboStatusStreamFilter.h */,
@@ -891,7 +899,6 @@
 		C6E1CD5414E5FADF000137B9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				C6E2D05C14E6BF02000D3507 /* ASIHTTPRequest */,
 				C6E1CD5914E5FB2E000137B9 /* WTHTTPRequest.h */,
 				C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */,
 				C6F317B014E7CD2200A952FE /* WeiboRequestError.h */,
@@ -997,6 +1004,7 @@
 		C6FC9E6314E3C40200094A8F /* WeiboSDK */ = {
 			isa = PBXGroup;
 			children = (
+				C6146F3B18D4580100C672F1 /* Vendors */,
 				C6B4DC1714ED347C0032A8CF /* Supporting Files */,
 				C6E1CD5414E5FADF000137B9 /* Network */,
 				C6DB909B14E4F07D001DE9F5 /* Support */,
@@ -1558,6 +1566,7 @@
 				C6146F2118D4378B00C672F1 /* MacAppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C6B4DC1C14ED347C0032A8CF /* Build configuration list for PBXNativeTarget "WeiboSDK" */ = {
 			isa = XCConfigurationList;

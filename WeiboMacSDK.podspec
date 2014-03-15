@@ -13,7 +13,23 @@ Pod::Spec.new do |s|
 
   s.platform     = :osx
   s.osx.deployment_target = '10.7'
-  s.requires_arc = true
+
+  s.subspec 'vendors' do |sp|
+    sp.source_files = 'WeiboSDK/Vendors/**/*.{h,m}'
+    sp.requires_arc = false
+    sp.compiler_flags = '-fno-objc-arc'
+  end
+
+  s.subspec 'arc' do |sp|
+    sp.prefix_header_file = "WeiboSDK/SupportingFiles/WeiboSDK-Prefix.pch"
+    sp.source_files = 'WeiboSDK/**/*.{h,m}'
+    sp.requires_arc = true,
+    sp.exclude_files = 'WeiboSDK/Vendors/**/*.{h,m}'
+    sp.dependency 'WeiboMacSDK/vendors'
+  end
+
+  s.resources = 'WeiboSDKResources'
 
   s.dependency 'libextobjc'
+
 end
