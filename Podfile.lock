@@ -1,4 +1,10 @@
 PODS:
+  - FMDB (2.2):
+    - FMDB/standard
+  - FMDB/common (2.2)
+  - FMDB/standard (2.2):
+    - FMDB/common
+  - JSONKit-NoWarning (1.1)
   - libextobjc (0.4):
     - libextobjc/EXTADT
     - libextobjc/EXTConcreteProtocol
@@ -34,11 +40,21 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
+  - RegexKitLite (4.0)
+  - SSKeychain (1.2.1)
 
 DEPENDENCIES:
+  - FMDB (~> 2.2)
+  - JSONKit-NoWarning (~> 1.1)
   - libextobjc
+  - RegexKitLite
+  - SSKeychain (~> 1.2)
 
 SPEC CHECKSUMS:
+  FMDB: 97472cfacf0d9e445e915704fb43b4b142799c36
+  JSONKit-NoWarning: 5b8c7dbf2969926b714727288bb2a9d24a176a0c
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
+  RegexKitLite: f7af7b4d2b675cd2ec9a4abab6aad6ae1f6499c0
+  SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
 
 COCOAPODS: 0.29.0
