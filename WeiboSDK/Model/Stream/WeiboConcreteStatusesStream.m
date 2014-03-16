@@ -598,8 +598,8 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 
 - (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type
 {
-    NSDictionary * userInfo = @{WeiboStatusStreamNotificationStatusesArrayKey : newStatuses,
-                                WeiboStatusStreamNotificationAddingTypeKey : [NSNumber numberWithInteger:type]};
+    NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@(type), WeiboStatusStreamNotificationAddingTypeKey, newStatuses, WeiboStatusStreamNotificationStatusesArrayKey, nil];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReceiveNewStatusesNotificationKey object:self userInfo:userInfo];
 }
 - (void)noticeDidReceiveRequestError:(WeiboRequestError *)error
