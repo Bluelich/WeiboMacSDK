@@ -61,11 +61,13 @@
         request = [self.serializer requestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters error:NULL];
     }
     
-    [[AFHTTPRequestOperationManager manager] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPRequestOperation * operation = [[AFHTTPRequestOperationManager manager] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self requestFinished:operation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self requestFinished:operation];
     }];
+    
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
 }
