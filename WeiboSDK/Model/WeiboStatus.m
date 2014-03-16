@@ -10,7 +10,7 @@
 #import "WeiboGeotag.h"
 #import "WeiboUser.h"
 #import "WeiboPicture.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 #import "RegexKitLite.h"
@@ -26,29 +26,10 @@
 
 #pragma mark -
 #pragma mark Parse Methods
-+ (WeiboStatus *)statusWithDictionary:(NSDictionary *)dic{
-    return [[[self class] alloc] initWithDictionary:dic];
-}
-+ (WeiboStatus *)statusWithJSON:(NSString *)json{
-    NSDictionary * dictionary = [json objectFromJSONString];
-    WeiboStatus * status = [[self class] statusWithDictionary:dictionary];
-    return status;
-}
 
-+ (NSArray *)statusesWithJSON:(NSString *)json
++ (void)processObjects:(NSMutableArray *)objects withMetadata:(NSDictionary *)metadata
 {
-    NSDictionary * jsonObject = [json objectFromJSONString];
-    NSArray * dictionaries = [jsonObject objectForKey:@"statuses"];
-    if (!dictionaries) dictionaries = [jsonObject objectForKey:@"reposts"];
-    
-    NSMutableArray * statuses = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries)
-    {
-        WeiboStatus * status = [WeiboStatus statusWithDictionary:dic];
-        [statuses addObject:status];
-    }
-    
-    NSArray * marks = [jsonObject objectForKey:@"marks"];
+    NSArray * marks = metadata[@"marks"];
     if (marks.count > 0)
     {
         for (NSString * mark in marks)
@@ -56,10 +37,8 @@
             if (![mark isKindOfClass:[NSString class]]) continue;
             
             WeiboStatusID sid = [mark longLongValue];
-            
             if (!sid) continue;
-            
-            for (WeiboStatus * status in statuses)
+            for (WeiboStatus * status in objects)
             {
                 if (status.sid == sid)
                 {
@@ -70,7 +49,7 @@
         }
     }
     
-    NSArray * ads = [jsonObject objectForKey:@"ad"];
+    NSArray * ads = metadata[@"ad"];
     if (ads.count)
     {
         for (NSDictionary * ad in ads)
@@ -80,8 +59,7 @@
             WeiboStatusID statusID = [ad longlongForKey:@"id" defaultValue:0];
             
             if (!statusID) continue;
-            
-            for (WeiboStatus * status in statuses)
+            for (WeiboStatus * status in objects)
             {
                 if (status.sid == statusID)
                 {
@@ -90,31 +68,20 @@
             }
         }
     }
-    
-    return statuses;
 }
 
-+ (NSArray *)objectsWithJSON:(NSString *)json
++ (NSString *)defaultJSONObjectRootKey
 {
-    return [self statusesWithJSON:json];
+    return @"status";
 }
-
-+ (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback{
-    [self parseObjectsJSON:json callback:callback];
-}
-+ (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        WeiboStatus * status = [self statusWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:status];
-        });
-    });
-}
-
-- (WeiboStatus *)_initWithDictionary:(NSDictionary *)dic
++ (NSString *)defaultJSONArrayRootKey
 {
-    if ((self = [super _initWithDictionary:dic]))
+    return @"statuses";
+}
+
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dic
+{
+    if ([super updateWithJSONDictionary:dic])
     {
         
         self.treatRetweetedStatusAsQuoted = YES;
@@ -198,13 +165,16 @@
         }
         
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];
-		if (retweetedStatusDic) {
-            WeiboStatus * retweeted = [[WeiboStatus alloc] _initWithDictionary:retweetedStatusDic];
+		if (retweetedStatusDic)
+        {
+            WeiboStatus * retweeted = [WeiboStatus objectWithJSONObject:retweetedStatusDic];
 			self.retweetedStatus = retweeted;
             self.retweetedStatus.quoted = YES;
 		}
+        
+        return YES;
     }
-    return self;
+    return NO;
 }
 
 - (WeiboBaseStatus *)quotedBaseStatus

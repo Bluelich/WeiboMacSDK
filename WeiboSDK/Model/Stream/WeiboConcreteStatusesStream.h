@@ -19,7 +19,7 @@ extern NSString * const WeiboStatusStreamNotificationBaseStatusKey;
 extern NSString * const WeiboStatusStreamNotificationStatusIndexKey;
 extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 
-@class WeiboBaseStatus, WTCallback;
+@class WeiboBaseStatus, WeiboCallback;
 
 @interface WeiboConcreteStatusesStream : WeiboStream
 
@@ -59,9 +59,9 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (void)loadOlder;
 - (void)retryLoadOlder;
 - (void)fillInGap:(NSString *)gap;
-- (WTCallback *)loadNewerResponseCallback;
-- (WTCallback *)loadOlderResponseCallback;
-- (WTCallback *)fillInGapResponseCallback:(id)info;
+- (WeiboCallback *)loadNewerResponseCallback;
+- (WeiboCallback *)loadOlderResponseCallback;
+- (WeiboCallback *)fillInGapResponseCallback:(id)info;
 
 #pragma mark -
 #pragma mark On Disk Caching ( Not Implemented Yet )

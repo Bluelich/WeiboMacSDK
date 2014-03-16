@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
+#import "WeiboModel.h"
 
-@class WTCallback, WeiboStatus;
+@class WeiboCallback, WeiboStatus;
 
-@interface WeiboUser : NSObject <NSCoding> {
+@interface WeiboUser : WeiboModel <NSCoding> {
     WeiboUserID userID;
     NSString * screenName;
     NSString * name;
@@ -65,17 +66,5 @@
 @property (assign, nonatomic) NSTimeInterval cacheTime;
 
 @property (assign, nonatomic) BOOL simplifiedCoding;
-
-#pragma mark -
-#pragma mark Parse Methods
-+ (WeiboUser *)userWithDictionary:(NSDictionary *)dic;
-+ (WeiboUser *)userWithJSON:(NSString *)json;
-+ (NSArray *)usersWithJSON:(NSString *)json;
-+ (NSArray *)usersWithDictionaries:(NSArray *)array;
-+ (void)parseUserJSON:(NSString *)json callback:(WTCallback *)callback;
-+ (void)parseUsersJSON:(NSString *)json callback:(WTCallback *)callback;
-+ (void)parseUserJSON:(NSString *)json onComplete:(WTObjectBlock)block;
-+ (void)parseUsersJSON:(NSString *)json onComplete:(WTArrayBlock)block;
-- (WeiboUser *)initWithDictionary:(NSDictionary *)dic;
 
 @end

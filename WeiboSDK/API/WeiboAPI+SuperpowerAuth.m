@@ -29,7 +29,7 @@ NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
         @"grant_type" : @"password"
     };
     
-    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(superpowerTokenResponse:info:) info:nil];
+    WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(superpowerTokenResponse:info:) info:nil];
     
     NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
     
@@ -42,9 +42,7 @@ NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
 
 - (void)superpowerTokenResponse:(id)response info:(id)info
 {
-    NSDictionary * dict = [response objectFromJSONString];
-    
-    [responseCallback invoke:dict];
+    [responseCallback invoke:response];
 }
 
 @end

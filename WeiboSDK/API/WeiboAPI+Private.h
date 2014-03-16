@@ -17,7 +17,7 @@
 #import "WeiboUnread.h"
 #import "WeiboHTTPRequest.h"
 
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WTFoundationUtilities.h"
 #import "JSONKit.h"
 
@@ -26,15 +26,15 @@
 #pragma mark -
 #pragma mark Request Core
 
-- (void)request:(NSString *)partialUrl method:(NSString *)method parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback;
-- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback;
-- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
-- (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
+- (void)request:(NSString *)partialUrl method:(NSString *)method parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WeiboCallback *)actualCallback;
+- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WeiboCallback *)actualCallback;
+- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WeiboCallback *)actualCallback;
+- (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WeiboCallback *)actualCallback;
 
 #pragma mark Response Handling
 - (void)handleRequestError:(WeiboRequestError *)error;
-- (void)_responseReceived:(id)responseValue callback:(WTCallback *)callback;
-- (WTCallback *)errorlessCallbackWithCallback:(WTCallback *)callback;
-- (WTCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info;
+- (void)_responseReceived:(id)responseValue callback:(WeiboCallback *)callback;
+- (WeiboCallback *)errorlessCallbackWithCallback:(WeiboCallback *)callback;
+- (WeiboCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info;
 
 @end

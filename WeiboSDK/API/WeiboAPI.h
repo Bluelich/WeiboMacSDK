@@ -10,7 +10,7 @@
 #import "WeiboConstants.h"
 #import "WeiboHTTPRequest.h"
 #import "WeiboRequestError.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WeiboAccount.h"
 #import "WeiboComposition.h"
 
@@ -18,19 +18,19 @@
 {
     NSString * apiRoot;
     WeiboAccount * authenticateWithAccount;
-    WTCallback * responseCallback;
+    WeiboCallback * responseCallback;
 }
 
-+ (id)requestWithAPIRoot:(NSString *)root callback:(WTCallback *)callback;
++ (id)requestWithAPIRoot:(NSString *)root callback:(WeiboCallback *)callback;
 + (id)authenticatedRequestWithAPIRoot:(NSString *)root 
                               account:(WeiboAccount *)account 
-                             callback:(WTCallback *)callback;
+                             callback:(WeiboCallback *)callback;
 + (instancetype)authenticatedRequestWithAPIRoot:(NSString *)root
                                         account:(WeiboAccount *)account
-                                     completion:(WTCallbackBlock)completion;
+                                     completion:(WeiboCallbackBlock)completion;
 - (id)initWithAccount:(WeiboAccount *)account
               apiRoot:(NSString *)root 
-             callback:(WTCallback *)callback;
+             callback:(WeiboCallback *)callback;
 
 - (WeiboHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl;
 - (WeiboHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl;

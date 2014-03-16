@@ -13,25 +13,25 @@
 @implementation WeiboAPI
 
 #pragma mark Object Lifecycle
-+ (id)requestWithAPIRoot:(NSString *)root callback:(WTCallback *)callback{
++ (id)requestWithAPIRoot:(NSString *)root callback:(WeiboCallback *)callback{
     return [[self alloc] initWithAccount:nil apiRoot:root callback:callback];
 }
 + (id)authenticatedRequestWithAPIRoot:(NSString *)root 
                               account:(WeiboAccount *)account 
-                             callback:(WTCallback *)callback{
+                             callback:(WeiboCallback *)callback{
     return [[self alloc] initWithAccount:account 
                                   apiRoot:root 
                                  callback:callback];
 }
 + (instancetype)authenticatedRequestWithAPIRoot:(NSString *)root
                                         account:(WeiboAccount *)account
-                                     completion:(WTCallbackBlock)completion
+                                     completion:(WeiboCallbackBlock)completion
 {
-    return [self authenticatedRequestWithAPIRoot:root account:account callback:WTBlockCallback(completion, nil)];
+    return [self authenticatedRequestWithAPIRoot:root account:account callback:WeiboBlockCallback(completion, nil)];
 }
 - (id)initWithAccount:(WeiboAccount *)account
               apiRoot:(NSString *)root 
-             callback:(WTCallback *)callback{
+             callback:(WeiboCallback *)callback{
     if ((self = [super init])) {
         apiRoot = root;
         authenticateWithAccount = account;

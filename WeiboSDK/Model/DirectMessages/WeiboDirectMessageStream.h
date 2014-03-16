@@ -36,8 +36,8 @@ extern NSString * const WeiboDirectMessageStreamFinishedLoadingNotification;
 
 - (BOOL)messagesLoaded;
 
-- (WTCallback *)loadNewerResponseCallback;
-- (WTCallback *)loaderOlderResponseCallback;
+- (WeiboCallback *)loadNewerResponseCallback;
+- (WeiboCallback *)loaderOlderResponseCallback;
 
 - (void)addMessages:(NSArray *)messages;
 - (void)deleteMessage:(WeiboDirectMessage *)message;

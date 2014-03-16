@@ -12,7 +12,7 @@
 extern NSString * const WeiboAccountSetDidChangeNotification;
 extern NSString * const WeiboDidHeartbeatNotification;
 
-@class WeiboAccount, WTCallback;
+@class WeiboAccount, WeiboCallback;
 
 @interface Weibo : NSObject {
     NSMutableArray * accounts;
@@ -33,13 +33,13 @@ extern NSString * const WeiboDidHeartbeatNotification;
 // Use When Grant Type == Password
 - (void)signInWithUsername:(NSString *)aUsername 
                   password:(NSString *)aPassword 
-                  callback:(WTCallback *)aCallback;
+                  callback:(WeiboCallback *)aCallback;
 // Use When Grant Type == Authorization Code 
-- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WTCallback *)aCallback;
+- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WeiboCallback *)aCallback;
 
 - (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
                       password:(NSString *)aPassword 
-                      callback:(WTCallback *)aCallback;
+                      callback:(WeiboCallback *)aCallback;
 - (void)didSignIn:(id)response info:(id)info;
 - (void)addAccount:(WeiboAccount *)aAccount;
 - (void)removeAccount:(WeiboAccount *)aAccount;

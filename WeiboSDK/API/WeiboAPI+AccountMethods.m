@@ -15,7 +15,7 @@
 #pragma mark oAuth (xAuth)
 - (void)clientAuthRequestAccessToken
 {
-    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(clientAuthResponse:info:) info:nil];
+    WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(clientAuthResponse:info:) info:nil];
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[authenticateWithAccount.username stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",authenticateWithAccount.password,@"password",@"password",@"grant_type", nil];
     
     NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
@@ -30,8 +30,7 @@
 }
 
 - (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
-    NSString * tokenResponse = returnValue;
-    NSDictionary * dic = [tokenResponse objectFromJSONString];
+    NSDictionary * dic = returnValue;
     NSString * token = [dic valueForKey:@"access_token"];
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
     [authenticateWithAccount setOAuth2Token:token];

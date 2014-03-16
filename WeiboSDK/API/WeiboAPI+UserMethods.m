@@ -17,7 +17,7 @@
 
 - (void)verifyCredentials
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(myUserIDResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(myUserIDResponse:info:), nil);
     [self GET:@"account/get_uid.json" parameters:nil callback:callback];
 }
 - (void)myUserIDResponse:(id)returnValue info:(id)info
@@ -26,30 +26,28 @@
         return;
     }
     authenticateWithAccount.tokenExpired = NO;
-    NSString * userID = [[[returnValue objectFromJSONString] objectForKey:@"uid"] stringValue];
-    WTCallback * callback = WTCallbackMake(self, @selector(verifyCredentialsResponse:info:), nil);
+    NSString * userID = [[returnValue objectForKey:@"uid"] stringValue];
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(verifyCredentialsResponse:info:), nil);
     NSDictionary * params = [NSDictionary dictionaryWithObject:userID forKey:@"uid"];
     [self GET:@"users/show.json" parameters:params callback:callback];
 }
 - (void)verifyCredentialsResponse:(id)response info:(id)info
 {
-    [WeiboUser parseUserJSON:response onComplete:^(id object) {
-        [responseCallback invoke:object];
-    }];
+    [WeiboUser parseObjectWithJSONObject:response callback:responseCallback];
 }
 - (void)userWithID:(WeiboUserID)uid
 {
     NSDictionary * param;
     param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",uid]
                                         forKey:@"user_id"];
-    WTCallback * callback = [self userResponseCallback];
+    WeiboCallback * callback = [self userResponseCallback];
     [self GET:@"users/show.json" parameters:param callback:callback];
 }
 - (void)userWithUsername:(NSString *)screenname
 {
     NSDictionary * param = [NSDictionary dictionaryWithObject:screenname
                                                        forKey:@"screen_name"];
-    WTCallback * callback = [self userResponseCallback];
+    WeiboCallback * callback = [self userResponseCallback];
     [self GET:@"users/show.json" parameters:param callback:callback];
 }
 
@@ -65,13 +63,11 @@
 #pragma mark ( User Response Handling )
 - (void)userResponse:(id)response info:(id)info
 {
-    [WeiboUser parseUserJSON:response onComplete:^(id object) {
-        [responseCallback invoke:object];
-    }];
+    [WeiboUser parseObjectWithJSONObject:response callback:responseCallback];
 }
-- (WTCallback *)userResponseCallback
+- (WeiboCallback *)userResponseCallback
 {
-    return WTCallbackMake(self, @selector(userResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(userResponse:info:), nil);
 }
 
 - (void)followUserID:(WeiboUserID)uid
@@ -98,13 +94,13 @@
                              screenname,@"screen_name", nil];
     [self POST:@"friendships/destroy.json" parameters:params callback:[self userResponseCallback]];
 }
-- (WTCallback *)friendshipExistsCallback
+- (WeiboCallback *)friendshipExistsCallback
 {
-    return WTCallbackMake(self, @selector(friendshipExists:info:), nil);
+    return WeiboCallbackMake(self, @selector(friendshipExists:info:), nil);
 }
-- (WTCallback *)friendshipInfoCallback
+- (WeiboCallback *)friendshipInfoCallback
 {
-    return WTCallbackMake(self, @selector(friendshipInfo:info:), nil);
+    return WeiboCallbackMake(self, @selector(friendshipInfo:info:), nil);
 }
 - (void)lookupRelationships:(WeiboUserID)tuid
 {
@@ -131,34 +127,23 @@
 }
 - (void)friendshipExists:(id)response info:(id)info
 {
-    NSDictionary * result = [response objectFromJSONString];
-    [responseCallback invoke:[result objectForKey:@"target"]];
+    [responseCallback invoke:[response objectForKey:@"target"]];
 }
 
 #pragma mark - User Lists
 
 - (void)userlistResponse:(id)response info:(id)info
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul), ^{
-        NSMutableDictionary * result = [response mutableObjectFromJSONString];
-        NSArray * users = result[@"users"];
-        if (users && [users isKindOfClass:[NSArray class]])
-        {
-            result[@"users"] = [WeiboUser usersWithDictionaries:users];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [responseCallback invoke:result];
-        });
-    });
+    [WeiboUser parseObjectsWithJSONObject:response callback:responseCallback];
 }
 
-- (WTCallback *)userlistResponseCallback
+- (WeiboCallback *)userlistResponseCallback
 {
     return [self userlistCallbackWithCursor:0];
 }
-- (WTCallback *)userlistCallbackWithCursor:(WeiboUserID)cursor
+- (WeiboCallback *)userlistCallbackWithCursor:(WeiboUserID)cursor
 {
-    return WTCallbackMake(self, @selector(userlistResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(userlistResponse:info:), nil);
 }
 
 - (void)followersForUsername:(NSString *)screenname cursor:(WeiboUserID)cursor
@@ -229,7 +214,7 @@
     if (!keyword) keyword = @"";
     NSDictionary * params = @{@"q": keyword, @"type": @"0"};
     
-    [self GET:@"search/suggestions/at_users.json" parameters:params callback:WTCallbackMake(self, @selector(userMentionSuggestionsResponse:info:), @{@"keyword": keyword})];
+    [self GET:@"search/suggestions/at_users.json" parameters:params callback:WeiboCallbackMake(self, @selector(userMentionSuggestionsResponse:info:), @{@"keyword": keyword})];
 }
 
 @end

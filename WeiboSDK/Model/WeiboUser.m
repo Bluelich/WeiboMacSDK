@@ -8,7 +8,7 @@
 
 #import "WeiboUser.h"
 #import "WeiboStatus.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
@@ -77,62 +77,27 @@
     }
 }
 
-- (void)dealloc{
+- (void)dealloc
+{
     _remark = nil;
 }
 
 #pragma mark -
 #pragma mark Parse Methods
-+ (WeiboUser *)userWithDictionary:(NSDictionary *)dic{
-    return [[WeiboUser alloc] initWithDictionary:dic];
-}
-+ (WeiboUser *)userWithJSON:(NSString *)json{
-    NSDictionary * dictionary = [json objectFromJSONString];
-    return [WeiboUser userWithDictionary:dictionary];
-}
-+ (NSArray *)usersWithJSON:(NSString *)json{
-    NSArray * dictionaries = [json objectFromJSONString];
-    return [self usersWithDictionaries:dictionaries];
-}
-+ (NSArray *)usersWithDictionaries:(NSArray *)dictionaries
+
++ (NSString *)defaultJSONArrayRootKey
 {
-    NSMutableArray * users = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries) {
-        WeiboUser * user = [WeiboUser userWithDictionary:dic];
-        [users addObject:user];
-    }
-    return users;
+    return @"users";
 }
-+ (void)parseUserJSON:(NSString *)json onComplete:(WTObjectBlock)block{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        WeiboUser * user = [self userWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            block(user);
-        });
-    });
++ (NSString *)defaultJSONObjectRootKey
+{
+    return @"user";
 }
-+ (void)parseUsersJSON:(NSString *)json onComplete:(WTArrayBlock)block{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSArray * users = [self usersWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            block(users);
-        });
-    });
-}
-+ (void)parseUserJSON:(NSString *)json callback:(WTCallback *)callback{
-    [WeiboUser parseUserJSON:json onComplete:^(id object) {
-        [callback invoke:object];
-    }];
-}
-+ (void)parseUsersJSON:(NSString *)json callback:(WTCallback *)callback{
-    [WeiboUser parseUsersJSON:json onComplete:^(NSArray * array) {
-        [callback invoke:array];
-    }];
-}
-- (WeiboUser *)initWithDictionary:(NSDictionary *)dic{
-    if (self = [super init]) {
+
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dic
+{
+    if ([super updateWithJSONDictionary:dic])
+    {
         self.userID = [dic longlongForKey:@"id" defaultValue:0];
         self.screenName = [dic stringForKey:@"screen_name" defaultValue:@""];
         self.name = [dic stringForKey:@"name" defaultValue:@""];
@@ -164,10 +129,12 @@
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];
         if (statusDic) {
-            self.status = [WeiboStatus statusWithDictionary:statusDic];
+            self.status = [WeiboStatus objectWithJSONObject:statusDic];
         }
+        
+        return YES;
     }
-    return self;
+    return NO;
 }
 
 - (BOOL)verified

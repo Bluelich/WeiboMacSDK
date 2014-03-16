@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
 #import "WeiboComposition.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 
-@class WeiboUser, WeiboRequestError, WeiboAPI, WTCallback;
+@class WeiboUser, WeiboRequestError, WeiboAPI, WeiboCallback;
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentMentionsStream, WeiboCommentsToMeStream, WeiboCommentsByMeStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboRepostsStream, WeiboStatus, WeiboBaseStatus, WeiboLikesStream;
@@ -95,9 +95,9 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 - (NSString *)keychainService;
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount;
 - (void)updateWithAccount:(WeiboAccount *)account;
-- (WeiboAPI *)request:(WTCallback *)callback;
-- (WeiboAPI *)authenticatedRequest:(WTCallback *)callback;
-- (WeiboAPI *)authenticatedRequestWithCompletion:(WTCallbackBlock)completion;
+- (WeiboAPI *)request:(WeiboCallback *)callback;
+- (WeiboAPI *)authenticatedRequest:(WeiboCallback *)callback;
+- (WeiboAPI *)authenticatedRequestWithCompletion:(WeiboCallbackBlock)completion;
 
 #pragma mark -
 #pragma mark Timeline
@@ -114,13 +114,13 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 
 #pragma mark -
 #pragma mark User
-- (void)userWithUsername:(NSString *)screenname callback:(WTCallback *)callback;
+- (void)userWithUsername:(NSString *)screenname callback:(WeiboCallback *)callback;
 
 #pragma mark -
 #pragma mark Account
 - (void)myUserDidUpdate:(WeiboUser *)user;
-- (void)verifyCredentials:(WTCallback *)callback;
-- (void)requestProfileImageWithCallback:(WTCallback *)callback;
+- (void)verifyCredentials:(WeiboCallback *)callback;
+- (void)requestProfileImageWithCallback:(WeiboCallback *)callback;
 
 #pragma mark -
 #pragma mark User Detail Streams

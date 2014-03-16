@@ -11,7 +11,7 @@
 #import "NSDictionary+WeiboAdditions.h"
 #import "WeiboSuperpowerAPI.h"
 #import "SSKeychain.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WeiboDirectMessagesConversationManager.h"
 #import "Weibo.h"
 
@@ -34,20 +34,20 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
 
 #pragma mark - Authorizing
 
-- (WeiboAPI *)authenticatedSuperpowerRequest:(WTCallback *)callback
+- (WeiboAPI *)authenticatedSuperpowerRequest:(WeiboCallback *)callback
 {
     return [WeiboSuperpowerAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
 }
-- (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WTCallbackBlock)completion
+- (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WeiboCallbackBlock)completion
 {
-    return [self authenticatedSuperpowerRequest:WTBlockCallback(completion, nil)];
+    return [self authenticatedSuperpowerRequest:WeiboBlockCallback(completion, nil)];
 }
 
 - (void)authorizeSuperpowerWithUsername:(NSString *)aUsername password:(NSString *)aPassword
 {
     if (_flags.superpowerAuthorizing) return;
     
-    WeiboAPI * api = [self authenticatedRequest:WTCallbackMake(self, @selector(superpowerAuthorizeResponse:info:), nil)];
+    WeiboAPI * api = [self authenticatedRequest:WeiboCallbackMake(self, @selector(superpowerAuthorizeResponse:info:), nil)];
     
     [api superpowerTokenWithUsername:aUsername password:aPassword];
 }

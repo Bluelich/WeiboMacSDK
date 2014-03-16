@@ -17,8 +17,8 @@ extern NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification;
 
 @property (nonatomic, assign, readonly) BOOL superpowerAuthorized;
 
-- (WeiboAPI *)authenticatedSuperpowerRequest:(WTCallback *)callback;
-- (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WTCallbackBlock)completion;
+- (WeiboAPI *)authenticatedSuperpowerRequest:(WeiboCallback *)callback;
+- (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WeiboCallbackBlock)completion;
 - (void)authorizeSuperpowerWithUsername:(NSString *)username password:(NSString *)password;
 - (void)deauthorizeSuperpower;
 

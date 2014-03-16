@@ -9,7 +9,7 @@
 #import "WeiboComment.h"
 #import "WeiboStatus.h"
 #import "WeiboUser.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "NSObject+AssociatedObject.h"
 #import "JSONKit.h"
@@ -20,55 +20,41 @@
 
 #pragma mark -
 #pragma mark Parse Methods
-+ (WeiboComment *)commentWithDictionary:(NSDictionary *)dic{
-    return [[self alloc] initWithDictionary:dic];
-}
-+ (WeiboComment *)commentWithJSON:(NSString *)json{
-    NSDictionary * dictionary = [json objectFromJSONString];
-    WeiboComment * comment = [WeiboComment commentWithDictionary:dictionary];
-    return comment;
-}
-+ (NSString *)objectsJSONKey
+
++ (NSString *)defaultJSONArrayRootKey
 {
     return @"comments";
 }
-+ (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback{
-    [self parseObjectsJSON:json callback:callback];
-}
-+ (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        WeiboComment * comment = [self commentWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:comment];
-        });
-    });
++ (NSString *)defaultJSONObjectRootKey
+{
+    return @"comment";
 }
 
-- (id)_initWithDictionary:(NSDictionary *)dic
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
 {
-    if ((self = [super _initWithDictionary:dic]))
+    if ([super updateWithJSONDictionary:dict])
     {
         
         self.treatReplyingStatusAsQuoted = YES;
         self.treatReplyingCommentAsQuoted = YES;
         
-		NSDictionary* statusDic = [dic objectForKey:@"status"];
-        WeiboStatus * status = [[WeiboStatus alloc] initWithDictionary:statusDic];
+		NSDictionary* statusDic = [dict objectForKey:@"status"];
 		if (statusDic)
         {
-			self.replyToStatus = status;
+			self.replyToStatus = [WeiboStatus objectWithJSONObject:statusDic];
             self.replyToStatus.quoted = YES;
 		}
 
-        NSDictionary* commentDic = [dic objectForKey:@"reply_comment"];
-        if (commentDic) {
-            WeiboComment * comment = [[WeiboComment alloc] initWithDictionary:commentDic];
+        NSDictionary* commentDic = [dict objectForKey:@"reply_comment"];
+        if (commentDic)
+        {
+            WeiboComment * comment = [WeiboComment objectWithJSONObject:commentDic];
             self.replyToComment = comment;
             self.replyToComment.quoted = YES;
         }
+        return YES;
     }
-    return self;
+    return NO;
 }
 
 - (BOOL)isComment

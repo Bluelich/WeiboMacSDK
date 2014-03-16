@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboBaseStatus.h"
 
-@class WeiboStatus, WTCallback;
+@class WeiboStatus, WeiboCallback;
 
 @interface WeiboComment : WeiboBaseStatus {
     WeiboStatus * replyToStatus;
@@ -21,12 +21,5 @@
 
 @property (nonatomic, assign) BOOL treatReplyingStatusAsQuoted;
 @property (nonatomic, assign) BOOL treatReplyingCommentAsQuoted;
-
-#pragma mark -
-#pragma mark Parse Methods
-+ (WeiboComment *)commentWithDictionary:(NSDictionary *)dic;
-+ (WeiboComment *)commentWithJSON:(NSString *)json;
-+ (void)parseCommentsJSON:(NSString *)json callback:(WTCallback *)callback;
-+ (void)parseCommentJSON:(NSString *)json callback:(WTCallback *)callback;
 
 @end

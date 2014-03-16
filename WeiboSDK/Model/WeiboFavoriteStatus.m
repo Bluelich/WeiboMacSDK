@@ -11,18 +11,15 @@
 
 @implementation WeiboFavoriteStatus
 
-+ (NSArray *)statusesWithJSON:(NSString *)json{
-    NSArray * dictionaries = [[json objectFromJSONString] objectForKey:@"favorites"];
-    NSMutableArray * statuses = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries) {
-        WeiboFavoriteStatus * status = [WeiboFavoriteStatus statusWithDictionary:dic];
-        [statuses addObject:status];
-    }
-    return statuses;
++ (NSString *)defaultJSONArrayRootKey
+{
+    return @"favorites";
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic{
-    if (self = [super initWithDictionary:[dic objectForKey:@"status"]]) {
+- (instancetype)initWithJSONDictionary:(NSDictionary *)dict
+{
+    if (self = [super initWithJSONDictionary:[dict objectForKey:@"status"]])
+    {
         self.favorited = YES;
     }
     return self;

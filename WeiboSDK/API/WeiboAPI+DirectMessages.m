@@ -16,17 +16,17 @@
 
 #pragma mark -
 #pragma mark Direct Message
-- (WTCallback *)directMessageResponseCallback
+- (WeiboCallback *)directMessageResponseCallback
 {
-    return WTCallbackMake(self, @selector(directMessageResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(directMessageResponse:info:), nil);
 }
-- (WTCallback *)directMessagesResponseCallback
+- (WeiboCallback *)directMessagesResponseCallback
 {
-    return WTCallbackMake(self, @selector(directMessagesResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(directMessagesResponse:info:), nil);
 }
 - (void)directMessagesSinceID:(WeiboMessageID)since maxID:(WeiboMessageID)max count:(NSUInteger)count
 {
-    WTCallback * callback = [self directMessagesResponseCallback];
+    WeiboCallback * callback = [self directMessagesResponseCallback];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     
@@ -38,7 +38,7 @@
 }
 - (void)sentDirectMessagesSinceID:(WeiboMessageID)since maxID:(WeiboMessageID)max count:(NSUInteger)count
 {
-    WTCallback * callback = [self directMessagesResponseCallback];
+    WeiboCallback * callback = [self directMessagesResponseCallback];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     
@@ -55,7 +55,7 @@
 - (void)directMessagesResponse:(id)response info:(id)info
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSDictionary * dict = [(NSString *)response objectFromJSONString];
+        NSDictionary * dict = response;
         NSArray * messageDicts = [dict objectForKey:@"direct_messages"];
         NSMutableArray * messages = [NSMutableArray arrayWithCapacity:messageDicts.count];
         
@@ -73,7 +73,7 @@
 
 - (void)conversationsWithCount:(NSInteger)count cursor:(WeiboUserID)cursor
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(directMessageConversationResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(directMessageConversationResponse:info:), nil);
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     
@@ -86,7 +86,7 @@
 - (void)directMessageConversationResponse:(id)returnValue info:(id)info
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray * conversationDicts = [[(NSString *)returnValue objectFromJSONString] objectForKey:@"user_list"];
+        NSArray * conversationDicts = [returnValue objectForKey:@"user_list"];
         
         NSMutableArray * conversations = [NSMutableArray array];
         
@@ -103,7 +103,7 @@
 
 - (void)directMessagesWithUserID:(WeiboUserID)userID since:(WeiboMessageID)since max:(WeiboMessageID)max count:(NSUInteger)count
 {
-    WTCallback * callback = [self directMessagesResponseCallback];
+    WeiboCallback * callback = [self directMessagesResponseCallback];
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     
@@ -117,7 +117,7 @@
 
 - (void)sendDirectMessage:(NSString *)text toUserID:(WeiboUserID)userID
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(directMessageSendResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(directMessageSendResponse:info:), nil);
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     

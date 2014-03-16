@@ -13,7 +13,7 @@
 #import "WeiboRequestError.h"
 #import "LocalAutocompleteDB.h"
 
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "NSArray+WeiboAdditions.h"
 #import "NSObject+AssociatedObject.h"
 
@@ -56,9 +56,9 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 - (void)loadOlderResponse:(id)response info:(id)info;
 - (void)fillInGapResponse:(id)response info:(id)info;
 
-- (WTCallback *)loadNewerResponseCallback;
-- (WTCallback *)loadOlderResponseCallback;
-- (WTCallback *)fillInGapResponseCallback:(id)info;
+- (WeiboCallback *)loadNewerResponseCallback;
+- (WeiboCallback *)loadOlderResponseCallback;
+- (WeiboCallback *)fillInGapResponseCallback:(id)info;
 
 @end
 
@@ -446,37 +446,37 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     [self statusesResponse:response couldBeGap:YES isFromFillingInGap:YES];
 }
 
-- (WTCallback *)loadNewerResponseCallback
+- (WeiboCallback *)loadNewerResponseCallback
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(loadNewerResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(loadNewerResponse:info:), nil);
     return [self filteringCallbackWithCallback:callback];
 }
-- (WTCallback *)loadOlderResponseCallback
+- (WeiboCallback *)loadOlderResponseCallback
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(loadOlderResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(loadOlderResponse:info:), nil);
     return [self filteringCallbackWithCallback:callback];
 }
-- (WTCallback *)fillInGapResponseCallback:(id)info
+- (WeiboCallback *)fillInGapResponseCallback:(id)info
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(fillInGapResponse:info:), info);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(fillInGapResponse:info:), info);
     return [self filteringCallbackWithCallback:callback];
 }
 
 #pragma mark - Filtering
 
-- (WTCallback *)filteringCallbackWithCallback:(WTCallback *)actualCallback
+- (WeiboCallback *)filteringCallbackWithCallback:(WeiboCallback *)actualCallback
 {
     if (self.appliesStatusFilter)
     {
-        return WTCallbackMake(self, @selector(filterResponse:info:), actualCallback);
+        return WeiboCallbackMake(self, @selector(filterResponse:info:), actualCallback);
     }
     return actualCallback;
 }
 - (void)filterResponse:(id)response info:(id)info
 {
-    WTCallback * callback = (WTCallback *)info;
+    WeiboCallback * callback = (WeiboCallback *)info;
     
-    if (![callback isKindOfClass:[WTCallback class]]) return;
+    if (![callback isKindOfClass:[WeiboCallback class]]) return;
     
     if (![response isKindOfClass:[NSArray class]])
     {

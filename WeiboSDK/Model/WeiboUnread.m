@@ -7,7 +7,7 @@
 //
 
 #import "WeiboUnread.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
@@ -16,37 +16,21 @@
 
 #pragma mark -
 #pragma mark Parse Methods
-+ (WeiboUnread *)unreadWithDictionary:(NSDictionary *)dic{
-    return [[WeiboUnread alloc] initWithDictionary:dic];
-}
-+ (WeiboUnread *)unreadWithJSON:(NSString *)json{
-    NSDictionary * dictionary = [json objectFromJSONString];
-    return [WeiboUnread unreadWithDictionary:dictionary];
-}
-+ (void)parseUnreadJSON:(NSString *)json callback:(WTCallback *)callback{
-    [self parseUnreadJSON:json onComplete:^(id object) {
-        [callback invoke:json];
-    }];
-}
-+ (void)parseUnreadJSON:(NSString *)json onComplete:(WTObjectBlock)block{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        WeiboUnread * unread = [self unreadWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            block(unread);
-        });
-    });
-}
-- (WeiboUnread *)initWithDictionary:(NSDictionary *)dic{
-    if (self = [super init]) {
-        self.newStatus = [dic intForKey:@"status" defaultValue:0];
-        self.newStatusMentions = [dic intForKey:@"mention_status" defaultValue:0];
-        self.newCommentMentions = [dic intForKey:@"mention_cmt" defaultValue:0];
-        self.newComments = [dic intForKey:@"cmt" defaultValue:0];
-        self.newDirectMessages = [dic intForKey:@"dm" defaultValue:0];
-        self.newFollowers = [dic intForKey:@"follower" defaultValue:0];
+
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
+{
+    if ([super updateWithJSONDictionary:dict])
+    {
+        self.newStatus = [dict intForKey:@"status" defaultValue:0];
+        self.newStatusMentions = [dict intForKey:@"mention_status" defaultValue:0];
+        self.newCommentMentions = [dict intForKey:@"mention_cmt" defaultValue:0];
+        self.newComments = [dict intForKey:@"cmt" defaultValue:0];
+        self.newDirectMessages = [dict intForKey:@"dm" defaultValue:0];
+        self.newFollowers = [dict intForKey:@"follower" defaultValue:0];
+    
+        return YES;
     }
-    return self;
+    return NO;
 }
 
 #pragma mark -

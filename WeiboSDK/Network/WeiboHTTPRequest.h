@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class WTMutableMultiDictionary, WTCallback;
+@class WTMutableMultiDictionary, WeiboCallback;
 
 @interface WeiboHTTPRequest : NSObject
 
 + (WeiboHTTPRequest *)requestWithURL:(NSURL *)url;
 
-@property (nonatomic, strong) WTCallback * responseCallback;
+@property (nonatomic, strong) WeiboCallback * responseCallback;
 @property (nonatomic, strong) NSString * oAuth2Token;
 @property (nonatomic, strong) NSString * method;
 @property (nonatomic, strong) NSDictionary * parameters;

@@ -7,7 +7,7 @@
 //
 
 #import "WeiboDirectMessageStream.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WeiboRequestError.h"
 #import "NSArray+WeiboAdditions.h"
 
@@ -151,14 +151,14 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     [self messagesResponse:response info:info];
 }
 
-- (WTCallback *)loadNewerResponseCallback
+- (WeiboCallback *)loadNewerResponseCallback
 {
-    return WTCallbackMake(self, @selector(loadNewerResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(loadNewerResponse:info:), nil);
 }
 
-- (WTCallback *)loaderOlderResponseCallback
+- (WeiboCallback *)loaderOlderResponseCallback
 {
-    return WTCallbackMake(self, @selector(loadOlderResponse:info:), nil);
+    return WeiboCallbackMake(self, @selector(loadOlderResponse:info:), nil);
 }
 
 - (void)addMessages:(NSArray *)messages

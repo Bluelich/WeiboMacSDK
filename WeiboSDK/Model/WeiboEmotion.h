@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboModel.h"
 
-@class WTCallback;
+@class WeiboCallback;
 
-@interface WeiboEmotion : NSObject
+@interface WeiboEmotion : WeiboModel
 
 @property (nonatomic, strong) NSString * phrase;
 @property (nonatomic, strong) NSString * type;
@@ -19,11 +20,5 @@
 @property (nonatomic, assign) BOOL common;
 @property (nonatomic, strong) NSString * category;
 @property (weak, nonatomic, readonly) NSString * fileName;
-
-+ (WeiboEmotion *)emotionWithDictionary:(NSDictionary *)dic;
-+ (WeiboEmotion *)emotionWithJSON:(NSString *)json;
-+ (NSArray *)emotionsWithJSON:(NSString *)json;
-+ (void)parseEmotionsJSON:(NSString *)json callback:(WTCallback *)callback;
-- (WeiboEmotion *)initWithDictionary:(NSDictionary *)dic;
 
 @end

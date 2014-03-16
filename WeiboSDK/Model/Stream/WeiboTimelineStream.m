@@ -17,12 +17,12 @@
     return YES;
 }
 - (void)_loadNewer{
-    WTCallback * callback = [self loadNewerResponseCallback];
+    WeiboCallback * callback = [self loadNewerResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
     [api friendsTimelineSinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20];
 }
 - (void)_loadOlder{
-    WTCallback * callback = [self loadOlderResponseCallback];
+    WeiboCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
     
     WeiboStatusID oldestID = self.oldestStatusID;

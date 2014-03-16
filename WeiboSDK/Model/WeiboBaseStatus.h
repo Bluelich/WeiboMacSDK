@@ -11,7 +11,7 @@
 #import "WeiboModel.h"
 #import "WeiboTextAttributes.h"
 
-@class WeiboUser, WeiboLayoutCache, WTCallback;
+@class WeiboUser, WeiboLayoutCache, WeiboCallback;
 
 @interface WeiboBaseStatus : WeiboModel {
     time_t createdAt;
@@ -54,16 +54,9 @@
 @property (nonatomic, assign, readonly) BOOL isDummy;
 @property (nonatomic, assign, readonly) BOOL isGap;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus;
 
 - (WeiboLayoutCache *)layoutCacheWithIdentifier:(NSString *)identifier;
 - (void)removeLayoutCacheWithIdentifier:(NSString *)identifier;
-
-- (id)_initWithDictionary:(NSDictionary *)dic;
-
-+ (NSString *)objectsJSONKey;
-+ (NSArray *)objectsWithJSON:(NSString *)json;
-+ (void)parseObjectsJSON:(NSString *)json callback:(WTCallback *)callback;
 
 @end

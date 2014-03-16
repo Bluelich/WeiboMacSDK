@@ -12,7 +12,7 @@
 #import "WeiboAccount+Superpower.h"
 #import "WeiboAPI+AccountMethods.h"
 #import "WeiboAPI+UserMethods.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WTFileManager.h"
 #import "LocalAutocompleteDB.h"
 #import "WeiboCryptographer.h"
@@ -176,9 +176,9 @@ static Weibo * _sharedWeibo = nil;
 
 - (void)signInWithUsername:(NSString *)aUsername 
                   password:(NSString *)aPassword 
-                  callback:(WTCallback *)aCallback
+                  callback:(WeiboCallback *)aCallback
 {
-    WTCallback * callback = [WTCallback callbackWithTarget:self selector:@selector(didSignIn:info:) info:aCallback];
+    WeiboCallback * callback = [WeiboCallback callbackWithTarget:self selector:@selector(didSignIn:info:) info:aCallback];
     WeiboAccount * account = [[WeiboAccount alloc] initWithUsername:aUsername password:aPassword];
     WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:account.apiRoot account:account callback:callback];
     [api clientAuthRequestAccessToken];
@@ -192,7 +192,7 @@ static Weibo * _sharedWeibo = nil;
 
 #define kWeiboAccessTokenVerifingAccountKey @"kWeiboAccessTokenVerifingAccountKey"
 #define kWeiboAccessTokenVerifingCallbackKey @"kWeiboAccessTokenVerifingCallbackKey"
-- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WTCallback *)aCallback
+- (void)signInWithAccessToken:(NSString *)accessToken tokenExpire:(NSTimeInterval)expireTime userID:(WeiboUserID)userID callback:(WeiboCallback *)aCallback
 {
     WeiboAccount * account = [[WeiboAccount alloc] initWithUserID:userID oAuth2Token:accessToken];
     
@@ -201,7 +201,7 @@ static Weibo * _sharedWeibo = nil;
     NSDictionary * info = @{kWeiboAccessTokenVerifingAccountKey: account,
                             kWeiboAccessTokenVerifingCallbackKey: aCallback};
     
-    WTCallback * callback = WTCallbackMake(self, @selector(accessTokenVerifingResponse:info:), info);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(accessTokenVerifingResponse:info:), info);
     WeiboAPI * api = [account authenticatedRequest:callback];
     
     [api verifyCredentials];
@@ -209,7 +209,7 @@ static Weibo * _sharedWeibo = nil;
 - (void)accessTokenVerifingResponse:(id)response info:(id)info
 {
     WeiboAccount * account = info[kWeiboAccessTokenVerifingAccountKey];
-    WTCallback * callback = info[kWeiboAccessTokenVerifingCallbackKey];
+    WeiboCallback * callback = info[kWeiboAccessTokenVerifingCallbackKey];
     
     id callbackObject = account;
     
@@ -254,9 +254,9 @@ static Weibo * _sharedWeibo = nil;
 
 - (void)refreshTokenForAccount:(WeiboAccount *)aAccount 
                       password:(NSString *)aPassword 
-                      callback:(WTCallback *)aCallback
+                      callback:(WeiboCallback *)aCallback
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(didRefresh:info:), aCallback);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(didRefresh:info:), aCallback);
     aAccount.password = aPassword;
     WeiboAPI * api = [WeiboAPI authenticatedRequestWithAPIRoot:aAccount.apiRoot account:aAccount callback:callback];
     [api clientAuthRequestAccessToken];

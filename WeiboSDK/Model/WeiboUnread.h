@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
+#import "WeiboModel.h"
 
-@class WTCallback;
+@class WeiboCallback;
 
-@interface WeiboUnread : NSObject {
+@interface WeiboUnread : WeiboModel {
     NSUInteger newStatus;
     NSUInteger newFollowers;
     NSUInteger newDirectMessages;
@@ -26,13 +27,5 @@
 @property (assign, nonatomic) NSUInteger newStatusMentions;
 @property (assign, nonatomic) NSUInteger newCommentMentions;
 @property (assign, nonatomic) NSUInteger newComments;
-
-#pragma mark -
-#pragma mark Parse Methods
-+ (WeiboUnread *)unreadWithDictionary:(NSDictionary *)dic;
-+ (WeiboUnread *)unreadWithJSON:(NSString *)json;
-+ (void)parseUnreadJSON:(NSString *)json callback:(WTCallback *)callback;
-+ (void)parseUnreadJSON:(NSString *)json onComplete:(WTObjectBlock)block;
-- (WeiboUnread *)initWithDictionary:(NSDictionary *)dic;
 
 @end

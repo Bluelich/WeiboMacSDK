@@ -14,7 +14,7 @@
 #pragma mark -
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID)since{
-    WTCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
+    WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
     NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
     
     NSString * urlString = OFFLINE_DEBUG_MODE?@"http://localhost/remind/unread_count.json":@"https://rm.api.weibo.com/2/remind/unread_count.json";
@@ -34,9 +34,7 @@
         [responseCallback dissociateTarget];
         return;
     }
-    [WeiboUnread parseUnreadJSON:response onComplete:^(id object) {
-        [responseCallback invoke:object];
-    }];
+    [WeiboUnread parseObjectWithJSONObject:response callback:responseCallback];
 }
 
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type{
@@ -45,7 +43,7 @@
         return;
     }
     
-    WTCallback * callback = WTCallbackMake(self, @selector(resetUnreadResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(resetUnreadResponse:info:), nil);
     NSString * typeString = nil;
     switch (type) {
         case WeiboUnreadCountTypeStatus:

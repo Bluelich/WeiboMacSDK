@@ -39,7 +39,7 @@
 #import "WeiboStatusAccountMentionFilter.h"
 
 #import "NSArray+WeiboAdditions.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
 #import "JSONKit.h"
@@ -392,13 +392,13 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     }
     return NO;
 }
-- (WeiboAPI *)request:(WTCallback *)callback{
+- (WeiboAPI *)request:(WeiboCallback *)callback{
     return [WeiboAPI requestWithAPIRoot:self.apiRoot callback:callback];
 }
-- (WeiboAPI *)authenticatedRequest:(WTCallback *)callback{
+- (WeiboAPI *)authenticatedRequest:(WeiboCallback *)callback{
     return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self callback:callback];
 }
-- (WeiboAPI *)authenticatedRequestWithCompletion:(WTCallbackBlock)completion
+- (WeiboAPI *)authenticatedRequestWithCompletion:(WeiboCallbackBlock)completion
 {
     return [WeiboAPI authenticatedRequestWithAPIRoot:self.apiRoot account:self completion:completion];
 }
@@ -503,7 +503,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [commentsByMeStream loadNewer];
 }
 - (void)refreshTimelines{
-    WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api unreadCountSinceID:[timelineStream newestStatusID]];
     if ([_delegate respondsToSelector:@selector(account:didCheckingUnreadCount:)]) {
@@ -561,7 +561,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 }
 - (void)resetUnreadCountWithType:(WeiboUnreadCountType)type
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(unreadCountResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(unreadCountResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api resetUnreadWithType:type];
     
@@ -580,7 +580,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 #pragma mark Composition
 - (void)sendCompletedComposition:(id<WeiboComposition>)composition
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(didSendCompletedComposition:info:), composition);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(didSendCompletedComposition:info:), composition);
     
     if (composition.type == WeiboCompositionTypeDirectMessage)
     {
@@ -615,18 +615,18 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
 #pragma mark -
 #pragma mark User
-- (void)userWithUsername:(NSString *)screenname callback:(WTCallback *)aCallback{
+- (void)userWithUsername:(NSString *)screenname callback:(WeiboCallback *)aCallback{
     WeiboUser * cachedUser = [usersByUsername objectForKey:screenname];
     if (cachedUser) {
         [self userResponse:cachedUser info:aCallback];
     }else {
-        WTCallback * callback = WTCallbackMake(self, @selector(userResponse:info:), aCallback);
+        WeiboCallback * callback = WeiboCallbackMake(self, @selector(userResponse:info:), aCallback);
         WeiboAPI * api = [self authenticatedRequest:callback];
         [api userWithUsername:screenname];
     }
 }
 - (void)userResponse:(id)response info:(id)info{
-    WTCallback * callback = (WTCallback *)info;
+    WeiboCallback * callback = (WeiboCallback *)info;
     WeiboUser * newUser = (WeiboUser *)response;
     [self cacheUser:newUser];
     [callback invoke:response];
@@ -646,13 +646,13 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         self.user = newUser;
         [self myUserDidUpdate:newUser];
     }
-    [(WTCallback *)info invoke:self];
+    [(WeiboCallback *)info invoke:self];
 }
 - (void)myUserDidUpdate:(WeiboUser *)user{
     [self _postAccountDidUpdateNotification];
 }
-- (void)verifyCredentials:(WTCallback *)aCallback{
-    WTCallback * callback = WTCallbackMake(self, @selector(myUserResponse:info:), aCallback);
+- (void)verifyCredentials:(WeiboCallback *)aCallback{
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(myUserResponse:info:), aCallback);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api verifyCredentials];
 }
@@ -694,7 +694,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     _flags.requestingAvatar = 0;
     
-    WTCallback * callback = (WTCallback *)info;
+    WeiboCallback * callback = (WeiboCallback *)info;
     
     NSImage * image = [[NSImage alloc] initWithData:response];
     if (image) {
@@ -708,15 +708,15 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     }
     [callback invoke:image];
 }
-- (void)requestProfileImageWithCallback:(WTCallback *)aCallback
+- (void)requestProfileImageWithCallback:(WeiboCallback *)aCallback
 {
     _flags.requestingAvatar = 1;
     
-    WTCallback * callback = WTCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
     NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
     
     WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
-    request.responseCallback = WTBlockCallback(^(id responseObject, id info) {
+    request.responseCallback = WeiboBlockCallback(^(id responseObject, id info) {
         [callback invoke:responseObject];
     }, nil);
     [request startRequest];
@@ -914,7 +914,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     [self postStatusFavoriteStateChangedNotification:status];
     
-    WTCallback * callback = WTCallbackMake(self, @selector(favoriteActionResponse:info:), userInfo);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(favoriteActionResponse:info:), userInfo);
     
     WeiboAPI * api = [self authenticatedRequest:callback];
     
@@ -974,12 +974,12 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             status.favorited = favoriteState;
         }
     }
-    else if ([response isKindOfClass:[NSString class]])
+    else if ([response isKindOfClass:[NSDictionary class]])
     {
-        NSDictionary * dict = [(NSString *)response objectFromJSONString];
+        NSDictionary * dict = response;
         NSDictionary * statusDict = [dict objectForKey:@"status"];
         
-        WeiboStatus * newStatus = [WeiboStatus statusWithDictionary:statusDict];
+        WeiboStatus * newStatus = [WeiboStatus objectWithJSONObject:statusDict];
         
         status.favorited = newStatus.favorited;
     }

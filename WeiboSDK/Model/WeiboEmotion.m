@@ -7,56 +7,35 @@
 //
 
 #import "WeiboEmotion.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "JSONKit.h"
 
 @implementation WeiboEmotion
 @synthesize phrase = _phrase, type = _type, url = _url;
 @synthesize hot = _hot, common = _common, category = _category;
 
-
-+ (WeiboEmotion *)emotionWithDictionary:(NSDictionary *)dic{
-    return [[[self class] alloc] initWithDictionary:dic];
-}
-+ (WeiboEmotion *)emotionWithJSON:(NSString *)json{
-    NSDictionary * dic = [json objectFromJSONString];
-    return [self emotionWithDictionary:dic];
-}
-+ (NSArray *)emotionsWithJSON:(NSString *)json{
-    NSArray * dictionaries = [json objectFromJSONString];
-    NSMutableArray * emotions = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries) {
-        WeiboEmotion * emotion = [WeiboEmotion emotionWithDictionary:dic];
-        [emotions addObject:emotion];
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
+{
+    if ([super updateWithJSONDictionary:dict])
+    {
+        self.phrase = [dict objectForKey:@"phrase"];
+        self.type = [dict objectForKey:@"type"];
+        self.url = [dict objectForKey:@"url"];
+        self.hot = [[dict objectForKey:@"hot"] boolValue];
+        self.common = [[dict objectForKey:@"common"] boolValue];
+        self.category = [dict objectForKey:@"category"];
+        return YES;
     }
-    return emotions;
-}
-+ (void)parseEmotionsJSON:(NSString *)json callback:(WTCallback *)callback{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSArray * emotions = [self emotionsWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:emotions];
-        });
-    });
-}
-- (WeiboEmotion *)initWithDictionary:(NSDictionary *)dic{
-    if (self = [super init]) {
-        self.phrase = [dic objectForKey:@"phrase"];
-        self.type = [dic objectForKey:@"type"];
-        self.url = [dic objectForKey:@"url"];
-        self.hot = [[dic objectForKey:@"hot"] boolValue];
-        self.common = [[dic objectForKey:@"common"] boolValue];
-        self.category = [dic objectForKey:@"category"];
-    }
-    return self;
+    return NO;
 }
 
-- (NSString *)fileName{
+- (NSString *)fileName
+{
     return [[self.url componentsSeparatedByString:@"/"] lastObject];
 }
 
-- (NSString *)description{
+- (NSString *)description
+{
     return [NSString stringWithFormat:@"phrase:%@",self.phrase];
 }
 

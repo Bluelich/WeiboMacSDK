@@ -1,5 +1,5 @@
 //
-//  WTCallback.h
+//  WeiboCallback.h
 //  Weibo
 //
 //  Created by Wu Tian on 12-2-9.
@@ -8,22 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^WTCallbackBlock)(id responseObject, id info);
+typedef void (^WeiboCallbackBlock)(id responseObject, id info);
 
-@interface WTCallback : NSObject
+@interface WeiboCallback : NSObject
 
-WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo);
-WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo);
+WeiboCallback * WeiboCallbackMake(id aTarget,SEL aSelector,id aInfo);
+WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block, id aInfo);
 
 + (id)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;
 - (id)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;
-- (id)initWithBlock:(WTCallbackBlock)block info:(id)info;
+- (id)initWithBlock:(WeiboCallbackBlock)block info:(id)info;
 - (void)invoke:(id)returnValue;
 - (void)dissociateTarget;
 
 @property(readonly, nonatomic, strong) id info;
 @property(readonly, nonatomic, assign) SEL selector;
 @property(readonly, nonatomic, strong) id target;
-@property(readonly, nonatomic, copy) WTCallbackBlock block;
+@property(readonly, nonatomic, copy) WeiboCallbackBlock block;
 
 @end

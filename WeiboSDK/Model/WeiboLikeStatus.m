@@ -23,7 +23,7 @@
     return NO;
 }
 
-+ (NSString *)objectsJSONKey
++ (NSString *)defaultJSONArrayRootKey
 {
     return @"attitudes";
 }

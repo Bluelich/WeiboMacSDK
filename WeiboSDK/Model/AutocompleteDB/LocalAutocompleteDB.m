@@ -16,7 +16,7 @@
 #import "WeiboUser.h"
 #import "WeiboBaseStatus.h"
 #import "sqlite3.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WeiboUserMentionSuggestion.h"
 #import "NSDictionary+WeiboAdditions.h"
@@ -155,7 +155,7 @@ static LocalAutocompleteDB * sharedDB = nil;
 
 - (void)seedAccount:(WeiboAccount *)account
 {
-    WTCallback * callback = WTCallbackMake(self, @selector(didReceiveFriends:info:), account);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(didReceiveFriends:info:), account);
     WeiboAPI * api = [account authenticatedRequest:callback];
     
     [api bilateralFriendsForUserID:account.user.userID count:200 page:1];

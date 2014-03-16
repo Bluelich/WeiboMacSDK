@@ -16,7 +16,7 @@
 #pragma mark Statuses Getting
 - (void)statusesRequest:(NSString *)url parameters:(NSDictionary *)params
                 sinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
-- (WTCallback *)statusesResponseCallback;
+- (WeiboCallback *)statusesResponseCallback;
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 - (void)mentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
 - (void)commentMentionsSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max page:(NSUInteger)page count:(NSUInteger)count;
@@ -58,7 +58,7 @@
 
 #pragma mark -
 #pragma mark Weibo Access
-- (WTCallback *)statusResponseCallback;
+- (WeiboCallback *)statusResponseCallback;
 - (void)updateWithComposition:(id<WeiboComposition>)composition;
 - (void)update:(NSString *)text imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;

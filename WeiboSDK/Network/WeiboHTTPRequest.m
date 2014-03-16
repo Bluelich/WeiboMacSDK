@@ -10,7 +10,7 @@
 #import "WeiboRequestError.h"
 #import <AFHTTPRequestOperationManager.h>
 
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 
 
 @interface WeiboHTTPRequest()

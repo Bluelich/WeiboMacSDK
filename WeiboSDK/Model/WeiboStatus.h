@@ -10,7 +10,7 @@
 #import "WeiboConstants.h"
 #import "WeiboBaseStatus.h"
 
-@class WeiboUser, WeiboGeotag, WTCallback;
+@class WeiboUser, WeiboGeotag, WeiboCallback;
 
 @interface WeiboStatus : WeiboBaseStatus {
     BOOL truncated;
@@ -38,11 +38,4 @@
 
 @property (nonatomic, assign) BOOL treatRetweetedStatusAsQuoted;
 
-#pragma mark -
-#pragma mark Parse Methods
-+ (id)statusWithDictionary:(NSDictionary *)dic;
-+ (id)statusWithJSON:(NSString *)json;
-+ (NSArray *)statusesWithJSON:(NSString *)json;
-+ (void)parseStatusesJSON:(NSString *)json callback:(WTCallback *)callback;
-+ (void)parseStatusJSON:(NSString *)json callback:(WTCallback *)callback;
 @end

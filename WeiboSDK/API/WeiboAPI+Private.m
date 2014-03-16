@@ -17,9 +17,9 @@
 - (void)request:(NSString *)partialUrl
          method:(NSString *)method parameters:(NSDictionary *)parameters
 multipartFormData:(NSDictionary *)parts
-       callback:(WTCallback *)actualCallback
+       callback:(WeiboCallback *)actualCallback
 {
-    WTCallback * callback = [self errorlessCallbackWithCallback:actualCallback];
+    WeiboCallback * callback = [self errorlessCallbackWithCallback:actualCallback];
     WeiboHTTPRequest * request = [self baseRequestWithPartialURL:partialUrl];
     [request setResponseCallback:callback];
     [request setMethod:method];
@@ -29,13 +29,13 @@ multipartFormData:(NSDictionary *)parts
     [request startRequest];
 }
 
-- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback{
+- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WeiboCallback *)actualCallback{
     [self request:partialUrl method:@"POST" parameters:parameters multipartFormData:(NSDictionary *)parts callback:actualCallback];
 }
-- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
+- (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WeiboCallback *)actualCallback{
     [self POST:partialUrl parameters:parameters multipartFormData:nil callback:actualCallback];
 }
-- (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback{
+- (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WeiboCallback *)actualCallback{
     [self request:partialUrl method:@"GET" parameters:parameters multipartFormData:(NSDictionary *)nil callback:actualCallback];
 }
 
@@ -49,7 +49,7 @@ multipartFormData:(NSDictionary *)parts
     }
 }
 
-- (void)_responseReceived:(id)responseValue callback:(WTCallback *)callback
+- (void)_responseReceived:(id)responseValue callback:(WeiboCallback *)callback
 {    
     if ([responseValue isKindOfClass:[WeiboRequestError class]])
     {
@@ -66,13 +66,13 @@ multipartFormData:(NSDictionary *)parts
     }
 }
 
-- (WTCallback *)errorlessCallbackWithCallback:(WTCallback *)callback{
-    return [WTCallback callbackWithTarget:self
+- (WeiboCallback *)errorlessCallbackWithCallback:(WeiboCallback *)callback{
+    return [WeiboCallback callbackWithTarget:self
                                  selector:@selector(_responseReceived:callback:)
                                      info:callback];
 }
-- (WTCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info{
-    WTCallback * actualCallback = [WTCallback callbackWithTarget:target
+- (WeiboCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info{
+    WeiboCallback * actualCallback = [WeiboCallback callbackWithTarget:target
                                                         selector:selector
                                                             info:nil];
     return [self errorlessCallbackWithCallback:actualCallback];

@@ -23,13 +23,13 @@
 
 - (void)_loadNewer
 {
-    WTCallback * callback = [self loadNewerResponseCallback];
+    WeiboCallback * callback = [self loadNewerResponseCallback];
     WeiboAPI * api = [account authenticatedSuperpowerRequest:callback];
     [api likeListForStautsID:self.baseStatus.sid page:1 count:50];
 }
 - (void)_loadOlder
 {
-    WTCallback * callback = [self loadOlderResponseCallback];
+    WeiboCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedSuperpowerRequest:callback];
     
     [api likeListForStautsID:self.baseStatus.sid page:loadedPage+1 count:50];

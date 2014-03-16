@@ -9,7 +9,7 @@
 #import "WeiboAccount+Lists.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboList.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 
 NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDidUpdateNotification";
 
@@ -24,7 +24,7 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
     
     _flags.listsAccessDenied = NO;
     
-    WTCallback * callback = WTCallbackMake(self, @selector(listsResponse:info:), nil);
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(listsResponse:info:), nil);
     WeiboAPI * api = [self authenticatedRequest:callback];
     [api lists];
 }

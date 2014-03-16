@@ -10,7 +10,7 @@
 #import "ABActiveRange.h"
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "JSONKit.h"
 #import "NSDictionary+WeiboAdditions.h"
 
@@ -46,26 +46,26 @@
     }
     return self;
 }
-- (id)_initWithDictionary:(NSDictionary *)dic
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
 {
-    if (self = [self init])
+    if ([super updateWithJSONDictionary:dict])
     {
-        self.sid = [dic longlongForKey:@"id" defaultValue:-1];
-		self.createdAt = [dic timeForKey:@"created_at" defaultValue:0];
-		self.text = [dic stringForKey:@"text" defaultValue:@""];
+        self.sid = [dict longlongForKey:@"id" defaultValue:-1];
+		self.createdAt = [dict timeForKey:@"created_at" defaultValue:0];
+		self.text = [dict stringForKey:@"text" defaultValue:@""];
         
-        NSDictionary* userDic = [dic objectForKey:@"user"];
+        NSDictionary* userDic = [dict objectForKey:@"user"];
 		if (userDic && [userDic isKindOfClass:[NSDictionary class]])
         {
-			self.user = [WeiboUser userWithDictionary:userDic];
+			self.user = [WeiboUser objectWithJSONObject:userDic];
 		}
+        return YES;
     }
-    return self;
+    return NO;
 }
-- (id)initWithDictionary:(NSDictionary *)dic
+- (id)initWithJSONDictionary:(NSDictionary *)dict
 {
-    self = [self _initWithDictionary:dic];
-    if (self)
+    if (self = [super initWithJSONDictionary:dict])
     {
         self.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.displayText];
         
@@ -189,34 +189,13 @@
     return NO;
 }
 
-+ (NSString *)objectsJSONKey
++ (NSString *)defaultJSONArrayRootKey
 {
     return @"statuses";
 }
-
-+ (NSArray *)objectsWithJSON:(NSString *)json
++ (NSString *)defaultJSONObjectRootKey
 {
-    NSDictionary * jsonObject = [json objectFromJSONString];
-    NSArray * dictionaries = [jsonObject objectForKey:[self objectsJSONKey]];
-    
-    NSMutableArray * statuses = [NSMutableArray array];
-    for (NSDictionary * dic in dictionaries)
-    {
-        WeiboBaseStatus * status = [[[self class] alloc] initWithDictionary:dic];
-        [statuses addObject:status];
-    }
-    
-    return statuses;
-}
-+ (void)parseObjectsJSON:(NSString *)json callback:(WTCallback *)callback
-{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-    dispatch_async(queue, ^{
-        NSArray * statuses = [self objectsWithJSON:json];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [callback invoke:statuses];
-        });
-    });
+    return @"status";
 }
 
 @end

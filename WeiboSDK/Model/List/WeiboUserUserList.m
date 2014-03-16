@@ -7,7 +7,7 @@
 //
 
 #import "WeiboUserUserList.h"
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 #import "WeiboRequestError.h"
 #import "NSDictionary+WeiboAdditions.h"
 
@@ -117,11 +117,11 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     return _users;
 }
 
-- (WTCallback *)usersListCallbackWithLoadingNewer:(BOOL)loadingNewer
+- (WeiboCallback *)usersListCallbackWithLoadingNewer:(BOOL)loadingNewer
 {
     NSNumber * info = loadingNewer ? @(YES) : nil;
     
-    return WTCallbackMake(self, @selector(_usersResponse:info:), info);
+    return WeiboCallbackMake(self, @selector(_usersResponse:info:), info);
 }
 
 - (void)_usersResponse:(id)response info:(id)info
@@ -132,12 +132,9 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     
     BOOL errorLoading = NO;
     
-    if (![response isKindOfClass:[NSDictionary class]])
+    if ([response isKindOfClass:[WeiboRequestError class]])
     {
-        if ([response isKindOfClass:[WeiboRequestError class]])
-        {
-            errorLoading = YES;
-        }
+        errorLoading = YES;
     }
     
     if (loadingNew)
@@ -161,15 +158,15 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    NSArray * users = [response objectForKey:@"users"];
+    NSArray * users = response;
     
     if (!users || ![users isKindOfClass:[NSArray class]])
     {
         return;
     }
     
-    WeiboUserID cursor = [response longlongForKey:@"next_cursor" defaultValue:0];
-    NSInteger totalCount = [response intForKey:@"total_number" defaultValue:0];
+    WeiboUserID cursor = [[users weibo_serverMetaData] longlongForKey:@"next_cursor" defaultValue:0];
+    NSInteger totalCount = [[users weibo_serverMetaData] intForKey:@"total_number" defaultValue:0];
     
     if (cursor)
     {

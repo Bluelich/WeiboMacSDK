@@ -19,13 +19,13 @@
 
 - (void)_loadNewer
 {
-    WTCallback * callback = [self loadNewerResponseCallback];
+    WeiboCallback * callback = [self loadNewerResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
     [api repostsForStatusID:self.baseStatus.sid sinceID:[self newestStatusID] maxID:0 count:[self hasData]?100:20];
 }
 - (void)_loadOlder
 {
-    WTCallback * callback = [self loadOlderResponseCallback];
+    WeiboCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
     
     // must pass in a maxID >= 0

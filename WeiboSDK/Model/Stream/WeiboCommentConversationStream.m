@@ -37,7 +37,7 @@
     
     WeiboStatusID commentID = replyingComment.sid;
     
-    WTCallback * callback = [self loadOlderResponseCallback];
+    WeiboCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedRequest:callback];
     [api commentWithID:commentID];
 }

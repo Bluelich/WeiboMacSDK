@@ -1,32 +1,32 @@
 //
-//  WTCallback.m
+//  WeiboCallback.m
 //  Weibo
 //
 //  Created by Wu Tian on 12-2-9.
 //  Copyright (c) 2012年 Wutian. All rights reserved.
 //
 
-#import "WTCallback.h"
+#import "WeiboCallback.h"
 
-@interface WTCallback ()
+@interface WeiboCallback ()
 
-@property (nonatomic, copy) WTCallbackBlock block;
+@property (nonatomic, copy) WeiboCallbackBlock block;
 
 @end
 
-@implementation WTCallback
+@implementation WeiboCallback
 
-+ (WTCallback *)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
-    return [[WTCallback alloc] initWithTarget:aTarget selector:aSelector info:aInfo];
++ (WeiboCallback *)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
+    return [[WeiboCallback alloc] initWithTarget:aTarget selector:aSelector info:aInfo];
 }
-WTCallback * WTCallbackMake(id aTarget,SEL aSelector,id aInfo){
-    return [WTCallback callbackWithTarget:aTarget selector:aSelector info:aInfo];
+WeiboCallback * WeiboCallbackMake(id aTarget,SEL aSelector,id aInfo){
+    return [WeiboCallback callbackWithTarget:aTarget selector:aSelector info:aInfo];
 }
-WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
+WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block, id aInfo)
 {
-    return [[WTCallback alloc] initWithBlock:block info:aInfo];
+    return [[WeiboCallback alloc] initWithBlock:block info:aInfo];
 }
-- (WTCallback *)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
+- (WeiboCallback *)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
     if ((self = [super init])) {
         _target = aTarget;
         _selector = aSelector;
@@ -34,7 +34,7 @@ WTCallback * WTBlockCallback(WTCallbackBlock block, id aInfo)
     }
     return self;
 }
-- (id)initWithBlock:(WTCallbackBlock)block info:(id)aInfo
+- (id)initWithBlock:(WeiboCallbackBlock)block info:(id)aInfo
 {
     if (self = [super init])
     {

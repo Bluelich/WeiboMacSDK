@@ -42,8 +42,8 @@
         NSDictionary * senderDictionary = [dict objectForKey:@"sender"];
         NSDictionary * recipientDictionary = [dict objectForKey:@"recipient"];
         
-        if (senderDictionary) self.sender = [WeiboUser userWithDictionary:senderDictionary];
-        if (recipientDictionary) self.recipient = [WeiboUser userWithDictionary:recipientDictionary];
+        if (senderDictionary) self.sender = [WeiboUser objectWithJSONObject:senderDictionary];
+        if (recipientDictionary) self.recipient = [WeiboUser objectWithJSONObject:recipientDictionary];
     }
     return self;
 }

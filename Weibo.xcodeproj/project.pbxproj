@@ -38,8 +38,7 @@
 		C651D28317EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C651D28117EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.m */; };
 		C6647D4114ED638E00422998 /* WeiboHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */; };
 		C6647D4314ED638E00422998 /* WeiboRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F317B114E7CD2200A952FE /* WeiboRequestError.m */; };
-		C6647D4514ED638E00422998 /* WTCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WTCallback.m */; };
-		C6647D4714ED638E00422998 /* WTKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */; };
+		C6647D4514ED638E00422998 /* WeiboCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WeiboCallback.m */; };
 		C6647D4914ED638E00422998 /* WeiboAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */; };
 		C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C665B67118AFBD6C00DBD3CB /* WeiboShortURLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C665B66F18AFBD6C00DBD3CB /* WeiboShortURLManager.h */; };
@@ -276,8 +275,6 @@
 		C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
 		C6D3101B180286A3008EAFA2 /* NSObject+AssociatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedObject.h"; sourceTree = "<group>"; };
 		C6D3101C180286A3008EAFA2 /* NSObject+AssociatedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObject.m"; sourceTree = "<group>"; };
-		C6DB908114E4C0F0001DE9F5 /* WTKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTKeychain.h; sourceTree = "<group>"; };
-		C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTKeychain.m; sourceTree = "<group>"; };
 		C6DB908A14E4E11E001DE9F5 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		C6DB909314E4EE3B001DE9F5 /* WeiboAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAPI.h; sourceTree = "<group>"; };
 		C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboAPI.m; sourceTree = "<group>"; };
@@ -414,8 +411,8 @@
 		C6FC9E4914E3C3F400094A8F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C6FC9E4A14E3C3F400094A8F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C6FC9E4B14E3C3F400094A8F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C6FC9E6414E3C43D00094A8F /* WTCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCallback.h; sourceTree = "<group>"; };
-		C6FC9E6514E3C43D00094A8F /* WTCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCallback.m; sourceTree = "<group>"; };
+		C6FC9E6414E3C43D00094A8F /* WeiboCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboCallback.h; sourceTree = "<group>"; };
+		C6FC9E6514E3C43D00094A8F /* WeiboCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboCallback.m; sourceTree = "<group>"; };
 		D1A120F3F64344C1979B8AC3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -683,10 +680,8 @@
 		C6DB909B14E4F07D001DE9F5 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				C6FC9E6414E3C43D00094A8F /* WTCallback.h */,
-				C6FC9E6514E3C43D00094A8F /* WTCallback.m */,
-				C6DB908114E4C0F0001DE9F5 /* WTKeychain.h */,
-				C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */,
+				C6FC9E6414E3C43D00094A8F /* WeiboCallback.h */,
+				C6FC9E6514E3C43D00094A8F /* WeiboCallback.m */,
 				C630CC6B152ABDED00A5AF7A /* WTFileManager.h */,
 				C630CC6C152ABDED00A5AF7A /* WTFileManager.m */,
 				C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */,
@@ -1037,11 +1032,10 @@
 				C6647D4314ED638E00422998 /* WeiboRequestError.m in Sources */,
 				C6F3E03A18D42DBD0055131A /* WeiboFavoritesStream.m in Sources */,
 				C6F3E04618D42DBD0055131A /* WeiboTimelineStream.m in Sources */,
-				C6647D4514ED638E00422998 /* WTCallback.m in Sources */,
+				C6647D4514ED638E00422998 /* WeiboCallback.m in Sources */,
 				C618900A18CE0988004ED7D1 /* WeiboLikesStream.m in Sources */,
 				C6F3DFF018D42C650055131A /* WeiboStatusSourceFilter.m in Sources */,
 				C6F3DFF418D42C650055131A /* WeiboStatusUserHighlighter.m in Sources */,
-				C6647D4714ED638E00422998 /* WTKeychain.m in Sources */,
 				C6F3E07E18D42F600055131A /* WeiboDummyGapStatus.m in Sources */,
 				C6F3E01418D42DA80055131A /* WeiboUserTimelineStream.m in Sources */,
 				C6F3DFEE18D42C650055131A /* WeiboStatusKeywordFilter.m in Sources */,
