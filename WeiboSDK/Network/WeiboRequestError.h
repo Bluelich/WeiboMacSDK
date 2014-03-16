@@ -37,10 +37,10 @@ typedef enum {
 @property (readonly, strong) NSString * errorStringInChinese;
 
 + (WeiboRequestError *)errorWithCode:(NSInteger)code;
-+ (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(int)code;
++ (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(NSInteger)code;
 + (WeiboRequestError *)errorWithHttpRequestError:(NSError *)error;
 
-- (id)initWithResponseString:(NSString *)responseString statusCode:(int)code;
+- (id)initWithResponseString:(NSString *)responseString statusCode:(NSInteger)code;
 - (id)initWithHttpRequestError:(NSError *)error;
 - (NSString *)message;
 

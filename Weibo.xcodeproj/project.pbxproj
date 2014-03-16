@@ -36,14 +36,7 @@
 		C643872017D77BF20097FB72 /* WeiboReceivedDirectMessageStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C643871E17D77BF20097FB72 /* WeiboReceivedDirectMessageStream.m */; };
 		C651D28217EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C651D28017EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.h */; };
 		C651D28317EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C651D28117EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.m */; };
-		C6647D3014ED638E00422998 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3214ED638E00422998 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3414ED638E00422998 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06514E6BF02000D3507 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3614ED638E00422998 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06714E6BF02000D3507 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3814ED638E00422998 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06914E6BF02000D3507 /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3C14ED638E00422998 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06D14E6BF02000D3507 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D3E14ED638E00422998 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E2D06F14E6BF02000D3507 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D4114ED638E00422998 /* WTHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */; };
+		C6647D4114ED638E00422998 /* WeiboHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */; };
 		C6647D4314ED638E00422998 /* WeiboRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F317B114E7CD2200A952FE /* WeiboRequestError.m */; };
 		C6647D4514ED638E00422998 /* WTCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WTCallback.m */; };
 		C6647D4714ED638E00422998 /* WTKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */; };
@@ -319,26 +312,8 @@
 		C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABActiveRange.m; sourceTree = "<group>"; };
 		C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABActiveRange.h; sourceTree = "<group>"; };
 		C6E0BFBD180AF6AD00168C6B /* WeiboUserNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUserNotificationCenter.h; sourceTree = "<group>"; };
-		C6E1CD5914E5FB2E000137B9 /* WTHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTHTTPRequest.h; sourceTree = "<group>"; };
-		C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTHTTPRequest.m; sourceTree = "<group>"; };
-		C6E2D05F14E6BF02000D3507 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
-		C6E2D06014E6BF02000D3507 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
-		C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataCompressor.m; sourceTree = "<group>"; };
-		C6E2D06214E6BF02000D3507 /* ASIDataDecompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataDecompressor.h; sourceTree = "<group>"; };
-		C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataDecompressor.m; sourceTree = "<group>"; };
-		C6E2D06414E6BF02000D3507 /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDownloadCache.h; sourceTree = "<group>"; };
-		C6E2D06514E6BF02000D3507 /* ASIDownloadCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDownloadCache.m; sourceTree = "<group>"; };
-		C6E2D06614E6BF02000D3507 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
-		C6E2D06714E6BF02000D3507 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
-		C6E2D06814E6BF02000D3507 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
-		C6E2D06914E6BF02000D3507 /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIHTTPRequest.m; sourceTree = "<group>"; };
-		C6E2D06A14E6BF02000D3507 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
-		C6E2D06B14E6BF02000D3507 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
-		C6E2D06C14E6BF02000D3507 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
-		C6E2D06D14E6BF02000D3507 /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIInputStream.m; sourceTree = "<group>"; };
-		C6E2D06E14E6BF02000D3507 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
-		C6E2D06F14E6BF02000D3507 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
-		C6E2D07014E6BF02000D3507 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		C6E1CD5914E5FB2E000137B9 /* WeiboHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboHTTPRequest.h; sourceTree = "<group>"; };
+		C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboHTTPRequest.m; sourceTree = "<group>"; };
 		C6EC374C1745EE570085E6ED /* WeiboAPI+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAPI+Private.h"; sourceTree = "<group>"; };
 		C6EC374D1745EE570085E6ED /* WeiboAPI+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeiboAPI+Private.m"; sourceTree = "<group>"; };
 		C6EC37511745EF9C0085E6ED /* WeiboAPI+UserMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAPI+UserMethods.h"; sourceTree = "<group>"; };
@@ -518,7 +493,6 @@
 			isa = PBXGroup;
 			children = (
 				C6CED17014E665F60033CA45 /* OAuthConsumer */,
-				C6E2D05C14E6BF02000D3507 /* ASIHTTPRequest */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -811,37 +785,12 @@
 		C6E1CD5414E5FADF000137B9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				C6E1CD5914E5FB2E000137B9 /* WTHTTPRequest.h */,
-				C6E1CD5A14E5FB2E000137B9 /* WTHTTPRequest.m */,
+				C6E1CD5914E5FB2E000137B9 /* WeiboHTTPRequest.h */,
+				C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */,
 				C6F317B014E7CD2200A952FE /* WeiboRequestError.h */,
 				C6F317B114E7CD2200A952FE /* WeiboRequestError.m */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		C6E2D05C14E6BF02000D3507 /* ASIHTTPRequest */ = {
-			isa = PBXGroup;
-			children = (
-				C6E2D05F14E6BF02000D3507 /* ASICacheDelegate.h */,
-				C6E2D06014E6BF02000D3507 /* ASIDataCompressor.h */,
-				C6E2D06114E6BF02000D3507 /* ASIDataCompressor.m */,
-				C6E2D06214E6BF02000D3507 /* ASIDataDecompressor.h */,
-				C6E2D06314E6BF02000D3507 /* ASIDataDecompressor.m */,
-				C6E2D06414E6BF02000D3507 /* ASIDownloadCache.h */,
-				C6E2D06514E6BF02000D3507 /* ASIDownloadCache.m */,
-				C6E2D06614E6BF02000D3507 /* ASIFormDataRequest.h */,
-				C6E2D06714E6BF02000D3507 /* ASIFormDataRequest.m */,
-				C6E2D06814E6BF02000D3507 /* ASIHTTPRequest.h */,
-				C6E2D06914E6BF02000D3507 /* ASIHTTPRequest.m */,
-				C6E2D06A14E6BF02000D3507 /* ASIHTTPRequestConfig.h */,
-				C6E2D06B14E6BF02000D3507 /* ASIHTTPRequestDelegate.h */,
-				C6E2D06C14E6BF02000D3507 /* ASIInputStream.h */,
-				C6E2D06D14E6BF02000D3507 /* ASIInputStream.m */,
-				C6E2D06E14E6BF02000D3507 /* ASINetworkQueue.h */,
-				C6E2D06F14E6BF02000D3507 /* ASINetworkQueue.m */,
-				C6E2D07014E6BF02000D3507 /* ASIProgressDelegate.h */,
-			);
-			path = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
 		C6ED9D0B17D62AF6008AA2A3 /* DirectMessages */ = {
@@ -1145,28 +1094,21 @@
 				C6F3E03818D42DBD0055131A /* WeiboConcreteStatusesStream.m in Sources */,
 				C6F3E00618D42D2A0055131A /* WeiboUserFollowingList.m in Sources */,
 				C643871817D7769F0097FB72 /* WeiboDirectMessageStream.m in Sources */,
-				C6647D3014ED638E00422998 /* ASIDataCompressor.m in Sources */,
 				C6ED9D1817D630D3008AA2A3 /* WeiboDirectMessagesConversationManager.m in Sources */,
 				C643871C17D77BD00097FB72 /* WeiboSentDirectMessageStream.m in Sources */,
 				C669030517E427EC005A859D /* WeiboAccount+DirectMessage.m in Sources */,
 				C6422F7C18228FEE0036B7F3 /* WeiboSearchStatusesStream.m in Sources */,
-				C6647D3214ED638E00422998 /* ASIDataDecompressor.m in Sources */,
 				C6F3E05E18D42EBE0055131A /* NSDictionary+WeiboAdditions.m in Sources */,
 				C6F3DFD918D42B420055131A /* WeiboAutocompleteResultItem.m in Sources */,
 				C6F3E00818D42D2A0055131A /* WeiboUserList.m in Sources */,
-				C6647D3414ED638E00422998 /* ASIDownloadCache.m in Sources */,
-				C6647D3614ED638E00422998 /* ASIFormDataRequest.m in Sources */,
 				C6F3E05118D42E8B0055131A /* WeiboStatusStreamFilter.m in Sources */,
 				C6F3DFEC18D42C650055131A /* WeiboStatusFilter.m in Sources */,
 				C6F3E08818D42F700055131A /* WeiboFavoriteStatus.m in Sources */,
 				C6ED9D1017D62B46008AA2A3 /* WeiboDirectMessageConversation.m in Sources */,
 				C6F3E03018D42DBD0055131A /* WeiboAccountStream.m in Sources */,
-				C6647D3814ED638E00422998 /* ASIHTTPRequest.m in Sources */,
 				C60B700118CF5ADE004358E5 /* WeiboModel.m in Sources */,
-				C6647D3C14ED638E00422998 /* ASIInputStream.m in Sources */,
 				C6F3E00418D42D2A0055131A /* WeiboUserFollowersList.m in Sources */,
-				C6647D3E14ED638E00422998 /* ASINetworkQueue.m in Sources */,
-				C6647D4114ED638E00422998 /* WTHTTPRequest.m in Sources */,
+				C6647D4114ED638E00422998 /* WeiboHTTPRequest.m in Sources */,
 				C6F3E03418D42DBD0055131A /* WeiboCommentMentionsStream.m in Sources */,
 				C6647D4314ED638E00422998 /* WeiboRequestError.m in Sources */,
 				C6F3E03A18D42DBD0055131A /* WeiboFavoritesStream.m in Sources */,
@@ -1270,7 +1212,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = MacAppStore;
@@ -1358,7 +1300,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1386,7 +1328,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;

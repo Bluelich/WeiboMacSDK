@@ -33,11 +33,11 @@ NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
     
     NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
     
-    WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
+    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
     [request setResponseCallback:callback];
-    [request setRequestMethod:@"POST"];
+    [request setMethod:@"POST"];
     [request setParameters:params];
-    [request startAuthrizedRequest];
+    [request startRequest];
 }
 
 - (void)superpowerTokenResponse:(id)response info:(id)info

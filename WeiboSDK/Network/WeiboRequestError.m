@@ -23,8 +23,9 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
     return [[self alloc] initWithDomain:WeiboRequestErrorDomain code:code userInfo:nil];
 }
 
-+ (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(int)code{
-    return [[self alloc] initWithResponseString:responseString statusCode:(int)code];
++ (WeiboRequestError *)errorWithResponseString:(NSString *)responseString statusCode:(NSInteger)code
+{
+    return [[self alloc] initWithResponseString:responseString statusCode:code];
 }
 
 + (WeiboRequestError *)errorWithHttpRequestError:(NSError *)error{
@@ -41,9 +42,10 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 /*
  {"request":"/statuses/update.json","error_code":"400","error":"40025:Error: repeated weibo text!"}
  */
-- (id)initWithResponseString:(NSString *)responseString statusCode:(int)code{
+- (id)initWithResponseString:(NSString *)responseString statusCode:(NSInteger)code
+{
     NSDictionary * resultDictionary = [self parseResponseToDictionaryWithString:responseString];
-    int error_code = code;
+    NSInteger error_code = code;
     if ([resultDictionary valueForKey:@"error_code"]) {
         error_code = [[resultDictionary valueForKey:@"error_code"] intValue];
     }

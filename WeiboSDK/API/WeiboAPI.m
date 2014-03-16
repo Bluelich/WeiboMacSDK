@@ -62,12 +62,12 @@
     return [Weibo globalKeychainService];
 }
 
-- (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
-    return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl
+- (WeiboHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
+    return [WeiboHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl
                                                 relativeToURL:[NSURL URLWithString:OFFLINE_DEBUG_MODE?@"http://127.0.0.1/":apiRoot]]];
 }
-- (WTHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl{
-    return [WTHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl
+- (WeiboHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl{
+    return [WeiboHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl
                                                 relativeToURL:[NSURL URLWithString:WEIBO_APIROOT_V1]]];
 }
 

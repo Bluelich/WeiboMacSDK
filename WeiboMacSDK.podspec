@@ -35,5 +35,6 @@ Pod::Spec.new do |s|
   s.dependency 'SSKeychain', '~> 1.2'
   s.dependency 'FMDB', '~> 2.2'
   s.dependency 'RegexKitLite'
+  s.dependency 'AFNetworking'
 
 end

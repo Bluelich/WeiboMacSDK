@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
-#import "WTHTTPRequest.h"
+#import "WeiboHTTPRequest.h"
 #import "WeiboRequestError.h"
 #import "WTCallback.h"
 #import "WeiboAccount.h"
@@ -32,8 +32,8 @@
               apiRoot:(NSString *)root 
              callback:(WTCallback *)callback;
 
-- (WTHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl;
-- (WTHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl;
+- (WeiboHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl;
+- (WeiboHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl;
 
 - (NSString *)oauth2Token;
 - (void)tokenDidExpire;

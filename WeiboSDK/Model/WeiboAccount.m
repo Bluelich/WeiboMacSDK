@@ -43,7 +43,7 @@
 #import "WTFoundationUtilities.h"
 #import "SSKeychain.h"
 #import "JSONKit.h"
-#import "WTHTTPRequest.h"
+#import "WeiboHTTPRequest.h"
 #import "WTFileManager.h"
 
 #define CACHE_LIVETIME 600.0
@@ -714,11 +714,12 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     WTCallback * callback = WTCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
     NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
-    __weak ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:url];
-    [request setCompletionBlock:^{
-        [callback invoke:request.responseData];
-    }];
-    [request startAsynchronous];
+    
+    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
+    request.responseCallback = WTBlockCallback(^(id responseObject, id info) {
+        [callback invoke:responseObject];
+    }, nil);
+    [request startRequest];
 }
 
 #pragma mark -

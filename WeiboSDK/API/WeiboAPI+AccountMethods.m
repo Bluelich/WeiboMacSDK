@@ -19,41 +19,16 @@
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:WEIBO_CONSUMER_KEY,@"client_id",WEIBO_CONSUMER_SECRET,@"client_secret",[authenticateWithAccount.username stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"username",authenticateWithAccount.password,@"password",@"password",@"grant_type", nil];
     
     NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
-    WTHTTPRequest * request = [WTHTTPRequest requestWithURL:url];
+    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
     [request setResponseCallback:callback];
-    [request setRequestMethod:@"POST"];
+    [request setMethod:@"POST"];
     [request setParameters:params];
-    [request startAuthrizedRequest];
+    [request startRequest];
 }
 - (void)clientAuthResponse:(id)returnValue info:(id)info{
     [self oAuth2TokenResponse:returnValue info:info];
 }
-- (void)xAuthRequestAccessTokens{
-    WTCallback * callback = [self errorlessCallbackWithTarget:self
-                                                     selector:@selector(xAuthMigrateResponse:info:)
-                                                         info:nil];
-    
-    NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 authenticateWithAccount.username,@"x_auth_username",
-                                 authenticateWithAccount.password,@"x_auth_password",
-                                 @"client_auth",@"x_auth_mode", nil];
-    [self v1_POST:@"oauth/access_token" parameters:parameters callback:callback];
-}
 
-- (void)xAuthMigrateResponse:(id)returnValue info:(id)info{
-    NSDictionary * resultDictionary = [self _queryStringToDictionary:returnValue];
-    NSString * token = [resultDictionary valueForKey:@"oauth_token"];
-    NSString * tokenSecret = [resultDictionary valueForKey:@"oauth_token_secret"];
-    [authenticateWithAccount setOAuthToken:token];
-    [authenticateWithAccount setOAuthTokenSecret:tokenSecret];
-    [self oAuth2RequestTokenByAccessToken];
-}
-- (void)oAuth2RequestTokenByAccessToken{
-    WTCallback * callback = [self errorlessCallbackWithTarget:self
-                                                     selector:@selector(oAuth2TokenResponse:info:)
-                                                         info:nil];
-    [self v1_POST:@"oauth2/get_oauth2_token" parameters:nil callback:callback];
-}
 - (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
     NSString * tokenResponse = returnValue;
     NSDictionary * dic = [tokenResponse objectFromJSONString];

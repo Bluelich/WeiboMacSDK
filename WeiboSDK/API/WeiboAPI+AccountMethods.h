@@ -13,7 +13,5 @@
 #pragma mark -
 #pragma mark oAuth (xAuth)
 - (void)clientAuthRequestAccessToken;
-- (void)xAuthRequestAccessTokens;
-- (void)oAuth2RequestTokenByAccessToken;
 
 @end

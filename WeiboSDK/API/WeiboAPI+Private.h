@@ -17,7 +17,7 @@
 #import "WeiboUnread.h"
 
 #import "WTCallback.h"
-#import "WTHTTPRequest.h"
+#import "WeiboHTTPRequest.h"
 #import "OAuthConsumer.h"
 #import "WTOASingnaturer.h"
 
@@ -30,15 +30,9 @@
 #pragma mark Request Core
 
 - (void)request:(NSString *)partialUrl method:(NSString *)method parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback;
-- (void)v1_request:(NSString *)partialUrl
-            method:(NSString *)method parameters:(NSDictionary *)parameters
- multipartFormData:(NSDictionary *)parts
-          callback:(WTCallback *)actualCallback;
 - (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WTCallback *)actualCallback;
 - (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
-- (void)v1_POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
 - (void)GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
-- (void)v1_GET:(NSString *)partialUrl parameters:(NSDictionary *)parameters callback:(WTCallback *)actualCallback;
 
 #pragma mark Response Handling
 - (void)handleRequestError:(WeiboRequestError *)error;
