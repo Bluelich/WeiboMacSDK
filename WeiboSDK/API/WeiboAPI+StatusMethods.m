@@ -44,7 +44,7 @@
     [WeiboStatus parseObjectsWithJSONObject:response rootKey:info[@"rootKey"] callback:responseCallback];
 }
 - (void)commentsResponse:(id)response info:(id)info{
-    [WeiboComment parseObjectsWithJSONObject:response rootKey:info[@"rootKey"] callback:responseCallback];
+    [WeiboComment parseObjectsWithJSONObject:response callback:responseCallback];
 }
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     [self statusesRequest:@"statuses/friends_timeline.json" parameters:nil sinceID:since maxID:max count:count];
