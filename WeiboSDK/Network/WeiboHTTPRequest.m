@@ -56,7 +56,9 @@
             [self.multiparts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 if ([obj isKindOfClass:[NSData class]])
                 {
-                    [formData appendPartWithFormData:obj name:key];
+                    NSMutableDictionary *mutableHeaders = [NSMutableDictionary dictionary];
+                    [mutableHeaders setValue:[NSString stringWithFormat:@"form-data; name=\"%@\"; filename=\"%@\"", key, key] forKey:@"Content-Disposition"];
+                    [formData appendPartWithHeaders:mutableHeaders body:obj];
                 }
             }];
         } error:NULL];
