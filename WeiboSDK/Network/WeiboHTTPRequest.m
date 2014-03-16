@@ -53,7 +53,12 @@
     if (self.multiparts)
     {
         request = [self.serializer multipartFormRequestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            
+            [self.multiparts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                if ([obj isKindOfClass:[NSData class]])
+                {
+                    [formData appendPartWithFormData:obj name:key];
+                }
+            }];
         } error:NULL];
     }
     else
