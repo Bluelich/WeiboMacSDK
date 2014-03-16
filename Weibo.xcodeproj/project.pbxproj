@@ -42,14 +42,6 @@
 		C6647D4714ED638E00422998 /* WTKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB908214E4C0F0001DE9F5 /* WTKeychain.m */; };
 		C6647D4914ED638E00422998 /* WeiboAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */; };
 		C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
-		C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19C14E666650033CA45 /* Base64Transcoder.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D6114ED638E00422998 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19314E6662B0033CA45 /* NSString+URLEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D6514ED638E00422998 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED19714E6662B0033CA45 /* NSURL+Base.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D6914ED638E00422998 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17414E6661A0033CA45 /* OAToken.m */; };
-		C6647D6B14ED638E00422998 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17614E6661A0033CA45 /* OAConsumer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D6F14ED638E00422998 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17A14E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D7114ED638E00422998 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17C14E6661A0033CA45 /* OAPlaintextSignatureProvider.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6647D7314ED638E00422998 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6CED17E14E6661A0033CA45 /* OARequestParameter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C665B67118AFBD6C00DBD3CB /* WeiboShortURLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C665B66F18AFBD6C00DBD3CB /* WeiboShortURLManager.h */; };
 		C665B67218AFBD6C00DBD3CB /* WeiboShortURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C665B67018AFBD6C00DBD3CB /* WeiboShortURLManager.m */; };
 		C669030417E427EC005A859D /* WeiboAccount+DirectMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = C669030217E427EC005A859D /* WeiboAccount+DirectMessage.h */; };
@@ -164,8 +156,6 @@
 		C6F3E05218D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F3E04B18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.h */; };
 		C6F3E05318D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F3E04C18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.m */; };
 		C6F3E05418D42E8B0055131A /* WTFoundationUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F3E04D18D42E8B0055131A /* WTFoundationUtilities.h */; };
-		C6F3E05518D42E8B0055131A /* WTOASingnaturer.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F3E04E18D42E8B0055131A /* WTOASingnaturer.h */; };
-		C6F3E05618D42E8B0055131A /* WTOASingnaturer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F3E04F18D42E8B0055131A /* WTOASingnaturer.m */; };
 		C6F3E05B18D42EBE0055131A /* NSArray+WeiboAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F3E05718D42EBE0055131A /* NSArray+WeiboAdditions.h */; };
 		C6F3E05C18D42EBE0055131A /* NSArray+WeiboAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F3E05818D42EBE0055131A /* NSArray+WeiboAdditions.m */; };
 		C6F3E05D18D42EBE0055131A /* NSDictionary+WeiboAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F3E05918D42EBE0055131A /* NSDictionary+WeiboAdditions.h */; };
@@ -284,24 +274,6 @@
 		C6AA998417E5E11D005F90E4 /* WeiboDirectMessageConversationList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboDirectMessageConversationList.m; sourceTree = "<group>"; };
 		C6B4DC1414ED347C0032A8CF /* libWeiboSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWeiboSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6B4DC1814ED347C0032A8CF /* WeiboSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeiboSDK-Prefix.pch"; sourceTree = "<group>"; };
-		C6CED17214E6661A0033CA45 /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
-		C6CED17314E6661A0033CA45 /* OAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAToken.h; sourceTree = "<group>"; };
-		C6CED17414E6661A0033CA45 /* OAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAToken.m; sourceTree = "<group>"; };
-		C6CED17514E6661A0033CA45 /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
-		C6CED17614E6661A0033CA45 /* OAConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAConsumer.m; sourceTree = "<group>"; };
-		C6CED17914E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHMAC_SHA1SignatureProvider.h; sourceTree = "<group>"; };
-		C6CED17A14E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHMAC_SHA1SignatureProvider.m; sourceTree = "<group>"; };
-		C6CED17B14E6661A0033CA45 /* OAPlaintextSignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAPlaintextSignatureProvider.h; sourceTree = "<group>"; };
-		C6CED17C14E6661A0033CA45 /* OAPlaintextSignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAPlaintextSignatureProvider.m; sourceTree = "<group>"; };
-		C6CED17D14E6661A0033CA45 /* OARequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OARequestParameter.h; sourceTree = "<group>"; };
-		C6CED17E14E6661A0033CA45 /* OARequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OARequestParameter.m; sourceTree = "<group>"; };
-		C6CED19114E666230033CA45 /* OASignatureProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OASignatureProviding.h; sourceTree = "<group>"; };
-		C6CED19214E6662B0033CA45 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
-		C6CED19314E6662B0033CA45 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
-		C6CED19614E6662B0033CA45 /* NSURL+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Base.h"; sourceTree = "<group>"; };
-		C6CED19714E6662B0033CA45 /* NSURL+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Base.m"; sourceTree = "<group>"; };
-		C6CED19C14E666650033CA45 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
-		C6CED19D14E666650033CA45 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
 		C6D3101B180286A3008EAFA2 /* NSObject+AssociatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedObject.h"; sourceTree = "<group>"; };
 		C6D3101C180286A3008EAFA2 /* NSObject+AssociatedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObject.m"; sourceTree = "<group>"; };
 		C6DB908114E4C0F0001DE9F5 /* WTKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTKeychain.h; sourceTree = "<group>"; };
@@ -401,8 +373,6 @@
 		C6F3E04B18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboStatusStreamFilterSimpleSearchFilter.h; sourceTree = "<group>"; };
 		C6F3E04C18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboStatusStreamFilterSimpleSearchFilter.m; sourceTree = "<group>"; };
 		C6F3E04D18D42E8B0055131A /* WTFoundationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTFoundationUtilities.h; sourceTree = "<group>"; };
-		C6F3E04E18D42E8B0055131A /* WTOASingnaturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTOASingnaturer.h; sourceTree = "<group>"; };
-		C6F3E04F18D42E8B0055131A /* WTOASingnaturer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTOASingnaturer.m; sourceTree = "<group>"; };
 		C6F3E05718D42EBE0055131A /* NSArray+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+WeiboAdditions.h"; sourceTree = "<group>"; };
 		C6F3E05818D42EBE0055131A /* NSArray+WeiboAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+WeiboAdditions.m"; sourceTree = "<group>"; };
 		C6F3E05918D42EBE0055131A /* NSDictionary+WeiboAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+WeiboAdditions.h"; sourceTree = "<group>"; };
@@ -487,14 +457,6 @@
 				C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */,
 			);
 			path = WeiboSDKResources;
-			sourceTree = "<group>";
-		};
-		C6146F3B18D4580100C672F1 /* Vendors */ = {
-			isa = PBXGroup;
-			children = (
-				C6CED17014E665F60033CA45 /* OAuthConsumer */,
-			);
-			path = Vendors;
 			sourceTree = "<group>";
 		};
 		C617C92014EBDF4300CC75F5 /* Additions */ = {
@@ -614,39 +576,6 @@
 			path = Stream;
 			sourceTree = "<group>";
 		};
-		C6CED17014E665F60033CA45 /* OAuthConsumer */ = {
-			isa = PBXGroup;
-			children = (
-				C6CED19B14E666650033CA45 /* Crypto */,
-				C6CED19214E6662B0033CA45 /* NSString+URLEncoding.h */,
-				C6CED19314E6662B0033CA45 /* NSString+URLEncoding.m */,
-				C6CED19614E6662B0033CA45 /* NSURL+Base.h */,
-				C6CED19714E6662B0033CA45 /* NSURL+Base.m */,
-				C6CED19114E666230033CA45 /* OASignatureProviding.h */,
-				C6CED17214E6661A0033CA45 /* OAuthConsumer.h */,
-				C6CED17314E6661A0033CA45 /* OAToken.h */,
-				C6CED17414E6661A0033CA45 /* OAToken.m */,
-				C6CED17514E6661A0033CA45 /* OAConsumer.h */,
-				C6CED17614E6661A0033CA45 /* OAConsumer.m */,
-				C6CED17914E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.h */,
-				C6CED17A14E6661A0033CA45 /* OAHMAC_SHA1SignatureProvider.m */,
-				C6CED17B14E6661A0033CA45 /* OAPlaintextSignatureProvider.h */,
-				C6CED17C14E6661A0033CA45 /* OAPlaintextSignatureProvider.m */,
-				C6CED17D14E6661A0033CA45 /* OARequestParameter.h */,
-				C6CED17E14E6661A0033CA45 /* OARequestParameter.m */,
-			);
-			path = OAuthConsumer;
-			sourceTree = "<group>";
-		};
-		C6CED19B14E666650033CA45 /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				C6CED19C14E666650033CA45 /* Base64Transcoder.c */,
-				C6CED19D14E666650033CA45 /* Base64Transcoder.h */,
-			);
-			path = Crypto;
-			sourceTree = "<group>";
-		};
 		C6DB908C14E4E139001DE9F5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,8 +587,6 @@
 				C6F3E04B18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.h */,
 				C6F3E04C18D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.m */,
 				C6F3E04D18D42E8B0055131A /* WTFoundationUtilities.h */,
-				C6F3E04E18D42E8B0055131A /* WTOASingnaturer.h */,
-				C6F3E04F18D42E8B0055131A /* WTOASingnaturer.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -867,7 +794,6 @@
 		C6FC9E6314E3C40200094A8F /* WeiboSDK */ = {
 			isa = PBXGroup;
 			children = (
-				C6146F3B18D4580100C672F1 /* Vendors */,
 				C6B4DC1714ED347C0032A8CF /* Supporting Files */,
 				C6E1CD5414E5FADF000137B9 /* Network */,
 				C6DB909B14E4F07D001DE9F5 /* Support */,
@@ -960,7 +886,6 @@
 				C6F3E01118D42DA80055131A /* WeiboUserStream.h in Headers */,
 				C6A4718F18AE558800B3CB48 /* WeiboCryptographer.h in Headers */,
 				C6EC375D1745F26D0085E6ED /* WeiboAPI+DirectMessages.h in Headers */,
-				C6F3E05518D42E8B0055131A /* WTOASingnaturer.h in Headers */,
 				C6F3E07718D42F4A0055131A /* WeiboComment.h in Headers */,
 				C682BAC117C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h in Headers */,
 				C6F3E05B18D42EBE0055131A /* NSArray+WeiboAdditions.h in Headers */,
@@ -1086,7 +1011,6 @@
 				C630CC6F152ABFDA00A5AF7A /* WTFileManager.m in Sources */,
 				C6AA998217E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m in Sources */,
 				C6F3DFD718D42B420055131A /* LocalAutocompleteDB.m in Sources */,
-				C6F3E05618D42E8B0055131A /* WTOASingnaturer.m in Sources */,
 				C643872017D77BF20097FB72 /* WeiboReceivedDirectMessageStream.m in Sources */,
 				C651D28317EEDEEF007242F9 /* WeiboStatusAdvertisementFilter.m in Sources */,
 				C6F3DFF218D42C650055131A /* WeiboStatusUserFilter.m in Sources */,
@@ -1137,20 +1061,12 @@
 				C6A471A218AF344300B3CB48 /* CocoaSecurity.m in Sources */,
 				C6F3E07018D42F420055131A /* WeiboAccount+Superpower.m in Sources */,
 				C6F3E06C18D42F420055131A /* WeiboAccount+Filters.m in Sources */,
-				C6647D5E14ED638E00422998 /* Base64Transcoder.c in Sources */,
-				C6647D6114ED638E00422998 /* NSString+URLEncoding.m in Sources */,
-				C6647D6514ED638E00422998 /* NSURL+Base.m in Sources */,
 				C6F3E05318D42E8B0055131A /* WeiboStatusStreamFilterSimpleSearchFilter.m in Sources */,
-				C6647D6914ED638E00422998 /* OAToken.m in Sources */,
-				C6647D6B14ED638E00422998 /* OAConsumer.m in Sources */,
-				C6647D6F14ED638E00422998 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
-				C6647D7114ED638E00422998 /* OAPlaintextSignatureProvider.m in Sources */,
 				C6F3DFDB18D42B420055131A /* WeiboUserMentionSuggestion.m in Sources */,
 				C6188FD618CC95D0004ED7D1 /* WeiboLikeStatus.m in Sources */,
 				C6F3E07818D42F4A0055131A /* WeiboComment.m in Sources */,
 				C6A1663418214168002C0B4B /* WeiboCommentsToMeStream.m in Sources */,
 				C6084B4417D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m in Sources */,
-				C6647D7314ED638E00422998 /* OARequestParameter.m in Sources */,
 				C6F3E06318D42F0F0055131A /* Weibo.m in Sources */,
 				C6F3E08C18D42F700055131A /* WeiboStatus.m in Sources */,
 				C6F3E00C18D42D2A0055131A /* WeiboUserUserList.m in Sources */,

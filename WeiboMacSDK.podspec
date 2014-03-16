@@ -12,22 +12,11 @@ Pod::Spec.new do |s|
   s.social_media_url = 'http://weibo.com/naituw'
 
   s.platform     = :osx
-  s.osx.deployment_target = '10.7'
+  s.osx.deployment_target = '10.8'
 
-  s.subspec 'Vendors' do |sp|
-    sp.source_files = 'WeiboSDK/Vendors/**/*.{h,m,c}'
-    sp.requires_arc = false
-    sp.compiler_flags = '-fno-objc-arc'
-  end
-
-  s.subspec 'Classes' do |sp|
-    sp.prefix_header_file = "WeiboSDK/SupportingFiles/WeiboSDK-Prefix.pch"
-    sp.source_files = 'WeiboSDK/**/*.{h,m,c}'
-    sp.requires_arc = true,
-    sp.exclude_files = 'WeiboSDK/Vendors/**/*.{h,m,c}'
-    sp.dependency 'WeiboMacSDK/Vendors'
-  end
-
+  s.prefix_header_file = "WeiboSDK/SupportingFiles/WeiboSDK-Prefix.pch"
+  s.source_files = 'WeiboSDK/**/*.{h,m,c}'
+  s.requires_arc = true,
   s.resources = 'WeiboSDKResources'
 
   s.dependency 'libextobjc'

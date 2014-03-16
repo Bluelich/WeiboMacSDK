@@ -15,12 +15,9 @@
 #import "WeiboAccount.h"
 #import "WeiboRequestError.h"
 #import "WeiboUnread.h"
+#import "WeiboHTTPRequest.h"
 
 #import "WTCallback.h"
-#import "WeiboHTTPRequest.h"
-#import "OAuthConsumer.h"
-#import "WTOASingnaturer.h"
-
 #import "WTFoundationUtilities.h"
 #import "JSONKit.h"
 
