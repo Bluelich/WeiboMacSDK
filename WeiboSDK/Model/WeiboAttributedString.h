@@ -29,6 +29,10 @@ extern NSString * const WeiboAttributedStringAttachmentTypeKey;
 
 + (instancetype)stringWithString:(NSString *)string;
 
+@end
+
+@interface NSAttributedString (WeiboAttributedString)
+
 - (void)enumerateActiveRanges:(void (^)(WeiboAttributedStringRangeFlavor rangeFlavor, NSRange range, BOOL *stop))block;
 - (WeiboAttributedStringRangeFlavor)rangeFlavorAtIndex:(NSInteger)index;
 - (WeiboAttributedStringRangeFlavor)rangeFlavorAtIndex:(NSInteger)index effectiveRange:(NSRangePointer)effectiveRange;

@@ -17,28 +17,28 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
 + (instancetype)stringWithString:(NSString *)string
 {
     if (!string) return nil;
-    return [[self alloc] initWithString:string];
+    
+    WeiboAttributedString * attributedString = (WeiboAttributedString *)[[NSMutableAttributedString alloc] initWithString:string];
+    
+    [string enumerateStringsMatchedByRegex:SHORT_LINK_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [attributedString addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorURL) range:capturedRanges[0]];
+    }];
+    [string enumerateStringsMatchedByRegex:MENTION_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [attributedString addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorUsername) range:capturedRanges[0]];
+    }];
+    [string enumerateStringsMatchedByRegex:HASHTAG_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [attributedString addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorHashtag) range:capturedRanges[0]];
+    }];
+    [string enumerateStringsMatchedByRegex:EMOTICON_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
+        [attributedString addAttribute:WeiboAttributedStringAttachmentTypeKey value:@(WeiboAttributedStringAttachmentTypeEmoticon) range:capturedRanges[0]];
+    }];
+    
+    return attributedString;
 }
 
-- (id)initWithString:(NSString *)string
-{
-    if (self = [super initWithString:string])
-    {
-        [string enumerateStringsMatchedByRegex:SHORT_LINK_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-            [self addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorURL) range:capturedRanges[0]];
-        }];
-        [string enumerateStringsMatchedByRegex:MENTION_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-            [self addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorUsername) range:capturedRanges[0]];
-        }];
-        [string enumerateStringsMatchedByRegex:HASHTAG_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-            [self addAttribute:WeiboAttributedStringActiveRangeKey value:@(WeiboAttributedStringRangeFlavorHashtag) range:capturedRanges[0]];
-        }];
-        [string enumerateStringsMatchedByRegex:EMOTICON_REGEX usingBlock:^(NSInteger captureCount, NSString *const __unsafe_unretained *capturedStrings, const NSRange *capturedRanges, volatile BOOL *const stop) {
-            [self addAttribute:WeiboAttributedStringAttachmentTypeKey value:@(WeiboAttributedStringAttachmentTypeEmoticon) range:capturedRanges[0]];
-        }];
-    }
-    return self;
-}
+@end
+
+@implementation NSAttributedString (WeiboAttributedString)
 
 - (void)enumerateActiveRanges:(void (^)(WeiboAttributedStringRangeFlavor rangeFlavor, NSRange range, BOOL *stop))block
 {
