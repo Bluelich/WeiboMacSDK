@@ -13,19 +13,7 @@
 
 @class WeiboUser, WeiboLayoutCache, WeiboCallback;
 
-@interface WeiboBaseStatus : WeiboModel {
-    time_t createdAt;
-    NSString * text;
-    WeiboStatusID sid;
-    WeiboUser * user;
-        
-    NSString * thumbnailPic;
-    NSString * middlePic;
-    NSString * originalPic;
-    
-    BOOL wasSeen;
-    
-}
+@interface WeiboBaseStatus : WeiboModel
 
 @property (nonatomic, assign) time_t createdAt;
 @property (nonatomic, strong) NSString * text;
