@@ -67,8 +67,6 @@
 		C6B4DC1514ED347C0032A8CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FC9E4614E3C3F400094A8F /* Cocoa.framework */; };
 		C6D3101D180286A3008EAFA2 /* NSObject+AssociatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D3101B180286A3008EAFA2 /* NSObject+AssociatedObject.h */; };
 		C6D3101E180286A3008EAFA2 /* NSObject+AssociatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D3101C180286A3008EAFA2 /* NSObject+AssociatedObject.m */; };
-		C6DE37D814EF85BB004DAFE9 /* ABActiveRange.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */; };
-		C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */ = {isa = PBXBuildFile; fileRef = C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */; };
 		C6E0BFBF180AF6AD00168C6B /* WeiboUserNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = C6E0BFBD180AF6AD00168C6B /* WeiboUserNotificationCenter.h */; };
 		C6EC374E1745EE570085E6ED /* WeiboAPI+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C6EC374C1745EE570085E6ED /* WeiboAPI+Private.h */; };
 		C6EC37501745EE570085E6ED /* WeiboAPI+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = C6EC374D1745EE570085E6ED /* WeiboAPI+Private.m */; };
@@ -276,8 +274,6 @@
 		C6DB908A14E4E11E001DE9F5 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		C6DB909314E4EE3B001DE9F5 /* WeiboAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboAPI.h; sourceTree = "<group>"; };
 		C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboAPI.m; sourceTree = "<group>"; };
-		C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABActiveRange.m; sourceTree = "<group>"; };
-		C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABActiveRange.h; sourceTree = "<group>"; };
 		C6E0BFBD180AF6AD00168C6B /* WeiboUserNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUserNotificationCenter.h; sourceTree = "<group>"; };
 		C6E1CD5914E5FB2E000137B9 /* WeiboHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboHTTPRequest.h; sourceTree = "<group>"; };
 		C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboHTTPRequest.m; sourceTree = "<group>"; };
@@ -641,8 +637,6 @@
 				C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */,
 				C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */,
 				C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */,
-				C6DE37D714EF85B9004DAFE9 /* ABActiveRange.h */,
-				C6DE37D614EF85B6004DAFE9 /* ABActiveRange.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -808,7 +802,6 @@
 				C6F3E06B18D42F420055131A /* WeiboAccount+Filters.h in Headers */,
 				C6E0BFBF180AF6AD00168C6B /* WeiboUserNotificationCenter.h in Headers */,
 				C6F3DFD618D42B420055131A /* LocalAutocompleteDB.h in Headers */,
-				C6DE37D914EF85BB004DAFE9 /* ABActiveRange.h in Headers */,
 				C60B6FFD18CF50E4004358E5 /* WeiboModelPersistence.h in Headers */,
 				C6F3E01318D42DA80055131A /* WeiboUserTimelineStream.h in Headers */,
 				C6F3DFEB18D42C650055131A /* WeiboStatusFilter.h in Headers */,
@@ -1060,7 +1053,6 @@
 				C6F3E00C18D42D2A0055131A /* WeiboUserUserList.m in Sources */,
 				C6F3DFCE18D42A7A0055131A /* WeiboUserNotificationCenter.m in Sources */,
 				C6F3E09C18D42F970055131A /* WeiboUnread.m in Sources */,
-				C6DE37D814EF85BB004DAFE9 /* ABActiveRange.m in Sources */,
 				C6F3E04818D42DBD0055131A /* WeiboTrendStatusesStream.m in Sources */,
 				C6F3E01218D42DA80055131A /* WeiboUserStream.m in Sources */,
 				C6F3E09418D42F860055131A /* WeiboUser.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "WeiboBaseStatus.h"
-#import "ABActiveRange.h"
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
 #import "WeiboCallback.h"
