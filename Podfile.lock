@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/Reachability (2.2.1)
   - AFNetworking/Security (2.2.1)
   - AFNetworking/Serialization (2.2.1)
+  - CocoaSecurity (1.2.3)
   - FMDB (2.2):
     - FMDB/standard
   - FMDB/common (2.2)
@@ -61,6 +62,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CocoaSecurity (~> 1.2)
   - FMDB (~> 2.2)
   - JSONKit-NoWarning (~> 1.1)
   - libextobjc
@@ -69,6 +71,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
+  CocoaSecurity: 9c82f530dc5b0516b04cc2ed4c2f5cd90f25352d
   FMDB: 97472cfacf0d9e445e915704fb43b4b142799c36
   JSONKit-NoWarning: 5b8c7dbf2969926b714727288bb2a9d24a176a0c
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
