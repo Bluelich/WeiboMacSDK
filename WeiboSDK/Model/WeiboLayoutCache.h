@@ -26,4 +26,6 @@
 @property (nonatomic, assign) CGRect quoteLineFrame;
 @property (nonatomic, assign) CGRect imageContentViewFrame;
 
+@property (nonatomic, strong) NSAttributedString * attributedString;
+
 @end
