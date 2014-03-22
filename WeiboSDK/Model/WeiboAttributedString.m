@@ -45,7 +45,11 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
     if (!block) return;
     
     [self enumerateAttribute:WeiboAttributedStringActiveRangeKey inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        block([value integerValue], range, stop);
+        WeiboAttributedStringRangeFlavor flavor = [value integerValue];
+        if (flavor != WeiboAttributedStringRangeFlavorNone)
+        {
+            block(flavor, range, stop);
+        }
     }];
 }
 
@@ -64,7 +68,12 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
     if (!block) return;
     
     [self enumerateAttribute:WeiboAttributedStringAttachmentTypeKey inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        block([value integerValue], range, stop);
+        WeiboAttributedStringAttachmentType type = [value integerValue];
+        if (type != WeiboAttributedStringAttachmentTypeNone)
+        {
+            block(type, range, stop);
+        }
+        block(type, range, stop);
     }];
 }
 - (WeiboAttributedStringAttachmentType)attachmentTypeAtIndex:(NSInteger)index
