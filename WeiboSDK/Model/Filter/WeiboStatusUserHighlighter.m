@@ -8,7 +8,6 @@
 
 #import "WeiboStatusUserHighlighter.h"
 #import "WeiboBaseStatus.h"
-#import "WTActiveTextRanges.h"
 #import "WeiboUser.h"
 
 @implementation WeiboStatusUserHighlighter
@@ -40,10 +39,18 @@
     }
     else if (self.highlightMentions)
     {
-        if ([status.textAttributes.activeRanges.usernames containsObject:self.screenname])
-        {
-            status.isSpecial = YES;
-        }
+        NSString * string = status.attributedString.string;
+        
+        [status.attributedString enumerateActiveRanges:^(WeiboAttributedStringRangeFlavor rangeFlavor, NSRange range, BOOL *stop) {
+            if (rangeFlavor == WeiboAttributedStringRangeFlavorUsername)
+            {
+                if ([[string substringWithRange:range] hasSuffix:self.screenname])
+                {
+                    status.isSpecial = YES;
+                    *stop = YES;
+                }
+            }
+        }];
     }
     
     return NO;

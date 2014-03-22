@@ -36,7 +36,7 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
     
     conversation.correspondent = [WeiboUser objectWithJSONObject:[dict objectForKey:@"user"]];
     
-    WeiboDirectMessage * message = [[WeiboDirectMessage alloc] initWithDictionary:[dict objectForKey:@"direct_message"]];
+    WeiboDirectMessage * message = [WeiboDirectMessage objectWithJSONObject:dict];
     
     [conversation addMessage:message];
     

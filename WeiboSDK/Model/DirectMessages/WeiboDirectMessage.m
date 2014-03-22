@@ -16,22 +16,30 @@
     } _flags;
 }
 
+@property (nonatomic, strong) WeiboAttributedString * attributedString;
+
 @end
 
 @implementation WeiboDirectMessage
 
-- (void)dealloc
++ (NSMutableArray *)ignoredCodingProperties
 {
-    _sender = nil;
-    _recipient = nil;
-    _text = nil;
-    _activeRanges = nil;
-    
+    return [@[@"attributedString"] mutableCopy];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict
++ (NSString *)defaultJSONObjectRootKey
 {
-    if (self = [super init])
+    return @"direct_message";
+}
+
++ (NSString *)defaultJSONArrayRootKey
+{
+    return @"direct_messages";
+}
+
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
+{
+    if ([super updateWithJSONDictionary:dict])
     {
         self.messageID = [dict longlongForKey:@"id" defaultValue:0];
         self.date = [dict timeForKey:@"created_at" defaultValue:0];
@@ -44,40 +52,21 @@
         
         if (senderDictionary) self.sender = [WeiboUser objectWithJSONObject:senderDictionary];
         if (recipientDictionary) self.recipient = [WeiboUser objectWithJSONObject:recipientDictionary];
+        
+        self.attributedString = [WeiboAttributedString stringWithString:self.text];
+        
+        return YES;
     }
-    return self;
+    return NO;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super init])
+    if (self = [super initWithCoder:aDecoder])
     {
-        self.messageID = [aDecoder decodeInt64ForKey:@"id"];
-        self.date = [aDecoder decodeInt64ForKey:@"date"];
-        self.text = [aDecoder decodeObjectForKey:@"text"];
-        self.senderID = [aDecoder decodeInt64ForKey:@"sender_id"];
-        self.recipientID = [aDecoder decodeInt64ForKey:@"recipient_id"];
-        
-        self.sender = [aDecoder decodeObjectForKey:@"sender"];
-        self.recipient = [aDecoder decodeObjectForKey:@"recipient"];
-        
-        self.read = [aDecoder decodeBoolForKey:@"read"];
+        self.attributedString = [WeiboAttributedString stringWithString:self.text];
     }
     return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeInt64:self.messageID forKey:@"id"];
-    [aCoder encodeInt64:self.date forKey:@"date"];
-    [aCoder encodeObject:self.text forKey:@"text"];
-    [aCoder encodeInt64:self.senderID forKey:@"sender_id"];
-    [aCoder encodeInt64:self.recipientID forKey:@"recipient_id"];
-    
-    [aCoder encodeObject:self.sender forKey:@"sender"];
-    [aCoder encodeObject:self.recipient forKey:@"recipient"];
-    
-    [aCoder encodeBool:self.read forKey:@"read"];
 }
 
 - (void)setRead:(BOOL)read
@@ -102,15 +91,6 @@
     if (object.messageID == self.messageID) return NSOrderedSame;
     if (object.messageID > self.messageID) return NSOrderedAscending;
     return NSOrderedDescending;
-}
-
-- (WTActiveTextRanges *)activeRanges
-{
-    if (!_activeRanges)
-    {
-        self.activeRanges = [[WTActiveTextRanges alloc] initWithString:self.text];
-    }
-    return _activeRanges;
 }
 
 @end

@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboModel.h"
 #import "WeiboUser.h"
-#import "WTActiveTextRanges.h"
+#import "WeiboAttributedString.h"
 
 typedef int64_t WeiboMessageID;
 
-@interface WeiboDirectMessage : NSObject <NSCoding>
-
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
+@interface WeiboDirectMessage : WeiboModel
 
 @property (nonatomic, assign) WeiboMessageID messageID;
 @property (nonatomic, assign) time_t date;
@@ -28,7 +27,7 @@ typedef int64_t WeiboMessageID;
 @property (nonatomic, strong) WeiboUser * recipient;
 @property (nonatomic, assign) BOOL read;
 
-@property (nonatomic, strong) WTActiveTextRanges * activeRanges;
+@property (nonatomic, strong, readonly) WeiboAttributedString * attributedString;
 
 - (NSComparisonResult)compare:(WeiboDirectMessage *)object;
 

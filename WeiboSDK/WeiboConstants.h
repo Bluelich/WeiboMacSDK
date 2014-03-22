@@ -46,6 +46,7 @@ extern NSString * const WeiboObjectUserInfoUniqueIdentifierKey;
 #define SHORT_LINK_REGEX @"(http://t.cn/)([a-zA-Z0-9]+)"
 #define MENTION_REGEX @"@([\\x{4e00}-\\x{9fa5}A-Za-z0-9_\\-]+)"
 #define HASHTAG_REGEX @"#(.+?)#"
+#define EMOTICON_REGEX @"\\[([^ \\[]*?)]"
 
 enum {
 	WeiboStatusesAddingTypePrepend,

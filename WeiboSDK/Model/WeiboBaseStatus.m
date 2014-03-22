@@ -16,32 +16,17 @@
 
 @interface WeiboBaseStatus ()
 
-@property (nonatomic, strong) WeiboTextAttributes * textAttributes;
+@property (nonatomic, strong) WeiboAttributedString * attributedString;
 
 @end
 
 @implementation WeiboBaseStatus
-@synthesize createdAt, text, sid, user;
-@synthesize thumbnailPic, originalPic, middlePic;
-@synthesize wasSeen, isComment;
-@synthesize quoted = _quoted;
-
-- (void)dealloc
-{
-    user = nil;
-    _layoutCaches = nil;
-    thumbnailPic = nil;
-    middlePic = nil;
-    originalPic = nil;
-    _pics = nil;
-    _textAttributes = nil;
-}
 
 - (id)init
 {
     if (self = [super init])
     {
-        wasSeen = NO;
+        self.wasSeen = NO;
         self.layoutCaches = [NSMutableDictionary dictionary];
     }
     return self;
@@ -67,11 +52,11 @@
 {
     if (self = [super initWithJSONDictionary:dict])
     {
-        self.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.displayText];
+        self.attributedString = [WeiboAttributedString stringWithString:self.displayPlainText];
         
         if (!self.quoted && self.quotedBaseStatus)
         {
-            self.quotedBaseStatus.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.quotedBaseStatus.displayText];
+            self.quotedBaseStatus.attributedString = [WeiboAttributedString stringWithString:self.quotedBaseStatus.displayPlainText];
         }
     }
     return self;
@@ -81,15 +66,15 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        self.textAttributes = [[WeiboTextAttributes alloc] initWithText:self.displayText];
+        self.attributedString = [WeiboAttributedString stringWithString:self.displayPlainText];
     }
     return self;
 }
 
 + (NSMutableArray *)ignoredCodingProperties
 {
-    return [@[@"textAttributes",
-               @"displayText",
+    return [@[@"attributedString",
+               @"displayPlainText",
                @"layoutCaches"] mutableCopy];
 }
 
@@ -121,7 +106,7 @@
     return nil;
 }
 
-- (NSString *)displayText
+- (NSString *)displayPlainText
 {
     if (self.quoted)
     {

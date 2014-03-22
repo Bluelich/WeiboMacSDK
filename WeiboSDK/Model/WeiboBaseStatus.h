@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
 #import "WeiboModel.h"
-#import "WeiboTextAttributes.h"
+#import "WeiboAttributedString.h"
 
 @class WeiboUser, WeiboLayoutCache, WeiboCallback;
 
@@ -27,19 +27,19 @@
     
 }
 
-@property (assign, readwrite) time_t createdAt;
-@property (strong, readwrite) NSString * text;
-@property (assign, readwrite) WeiboStatusID sid;
-@property (strong, readwrite) WeiboUser * user;
-@property (strong, readwrite) NSString * thumbnailPic;
-@property (strong, readwrite) NSString * middlePic;
-@property (strong, readwrite) NSString * originalPic;
+@property (nonatomic, assign) time_t createdAt;
+@property (nonatomic, strong) NSString * text;
+@property (nonatomic, assign) WeiboStatusID sid;
+@property (nonatomic, strong) WeiboUser * user;
+@property (nonatomic, strong) NSString * thumbnailPic;
+@property (nonatomic, strong) NSString * middlePic;
+@property (nonatomic, strong) NSString * originalPic;
 @property (nonatomic, assign) BOOL quoted;
-@property (weak, nonatomic, readonly) WeiboBaseStatus * quotedBaseStatus;
+@property (nonatomic, strong, readonly) WeiboBaseStatus * quotedBaseStatus;
 @property (nonatomic, strong) NSArray * pics;
 
-@property (weak, nonatomic, readonly) NSString * displayText;
-@property (nonatomic, strong, readonly) WeiboTextAttributes * textAttributes;
+@property (nonatomic, readonly) NSString * displayPlainText;
+@property (nonatomic, strong, readonly) WeiboAttributedString * attributedString;
 
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;

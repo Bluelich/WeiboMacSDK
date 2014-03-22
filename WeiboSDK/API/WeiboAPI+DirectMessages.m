@@ -54,21 +54,7 @@
 }
 - (void)directMessagesResponse:(id)response info:(id)info
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSDictionary * dict = response;
-        NSArray * messageDicts = [dict objectForKey:@"direct_messages"];
-        NSMutableArray * messages = [NSMutableArray arrayWithCapacity:messageDicts.count];
-        
-        for (NSDictionary * messageDict in messageDicts)
-        {
-            WeiboDirectMessage * message = [[WeiboDirectMessage alloc] initWithDictionary:messageDict];
-            [messages addObject:message];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [responseCallback invoke:messages];
-        });
-    });
+    [WeiboDirectMessage parseObjectsWithJSONObject:response callback:responseCallback];
 }
 
 - (void)conversationsWithCount:(NSInteger)count cursor:(WeiboUserID)cursor
