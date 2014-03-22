@@ -13,7 +13,7 @@
 #import "WeiboAPI+AccountMethods.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WeiboCallback.h"
-#import "WTFileManager.h"
+#import "WeiboFileManager.h"
 #import "LocalAutocompleteDB.h"
 #import "WeiboCryptographer.h"
 
@@ -137,7 +137,7 @@ static Weibo * _sharedWeibo = nil;
 }
 - (NSURL *)accountDataPathURL
 {
-    NSURL * url = [NSURL fileURLWithPath:[WTFileManager cachesApplicationDirectory]];
+    NSURL * url = [NSURL fileURLWithPath:[WeiboFileManager cachesApplicationDirectory]];
     url = [url URLByAppendingPathComponent:@"accounts.dat"];
     return url;
 }

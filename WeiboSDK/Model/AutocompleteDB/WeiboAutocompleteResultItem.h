@@ -7,10 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WTAutoCompleteResultItem.h"
 
+enum {
+    WeiboAutocompleteTypeUser       = 1,
+    WeiboAutocompleteTypeHashtag    = 2,
+    WeiboAutocompleteTypeCustom     = 99,
+};
+typedef NSInteger WeiboAutocompleteType;
 
-@interface WeiboAutocompleteResultItem : NSObject <WTAutoCompleteResultItem> {
+@protocol WeiboAutoCompleteResultItem <NSObject>
+- (NSString *)searchableSortableText;
+@property(nonatomic) NSInteger priority;
+@property(nonatomic) WeiboAutocompleteType autocompleteType;
+@property(nonatomic) long long autocompleteAction;
+@property(retain, nonatomic) NSString *itemID;
+@property(retain, nonatomic) id userInfo;
+@property(retain, nonatomic) NSURL *autocompleteImageURL;
+@property(retain, nonatomic) NSString *autocompleteSubtext;
+@property(retain, nonatomic) NSString *autocompleteText;
+@end
+
+@interface WeiboAutocompleteResultItem : NSObject <WeiboAutoCompleteResultItem> {
     NSString *autocompleteText;
     NSString *autocompleteSubtext;
     NSURL *autocompleteImageURL;

@@ -18,7 +18,7 @@
 #import "WeiboHTTPRequest.h"
 
 #import "WeiboCallback.h"
-#import "WTFoundationUtilities.h"
+#import "WeiboFoundationUtilities.h"
 #import "JSONKit.h"
 
 @interface WeiboAPI (Private)

@@ -10,7 +10,7 @@
 #import "WeiboAccount.h"
 #import "WeiboAPI+StatusMethods.h"
 #import "WeiboComment.h"
-#import "WTFoundationUtilities.h"
+#import "WeiboFoundationUtilities.h"
 
 @implementation WeiboCommentConversationStream
 

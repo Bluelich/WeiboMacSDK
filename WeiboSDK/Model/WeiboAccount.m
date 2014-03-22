@@ -40,11 +40,11 @@
 
 #import "NSArray+WeiboAdditions.h"
 #import "WeiboCallback.h"
-#import "WTFoundationUtilities.h"
+#import "WeiboFoundationUtilities.h"
 #import "SSKeychain.h"
 #import "JSONKit.h"
 #import "WeiboHTTPRequest.h"
-#import "WTFileManager.h"
+#import "WeiboFileManager.h"
 
 #define CACHE_LIVETIME 600.0
 

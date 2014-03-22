@@ -1,5 +1,5 @@
 //
-//  WTFileManager.h
+//  WeiboFileManager.h
 //  Weibo
 //
 //  Created by Wu Tian on 12-4-3.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WTFileManager : NSObject
+@interface WeiboFileManager : NSObject
 
 + (NSString *)createDirectoryIfNonExistent:(NSString *)path;
 + (NSString *)cachesDirectory;

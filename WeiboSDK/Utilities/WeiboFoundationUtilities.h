@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-static void QuietLog (NSString *format, ...) {
+NS_INLINE void QuietLog (NSString *format, ...) {
     va_list argList;
     va_start (argList, format);
     NSString *message = [[NSString alloc] initWithFormat: format
@@ -17,7 +17,7 @@ static void QuietLog (NSString *format, ...) {
     va_end  (argList);
 }
 
-static void LogIt (id format, ...) {
+NS_INLINE void LogIt (id format, ...) {
     va_list args;
     va_start (args, format);
     NSString *string;
@@ -26,7 +26,7 @@ static void LogIt (id format, ...) {
     fprintf (stderr, "%s\n", [string UTF8String]);
 }
 
-static void LogBinary (NSUInteger theNumber,NSInteger bits) {
+NS_INLINE void LogBinary (NSUInteger theNumber,NSInteger bits) {
     NSMutableString *str = [NSMutableString string];
     NSUInteger numberCopy = theNumber; // so you won't change your original value
     for(NSInteger i = 0; i < bits ; i++) {
@@ -57,33 +57,33 @@ ivar = newVar;
 
 #define BETWEEN(min, x, max) MIN(MAX(min, x), max)
 
-static void dispatch_next(dispatch_block_t block)
+NS_INLINE void dispatch_next(dispatch_block_t block)
 {
     dispatch_async(dispatch_get_current_queue(), block);
 }
-static void dispatch_async_priority(NSInteger priority, dispatch_block_t work)
+NS_INLINE void dispatch_async_priority(NSInteger priority, dispatch_block_t work)
 {
     dispatch_async(dispatch_get_global_queue(priority, 0), ^{
         work();
     });
 }
-static void dispatch_async_default(dispatch_block_t work)
+NS_INLINE void dispatch_async_default(dispatch_block_t work)
 {
     dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_DEFAULT, work);
 }
-static void dispatch_async_low(dispatch_block_t work)
+NS_INLINE void dispatch_async_low(dispatch_block_t work)
 {
     dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_LOW, work);
 }
-static void dispatch_async_high(dispatch_block_t work)
+NS_INLINE void dispatch_async_high(dispatch_block_t work)
 {
     dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_HIGH, work);
 }
-static void dispatch_async_background(dispatch_block_t work)
+NS_INLINE void dispatch_async_background(dispatch_block_t work)
 {
     dispatch_async_priority(DISPATCH_QUEUE_PRIORITY_BACKGROUND, work);
 }
-static void dispatch_async_main(dispatch_block_t work)
+NS_INLINE void dispatch_async_main(dispatch_block_t work)
 {
     dispatch_async(dispatch_get_main_queue(), work);
 }

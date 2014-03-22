@@ -7,13 +7,13 @@
 //
 
 #import "WeiboAccount+DirectMessage.h"
-#import "WTFileManager.h"
+#import "WeiboFileManager.h"
 
 @implementation WeiboAccount (DirectMessage)
 
 - (NSString *)directMessageCachePath
 {
-    NSString * directory = [WTFileManager subCacheDirectory:@"messages"];
+    NSString * directory = [WeiboFileManager subCacheDirectory:@"messages"];
     return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%lld.zip", self.user.userID]];
 }
 
