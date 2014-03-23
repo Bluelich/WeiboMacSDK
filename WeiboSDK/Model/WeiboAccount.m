@@ -698,7 +698,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     _flags.requestingAvatar = 1;
     
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         _flags.requestingAvatar = 0;
         if (data)
         {
