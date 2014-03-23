@@ -690,36 +690,30 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     return _profileImage;
 }
 
-- (void)profileImageResponse:(id)response info:(id)info
-{
-    _flags.requestingAvatar = 0;
-    
-    WeiboCallback * callback = (WeiboCallback *)info;
-    
-    NSImage * image = [[NSImage alloc] initWithData:response];
-    if (image) {
-        if (image.size.width > 50 || image.size.height > 50)
-        {
-            image = [[self class] scaleImage:image toSize:NSMakeSize(50, 50)];
-        }
-        self.profileImage = image;
-        NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-        [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
-    }
-    [callback invoke:image];
-}
 - (void)requestProfileImageWithCallback:(WeiboCallback *)aCallback
 {
+    NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
+
+    if (!url) return;
+    
     _flags.requestingAvatar = 1;
     
-    WeiboCallback * callback = WeiboCallbackMake(self, @selector(profileImageResponse:info:), aCallback);
-    NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
-    
-    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
-    request.responseCallback = WeiboBlockCallback(^(id responseObject, id info) {
-        [callback invoke:responseObject];
-    }, nil);
-    [request startRequest];
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:nil completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        _flags.requestingAvatar = 0;
+        if (data)
+        {
+            NSImage * image = [[NSImage alloc] initWithData:data];
+            if (image) {
+                if (image.size.width > 100 || image.size.height > 100)
+                {
+                    image = [[self class] scaleImage:image toSize:NSMakeSize(100, 100)];
+                }
+                self.profileImage = image;
+                NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
+                [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
+            }
+        }
+    }];
 }
 
 #pragma mark -
