@@ -64,7 +64,7 @@
 
 - (WeiboHTTPRequest *)baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WeiboHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl
-                                                relativeToURL:[NSURL URLWithString:OFFLINE_DEBUG_MODE?@"http://127.0.0.1/":apiRoot]]];
+                                                relativeToURL:[NSURL URLWithString:apiRoot]]];
 }
 - (WeiboHTTPRequest *)v1_baseRequestWithPartialURL:(NSString *)partialUrl{
     return [WeiboHTTPRequest requestWithURL:[NSURL URLWithString:partialUrl

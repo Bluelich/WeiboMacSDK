@@ -23,8 +23,6 @@ typedef void (^WTObjectBlock)(id object);
 
 #define WeiboUnimplementedMethod NSLog(@"[Warning - Weibo SDK] A Unimplemented Method Has Been Called. In File:%s , Line:%d.", __FILE__, __LINE__);
 
-#define OFFLINE_DEBUG_MODE NO
-
 #define WEIBO_APIROOT_V1 @"http://api.t.sina.com.cn/"
 #define WEIBO_APIROOT_V2 @"https://api.weibo.com/2/"
 #define WEIBO_APIROOT_DEFAULT WEIBO_APIROOT_V2

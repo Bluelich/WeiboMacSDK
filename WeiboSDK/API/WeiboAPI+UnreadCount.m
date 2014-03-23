@@ -17,8 +17,7 @@
     WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
     NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
     
-    NSString * urlString = OFFLINE_DEBUG_MODE?@"http://localhost/remind/unread_count.json":@"https://rm.api.weibo.com/2/remind/unread_count.json";
-    NSURL * url = [NSURL URLWithString:urlString];
+    NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/unread_count.json"];
     WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
     [request setResponseCallback:callback];
     [request setMethod:@"GET"];
