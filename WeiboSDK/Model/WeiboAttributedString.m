@@ -73,7 +73,6 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
         {
             block(type, range, stop);
         }
-        block(type, range, stop);
     }];
 }
 - (WeiboAttributedStringAttachmentType)attachmentTypeAtIndex:(NSInteger)index
