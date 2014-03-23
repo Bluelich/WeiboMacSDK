@@ -60,7 +60,7 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
 
 - (WeiboAttributedStringRangeFlavor)rangeFlavorAtIndex:(NSInteger)index effectiveRange:(NSRangePointer)effectiveRange
 {
-    return [[self attribute:WeiboAttributedStringActiveRangeKey atIndex:index effectiveRange:effectiveRange] integerValue];
+    return [[self attribute:WeiboAttributedStringActiveRangeKey atIndex:index longestEffectiveRange:effectiveRange inRange:NSMakeRange(0, self.length)] integerValue];
 }
 
 - (void)enumerateAttachments:(void (^)(WeiboAttributedStringAttachmentType attachmentType, NSRange range, BOOL *stop))block
@@ -81,7 +81,7 @@ NSString * const WeiboAttributedStringAttachmentTypeKey = @"WeiboAttributedStrin
 }
 - (WeiboAttributedStringAttachmentType)attachmentTypeAtIndex:(NSInteger)index effectiveRange:(NSRangePointer)effectiveRange
 {
-    return [[self attribute:WeiboAttributedStringAttachmentTypeKey atIndex:index effectiveRange:effectiveRange] integerValue];
+    return [[self attribute:WeiboAttributedStringAttachmentTypeKey atIndex:index longestEffectiveRange:effectiveRange inRange:NSMakeRange(0, self.length)] integerValue];
 }
 
 @end
