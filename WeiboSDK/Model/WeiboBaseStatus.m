@@ -15,8 +15,6 @@
 
 @interface WeiboBaseStatus ()
 
-@property (nonatomic, strong) WeiboAttributedString * attributedString;
-
 @end
 
 @implementation WeiboBaseStatus
@@ -47,33 +45,10 @@
     }
     return NO;
 }
-- (id)initWithJSONDictionary:(NSDictionary *)dict
-{
-    if (self = [super initWithJSONDictionary:dict])
-    {
-        self.attributedString = [WeiboAttributedString stringWithString:self.displayPlainText];
-        
-        if (!self.quoted && self.quotedBaseStatus)
-        {
-            self.quotedBaseStatus.attributedString = [WeiboAttributedString stringWithString:self.quotedBaseStatus.displayPlainText];
-        }
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder])
-    {
-        self.attributedString = [WeiboAttributedString stringWithString:self.displayPlainText];
-    }
-    return self;
-}
 
 + (NSMutableArray *)ignoredCodingProperties
 {
-    return [@[@"attributedString",
-               @"displayPlainText",
+    return [@[@"displayPlainText",
                @"layoutCaches"] mutableCopy];
 }
 

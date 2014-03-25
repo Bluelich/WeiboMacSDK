@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "WeiboConstants.h"
 #import "WeiboModel.h"
-#import "WeiboAttributedString.h"
 
 @class WeiboUser, WeiboLayoutCache, WeiboCallback;
 
@@ -27,7 +26,6 @@
 @property (nonatomic, strong) NSArray * pics;
 
 @property (nonatomic, readonly) NSString * displayPlainText;
-@property (nonatomic, strong, readonly) WeiboAttributedString * attributedString;
 
 @property (assign, nonatomic) BOOL wasSeen;
 @property (readonly, nonatomic) BOOL isComment;

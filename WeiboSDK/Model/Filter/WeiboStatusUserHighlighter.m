@@ -39,18 +39,13 @@
     }
     else if (self.highlightMentions)
     {
-        NSString * string = status.attributedString.string;
+        NSString * string = status.text;
+        NSString * token = [@"@" stringByAppendingString:self.screenname];
         
-        [status.attributedString enumerateActiveRanges:^(WeiboAttributedStringRangeFlavor rangeFlavor, NSRange range, BOOL *stop) {
-            if (rangeFlavor == WeiboAttributedStringRangeFlavorUsername)
-            {
-                if ([[string substringWithRange:range] hasSuffix:self.screenname])
-                {
-                    status.isSpecial = YES;
-                    *stop = YES;
-                }
-            }
-        }];
+        if ([string rangeOfString:token].location != NSNotFound)
+        {
+            status.isSpecial = YES;
+        }
     }
     
     return NO;

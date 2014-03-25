@@ -16,8 +16,6 @@
     } _flags;
 }
 
-@property (nonatomic, strong) WeiboAttributedString * attributedString;
-
 @end
 
 @implementation WeiboDirectMessage
@@ -53,20 +51,9 @@
         if (senderDictionary) self.sender = [WeiboUser objectWithJSONObject:senderDictionary];
         if (recipientDictionary) self.recipient = [WeiboUser objectWithJSONObject:recipientDictionary];
         
-        self.attributedString = [WeiboAttributedString stringWithString:self.text];
-        
         return YES;
     }
     return NO;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder])
-    {
-        self.attributedString = [WeiboAttributedString stringWithString:self.text];
-    }
-    return self;
 }
 
 - (void)setRead:(BOOL)read

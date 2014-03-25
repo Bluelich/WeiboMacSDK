@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "WeiboModel.h"
 #import "WeiboUser.h"
-#import "WeiboAttributedString.h"
 
 typedef int64_t WeiboMessageID;
 
@@ -26,8 +25,6 @@ typedef int64_t WeiboMessageID;
 @property (nonatomic, strong) WeiboUser * sender;
 @property (nonatomic, strong) WeiboUser * recipient;
 @property (nonatomic, assign) BOOL read;
-
-@property (nonatomic, strong, readonly) WeiboAttributedString * attributedString;
 
 - (NSComparisonResult)compare:(WeiboDirectMessage *)object;
 
