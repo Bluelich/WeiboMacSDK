@@ -35,6 +35,7 @@
         self.serializer = [[AFHTTPRequestSerializer alloc] init];
         self.serializer.stringEncoding = NSUTF8StringEncoding;
         self.serializer.timeoutInterval = 60;
+        self.serializer.HTTPShouldHandleCookies = NO;
         self.method = @"GET";
     }
     return self;
