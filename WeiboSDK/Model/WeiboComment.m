@@ -41,14 +41,14 @@
 		NSDictionary* statusDic = [dict objectForKey:@"status"];
 		if (statusDic)
         {
-			self.replyToStatus = [WeiboStatus objectWithJSONObject:statusDic];
+			self.replyToStatus = [WeiboStatus objectWithJSONObject:statusDic account:self.account];
             self.replyToStatus.quoted = YES;
 		}
 
         NSDictionary* commentDic = [dict objectForKey:@"reply_comment"];
         if (commentDic)
         {
-            WeiboComment * comment = [WeiboComment objectWithJSONObject:commentDic];
+            WeiboComment * comment = [WeiboComment objectWithJSONObject:commentDic account:self.account];
             self.replyToComment = comment;
             self.replyToComment.quoted = YES;
         }

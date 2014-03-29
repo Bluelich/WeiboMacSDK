@@ -33,7 +33,7 @@
 }
 - (void)verifyCredentialsResponse:(id)response info:(id)info
 {
-    [WeiboUser parseObjectWithJSONObject:response callback:responseCallback];
+    [WeiboUser parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 - (void)userWithID:(WeiboUserID)uid
 {
@@ -63,7 +63,7 @@
 #pragma mark ( User Response Handling )
 - (void)userResponse:(id)response info:(id)info
 {
-    [WeiboUser parseObjectWithJSONObject:response callback:responseCallback];
+    [WeiboUser parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 - (WeiboCallback *)userResponseCallback
 {
@@ -134,7 +134,7 @@
 
 - (void)userlistResponse:(id)response info:(id)info
 {
-    [WeiboUser parseObjectsWithJSONObject:response callback:responseCallback];
+    [WeiboUser parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 
 - (WeiboCallback *)userlistResponseCallback

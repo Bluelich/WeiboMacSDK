@@ -167,7 +167,7 @@
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];
 		if (retweetedStatusDic)
         {
-            WeiboStatus * retweeted = [WeiboStatus objectWithJSONObject:retweetedStatusDic];
+            WeiboStatus * retweeted = [WeiboStatus objectWithJSONObject:retweetedStatusDic account:self.account];
 			self.retweetedStatus = retweeted;
             self.retweetedStatus.quoted = YES;
 		}

@@ -33,7 +33,7 @@
         [responseCallback dissociateTarget];
         return;
     }
-    [WeiboUnread parseObjectWithJSONObject:response callback:responseCallback];
+    [WeiboUnread parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type{

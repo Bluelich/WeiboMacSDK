@@ -41,10 +41,10 @@
 }
 - (void)statusesResponse:(id)response info:(id)info
 {
-    [WeiboStatus parseObjectsWithJSONObject:response rootKey:info[@"rootKey"] callback:responseCallback];
+    [WeiboStatus parseObjectsWithJSONObject:response account:authenticateWithAccount rootKey:info[@"rootKey"] callback:responseCallback];
 }
 - (void)commentsResponse:(id)response info:(id)info{
-    [WeiboComment parseObjectsWithJSONObject:response callback:responseCallback];
+    [WeiboComment parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
     [self statusesRequest:@"statuses/friends_timeline.json" parameters:nil sinceID:since maxID:max count:count];
@@ -118,7 +118,7 @@
 }
 - (void)commentArrayResponse:(id)response info:(id)info
 {
-    [WeiboComment parseObjectsWithJSONObject:response rootKey:info[@"rootKey"] callback:responseCallback];
+    [WeiboComment parseObjectsWithJSONObject:response account:authenticateWithAccount rootKey:info[@"rootKey"] callback:responseCallback];
 }
 
 #pragma mark -
@@ -130,7 +130,7 @@
 }
 - (void)favoritesResponse:(id)returnValue info:(id)info
 {
-    [WeiboFavoriteStatus parseObjectsWithJSONObject:returnValue callback:responseCallback];
+    [WeiboFavoriteStatus parseObjectsWithJSONObject:returnValue account:authenticateWithAccount callback:responseCallback];
 }
 
 - (void)favoriteStatusID:(WeiboStatusID)statusID
@@ -153,7 +153,7 @@
 - (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count
 {
     [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WeiboBlockCallback(^(id responseObject, id info) {
-        [WeiboLikeStatus parseObjectsWithJSONObject:responseObject callback:responseCallback];
+        [WeiboLikeStatus parseObjectsWithJSONObject:responseObject account:authenticateWithAccount callback:responseCallback];
     }, nil)];
 }
 - (void)likeStatusID:(WeiboStatusID)statusID

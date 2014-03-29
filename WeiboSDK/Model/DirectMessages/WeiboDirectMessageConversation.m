@@ -30,17 +30,21 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
     _messages = nil;
 }
 
-+ (instancetype)conversationWithDictionary:(NSDictionary *)dict
++ (NSString *)defaultJSONArrayRootKey
 {
-    WeiboDirectMessageConversation * conversation = [[self alloc] init];
-    
-    conversation.correspondent = [WeiboUser objectWithJSONObject:[dict objectForKey:@"user"]];
-    
-    WeiboDirectMessage * message = [WeiboDirectMessage objectWithJSONObject:dict];
-    
-    [conversation addMessage:message];
-    
-    return conversation;
+    return @"user_list";
+}
+
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
+{
+    if ([super updateWithJSONDictionary:dict])
+    {
+        self.correspondent = [WeiboUser objectWithJSONObject:[dict objectForKey:@"user"] account:self.account];
+        [self addMessage:[WeiboDirectMessage objectWithJSONObject:dict account:self.account]];
+        
+        return YES;
+    }
+    return NO;
 }
 
 - (instancetype)init

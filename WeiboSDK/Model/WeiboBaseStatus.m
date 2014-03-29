@@ -39,7 +39,7 @@
         NSDictionary* userDic = [dict objectForKey:@"user"];
 		if (userDic && [userDic isKindOfClass:[NSDictionary class]])
         {
-			self.user = [WeiboUser objectWithJSONObject:userDic];
+			self.user = [WeiboUser objectWithJSONObject:userDic account:self.account];
 		}
         return YES;
     }

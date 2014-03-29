@@ -54,7 +54,7 @@
 }
 - (void)directMessagesResponse:(id)response info:(id)info
 {
-    [WeiboDirectMessage parseObjectsWithJSONObject:response callback:responseCallback];
+    [WeiboDirectMessage parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 
 - (void)conversationsWithCount:(NSInteger)count cursor:(WeiboUserID)cursor
@@ -71,20 +71,7 @@
 
 - (void)directMessageConversationResponse:(id)returnValue info:(id)info
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray * conversationDicts = [returnValue objectForKey:@"user_list"];
-        
-        NSMutableArray * conversations = [NSMutableArray array];
-        
-        for (NSDictionary * conversationDict in conversationDicts)
-        {
-            [conversations addObject:[WeiboDirectMessageConversation conversationWithDictionary:conversationDict]];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [responseCallback invoke:conversations];
-        });
-    });
+    [WeiboDirectMessageConversation parseObjectsWithJSONObject:returnValue account:authenticateWithAccount callback:responseCallback];
 }
 
 - (void)directMessagesWithUserID:(WeiboUserID)userID since:(WeiboMessageID)since max:(WeiboMessageID)max count:(NSUInteger)count

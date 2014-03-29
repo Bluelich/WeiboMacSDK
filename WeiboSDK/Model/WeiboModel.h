@@ -9,28 +9,32 @@
 #import <Foundation/Foundation.h>
 #import "WeiboCallback.h"
 
+@class WeiboAccount;
+
 @interface WeiboModel : NSObject <NSCoding>
+
+@property (nonatomic, weak) WeiboAccount * account;
 
 + (NSMutableArray *)ignoredCodingProperties;
 
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict;
+- (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account;
 - (BOOL)updateWithJSONDictionary:(NSDictionary *)dict;
 
 + (NSString *)defaultJSONArrayRootKey;
 + (NSString *)defaultJSONObjectRootKey;
 
-+ (NSArray *)objectsWithJSONObject:(id)jsonObject;
-+ (NSArray *)objectsWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey;
++ (NSArray *)objectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account;
++ (NSArray *)objectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey;
 + (void)processObjects:(NSMutableArray *)objects withMetadata:(NSDictionary *)metadata;
 
-+ (instancetype)objectWithJSONObject:(id)jsonObject;
-+ (instancetype)objectWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey;
++ (instancetype)objectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account;
++ (instancetype)objectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey;
 + (void)processObject:(WeiboModel *)object withMetadata:(NSDictionary *)metadata;
 
-+ (void)parseObjectsWithJSONObject:(id)jsonObject callback:(WeiboCallback *)callback;
-+ (void)parseObjectsWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback;
-+ (void)parseObjectWithJSONObject:(id)jsonObject callback:(WeiboCallback *)callback;
-+ (void)parseObjectWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback;
++ (void)parseObjectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account callback:(WeiboCallback *)callback;
++ (void)parseObjectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback;
++ (void)parseObjectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account callback:(WeiboCallback *)callback;
++ (void)parseObjectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback;
 
 @end
 

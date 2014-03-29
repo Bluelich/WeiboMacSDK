@@ -129,7 +129,7 @@
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];
         if (statusDic) {
-            self.status = [WeiboStatus objectWithJSONObject:statusDic];
+            self.status = [WeiboStatus objectWithJSONObject:statusDic account:self.account];
         }
         
         return YES;

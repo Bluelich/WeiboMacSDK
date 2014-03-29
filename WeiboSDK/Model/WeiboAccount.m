@@ -973,7 +973,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         NSDictionary * dict = response;
         NSDictionary * statusDict = [dict objectForKey:@"status"];
         
-        WeiboStatus * newStatus = [WeiboStatus objectWithJSONObject:statusDict];
+        WeiboStatus * newStatus = [WeiboStatus objectWithJSONObject:statusDict account:self];
         
         status.favorited = newStatus.favorited;
     }

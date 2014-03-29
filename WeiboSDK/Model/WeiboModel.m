@@ -8,6 +8,7 @@
 
 #import "WeiboModel.h"
 #import "NSObject+AssociatedObject.h"
+#import "WeiboAccount.h"
 #import <objc/runtime.h>
 
 static NSMutableDictionary *keyNames = nil;
@@ -94,10 +95,11 @@ static NSMutableDictionary *keyNames = nil;
 
 #pragma mark - JSON
 
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict
+- (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account
 {
     if (self = [self init])
     {
+        [self setAccount:account];
         [self updateWithJSONDictionary:dict];
     }
     return self;
@@ -116,11 +118,11 @@ static NSMutableDictionary *keyNames = nil;
     return nil;
 }
 
-+ (NSArray *)objectsWithJSONObject:(id)jsonObject
++ (NSArray *)objectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account
 {
-    return [self objectsWithJSONObject:jsonObject rootKey:nil];
+    return [self objectsWithJSONObject:jsonObject account:account rootKey:nil];
 }
-+ (NSArray *)objectsWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey
++ (NSArray *)objectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey
 {
     if (!jsonObject) return nil;
     if (!rootKey) rootKey = [self defaultJSONArrayRootKey];
@@ -164,7 +166,7 @@ static NSMutableDictionary *keyNames = nil;
     
     for (NSDictionary * dict in JSONArray)
     {
-        WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:dict];
+        WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:dict account:account];
         
         [result addObject:model];
     }
@@ -185,11 +187,11 @@ static NSMutableDictionary *keyNames = nil;
 }
 
 
-+ (instancetype)objectWithJSONObject:(id)jsonObject
++ (instancetype)objectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account
 {
-    return [self objectWithJSONObject:jsonObject rootKey:[self defaultJSONObjectRootKey]];
+    return [self objectWithJSONObject:jsonObject account:account rootKey:[self defaultJSONObjectRootKey]];
 }
-+ (instancetype)objectWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey
++ (instancetype)objectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey
 {
     if (!jsonObject) return nil;
     if (!rootKey) rootKey = [self defaultJSONObjectRootKey];
@@ -229,7 +231,7 @@ static NSMutableDictionary *keyNames = nil;
     
     if (!JSONDict) return nil;
     
-    WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:JSONDict];
+    WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:JSONDict account:account];
     
     [self processObject:model withMetadata:metaData];
     
@@ -245,28 +247,28 @@ static NSMutableDictionary *keyNames = nil;
     
 }
 
-+ (void)parseObjectsWithJSONObject:(id)jsonObject callback:(WeiboCallback *)callback
++ (void)parseObjectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account callback:(WeiboCallback *)callback
 {
-    [self parseObjectsWithJSONObject:jsonObject rootKey:nil callback:callback];
+    [self parseObjectsWithJSONObject:jsonObject account:account rootKey:nil callback:callback];
 }
-+ (void)parseObjectsWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback
++ (void)parseObjectsWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray * objects = [self objectsWithJSONObject:jsonObject rootKey:rootKey];
+        NSArray * objects = [self objectsWithJSONObject:jsonObject account:account rootKey:rootKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             [callback invoke:objects];
         });
     });
 }
 
-+ (void)parseObjectWithJSONObject:(id)jsonObject callback:(WeiboCallback *)callback
++ (void)parseObjectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account callback:(WeiboCallback *)callback
 {
-    [self parseObjectWithJSONObject:jsonObject rootKey:nil callback:callback];
+    [self parseObjectWithJSONObject:jsonObject account:account rootKey:nil callback:callback];
 }
-+ (void)parseObjectWithJSONObject:(id)jsonObject rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback
++ (void)parseObjectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account rootKey:(NSString *)rootKey callback:(WeiboCallback *)callback
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        WeiboModel * object = [self objectWithJSONObject:jsonObject rootKey:rootKey];
+        WeiboModel * object = [self objectWithJSONObject:jsonObject account:account rootKey:rootKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             [callback invoke:object];
         });

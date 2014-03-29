@@ -12,9 +12,7 @@
 extern NSString * const WeiboDirectMessageConversationDidUpdateNotification;
 extern NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification;
 
-@interface WeiboDirectMessageConversation : NSObject <NSCoding>
-
-+ (instancetype)conversationWithDictionary:(NSDictionary *)dict;
+@interface WeiboDirectMessageConversation : WeiboModel <NSCoding>
 
 - (WeiboDirectMessage *)newestMessageNotFrom:(WeiboUser *)user;
 - (void)beginAddingMessages;

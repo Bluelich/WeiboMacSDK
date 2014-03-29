@@ -16,9 +16,9 @@
     return @"favorites";
 }
 
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict
+- (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account
 {
-    if (self = [super initWithJSONDictionary:[dict objectForKey:@"status"]])
+    if (self = [super initWithJSONDictionary:[dict objectForKey:@"status"] account:account])
     {
         self.favorited = YES;
     }
