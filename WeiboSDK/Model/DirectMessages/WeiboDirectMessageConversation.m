@@ -85,6 +85,11 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
     return _messages;
 }
 
+- (BOOL)isMine
+{
+    return YES;
+}
+
 - (WeiboDirectMessage *)newestMessageNotFrom:(WeiboUser *)user
 {
     for (WeiboDirectMessage * message in [_messages reverseObjectEnumerator])

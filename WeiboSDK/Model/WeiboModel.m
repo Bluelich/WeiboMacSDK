@@ -99,6 +99,13 @@ static NSMutableDictionary *keyNames = nil;
 	}
 }
 
+#pragma mark - Accessors
+
+- (BOOL)isMine
+{
+    return NO; // subclass can override
+}
+
 #pragma mark - JSON
 
 - (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account

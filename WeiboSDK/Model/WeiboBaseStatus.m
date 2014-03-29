@@ -10,6 +10,7 @@
 #import "WeiboLayoutCache.h"
 #import "WeiboUser.h"
 #import "WeiboCallback.h"
+#import "WeiboAccount.h"
 #import "JSONKit.h"
 #import "NSDictionary+WeiboAdditions.h"
 
@@ -73,6 +74,10 @@
 - (BOOL)canReply
 {
     return YES;
+}
+- (BOOL)isMine
+{
+    return [self.account.user isEqual:self.user];
 }
 
 - (WeiboBaseStatus *)quotedBaseStatus

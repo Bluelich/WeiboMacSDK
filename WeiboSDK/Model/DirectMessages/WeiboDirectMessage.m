@@ -7,6 +7,7 @@
 //
 
 #import "WeiboDirectMessage.h"
+#import "WeiboAccount.h"
 #import "NSDictionary+WeiboAdditions.h"
 
 @interface WeiboDirectMessage ()
@@ -64,6 +65,11 @@
 - (BOOL)read
 {
     return _flags.read;
+}
+
+- (BOOL)isMine
+{
+    return [self.account.user isEqual:self.sender];
 }
 
 - (BOOL)isEqual:(WeiboDirectMessage *)object

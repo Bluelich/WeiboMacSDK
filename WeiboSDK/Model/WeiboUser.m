@@ -9,6 +9,7 @@
 #import "WeiboUser.h"
 #import "WeiboStatus.h"
 #import "WeiboCallback.h"
+#import "WeiboAccount.h"
 #import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
@@ -148,6 +149,11 @@
 {
     return (self.verifiedType == WeiboUserVerifiedTypeGrassroot ||
             self.verifiedType == WeiboUserVerifiedTypeWeiboGirl);
+}
+
+- (BOOL)isMine
+{
+    return [self.account.user isEqual:self];
 }
 
 - (BOOL)isEqual:(id)object

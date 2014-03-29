@@ -14,6 +14,7 @@
 @interface WeiboModel : NSObject <NSCoding>
 
 @property (nonatomic, weak, readonly) WeiboAccount * account;
+@property (nonatomic, assign, readonly) BOOL isMine;
 
 + (NSMutableArray *)ignoredCodingProperties;
 
