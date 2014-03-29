@@ -16,7 +16,7 @@
 @interface WeiboHTTPRequest()
 
 @property (nonatomic, strong) NSURL * url;
-@property (nonatomic, strong) AFHTTPRequestSerializer * serializer;
+@property (nonatomic, strong) AFHTTPRequestSerializer * requestSerializer;
 
 @end
 
@@ -32,10 +32,10 @@
     if (self = [self init])
     {
         self.url = newURL;
-        self.serializer = [[AFHTTPRequestSerializer alloc] init];
-        self.serializer.stringEncoding = NSUTF8StringEncoding;
-        self.serializer.timeoutInterval = 60;
-        self.serializer.HTTPShouldHandleCookies = NO;
+        self.requestSerializer = [[AFHTTPRequestSerializer alloc] init];
+        self.requestSerializer.stringEncoding = NSUTF8StringEncoding;
+        self.requestSerializer.timeoutInterval = 60;
+        self.requestSerializer.HTTPShouldHandleCookies = NO;
         self.method = @"GET";
         self.parsesJSON = YES;
     }
@@ -47,14 +47,14 @@
     if (self.oAuth2Token)
     {
         NSString * authorization = [NSString stringWithFormat:@"OAuth2 %@",self.oAuth2Token];
-        [self.serializer setValue:authorization forHTTPHeaderField:@"Authorization"];
+        [self.requestSerializer setValue:authorization forHTTPHeaderField:@"Authorization"];
     }
     
     NSMutableURLRequest * request = nil;
     
     if (self.multiparts)
     {
-        request = [self.serializer multipartFormRequestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        request = [self.requestSerializer multipartFormRequestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [self.multiparts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 if ([obj isKindOfClass:[NSData class]])
                 {
@@ -67,10 +67,14 @@
     }
     else
     {
-        request = [self.serializer requestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters error:NULL];
+        request = [self.requestSerializer requestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters error:NULL];
     }
     
-    AFHTTPRequestOperation * operation = [[AFHTTPRequestOperationManager manager] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.shouldUseCredentialStorage = NO;
+    operation.securityPolicy = [AFSecurityPolicy defaultPolicy];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self requestFinished:operation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self requestFinished:operation];
@@ -79,6 +83,15 @@
     if (!self.parsesJSON)
     {
         operation.responseSerializer = [AFHTTPResponseSerializer serializer];
+    }
+    else
+    {
+        AFHTTPResponseSerializer * serializer = [AFJSONResponseSerializer serializer];
+        NSMutableSet * types = [[serializer acceptableContentTypes] mutableCopy];
+        [types addObject:@"text/plain"];
+        [serializer setAcceptableContentTypes:types];
+        
+        operation.responseSerializer = serializer;
     }
     
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
