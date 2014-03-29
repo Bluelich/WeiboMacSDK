@@ -13,7 +13,7 @@
 
 @interface WeiboModel : NSObject <NSCoding>
 
-@property (nonatomic, weak) WeiboAccount * account;
+@property (nonatomic, weak, readonly) WeiboAccount * account;
 
 + (NSMutableArray *)ignoredCodingProperties;
 

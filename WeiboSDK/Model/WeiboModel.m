@@ -19,6 +19,12 @@ static NSMutableDictionary *keyNames = nil;
 
 @end
 
+@interface WeiboModel ()
+
+@property (nonatomic, weak) WeiboAccount * account;
+
+@end
+
 @implementation WeiboModel
 
 + (void)initialize
