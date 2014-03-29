@@ -37,6 +37,7 @@
         self.serializer.timeoutInterval = 60;
         self.serializer.HTTPShouldHandleCookies = NO;
         self.method = @"GET";
+        self.parsesJSON = YES;
     }
     return self;
 }
@@ -74,6 +75,11 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self requestFinished:operation];
     }];
+    
+    if (!self.parsesJSON)
+    {
+        operation.responseSerializer = [AFHTTPResponseSerializer serializer];
+    }
     
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     

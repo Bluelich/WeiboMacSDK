@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString * method;
 @property (nonatomic, strong) NSDictionary * parameters;
 @property (nonatomic, strong) NSDictionary * multiparts;
+@property (nonatomic, assign) BOOL parsesJSON; // default to YES
 
 - (void)startRequest;
 
