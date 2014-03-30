@@ -11,6 +11,7 @@
 #import "WeiboStatus.h"
 #import "WeiboList.h"
 #import "WeiboLikeStatus.h"
+#import "WeiboUploadImage.h"
 #import "NSArray+WeiboAdditions.h"
 
 @implementation WeiboAPI (StatusMethods)
@@ -295,7 +296,8 @@
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeNewTweet];
     WeiboCallback * callback = WeiboCallbackMake(self, @selector(updated:info:), type);
     NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
-    if (latValue > 0 || longValue > 0) {
+    if (latValue || longValue)
+    {
         [params setObject:@(latValue) forKey:@"lat"];
         [params setObject:@(longValue) forKey:@"long"];
     }
@@ -308,6 +310,28 @@
     }
     [self POST:url parameters:params multipartFormData:parts callback:callback];
 }
+
+- (void)update:(NSString *)text imageIDs:(NSArray *)picIDs latitude:(double)latValue longitude:(double)longValue
+{
+    if (!text) return;
+    if (!picIDs.count)
+    {
+        [self update:text imageData:nil latitude:latValue longitude:longValue];
+        return;
+    }
+    
+    WeiboCallback * callback = WeiboCallbackMake(self, @selector(updated:info:), @(WeiboCompositionTypeNewTweet));
+    NSMutableDictionary * params = [NSMutableDictionary dictionaryWithObject:text forKey:@"status"];
+    if (latValue || longValue)
+    {
+        [params setObject:@(latValue) forKey:@"lat"];
+        [params setObject:@(longValue) forKey:@"long"];
+    }
+    [params setObject:[picIDs componentsJoinedByString:@","] forKey:@"pic_id"];
+    
+    [self POST:@"statuses/upload_url_text.json" parameters:params callback:callback];
+}
+
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply
 {
     [self repost:text repostingID:reply shouldComment:NO];
@@ -369,7 +393,24 @@
     }
     else
     {
-        [self update:composition.text imageData:composition.imageData latitude:composition.latitude longitude:composition.longitude];
+        if (composition.uploadImages.count > 1)
+        {
+            NSMutableArray * picIDs = [NSMutableArray array];
+            
+            for (WeiboUploadImage * uploadImage in composition.uploadImages)
+            {
+                if (uploadImage.pictureID.length)
+                {
+                    [picIDs addObject:uploadImage.pictureID];
+                }
+            }
+            
+            [self update:composition.text imageIDs:picIDs latitude:composition.latitude longitude:composition.longitude];
+        }
+        else
+        {
+            [self update:composition.text imageData:[composition.uploadImages.firstObject imageData] latitude:composition.latitude longitude:composition.longitude];
+        }
     }
 }
 

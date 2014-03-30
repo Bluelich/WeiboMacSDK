@@ -61,6 +61,7 @@
 - (WeiboCallback *)statusResponseCallback;
 - (void)updateWithComposition:(id<WeiboComposition>)composition;
 - (void)update:(NSString *)text imageData:(NSData *)image latitude:(double)latValue longitude:(double)longValue;
+- (void)update:(NSString *)text imageIDs:(NSArray *)picIDs latitude:(double)latValue longitude:(double)longValue;
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;
 - (void)destoryStatus:(WeiboStatusID)sid;
 - (void)destoryComment:(WeiboStatusID)sid;
