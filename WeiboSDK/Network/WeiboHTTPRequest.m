@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSURL * url;
 @property (nonatomic, strong) AFHTTPRequestSerializer * requestSerializer;
 
+@property (nonatomic, weak) AFHTTPRequestOperation * runningOperation;
+
 @end
 
 @implementation WeiboHTTPRequest
@@ -94,9 +96,19 @@
         operation.responseSerializer = serializer;
     }
     
+    self.runningOperation = operation;
+    
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
+}
+
+- (void)cancelRequest
+{
+    if (self.runningOperation)
+    {
+        [self.runningOperation cancel];
+    }
 }
 
 
@@ -115,6 +127,8 @@
 
 - (void)requestFinished:(AFHTTPRequestOperation *)operation
 {
+    self.runningOperation = nil;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
     
     if (operation.response.statusCode == 200)

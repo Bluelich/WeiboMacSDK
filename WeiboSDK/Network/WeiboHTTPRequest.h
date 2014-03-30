@@ -22,5 +22,6 @@
 @property (nonatomic, assign) BOOL parsesJSON; // default to YES
 
 - (void)startRequest;
+- (void)cancelRequest;
 
 @end

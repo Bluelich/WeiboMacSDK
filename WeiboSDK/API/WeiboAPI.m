@@ -11,6 +11,7 @@
 #import "Weibo.h"
 
 @implementation WeiboAPI
+@synthesize runningRequest;
 
 #pragma mark Object Lifecycle
 + (id)requestWithAPIRoot:(NSString *)root callback:(WeiboCallback *)callback{

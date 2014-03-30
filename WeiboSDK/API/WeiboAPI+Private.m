@@ -27,6 +27,8 @@ multipartFormData:(NSDictionary *)parts
     [request setMultiparts:parts];
     [request setOAuth2Token:self.oauth2Token];
     [request startRequest];
+    
+    runningRequest = request;
 }
 
 - (void)POST:(NSString *)partialUrl parameters:(NSDictionary *)parameters multipartFormData:(NSDictionary *)parts callback:(WeiboCallback *)actualCallback{
@@ -50,7 +52,9 @@ multipartFormData:(NSDictionary *)parts
 }
 
 - (void)_responseReceived:(id)responseValue callback:(WeiboCallback *)callback
-{    
+{
+    runningRequest = nil;
+    
     if ([responseValue isKindOfClass:[WeiboRequestError class]])
     {
         [self handleRequestError:responseValue];

@@ -19,7 +19,10 @@
     NSString * apiRoot;
     WeiboAccount * authenticateWithAccount;
     WeiboCallback * responseCallback;
+    WeiboHTTPRequest * runningRequest;
 }
+
+@property (nonatomic, weak, readonly) WeiboHTTPRequest * runningRequest;
 
 + (id)requestWithAPIRoot:(NSString *)root callback:(WeiboCallback *)callback;
 + (id)authenticatedRequestWithAPIRoot:(NSString *)root 
