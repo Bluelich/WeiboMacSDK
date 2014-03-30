@@ -276,7 +276,7 @@ static LocalAutocompleteDB * sharedDB = nil;
         return nil;
     }
     
-    __weak NSMutableArray * resultArray = [NSMutableArray array];
+    NSMutableArray * resultArray = [NSMutableArray array];
     
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         
