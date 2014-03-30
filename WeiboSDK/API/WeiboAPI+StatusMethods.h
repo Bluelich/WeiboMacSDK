@@ -66,4 +66,6 @@
 - (void)destoryComment:(WeiboStatusID)sid;
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid;
 
+- (void)uploadImageWithData:(NSData *)imageData;
+
 @end

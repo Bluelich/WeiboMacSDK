@@ -373,4 +373,11 @@
     }
 }
 
+- (void)uploadImageWithData:(NSData *)imageData
+{
+    NSDictionary * params = [NSDictionary dictionaryWithObject:imageData forKey:@"pic"];
+    
+    [self POST:@"statuses/upload_pic.json" parameters:nil multipartFormData:params callback:responseCallback];
+}
+
 @end
