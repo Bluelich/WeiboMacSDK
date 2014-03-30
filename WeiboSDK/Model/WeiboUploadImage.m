@@ -20,7 +20,6 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 @property (nonatomic, strong) WeiboAccount * account;
 
-@property (nonatomic, assign) BOOL uploading;
 @property (nonatomic, assign) CGFloat uploadProgress;
 @property (nonatomic, strong) WeiboRequestError * uploadError;
 @property (nonatomic, weak) WeiboHTTPRequest * uploadRequest;
@@ -48,6 +47,16 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 - (BOOL)canUploadSeparately
 {
     return self.account.superpowerAuthorized;
+}
+
+- (BOOL)uploaded
+{
+    return self.pictureID.length > 0;
+}
+
+- (BOOL)uploading
+{
+    return self.uploadRequest != nil;
 }
 
 #pragma mark - Upload
