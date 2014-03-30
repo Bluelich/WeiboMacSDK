@@ -44,4 +44,5 @@ typedef NSInteger WeiboCompositionType;
 - (BOOL)canPostImage;
 - (BOOL)requiresUserInput;
 
+
 @end
