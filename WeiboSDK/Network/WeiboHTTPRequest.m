@@ -107,6 +107,7 @@
         AFHTTPResponseSerializer * serializer = [AFJSONResponseSerializer serializer];
         NSMutableSet * types = [[serializer acceptableContentTypes] mutableCopy];
         [types addObject:@"text/plain"];
+        [types addObject:@"text/html"];
         [serializer setAcceptableContentTypes:types];
         
         operation.responseSerializer = serializer;
