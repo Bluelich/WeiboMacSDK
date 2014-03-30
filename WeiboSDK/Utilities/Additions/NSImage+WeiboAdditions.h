@@ -14,4 +14,6 @@
 @property (nonatomic, strong, readonly) NSData * weibo_GIFRepresentation;
 @property (nonatomic, strong, readonly) NSData * weibo_PNGRepresentation;
 
+- (NSData *)weibo_JPEGRepersentationWithCompressFactor:(CGFloat)factor;
+
 @end

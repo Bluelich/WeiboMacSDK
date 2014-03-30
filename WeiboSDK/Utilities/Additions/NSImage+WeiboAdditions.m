@@ -127,4 +127,18 @@
     return nil;
 }
 
+- (NSData *)weibo_JPEGRepersentationWithCompressFactor:(CGFloat)factor
+{
+    NSArray * reps = [self representations];
+    for (NSImageRep * rep in reps)
+    {
+        if ([rep isKindOfClass:[NSBitmapImageRep class]] == YES)
+        {
+            NSBitmapImageRep * bitmapRep = (NSBitmapImageRep *)rep;
+            return [bitmapRep representationUsingType:NSPNGFileType properties:@{NSImageCompressionFactor: @(factor)}];
+        }
+    }
+    return nil;
+}
+
 @end
