@@ -82,6 +82,22 @@
         [self requestFinished:operation];
     }];
     
+    if (self.uploadProgressBlock)
+    {
+        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+            CGFloat progress = (CGFloat)totalBytesWritten / totalBytesExpectedToWrite;
+            self.uploadProgressBlock(progress);
+        }];
+    }
+    
+    if (self.downloadProgressBlock)
+    {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, NSInteger totalBytesRead, NSInteger totalBytesExpectedToRead) {
+            CGFloat progress = (CGFloat)totalBytesRead / totalBytesExpectedToRead;
+            self.downloadProgressBlock(progress);
+        }];
+    }
+    
     if (!self.parsesJSON)
     {
         operation.responseSerializer = [AFHTTPResponseSerializer serializer];

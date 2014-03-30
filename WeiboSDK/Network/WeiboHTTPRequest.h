@@ -21,6 +21,9 @@
 @property (nonatomic, strong) NSDictionary * multiparts;
 @property (nonatomic, assign) BOOL parsesJSON; // default to YES
 
+@property (nonatomic, copy) void (^uploadProgressBlock)(CGFloat progress);
+@property (nonatomic, copy) void (^downloadProgressBlock)(CGFloat progress);
+
 - (void)startRequest;
 - (void)cancelRequest;
 
