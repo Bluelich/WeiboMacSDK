@@ -32,8 +32,9 @@ typedef NSInteger WeiboCompositionType;
 @property (nonatomic, assign) CLLocationDegrees longitude;
 
 @property (nonatomic, assign, readonly) NSInteger characterLimit;
+@property (nonatomic, assign, readonly) NSInteger uploadImageCountLimit;
 
-@property (nonatomic, retain) NSData * imageData;
+@property (nonatomic, retain) NSArray * uploadImages; // objects of WeiboUploadImage class
 
 - (void)didSend:(id)response;
 - (void)errorSending;
