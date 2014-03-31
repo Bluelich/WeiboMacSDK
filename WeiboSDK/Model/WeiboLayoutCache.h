@@ -21,6 +21,7 @@
 @property (nonatomic, assign) CGFloat textHeightOfQuotedStatus;
 @property (nonatomic, assign) CGFloat height;
 
+@property (nonatomic, assign) CGRect avatarFrame;
 @property (nonatomic, assign) CGRect textFrame;
 @property (nonatomic, assign) CGRect quotedTextFrame;
 @property (nonatomic, assign) CGRect quoteLineFrame;
