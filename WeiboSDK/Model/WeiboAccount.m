@@ -703,11 +703,13 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         if (data)
         {
             NSImage * image = [[NSImage alloc] initWithData:data];
-            if (image) {
+            if (image)
+            {
                 if (image.size.width > 100 || image.size.height > 100)
                 {
                     image = [[self class] scaleImage:image toSize:NSMakeSize(100, 100)];
                 }
+                image.size = NSMakeSize(50, 50);
                 self.profileImage = image;
                 NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
                 [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
