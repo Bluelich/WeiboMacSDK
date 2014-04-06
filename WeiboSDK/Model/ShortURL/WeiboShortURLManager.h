@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboExpandedURL.h"
 
 @interface WeiboShortURLManager : NSObject
 
 + (instancetype)defaultManager;
 
 - (void)enqueueShortURL:(NSString *)shortURL;
+
+- (WeiboExpandedURL *)expandedURLWithShortURL:(NSString *)shortURL;
 
 @end
