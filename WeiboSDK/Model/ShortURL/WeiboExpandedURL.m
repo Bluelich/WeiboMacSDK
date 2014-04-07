@@ -72,7 +72,7 @@
     MAP(@"iqiyi.com", WeiboExpandedURLSiteQiyi);
     MAP(@"letv.com", WeiboExpandedURLSiteLeTV);
     MAP(@"ku6.com", WeiboExpandedURLSiteKu6);
-    MAP(@"ifeng.com", WeiboExpandedURLTypeIFeng);
+    MAP(@"ifeng.com", WeiboExpandedURLSiteIFeng);
     MAP(@"sina.com", WeiboExpandedURLSiteSina);
     MAP(@"sina.com.cn", WeiboExpandedURLSiteSina);
     MAP(@"weibo.com", WeiboExpandedURLSiteWeibo);

@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, WeiboExpandedURLSite)
     WeiboExpandedURLSiteQiyi,
     WeiboExpandedURLSiteLeTV,
     WeiboExpandedURLSiteKu6,
-    WeiboExpandedURLTypeIFeng,
+    WeiboExpandedURLSiteIFeng,
     WeiboExpandedURLSiteSina,
     WeiboExpandedURLSiteWeibo,
     WeiboExpandedURLSiteWeiboX,
