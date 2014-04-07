@@ -45,6 +45,8 @@ typedef NS_ENUM(NSInteger, WeiboExpandedURLSite)
     WeiboExpandedURLSiteApple,
     WeiboExpandedURLSiteGoogle,
     WeiboExpandedURLSiteYoutube,
+    WeiboExpandedURLSiteTechWeb,
+    WeiboExpandedURLSiteBaidu,
 };
 
 @interface WeiboExpandedURL : WeiboModel

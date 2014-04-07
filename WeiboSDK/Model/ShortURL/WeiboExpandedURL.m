@@ -90,6 +90,8 @@
     MAP(@"apple.com", WeiboExpandedURLSiteApple);
     MAP(@"google.com", WeiboExpandedURLSiteGoogle);
     MAP(@"youtube.com", WeiboExpandedURLSiteYoutube);
+    MAP(@"techweb.com.cn", WeiboExpandedURLSiteTechWeb);
+    MAP(@"baidu.com", WeiboExpandedURLSiteBaidu);
     
 #undef MAP
     
