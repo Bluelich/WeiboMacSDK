@@ -8,7 +8,7 @@
 
 #import "WeiboShortURLManager.h"
 #import "WeiboExpandedURL.h"
-#import "WeiboAPI+Private.h"
+#import "WeiboAPI+ShortURL.h"
 #import "Weibo.h"
 
 NSString * const WeiboShortURLManagerBatchRequestDidSuccessNotification = @"WeiboShortURLManagerBatchRequestDidSuccessNotification";
@@ -84,7 +84,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
     // random account here, prevents open API access limit
     WeiboAccount * account = [accounts objectAtIndex:arc4random() % accounts.count];
     
-    [account authenticatedRequestWithCompletion:^(id responseObject, id info) {
+    [[account authenticatedRequestWithCompletion:^(id responseObject, id info) {
         [self.requestingURLs minusSet:urls];
         
         if (![responseObject isKindOfClass:[WeiboRequestError class]])
@@ -98,7 +98,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboShortURLManagerBatchRequestDidSuccessNotification object:self userInfo:@{WeiboShortURLManagerNotificationShortURLSetKey : urls}];
         }
-    }];
+    }] expandShortURLs:urls];
 }
 
 - (void)batchRequest
