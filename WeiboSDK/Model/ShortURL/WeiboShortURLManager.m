@@ -11,6 +11,9 @@
 #import "WeiboAPI+Private.h"
 #import "Weibo.h"
 
+NSString * const WeiboShortURLManagerBatchRequestDidSuccessNotification = @"WeiboShortURLManagerBatchRequestDidSuccessNotification";
+NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortURLManagerNotificationShortURLSetKey";
+
 @interface WeiboShortURLManager ()
 {
     struct {
@@ -50,6 +53,12 @@
 
 #pragma mark - 
 
+- (WeiboExpandedURL *)expandedURLWithShortURL:(NSString *)shortURL
+{
+    if (!shortURL) return nil;
+    return [self.shortURLs objectForKey:shortURL];
+}
+
 #pragma mark - Request
 
 - (void)setNeedsRequest
@@ -66,6 +75,8 @@
 
 - (void)requestForURLSet:(NSSet *)urls
 {
+    if (!urls.count) return;
+    
     NSArray * accounts = [[Weibo sharedWeibo] accounts];
     
     if (!accounts.count) return;
@@ -84,6 +95,8 @@
                 
                 [_shortURLs setObject:shortURL forKey:shortURL.shortURL];
             }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:WeiboShortURLManagerBatchRequestDidSuccessNotification object:self userInfo:@{WeiboShortURLManagerNotificationShortURLSetKey : urls}];
         }
     }];
 }

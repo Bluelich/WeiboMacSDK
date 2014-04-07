@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "WeiboExpandedURL.h"
 
+extern NSString * const WeiboShortURLManagerBatchRequestDidSuccessNotification;
+extern NSString * const WeiboShortURLManagerNotificationShortURLSetKey;
+
 @interface WeiboShortURLManager : NSObject
 
 + (instancetype)defaultManager;
