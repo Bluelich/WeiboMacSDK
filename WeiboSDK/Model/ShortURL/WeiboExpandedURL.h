@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, WeiboExpandedURLSite)
     WeiboExpandedURLSiteYoutube,
     WeiboExpandedURLSiteTechWeb,
     WeiboExpandedURLSiteBaidu,
+    WeiboExpandedURLSiteXiaomi,
 };
 
 @interface WeiboExpandedURL : WeiboModel
@@ -54,6 +55,7 @@ typedef NS_ENUM(NSInteger, WeiboExpandedURLSite)
 @property (nonatomic, strong, readonly) NSString * shortURL;
 @property (nonatomic, strong, readonly) NSString * originalURL;
 @property (nonatomic, assign, readonly) WeiboExpandedURLType type;
+@property (nonatomic, assign, readonly) WeiboExpandedURLType derivedType;
 @property (nonatomic, assign, readonly) WeiboExpandedURLSite site;
 @property (nonatomic, assign, readonly) BOOL result;
 

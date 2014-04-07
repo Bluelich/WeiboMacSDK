@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString * shortURL;
 @property (nonatomic, strong) NSString * originalURL;
 @property (nonatomic, assign) WeiboExpandedURLType type;
+@property (nonatomic, assign) WeiboExpandedURLType derivedType;
 @property (nonatomic, assign) WeiboExpandedURLSite site;
 @property (nonatomic, assign) BOOL result;
 
@@ -40,6 +41,7 @@
         self.type = [dict intForKey:@"type" defaultValue:0];
         self.result = [dict boolForKey:@"result" defaultValue:YES];
         self.site = [self siteForURL:self.originalURL];
+        self.derivedType = [self _derivedType];
         
         return YES;
     }
@@ -92,10 +94,40 @@
     MAP(@"youtube.com", WeiboExpandedURLSiteYoutube);
     MAP(@"techweb.com.cn", WeiboExpandedURLSiteTechWeb);
     MAP(@"baidu.com", WeiboExpandedURLSiteBaidu);
+    MAP(@"xiaomi.com", WeiboExpandedURLSiteXiaomi);
     
 #undef MAP
     
     return WeiboExpandedURLSiteUnknow;
+}
+
+- (WeiboExpandedURLType)_derivedType
+{
+    WeiboExpandedURLType type = _type;
+    
+    if (_site == WeiboExpandedURLSiteYouku)
+    {
+        if ([_originalURL rangeOfString:@"youku.com/v_show/id_"].location != NSNotFound)
+        {
+            type = WeiboExpandedURLTypeVideo;
+        }
+    }
+    else if (_site == WeiboExpandedURLSite56)
+    {
+        if ([_originalURL rangeOfString:@"/v_"].location != NSNotFound)
+        {
+            type = WeiboExpandedURLTypeVideo;
+        }
+    }
+    else if (_site == WeiboExpandedURLSiteLeTV)
+    {
+        if ([_originalURL rangeOfString:@"letv.com/ptv/vplay"].location != NSNotFound)
+        {
+            type = WeiboExpandedURLTypeVideo;
+        }
+    }
+    
+    return type;
 }
 
 @end
