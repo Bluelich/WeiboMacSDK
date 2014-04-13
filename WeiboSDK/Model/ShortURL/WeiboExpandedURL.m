@@ -95,6 +95,8 @@
     MAP(@"techweb.com.cn", WeiboExpandedURLSiteTechWeb);
     MAP(@"baidu.com", WeiboExpandedURLSiteBaidu);
     MAP(@"xiaomi.com", WeiboExpandedURLSiteXiaomi);
+    MAP(@"yixia.com", WeiboExpandedURLSiteYixia);
+    MAP(@"yinyuetai.com", WeiboExpandedURLSiteYinyuetai);
     
 #undef MAP
     
@@ -105,26 +107,50 @@
 {
     WeiboExpandedURLType type = _type;
     
-    if (_site == WeiboExpandedURLSiteYouku)
+    switch (_site)
     {
-        if ([_originalURL rangeOfString:@"youku.com/v_show/id_"].location != NSNotFound)
+        case WeiboExpandedURLSiteYouku:
         {
-            type = WeiboExpandedURLTypeVideo;
+            if ([_originalURL rangeOfString:@"youku.com/v_show/id_"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
         }
-    }
-    else if (_site == WeiboExpandedURLSite56)
-    {
-        if ([_originalURL rangeOfString:@"/v_"].location != NSNotFound)
+        case WeiboExpandedURLSite56:
         {
-            type = WeiboExpandedURLTypeVideo;
+            if ([_originalURL rangeOfString:@"/v_"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
         }
-    }
-    else if (_site == WeiboExpandedURLSiteLeTV)
-    {
-        if ([_originalURL rangeOfString:@"letv.com/ptv/vplay"].location != NSNotFound)
+        case WeiboExpandedURLSiteLeTV:
         {
-            type = WeiboExpandedURLTypeVideo;
+            if ([_originalURL rangeOfString:@"letv.com/ptv/vplay"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
         }
+        case WeiboExpandedURLSiteYixia:
+        {
+            if ([_originalURL rangeOfString:@"yixia.com/show/"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
+        }
+        case WeiboExpandedURLSiteYinyuetai:
+        {
+            if ([_originalURL rangeOfString:@"v.yinyuetai.com/"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
+        }
+        default:
+            break;
     }
     
     return type;
