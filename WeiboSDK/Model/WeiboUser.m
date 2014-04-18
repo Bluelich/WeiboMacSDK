@@ -127,6 +127,7 @@
         self.followMe = [dic boolForKey:@"follow_me" defaultValue:NO];
         //self.verified = [dic boolForKey:@"verified" defaultValue:NO];
         self.verifiedType = [dic intForKey:@"verified_type" defaultValue:-1];
+        self.verifiedReason = [dic stringForKey:@"verified_reason" defaultValue:nil];
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];
         if (statusDic) {

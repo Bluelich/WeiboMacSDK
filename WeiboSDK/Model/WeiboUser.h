@@ -37,31 +37,32 @@
     NSTimeInterval cacheTime;
 }
 
-@property (assign, readwrite) WeiboUserID userID;
-@property (strong, readwrite) NSString * screenName;
-@property (strong, readwrite) NSString * name;
-@property (strong, readwrite) NSString * remark;
-@property (strong, readwrite) NSString * province;
-@property (strong, readwrite) NSString * city;
-@property (strong, readwrite) NSString * location;
-@property (strong, readwrite) NSString * description;
-@property (strong, readwrite) NSString * url;
-@property (strong, readwrite) NSString * profileImageUrl;
-@property (strong, readwrite) NSString * profileLargeImageUrl;
-@property (strong, readwrite) NSString * domain;
-@property (strong, readwrite) WeiboStatus * status;
-@property (assign, readwrite) WeiboGender gender;
-@property (assign, readwrite) int followersCount;
-@property (assign, readwrite) int friendsCount;
-@property (assign, readwrite) int statusesCount;
-@property (assign, readwrite) int favouritesCount;
-@property (assign, readwrite) time_t createAt;
-@property (assign, readwrite) BOOL following;
-@property (assign, readwrite) BOOL followMe;
-@property (assign, readwrite) WeiboUserVerifiedType verifiedType;
+@property (nonatomic, assign, readwrite) WeiboUserID userID;
+@property (nonatomic, strong, readwrite) NSString * screenName;
+@property (nonatomic, strong, readwrite) NSString * name;
+@property (nonatomic, strong, readwrite) NSString * remark;
+@property (nonatomic, strong, readwrite) NSString * province;
+@property (nonatomic, strong, readwrite) NSString * city;
+@property (nonatomic, strong, readwrite) NSString * location;
+@property (nonatomic, strong, readwrite) NSString * description;
+@property (nonatomic, strong, readwrite) NSString * url;
+@property (nonatomic, strong, readwrite) NSString * profileImageUrl;
+@property (nonatomic, strong, readwrite) NSString * profileLargeImageUrl;
+@property (nonatomic, strong, readwrite) NSString * domain;
+@property (nonatomic, strong, readwrite) WeiboStatus * status;
+@property (nonatomic, assign, readwrite) WeiboGender gender;
+@property (nonatomic, assign, readwrite) int followersCount;
+@property (nonatomic, assign, readwrite) int friendsCount;
+@property (nonatomic, assign, readwrite) int statusesCount;
+@property (nonatomic, assign, readwrite) int favouritesCount;
+@property (nonatomic, assign, readwrite) time_t createAt;
+@property (nonatomic, assign, readwrite) BOOL following;
+@property (nonatomic, assign, readwrite) BOOL followMe;
+@property (nonatomic, assign, readwrite) WeiboUserVerifiedType verifiedType;
+@property (nonatomic, strong, readwrite) NSString * verifiedReason;
 
-@property (assign, readonly) BOOL verified;
-@property (assign, readonly) BOOL isDaren;
+@property (nonatomic, assign, readonly) BOOL verified;
+@property (nonatomic, assign, readonly) BOOL isDaren;
 
 @property (assign, nonatomic) NSTimeInterval cacheTime;
 
