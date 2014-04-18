@@ -15,6 +15,11 @@
 		C60B6FFD18CF50E4004358E5 /* WeiboModelPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = C60B6FFC18CF50E4004358E5 /* WeiboModelPersistence.h */; };
 		C60B700018CF5ADE004358E5 /* WeiboModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C60B6FFE18CF5ADE004358E5 /* WeiboModel.h */; };
 		C60B700118CF5ADE004358E5 /* WeiboModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */; };
+		C60BA6B819016F6900C37D6D /* WeiboSimpleCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = C60BA6B719016F6900C37D6D /* WeiboSimpleCoding.h */; };
+		C60BA6BF19016FDB00C37D6D /* WeiboSimpleArchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = C60BA6BD19016FDB00C37D6D /* WeiboSimpleArchiver.h */; };
+		C60BA6C019016FDB00C37D6D /* WeiboSimpleArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = C60BA6BE19016FDB00C37D6D /* WeiboSimpleArchiver.m */; };
+		C60BA6C31901705700C37D6D /* WeiboSimpleUnarchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = C60BA6C11901705700C37D6D /* WeiboSimpleUnarchiver.h */; };
+		C60BA6C41901705700C37D6D /* WeiboSimpleUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = C60BA6C21901705700C37D6D /* WeiboSimpleUnarchiver.m */; };
 		C6188FD518CC95D0004ED7D1 /* WeiboLikeStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = C6188FD318CC95D0004ED7D1 /* WeiboLikeStatus.h */; };
 		C6188FD618CC95D0004ED7D1 /* WeiboLikeStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6188FD418CC95D0004ED7D1 /* WeiboLikeStatus.m */; };
 		C618900918CE0988004ED7D1 /* WeiboLikesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C618900718CE0988004ED7D1 /* WeiboLikesStream.h */; };
@@ -213,6 +218,11 @@
 		C60B6FFC18CF50E4004358E5 /* WeiboModelPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboModelPersistence.h; sourceTree = "<group>"; };
 		C60B6FFE18CF5ADE004358E5 /* WeiboModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboModel.h; sourceTree = "<group>"; };
 		C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboModel.m; sourceTree = "<group>"; };
+		C60BA6B719016F6900C37D6D /* WeiboSimpleCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSimpleCoding.h; sourceTree = "<group>"; };
+		C60BA6BD19016FDB00C37D6D /* WeiboSimpleArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSimpleArchiver.h; sourceTree = "<group>"; };
+		C60BA6BE19016FDB00C37D6D /* WeiboSimpleArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSimpleArchiver.m; sourceTree = "<group>"; };
+		C60BA6C11901705700C37D6D /* WeiboSimpleUnarchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSimpleUnarchiver.h; sourceTree = "<group>"; };
+		C60BA6C21901705700C37D6D /* WeiboSimpleUnarchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSimpleUnarchiver.m; sourceTree = "<group>"; };
 		C6146ED118D4342C00C672F1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autocomplete_schema.sql; sourceTree = "<group>"; };
 		C6146F3E18D46B6D00C672F1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -683,6 +693,11 @@
 				C630CC6C152ABDED00A5AF7A /* WeiboFileManager.m */,
 				C6A4718D18AE558800B3CB48 /* WeiboCryptographer.h */,
 				C6A4718E18AE558800B3CB48 /* WeiboCryptographer.m */,
+				C60BA6B719016F6900C37D6D /* WeiboSimpleCoding.h */,
+				C60BA6BD19016FDB00C37D6D /* WeiboSimpleArchiver.h */,
+				C60BA6BE19016FDB00C37D6D /* WeiboSimpleArchiver.m */,
+				C60BA6C11901705700C37D6D /* WeiboSimpleUnarchiver.h */,
+				C60BA6C21901705700C37D6D /* WeiboSimpleUnarchiver.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -804,6 +819,7 @@
 				C6F3E06B18D42F420055131A /* WeiboAccount+Filters.h in Headers */,
 				C6E0BFBF180AF6AD00168C6B /* WeiboUserNotificationCenter.h in Headers */,
 				C6F3DFD618D42B420055131A /* LocalAutocompleteDB.h in Headers */,
+				C60BA6BF19016FDB00C37D6D /* WeiboSimpleArchiver.h in Headers */,
 				C60B6FFD18CF50E4004358E5 /* WeiboModelPersistence.h in Headers */,
 				C6F3E01318D42DA80055131A /* WeiboUserTimelineStream.h in Headers */,
 				C6F3DFEB18D42C650055131A /* WeiboStatusFilter.h in Headers */,
@@ -816,9 +832,11 @@
 				C6ED9D1717D630D3008AA2A3 /* WeiboDirectMessagesConversationManager.h in Headers */,
 				C6F3DFF118D42C650055131A /* WeiboStatusUserFilter.h in Headers */,
 				C6F3DFD818D42B420055131A /* WeiboAutocompleteResultItem.h in Headers */,
+				C60BA6B819016F6900C37D6D /* WeiboSimpleCoding.h in Headers */,
 				C6F3E08B18D42F700055131A /* WeiboStatus.h in Headers */,
 				C62B76E5186B34FF00152B31 /* WeiboSavedSearch.h in Headers */,
 				C6F3E00318D42D2A0055131A /* WeiboUserFollowersList.h in Headers */,
+				C60BA6C31901705700C37D6D /* WeiboSimpleUnarchiver.h in Headers */,
 				C6F3DFED18D42C650055131A /* WeiboStatusKeywordFilter.h in Headers */,
 				C6F3E05D18D42EBE0055131A /* NSDictionary+WeiboAdditions.h in Headers */,
 				C643871717D7769F0097FB72 /* WeiboDirectMessageStream.h in Headers */,
@@ -992,6 +1010,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6D3101E180286A3008EAFA2 /* NSObject+AssociatedObject.m in Sources */,
+				C60BA6C41901705700C37D6D /* WeiboSimpleUnarchiver.m in Sources */,
 				C630CC6F152ABFDA00A5AF7A /* WeiboFileManager.m in Sources */,
 				C6AA998217E5E06A005F90E4 /* WeiboConversationDirectMessageStream.m in Sources */,
 				C6F3DFD718D42B420055131A /* LocalAutocompleteDB.m in Sources */,
@@ -1038,6 +1057,7 @@
 				C6F3E03C18D42DBD0055131A /* WeiboListStream.m in Sources */,
 				C6F3E04218D42DBD0055131A /* WeiboRepostsStream.m in Sources */,
 				C665B67218AFBD6C00DBD3CB /* WeiboShortURLManager.m in Sources */,
+				C60BA6C019016FDB00C37D6D /* WeiboSimpleArchiver.m in Sources */,
 				C6084B4C17D2056500A667F2 /* WeiboSuperpowerAPI.m in Sources */,
 				C6F3E04418D42DBD0055131A /* WeiboStream.m in Sources */,
 				C6F3E08A18D42F700055131A /* WeiboLayoutCache.m in Sources */,
