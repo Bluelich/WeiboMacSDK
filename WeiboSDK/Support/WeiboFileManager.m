@@ -41,6 +41,21 @@
     NSString * path = [[self documentsApplicationDirectory] stringByAppendingPathComponent:name];
     return [self createDirectoryIfNonExistent:path];
 }
+
++ (NSString *)applicationSupportDirectory
+{
+    return [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask,YES) objectAtIndex:0];
+}
++ (NSString *)applicationSupportApplicationDirectory
+{
+    return [[self applicationSupportDirectory] stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]];
+}
++ (NSString *)subApplicationSupportDirectory:(NSString *)name
+{
+    NSString * path = [[self applicationSupportApplicationDirectory] stringByAppendingPathComponent:name];
+    return [self createDirectoryIfNonExistent:path];
+}
+
 + (NSString *)databaseCacheDirectory{
     return [self subCacheDirectory:@"AutoCompleteDB"];
 }
