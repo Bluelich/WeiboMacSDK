@@ -136,32 +136,17 @@
 		self.originalPic = [dic stringForKey:@"original_pic" defaultValue:nil];
         
         NSArray * picURLs = [dic objectForKey:@"pic_urls"];
-        NSMutableArray * pics = [NSMutableArray array];
         
-        for (NSDictionary * dict in picURLs)
-        {
-            if ([dict isKindOfClass:[NSDictionary class]])
-            {
-                WeiboPicture * picture = [WeiboPicture pictureWithDictionary:dict];
-                
-                if (picture)
-                {
-                    [pics addObject:picture];
-                }
-            }
-        }
-        
-        self.pics = pics;
+        self.pics = [WeiboPicture objectsWithJSONObject:picURLs account:self.account];
         
         if (!self.pics.count && self.thumbnailPic.length)
         {
-            WeiboPicture * picture = [WeiboPicture new];
+            WeiboPicture * picture = [[WeiboPicture alloc] initWithAccount:self.account];
             picture.thumbnailImage = self.thumbnailPic;
             picture.middleImage = self.middlePic;
             picture.originalImage = self.originalPic;
             
             self.pics = @[picture];
-            
         }
         
 		NSDictionary* retweetedStatusDic = [dic objectForKey:@"retweeted_status"];

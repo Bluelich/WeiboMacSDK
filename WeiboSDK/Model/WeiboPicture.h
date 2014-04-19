@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WeiboModel.h"
 
-@interface WeiboPicture : NSObject
+@interface WeiboPicture : WeiboModel
 
 @property (nonatomic, strong) NSString * thumbnailImage;
 @property (nonatomic, strong) NSString * middleImage;
 @property (nonatomic, strong) NSString * originalImage;
-
-+ (id)pictureWithDictionary:(NSDictionary *)dict;
 
 @end

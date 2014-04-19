@@ -18,6 +18,7 @@
 
 + (NSMutableArray *)ignoredCodingProperties;
 
+- (instancetype)initWithAccount:(WeiboAccount *)account;
 - (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account;
 - (BOOL)updateWithJSONDictionary:(NSDictionary *)dict;
 

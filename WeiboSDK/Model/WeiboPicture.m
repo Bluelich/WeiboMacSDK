@@ -18,25 +18,19 @@
     _originalImage = nil;
 }
 
-+ (id)pictureWithDictionary:(NSDictionary *)dict
+- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
 {
-    if (![dict objectForKey:@"thumbnail_pic"])
-    {
-        return nil;
-    }
-    
-    return [[self alloc] initWithDictionary:dict];
-}
-
-- (id)initWithDictionary:(NSDictionary *)dict
-{
-    if (self = [super init])
+    if ([super updateWithJSONDictionary:dict])
     {
         self.thumbnailImage = [dict stringForKey:@"thumbnail_pic" defaultValue:nil];
         self.middleImage = [dict stringForKey:@"bmiddle_pic" defaultValue:nil];
         self.originalImage = [dict stringForKey:@"original_pic" defaultValue:nil];
+        
+        if (!self.thumbnailImage.length) return NO;
+        
+        return YES;
     }
-    return self;
+    return NO;
 }
 
 - (BOOL)isEqual:(id)object

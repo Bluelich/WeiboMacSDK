@@ -108,12 +108,23 @@ static NSMutableDictionary *keyNames = nil;
 
 #pragma mark - JSON
 
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account
+- (instancetype)initWithAccount:(WeiboAccount *)account
 {
     if (self = [self init])
     {
-        [self setAccount:account];
-        [self updateWithJSONDictionary:dict];
+        self.account = account;
+    }
+    return self;
+}
+
+- (instancetype)initWithJSONDictionary:(NSDictionary *)dict account:(WeiboAccount *)account
+{
+    if (self = [self initWithAccount:account])
+    {
+        if (![self updateWithJSONDictionary:dict])
+        {
+            return nil;
+        }
     }
     return self;
 }
@@ -181,7 +192,10 @@ static NSMutableDictionary *keyNames = nil;
     {
         WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:dict account:account];
         
-        [result addObject:model];
+        if (model)
+        {
+            [result addObject:model];
+        }
     }
     
     [self processObjects:result withMetadata:metaData];
@@ -198,7 +212,6 @@ static NSMutableDictionary *keyNames = nil;
 {
     
 }
-
 
 + (instancetype)objectWithJSONObject:(id)jsonObject account:(WeiboAccount *)account
 {
@@ -246,11 +259,14 @@ static NSMutableDictionary *keyNames = nil;
     
     WeiboModel * model = [[[self class] alloc] initWithJSONDictionary:JSONDict account:account];
     
-    [self processObject:model withMetadata:metaData];
-    
-    if (metaData)
+    if (model)
     {
-        [model weibo_setServerMetaData:metaData];
+        [self processObject:model withMetadata:metaData];
+        
+        if (metaData)
+        {
+            [model weibo_setServerMetaData:metaData];
+        }
     }
     
     return model;
