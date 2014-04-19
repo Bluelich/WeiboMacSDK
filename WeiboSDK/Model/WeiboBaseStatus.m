@@ -25,7 +25,6 @@
     if (self = [super init])
     {
         self.wasSeen = NO;
-        self.layoutCaches = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -49,8 +48,16 @@
 
 + (NSMutableArray *)ignoredCodingProperties
 {
-    return [@[@"displayPlainText",
-               @"layoutCaches"] mutableCopy];
+    return [@[@"layoutCaches"] mutableCopy];
+}
+
+- (NSMutableDictionary *)layoutCaches
+{
+    if (!_layoutCaches)
+    {
+        _layoutCaches = [NSMutableDictionary dictionary];
+    }
+    return _layoutCaches;
 }
 
 - (NSComparisonResult)compare:(WeiboBaseStatus *)otherStatus{
