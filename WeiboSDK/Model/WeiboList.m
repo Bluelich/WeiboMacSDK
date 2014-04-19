@@ -7,11 +7,14 @@
 //
 
 #import "WeiboList.h"
+#import "WeiboAccount.h"
+#import "Weibo.h"
 #import "NSDictionary+WeiboAdditions.h"
 
 @interface WeiboList ()
 
 @property (nonatomic, strong) WeiboListStream * stream;
+@property (nonatomic, assign) WeiboUserID decodedAccountID;
 
 @end
 
@@ -39,6 +42,30 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [self init])
+    {
+        self.listID = [aDecoder decodeObjectForKey:@"idstr"];
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.mode = [aDecoder decodeObjectForKey:@"mode"];
+        self.description = [aDecoder decodeObjectForKey:@"description"];
+        self.memberCount = [aDecoder decodeInt64ForKey:@"member_count"];
+        self.decodedAccountID = [aDecoder decodeInt64ForKey:@"account_id"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.listID forKey:@"idstr"];
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.mode forKey:@"mode"];
+    [aCoder encodeObject:self.description forKey:@"description"];
+    [aCoder encodeInt64:self.memberCount forKey:@"member_count"];
+    [aCoder encodeInt64:self.account.user.userID forKey:@"account_id"];
+}
+
 + (instancetype)listWithDictionary:(NSDictionary *)dict
 {
     return [[[self class] alloc] initWithDictionary:dict];
@@ -58,6 +85,16 @@
         _stream.account = self.account;
     }
     return _stream;
+}
+
+- (WeiboAccount *)account
+{
+    if (!_account && _decodedAccountID)
+    {
+        self.account = [[Weibo sharedWeibo] accountWithUserID:_decodedAccountID];
+        _decodedAccountID = 0;
+    }
+    return _account;
 }
 
 @end

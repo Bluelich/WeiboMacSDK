@@ -141,6 +141,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [encoder encodeBool:self.superpowerTokenExpired forKey:@"superpower-token-expired"];
     
     [encoder encodeObject:self.savedSearchKeywords forKey:@"saved-searches"];
+    [encoder encodeObject:_lists forKey:@"lists"];
     
     NSString * token = [[WeiboCryptographer sharedCryptographer] encryptText:self.oAuth2Token salt:[@(user.userID) stringValue]];
     [encoder encodeObject:token forKey:@"token"];
@@ -160,6 +161,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         self.superpowerTokenExpired = [decoder decodeBoolForKey:@"superpower-token-expired"];
         
         self.savedSearchKeywords = [[decoder decodeObjectForKey:@"saved-searches"] mutableCopy];
+        
+        _lists = [[decoder decodeObjectForKey:@"lists"] mutableCopy];
         
         id filterAdvertisements = [decoder decodeObjectForKey:@"filter-advertisements"];
         if (filterAdvertisements)

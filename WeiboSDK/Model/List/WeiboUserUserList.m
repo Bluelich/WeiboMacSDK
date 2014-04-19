@@ -9,6 +9,7 @@
 #import "WeiboUserUserList.h"
 #import "WeiboCallback.h"
 #import "WeiboRequestError.h"
+#import "Weibo.h"
 #import "NSDictionary+WeiboAdditions.h"
 
 NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
@@ -49,6 +50,28 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         self.users = [NSMutableArray array];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        WeiboUserID userID = [aDecoder decodeInt64ForKey:@"account_id"];
+        self.account = [[Weibo sharedWeibo] accountWithUserID:userID];
+        
+        if (!self.account) return nil;
+        
+        self.user = [aDecoder decodeObjectForKey:@"user"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeInt64:self.account.user.userID forKey:@"account_id"];
+    [aCoder encodeObject:self.user forKey:@"user"];
 }
 
 - (void)_loadOlder
@@ -210,29 +233,6 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
     }
     
     [self didAddUsers:toAdd prepend:loadingNew];
-}
-
-#pragma mark - WeiboModelPersistence
-
-+ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
-{
-    WeiboUserUserList * list = [[self class] new];
-    
-    list.user = [WeiboUser new];
-    list.user.userID = [info longLongValue];
-    list.account = account;
-    
-    return list;
-}
-
-- (id)persistenceInfo
-{
-    return @(self.user.userID);
-}
-
-- (WeiboUserID)persistenceAccountID
-{
-    return self.account.user.userID;
 }
 
 @end

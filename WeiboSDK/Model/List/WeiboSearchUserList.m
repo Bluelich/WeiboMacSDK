@@ -23,6 +23,23 @@
     _keyword = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        NSString * keyword = [aDecoder decodeObjectForKey:@"keyword"];
+        self.keyword = keyword;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+}
+
 - (void)_loadNewer
 {
     WeiboAPI * api = [self.account authenticatedSuperpowerRequest:[self usersListCallbackWithLoadingNewer:YES]];
@@ -44,26 +61,6 @@
     self.loadedPage = MAX(1, self.loadedPage);
     
     [super didAddUsers:users prepend:prepend];
-}
-
-#pragma mark - WeiboModelPersistence
-
-+ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
-{
-    WeiboSearchUserList * list = [[self class] new];
-    
-    list.user = [WeiboUser new];
-    list.user.userID = [info[@"userID"] longLongValue];
-    list.keyword = info[@"keyword"];
-    list.account = account;
-    
-    return list;
-}
-
-- (id)persistenceInfo
-{
-    NSString * keyword = self.keyword ? : @"";
-    return @{@"userID": @(self.user.userID), @"keyword": keyword};
 }
 
 @end

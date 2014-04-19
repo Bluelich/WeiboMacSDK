@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboRequestError.h"
 
-@interface WeiboUserList : NSObject
+@interface WeiboUserList : NSObject <NSCoding>
 
 @property (weak, nonatomic, readonly) NSArray *users;
 @property (nonatomic, strong) WeiboRequestError * loadNewerError;

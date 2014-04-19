@@ -17,6 +17,23 @@
     _keyword = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        NSString * keyword = [aDecoder decodeObjectForKey:@"keyword"];
+        self.keyword = keyword;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+}
+
 - (void)_loadNewer
 {
     WeiboAPI * api = [account authenticatedSuperpowerRequest:[self loadNewerResponseCallback]];
@@ -41,22 +58,6 @@
 - (id)autosaveName
 {
     return [[super autosaveName] stringByAppendingFormat:@"search/statuses/%@.scrollPosition",self.keyword];
-}
-
-#pragma mark - WeiboModelPersistence
-
-+ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
-{
-    WeiboSearchStatusesStream * stream = [super objectWithPersistenceInfo:info forAccount:account];
-    
-    stream.keyword = info;
-    
-    return stream;
-}
-
-- (id)persistenceInfo
-{
-    return self.keyword;
 }
 
 @end

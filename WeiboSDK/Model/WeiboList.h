@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboListStream.h"
 
-@interface WeiboList : NSObject
+@interface WeiboList : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString * listID;
 @property (nonatomic, strong) NSString * name;

@@ -19,6 +19,26 @@
     _sourceComment = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        WeiboComment * comment = [aDecoder decodeObjectForKey:@"comment"];
+        
+        if (![comment isKindOfClass:[WeiboComment class]]) return nil;
+        
+        self.sourceComment = comment;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+
+    [aCoder encodeObject:self.sourceComment forKey:@"comment"];
+}
+
 - (WeiboComment *)oldestReplyingComment
 {
     WeiboComment * sourceComment = [self.statuses lastObject];

@@ -8,7 +8,7 @@
 
 #import "WeiboUserUserList.h"
 
-@interface WeiboSearchUserList : WeiboUserUserList <WeiboModelPersistence>
+@interface WeiboSearchUserList : WeiboUserUserList
 
 @property (nonatomic, strong) NSString * keyword;
 

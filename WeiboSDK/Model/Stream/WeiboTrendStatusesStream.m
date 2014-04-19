@@ -13,6 +13,22 @@
 @implementation WeiboTrendStatusesStream
 @synthesize trendName = _trendName;
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        NSString * trendname = [aDecoder decodeObjectForKey:@"trendname"];
+        self.trendName = trendname;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.trendName forKey:@"trendname"];
+}
 
 - (void)_loadNewer{
     WeiboAPI * api = [account authenticatedRequest:[self loadNewerResponseCallback]];
@@ -38,22 +54,6 @@
 }
 - (id)autosaveName{
     return [[super autosaveName] stringByAppendingFormat:@"trend/%@.scrollPosition",self.trendName];
-}
-
-#pragma mark - WeiboModelPersistence
-
-+ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
-{
-    WeiboTrendStatusesStream * stream = [super objectWithPersistenceInfo:info forAccount:account];
-    
-    stream.trendName = info;
-    
-    return stream;
-}
-
-- (id)persistenceInfo
-{
-    return self.trendName;
 }
 
 @end

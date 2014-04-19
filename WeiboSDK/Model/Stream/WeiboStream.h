@@ -11,7 +11,8 @@
 
 @class WeiboRequestError, WeiboBaseStatus;
 
-@interface WeiboStream : NSObject {
+@interface WeiboStream : NSObject <NSCoding>
+{
     NSTimeInterval cacheTime;
     NSUInteger savedCellIndex;
     double savedRelativeOffset;

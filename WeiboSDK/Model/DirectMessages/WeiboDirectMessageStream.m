@@ -9,6 +9,8 @@
 #import "WeiboDirectMessageStream.h"
 #import "WeiboCallback.h"
 #import "WeiboRequestError.h"
+#import "Weibo.h"
+#import "WeiboAccount.h"
 #import "NSArray+WeiboAdditions.h"
 
 NSString * const WeiboDirectMessageStreamDidUpdateNotification = @"WeiboDirectMessageStreamDidUpdateNotification";
@@ -49,15 +51,22 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     if (self = [self init])
     {
 //        self.messages = [aDecoder decodeObjectForKey:@"messages"];
-        self.account = [aDecoder decodeObjectForKey:@"account"];
+        WeiboUserID accountUserID = [aDecoder decodeInt64ForKey:@"account-id"];
+        self.account = [[Weibo sharedWeibo] accountWithUserID:accountUserID];
+        
+        if (!self.account)
+        {
+            return nil;
+        }
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-//    [aCoder encodeObject:self.messages forKey:@"messages"];
-    [aCoder encodeObject:self.account forKey:@"account"];
+    [super encodeWithCoder:aCoder];
+
+    [aCoder encodeInt64:self.account.user.userID forKey:@"account-id"];
 }
 
 - (NSArray *)messages

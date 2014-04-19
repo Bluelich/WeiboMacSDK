@@ -11,6 +11,7 @@
 #import "WeiboAccount+Filters.h"
 #import "WeiboBaseStatus.h"
 #import "WeiboUser.h"
+#import "Weibo.h"
 
 @implementation WeiboAccountStream
 @synthesize account;
@@ -28,6 +29,25 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRemarkDidUpdateNotification:) name:WeiboUserRemarkDidUpdateNotification object:nil];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        WeiboUserID userID = [aDecoder decodeInt64ForKey:@"account-id"];
+        self.account = [[Weibo sharedWeibo] accountWithUserID:userID];
+        
+        if (!self.account) return nil;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+
+    [aCoder encodeInt64:account.user.userID forKey:@"account-id"];
 }
 
 - (WeiboBaseStatus *)newestStatusThatIsNotMine{
@@ -65,27 +85,6 @@
             }
         }
     }
-}
-
-#pragma mark - WeiboModelPersistence
-
-+ (instancetype)objectWithPersistenceInfo:(id)info forAccount:(WeiboAccount *)account
-{
-    WeiboAccountStream * stream = [[self class] new];
-    
-    stream.account = account;
-    
-    return stream;
-}
-
-- (id)persistenceInfo
-{
-    return nil;
-}
-
-- (WeiboUserID)persistenceAccountID
-{
-    return self.account.user.userID;
 }
 
 @end

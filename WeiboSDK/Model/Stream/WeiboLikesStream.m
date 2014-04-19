@@ -20,6 +20,25 @@
 
 @implementation WeiboLikesStream
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        WeiboStatus * status = [aDecoder decodeObjectForKey:@"base-status"];
+        
+        if (![status isKindOfClass:[WeiboStatus class]]) return nil;
+        
+        self.baseStatus = status;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.baseStatus forKey:@"base-status"];
+}
 
 - (void)_loadNewer
 {

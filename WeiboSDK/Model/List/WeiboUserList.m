@@ -16,6 +16,20 @@
     _loadOlderError = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [self init])
+    {
+        
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    
+}
+
 - (NSArray *)users
 {
     return nil;

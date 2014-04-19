@@ -12,6 +12,19 @@
 @synthesize cacheTime, statuses, savedCellIndex, savedRelativeOffset;
 @synthesize viewedMostRecentID = _viewedMostRecentID;
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [self init])
+    {
+        
+    }
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    
+}
+
 - (BOOL)canLoadNewer{
     return YES;
 }

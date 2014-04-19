@@ -17,6 +17,26 @@
     _user = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        WeiboUser * user = [aDecoder decodeObjectForKey:@"user"];
+        
+        if (![user isKindOfClass:[WeiboUser class]]) return nil;
+        
+        self.user = user;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    
+    [aCoder encodeObject:self.user forKey:@"user"];
+}
+
 - (NSString *)autosaveName{
     return [[super autosaveName] stringByAppendingFormat:@"user/%lld/",self.user.userID];
 }

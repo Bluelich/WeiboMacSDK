@@ -10,7 +10,7 @@
 
 @class WeiboAccount, WeiboBaseStatus;
 
-@interface WeiboAccountStream : WeiboConcreteStatusesStream <WeiboModelPersistence>
+@interface WeiboAccountStream : WeiboConcreteStatusesStream
 {
     WeiboAccount * account;
 }
