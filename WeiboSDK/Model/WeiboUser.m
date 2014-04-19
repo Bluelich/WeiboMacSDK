@@ -43,6 +43,7 @@
         self.followMe = [decoder decodeBoolForKey:@"follow-me"];
         //self.verified = [decoder decodeBoolForKey:@"verified"];
         self.verifiedType = [decoder decodeIntegerForKey:@"verified-type"];
+        self.verifiedReason = [decoder decodeObjectForKey:@"verified-reason"];
         //self.status = [decoder decodeObjectForKey:@"status"];
     }
     return self;
@@ -75,6 +76,7 @@
         [encoder encodeBool:followMe forKey:@"follow-me"];
         //[encoder encodeBool:verified forKey:@"verified"];
         [encoder encodeInteger:_verifiedType forKey:@"verified-type"];
+        [encoder encodeObject:_verifiedReason forKey:@"verified-reason"];
     }
 }
 
