@@ -84,7 +84,7 @@
     
     if (self.uploadProgressBlock)
     {
-        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             CGFloat progress = (CGFloat)totalBytesWritten / totalBytesExpectedToWrite;
             self.uploadProgressBlock(progress);
         }];
@@ -92,7 +92,7 @@
     
     if (self.downloadProgressBlock)
     {
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, NSInteger totalBytesRead, NSInteger totalBytesExpectedToRead) {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
             CGFloat progress = (CGFloat)totalBytesRead / totalBytesExpectedToRead;
             self.downloadProgressBlock(progress);
         }];
