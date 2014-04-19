@@ -12,6 +12,21 @@
 
 @implementation WeiboCommentsToMeStream
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        if (self.account)
+        {
+            // return the shared stream
+            typeof(self) __strong stream = self.account.commentsToMeStream;
+            self = nil;
+            return stream;
+        }
+    }
+    return self;
+}
+
 - (BOOL)shouldIndexUsersInAutocomplete
 {
     return YES;

@@ -28,6 +28,21 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        if (self.account)
+        {
+            // return the shared stream
+            typeof(self) __strong stream = self.account.favoritesStream;
+            self = nil;
+            return stream;
+        }
+    }
+    return self;
+}
+
 - (void)favoriteStateDidChangeNotification:(NSNotification *)notification
 {
     WeiboAccount * theAccount = notification.object;
