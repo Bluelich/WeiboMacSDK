@@ -10,6 +10,7 @@
 #import "NSObject+AssociatedObject.h"
 #import "WeiboAccount.h"
 #import <objc/runtime.h>
+#import <libextobjc/extobjc.h>
 
 static NSMutableDictionary *keyNames = nil;
 
@@ -27,6 +28,28 @@ static NSMutableDictionary *keyNames = nil;
 
 @implementation WeiboModel
 
++ (void)enumeratePropertiesUsingBlock:(void (^)(objc_property_t property, BOOL *stop))block {
+	Class cls = self;
+	BOOL stop = NO;
+    
+	while (!stop && ![cls isEqual:WeiboModel.class]) {
+		unsigned count = 0;
+		objc_property_t *properties = class_copyPropertyList(cls, &count);
+        
+		cls = cls.superclass;
+		if (properties == NULL) continue;
+        
+		@onExit {
+			free(properties);
+		};
+        
+		for (unsigned i = 0; i < count; i++) {
+			block(properties[i], &stop);
+			if (stop) break;
+		}
+	}
+}
+
 + (void)initialize
 {
 	if (!keyNames)
@@ -36,22 +59,18 @@ static NSMutableDictionary *keyNames = nil;
 
 	NSMutableArray *names = [[NSMutableArray alloc] init];
 	
-	for (Class class = self; class != [WeiboModel class]; class = [class superclass])
-	{
-		unsigned int propertyCount;
-		objc_property_t *properties = class_copyPropertyList(class, &propertyCount);
-		
-		for (int i = 0; i < propertyCount; i++)
-		{
-			objc_property_t property = properties[i];
-			NSString *name = [[NSString alloc] initWithUTF8String:property_getName(property)];
-			[names addObject:name];
-			
-		}
-		
-		free(properties);
-	}
-    
+    [self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL *stop) {
+        ext_propertyAttributes *attributes = ext_copyPropertyAttributes(property);
+        @onExit {
+            free(attributes);
+        };
+        
+        if (attributes->readonly && attributes->ivar == NULL) return;
+        
+        NSString * key = @(property_getName(property));
+        [names addObject:key];
+    }];
+
     NSArray * ignored = [self ignoredCodingProperties];
     
     if (ignored)
@@ -60,7 +79,6 @@ static NSMutableDictionary *keyNames = nil;
     }
 	
 	[keyNames setObject:names forKey:NSStringFromClass(self)];
-	
 }
 
 
