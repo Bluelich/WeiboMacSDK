@@ -63,7 +63,7 @@ static Weibo * _sharedWeibo = nil;
 {
     NSData * accountData = [self accountData];
     
-    NSLog(@"<Token> 恢复的accountData为: %@", accountData);
+    NSLog(@"<Token> 恢复的accountData长度为: %lu", accountData.length);
     
     BOOL hasAccountRestored = NO;
     if (accountData) {

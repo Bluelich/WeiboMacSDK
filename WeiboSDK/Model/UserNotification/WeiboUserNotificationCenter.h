@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, WeiboUserNotificationItemType)
     WeiboUserNotificationItemTypeCommentMentions,
     WeiboUserNotificationItemTypeComments,
     WeiboUserNotificationItemTypeDirectMessages,
+    
+    WeiboUserNotificationItemTypeTimeline,
 };
 
 extern NSString * const WeiboUserNotificationUserInfoItemTypeKey;
