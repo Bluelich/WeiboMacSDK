@@ -51,22 +51,22 @@ multipartFormData:(NSDictionary *)parts
     }
 }
 
-- (void)_responseReceived:(WeiboHTTPResponse *)response callback:(WeiboCallback *)callback
+- (void)_responseReceived:(id)responseValue callback:(WeiboCallback *)callback
 {
     runningRequest = nil;
     
-    if (!response.success)
+    if ([responseValue isKindOfClass:[WeiboRequestError class]])
     {
-        [self handleRequestError:response.error];
+        [self handleRequestError:responseValue];
         if (callback != responseCallback)
         {
             [callback dissociateTarget];
         }
-        [responseCallback invoke:response.error];
+        [responseCallback invoke:responseValue];
     }
     else
     {
-        [callback invoke:response.responseObject];
+        [callback invoke:responseValue];
     }
 }
 

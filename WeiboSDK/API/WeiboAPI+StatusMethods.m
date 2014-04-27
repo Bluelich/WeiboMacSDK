@@ -264,6 +264,19 @@
     [self statusesRequest:@"statuses/bilateral_timeline.json" parameters:@{@"feature": @"1"} sinceID:since maxID:max count:count];
 }
 
+#pragma mark -
+#pragma mark - Hot 
+
+- (void)hotStatusesForPage:(NSInteger)page
+{
+    WeiboUnimplementedMethod
+//    if (!page) page = 1;
+//    
+//    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:[NSURL URLWithString:@"http://m.weibo.cn/hot/mblog"]];
+//    request.parameters = @{@"catId": @9999, @"page": @(page)};
+//    
+//    [request startRequest];
+}
 
 #pragma mark -
 #pragma mark Weibo Access
