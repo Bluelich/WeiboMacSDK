@@ -141,15 +141,15 @@
     
     WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
     
-    [self.responseCallback invoke:response];
-    
     if (response.success)
     {
         [deferred resolve:response];
+        [self.responseCallback invoke:response.responseObject];
     }
     else
     {
         [deferred reject:response];
+        [self.responseCallback invoke:response.error];
     }
 }
 

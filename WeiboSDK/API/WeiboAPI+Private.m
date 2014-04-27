@@ -62,11 +62,11 @@ multipartFormData:(NSDictionary *)parts
         {
             [callback dissociateTarget];
         }
-        [responseCallback invoke:response];
+        [responseCallback invoke:response.error];
     }
     else
     {
-        [callback invoke:response];
+        [callback invoke:response.responseObject];
     }
 }
 
