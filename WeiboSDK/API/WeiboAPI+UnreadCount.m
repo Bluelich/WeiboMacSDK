@@ -28,15 +28,12 @@
 - (void)unreadCount{
     [self unreadCountSinceID:0];
 }
-- (void)unreadCountResponse:(id)response info:(id)info
-{
-    if (![response success])
-    {
+- (void)unreadCountResponse:(id)response info:(id)info{
+    if ([response isKindOfClass:[WeiboRequestError class]]) {
         [responseCallback dissociateTarget];
         return;
     }
-    
-    [WeiboUnread parseObjectWithJSONObject:[response responseObject] account:authenticateWithAccount callback:responseCallback];
+    [WeiboUnread parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type{
