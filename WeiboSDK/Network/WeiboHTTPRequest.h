@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PromiseKit/PromiseKit.h>
+#import "WeiboHTTPResponse.h"
 
 @class WTMutableMultiDictionary, WeiboCallback;
 
@@ -24,7 +26,7 @@
 @property (nonatomic, copy) void (^uploadProgressBlock)(CGFloat progress);
 @property (nonatomic, copy) void (^downloadProgressBlock)(CGFloat progress);
 
-- (void)startRequest;
+- (Promise *)startRequest;
 - (void)cancelRequest;
 
 @end

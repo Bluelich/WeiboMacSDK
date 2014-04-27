@@ -7,11 +7,9 @@
 //
 
 #import "WeiboHTTPRequest.h"
-#import "WeiboRequestError.h"
-#import <AFHTTPRequestOperationManager.h>
-
 #import "WeiboCallback.h"
 
+#import <AFHTTPRequestOperationManager.h>
 
 @interface WeiboHTTPRequest()
 
@@ -44,7 +42,7 @@
     return self;
 }
 
-- (void)startRequest
+- (Promise *)startRequest
 {
     if (self.oAuth2Token)
     {
@@ -76,10 +74,12 @@
     operation.shouldUseCredentialStorage = NO;
     operation.securityPolicy = [AFSecurityPolicy defaultPolicy];
     
+    Deferred * deferred = [Deferred new];
+    
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self requestFinished:operation];
+        [self requestFinished:operation deferred:deferred];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self requestFinished:operation];
+        [self requestFinished:operation deferred:deferred];
     }];
     
     if (self.uploadProgressBlock)
@@ -118,6 +118,8 @@
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
+    
+    return deferred.promise;
 }
 
 - (void)cancelRequest
@@ -128,33 +130,26 @@
     }
 }
 
-
 #pragma mark -
 #pragma mark Responses
 
-- (void)requestError:(AFHTTPRequestOperation *)operation
-{
-    WeiboRequestError * requestError = [WeiboRequestError errorWithResponseString:operation.responseString statusCode:operation.response.statusCode];
-    [self.responseCallback invoke:requestError];
-}
-- (void)requestSuccess:(AFHTTPRequestOperation *)operation
-{
-    [self.responseCallback invoke:operation.responseObject];
-}
-
-- (void)requestFinished:(AFHTTPRequestOperation *)operation
+- (void)requestFinished:(AFHTTPRequestOperation *)operation deferred:(Deferred *)deferred
 {
     self.runningOperation = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
     
-    if (operation.response.statusCode == 200)
+    WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
+    
+    [self.responseCallback invoke:response];
+    
+    if (response.success)
     {
-        [self requestSuccess:operation];
+        [deferred resolve:response];
     }
     else
     {
-        [self requestError:operation];
+        [deferred reject:response];
     }
 }
 

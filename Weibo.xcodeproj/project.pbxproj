@@ -23,6 +23,8 @@
 		C62B76E5186B34FF00152B31 /* WeiboSavedSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */; };
 		C62B76E6186B34FF00152B31 /* WeiboSavedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */; };
 		C630CC6F152ABFDA00A5AF7A /* WeiboFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C630CC6C152ABDED00A5AF7A /* WeiboFileManager.m */; };
+		C6385879190C999700BDC4C6 /* WeiboHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C6385877190C999700BDC4C6 /* WeiboHTTPResponse.h */; };
+		C638587A190C999700BDC4C6 /* WeiboHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C6385878190C999700BDC4C6 /* WeiboHTTPResponse.m */; };
 		C638914A175840400005069A /* WeiboPicture.h in Headers */ = {isa = PBXBuildFile; fileRef = C63891481758403E0005069A /* WeiboPicture.h */; };
 		C638914B175840400005069A /* WeiboPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = C63891491758403F0005069A /* WeiboPicture.m */; };
 		C6422F7B18228FEE0036B7F3 /* WeiboSearchStatusesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C6422F7918228FEE0036B7F3 /* WeiboSearchStatusesStream.h */; };
@@ -226,6 +228,8 @@
 		C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSavedSearch.m; sourceTree = "<group>"; };
 		C630CC6B152ABDED00A5AF7A /* WeiboFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboFileManager.h; sourceTree = "<group>"; };
 		C630CC6C152ABDED00A5AF7A /* WeiboFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboFileManager.m; sourceTree = "<group>"; };
+		C6385877190C999700BDC4C6 /* WeiboHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboHTTPResponse.h; sourceTree = "<group>"; };
+		C6385878190C999700BDC4C6 /* WeiboHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboHTTPResponse.m; sourceTree = "<group>"; };
 		C63891481758403E0005069A /* WeiboPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboPicture.h; sourceTree = "<group>"; };
 		C63891491758403F0005069A /* WeiboPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboPicture.m; sourceTree = "<group>"; };
 		C6422F7918228FEE0036B7F3 /* WeiboSearchStatusesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSearchStatusesStream.h; sourceTree = "<group>"; };
@@ -698,6 +702,8 @@
 			children = (
 				C6E1CD5914E5FB2E000137B9 /* WeiboHTTPRequest.h */,
 				C6E1CD5A14E5FB2E000137B9 /* WeiboHTTPRequest.m */,
+				C6385877190C999700BDC4C6 /* WeiboHTTPResponse.h */,
+				C6385878190C999700BDC4C6 /* WeiboHTTPResponse.m */,
 				C6F317B014E7CD2200A952FE /* WeiboRequestError.h */,
 				C6F317B114E7CD2200A952FE /* WeiboRequestError.m */,
 			);
@@ -851,6 +857,7 @@
 				C6D3101D180286A3008EAFA2 /* NSObject+AssociatedObject.h in Headers */,
 				C6ED9D0F17D62B46008AA2A3 /* WeiboDirectMessageConversation.h in Headers */,
 				C6F3E03718D42DBD0055131A /* WeiboConcreteStatusesStream.h in Headers */,
+				C6385879190C999700BDC4C6 /* WeiboHTTPResponse.h in Headers */,
 				C6A1663318214168002C0B4B /* WeiboCommentsToMeStream.h in Headers */,
 				C6EC374E1745EE570085E6ED /* WeiboAPI+Private.h in Headers */,
 				C6EC37531745EF9C0085E6ED /* WeiboAPI+UserMethods.h in Headers */,
@@ -1038,6 +1045,7 @@
 				C6F3E04418D42DBD0055131A /* WeiboStream.m in Sources */,
 				C6F3E08A18D42F700055131A /* WeiboLayoutCache.m in Sources */,
 				C6A1663818214178002C0B4B /* WeiboCommentsByMeStream.m in Sources */,
+				C638587A190C999700BDC4C6 /* WeiboHTTPResponse.m in Sources */,
 				C6F3E07018D42F420055131A /* WeiboAccount+Superpower.m in Sources */,
 				C69CB49918E7C5AA0093C02D /* NSImage+WeiboAdditions.m in Sources */,
 				C6F3E06C18D42F420055131A /* WeiboAccount+Filters.m in Sources */,
@@ -1115,6 +1123,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1134,6 +1143,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1152,6 +1162,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

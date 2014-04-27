@@ -57,6 +57,7 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
+  - PromiseKit/base (0.9.2)
   - RegexKitLite (4.0)
   - SSKeychain (1.2.2)
 
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - FMDB (~> 2.2)
   - JSONKit-NoWarning (~> 1.1)
   - libextobjc
+  - PromiseKit/base
   - RegexKitLite
   - SSKeychain (~> 1.2)
 
@@ -75,6 +77,7 @@ SPEC CHECKSUMS:
   FMDB: e0dd09464b4e1a1cd7fa51ea835ae821b5656865
   JSONKit-NoWarning: 85857d86cd61cfddd691c7eb4855496e2ec9b2a9
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
+  PromiseKit: a137a882c7a2897a8b59c383b31a10a91eff4900
   RegexKitLite: b16f029b518614394438e17b7d1df8bfa1e5a81e
   SSKeychain: 3d0b76c87e7b062a7ad1631a825fddec84367d44
 

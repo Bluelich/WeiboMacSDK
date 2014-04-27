@@ -25,12 +25,14 @@
     [request setParameters:params];
     [request startRequest];
 }
-- (void)clientAuthResponse:(id)returnValue info:(id)info{
+- (void)clientAuthResponse:(id)returnValue info:(id)info
+{
     [self oAuth2TokenResponse:returnValue info:info];
 }
 
-- (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
-    NSDictionary * dic = returnValue;
+- (void)oAuth2TokenResponse:(WeiboHTTPResponse *)response info:(id)info
+{
+    NSDictionary * dic = response.responseObject;
     NSString * token = [dic valueForKey:@"access_token"];
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];
     [authenticateWithAccount setOAuth2Token:token];
@@ -38,7 +40,8 @@
     [authenticateWithAccount verifyCredentials:responseCallback];
 }
 
-- (NSDictionary *)_queryStringToDictionary:(NSString *)string{
+- (NSDictionary *)_queryStringToDictionary:(NSString *)string
+{
     NSArray * components = [string componentsSeparatedByString:@"&"];
     NSMutableDictionary * resultDictionary = [NSMutableDictionary dictionary];
     for (NSString * component in components) {
