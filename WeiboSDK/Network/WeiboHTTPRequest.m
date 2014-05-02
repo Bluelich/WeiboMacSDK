@@ -74,12 +74,33 @@
     operation.shouldUseCredentialStorage = NO;
     operation.securityPolicy = [AFSecurityPolicy defaultPolicy];
     
-    Deferred * deferred = [Deferred new];
+    void __block (^completionBlock)(AFHTTPRequestOperation * opration) = NULL;
+    
+    Promise * promise = [Promise new:^(PromiseResolver fulfiller, PromiseResolver rejecter) {
+        completionBlock = ^(AFHTTPRequestOperation * operation) {
+            self.runningOperation = nil;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
+            
+            WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
+            
+            if (response.success)
+            {
+                fulfiller(response);
+                [self.responseCallback invoke:response.responseObject];
+            }
+            else
+            {
+                fulfiller(rejecter);
+                [self.responseCallback invoke:response.error];
+            }
+        };
+    }];
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self requestFinished:operation deferred:deferred];
+        completionBlock(operation);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self requestFinished:operation deferred:deferred];
+        completionBlock(operation);
     }];
     
     if (self.uploadProgressBlock)
@@ -119,7 +140,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
     
-    return deferred.promise;
+    return promise;
 }
 
 - (void)cancelRequest
@@ -127,29 +148,6 @@
     if (self.runningOperation)
     {
         [self.runningOperation cancel];
-    }
-}
-
-#pragma mark -
-#pragma mark Responses
-
-- (void)requestFinished:(AFHTTPRequestOperation *)operation deferred:(Deferred *)deferred
-{
-    self.runningOperation = nil;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
-    
-    WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
-    
-    if (response.success)
-    {
-        [deferred resolve:response];
-        [self.responseCallback invoke:response.responseObject];
-    }
-    else
-    {
-        [deferred reject:response];
-        [self.responseCallback invoke:response.error];
     }
 }
 

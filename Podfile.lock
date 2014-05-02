@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/Reachability (2.2.3)
   - AFNetworking/Security (2.2.3)
   - AFNetworking/Serialization (2.2.3)
+  - ChuzzleKit (1.0.2)
   - CocoaSecurity (1.2.3)
   - FMDB (2.2):
     - FMDB/standard
@@ -57,7 +58,20 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
-  - PromiseKit/base (0.9.2)
+  - PromiseKit (0.9.3):
+    - PromiseKit/base
+    - PromiseKit/CoreLocation
+    - PromiseKit/Foundation
+    - PromiseKit/MapKit
+    - PromiseKit/UIKit
+  - PromiseKit/base (0.9.3)
+  - PromiseKit/CoreLocation (0.9.3):
+    - PromiseKit/base
+  - PromiseKit/Foundation (0.9.3):
+    - ChuzzleKit
+    - PromiseKit/base
+  - PromiseKit/MapKit (0.9.3):
+    - PromiseKit/base
   - RegexKitLite (4.0)
   - SSKeychain (1.2.2)
 
@@ -67,17 +81,18 @@ DEPENDENCIES:
   - FMDB (~> 2.2)
   - JSONKit-NoWarning (~> 1.1)
   - libextobjc
-  - PromiseKit/base
+  - PromiseKit
   - RegexKitLite
   - SSKeychain (~> 1.2)
 
 SPEC CHECKSUMS:
   AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
+  ChuzzleKit: 1038c23679609e54364f5d569159897a4d39567f
   CocoaSecurity: 9c82f530dc5b0516b04cc2ed4c2f5cd90f25352d
   FMDB: e0dd09464b4e1a1cd7fa51ea835ae821b5656865
   JSONKit-NoWarning: 85857d86cd61cfddd691c7eb4855496e2ec9b2a9
   libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
-  PromiseKit: a137a882c7a2897a8b59c383b31a10a91eff4900
+  PromiseKit: 9c1bb212e97734414ba972d5e750522c8fe54ea4
   RegexKitLite: b16f029b518614394438e17b7d1df8bfa1e5a81e
   SSKeychain: 3d0b76c87e7b062a7ad1631a825fddec84367d44
 
