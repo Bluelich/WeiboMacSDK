@@ -111,7 +111,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         
         favoritesStream = [[WeiboFavoritesStream alloc] init];
         favoritesStream.account = self;
-
+        
         usersByUsername = [[NSMutableDictionary alloc] init];
         outbox = [[NSMutableArray alloc] init];
     }
@@ -131,10 +131,10 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [encoder encodeObject:self.clientFilters forKey:@"client-filters"];
     [encoder encodeObject:@(self.filterAdvertisements) forKey:@"filter-advertisements"];
     
-//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.keywordFilters] forKey:@"keyword-filters"];
-//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userFilters] forKey:@"user-filters"];
-//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userHighlighters] forKey:@"user-highlighters"];
-//    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.clientFilters] forKey:@"client-filters"];
+    //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.keywordFilters] forKey:@"keyword-filters"];
+    //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userFilters] forKey:@"user-filters"];
+    //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.userHighlighters] forKey:@"user-highlighters"];
+    //    [encoder encodeObject:[NSKeyedArchiver archivedDataWithRootObject:self.clientFilters] forKey:@"client-filters"];
     
     [encoder encodeObject:self.profileImage forKey:@"profile-image"];
     
@@ -213,7 +213,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             
             NSString * superpowerToken = [decoder decodeObjectForKey:@"superpower-token"];;
             NSLog(@"<Token> decoder中存储的superpower-token为: %@", superpowerToken);
-
+            
             superpowerToken = [[WeiboCryptographer sharedCryptographer] decryptText:superpowerToken salt:[@(userID) stringValue]];
             
             NSLog(@"<Token> 解密后的superpower-token为: %@", superpowerToken.stringForLogging);
@@ -375,7 +375,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (NSString *)keychainService
 {
     return [Weibo globalKeychainService];
-}                                                            
+}
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount
 {
     if (self.username)
@@ -442,7 +442,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (void)setFilterArray:(NSMutableArray *)filters forKeyPath:(NSString *)keyPath
 {
     NSMutableArray * result = nil;
-//    id filters = [NSKeyedUnarchiver unarchiveObjectWithData:filtersData];
+    //    id filters = [NSKeyedUnarchiver unarchiveObjectWithData:filtersData];
     
     if ([filters isKindOfClass:[NSMutableArray class]])
     {
@@ -555,7 +555,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     }
     [self setNewDirectMessagesCount:unread.newDirectMessages];
     // can NOT get access to DM api yet, just post a notification
-
+    
     [self setNewFollowersCount:unread.newFollowers];
     
     if ([_delegate respondsToSelector:@selector(account:finishCheckingUnreadCount:)]) {
@@ -594,7 +594,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         
         double delayInSeconds = 90.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){            
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.directMessagesManager endStreaming];
         });
     }
@@ -630,19 +630,15 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             WeiboAPI * api = [self authenticatedRequest:nil];
             
             NSString * text = composition.text;
-            NSString * additionalText = nil;
+            
+            if ([composition.replyToStatus isComment])
+            {
+                text = [self appendQuotationToText:text withStatus:composition.replyToStatus];
+            }
             
             if (replyToStatus.quotedBaseStatus)
             {
-                additionalText = [NSString stringWithFormat:@" //@%@:%@", replyToStatus.user.screenName, replyToStatus.text];
-                
-                NSInteger textLength = WeiboCompositionTextLength(text);
-                NSInteger additionalTextLength = WeiboCompositionTextLength(additionalText);
-                
-                if (textLength + additionalTextLength <= 140)
-                {
-                    text = [text stringByAppendingString:additionalText];
-                }
+                text = [self appendQuotationToText:text withStatus:replyToStatus];
             }
             
             [api repost:text repostingID:replyToStatus.sid shouldComment:NO];
@@ -654,6 +650,22 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [api updateWithComposition:composition];
     }
 }
+
+- (NSString *)appendQuotationToText:(NSString *)text withStatus:(WeiboBaseStatus *)status
+{
+    NSString * additionalText = [NSString stringWithFormat:@" //@%@:%@", status.user.screenName, status.text];
+    
+    NSInteger textLength = WeiboCompositionTextLength(text);
+    NSInteger additionalTextLength = WeiboCompositionTextLength(additionalText);
+    
+    if (textLength + additionalTextLength <= 140)
+    {
+        text = [text stringByAppendingString:additionalText];
+    }
+    
+    return text;
+}
+
 - (void)didSendCompletedComposition:(id)response info:(id)info
 {
     id<WeiboComposition> composition = info;
@@ -746,7 +758,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 - (void)requestProfileImageWithCallback:(WeiboCallback *)aCallback
 {
     NSURL * url = [NSURL URLWithString:self.user.profileLargeImageUrl];
-
+    
     if (!url) return;
     
     _flags.requestingAvatar = 1;
