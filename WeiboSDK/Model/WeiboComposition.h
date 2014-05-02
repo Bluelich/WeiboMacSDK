@@ -44,5 +44,29 @@ typedef NSInteger WeiboCompositionType;
 - (BOOL)canPostImage;
 - (BOOL)requiresUserInput;
 
-
 @end
+
+NS_INLINE NSInteger WeiboCompositionTextLength(NSString * text)
+{
+    NSInteger idx, length = [text length], sbc = 0, ascii = 0, blank = 0;
+    for(idx = 0; idx < length; idx++)
+    {
+        unichar c = [text characterAtIndex:idx];
+        if (isblank(c))
+        {
+            blank++;
+        }
+        else if(isascii(c))
+        {
+            ascii++;
+        }
+        else
+        {
+            sbc++;
+        }
+    }
+    
+    if (!ascii && !sbc) return 0;
+
+    return sbc + (NSInteger)ceilf((float)(ascii + blank)/2.0);
+}
