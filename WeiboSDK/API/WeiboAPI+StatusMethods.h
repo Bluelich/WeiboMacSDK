@@ -68,6 +68,7 @@
 - (void)update:(NSString *)text inRetweetStatusID:(WeiboStatusID)reply;
 - (void)destoryStatus:(WeiboStatusID)sid;
 - (void)destoryComment:(WeiboStatusID)sid;
+- (void)repost:(NSString *)text repostingID:(WeiboStatusID)repostID shouldComment:(BOOL)comment;
 - (void)reply:(NSString *)text toStatusID:(WeiboStatusID)sid toCommentID:(WeiboStatusID)cid;
 
 - (void)uploadImageWithData:(NSData *)imageData;

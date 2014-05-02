@@ -376,7 +376,8 @@
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:
                              text, @"comment",
                              [NSString stringWithFormat:@"%lld",sid],@"id",
-                             [NSString stringWithFormat:@"%lld",cid],@"cid", nil];
+                             [NSString stringWithFormat:@"%lld",cid],@"cid",
+                             @"1", @"without_mention", nil];
     NSString * url = @"comments/create.json";
     if (cid > 0) {
         url = @"comments/reply.json";
@@ -385,45 +386,23 @@
 }
 - (void)updateWithComposition:(id<WeiboComposition>)composition
 {
-    if (composition.retweetingStatus)
+    if (composition.uploadImages.count > 1)
     {
-        WeiboStatus * status = (WeiboStatus *)composition.retweetingStatus;
+        NSMutableArray * picIDs = [NSMutableArray array];
         
-        BOOL shouldComment = [composition.replyToStatus isEqual:composition.retweetingStatus];
-        
-        [self repost:composition.text repostingID:status.sid shouldComment:shouldComment];
-    }
-    else if (composition.replyToStatus)
-    {
-        WeiboStatusID toSID = composition.replyToStatus.sid, toCID = 0;
-        if ([composition.replyToStatus isComment])
+        for (WeiboUploadImage * uploadImage in composition.uploadImages)
         {
-            WeiboComment * comment = (WeiboComment *)composition.replyToStatus;
-            toCID = toSID;
-            toSID = comment.replyToStatus.sid;
+            if (uploadImage.pictureID.length)
+            {
+                [picIDs addObject:uploadImage.pictureID];
+            }
         }
-        [self reply:composition.text toStatusID:toSID toCommentID:toCID];
+        
+        [self update:composition.text imageIDs:picIDs latitude:composition.latitude longitude:composition.longitude];
     }
     else
     {
-        if (composition.uploadImages.count > 1)
-        {
-            NSMutableArray * picIDs = [NSMutableArray array];
-            
-            for (WeiboUploadImage * uploadImage in composition.uploadImages)
-            {
-                if (uploadImage.pictureID.length)
-                {
-                    [picIDs addObject:uploadImage.pictureID];
-                }
-            }
-            
-            [self update:composition.text imageIDs:picIDs latitude:composition.latitude longitude:composition.longitude];
-        }
-        else
-        {
-            [self update:composition.text imageData:[composition.uploadImages.firstObject imageData] latitude:composition.latitude longitude:composition.longitude];
-        }
+        [self update:composition.text imageData:[composition.uploadImages.firstObject imageData] latitude:composition.latitude longitude:composition.longitude];
     }
 }
 

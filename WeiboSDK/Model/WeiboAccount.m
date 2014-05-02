@@ -598,6 +598,56 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             [self.directMessagesManager endStreaming];
         });
     }
+    if (composition.type == WeiboCompositionTypeRetweet)
+    {
+        WeiboAPI * api = [self authenticatedRequest:callback];
+        
+        WeiboStatus * status = (WeiboStatus *)composition.retweetingStatus;
+        
+        BOOL shouldComment = [composition.replyToStatus isEqual:composition.retweetingStatus];
+        
+        [api repost:composition.text repostingID:status.sid shouldComment:shouldComment];
+    }
+    else if (composition.type == WeiboCompositionTypeComment)
+    {
+        WeiboAPI * api = [self authenticatedRequest:callback];
+        WeiboStatus * replyToStatus = (WeiboStatus *)composition.replyToStatus;
+        WeiboComment * replyToComment = nil;
+        
+        if ([composition.replyToStatus isComment])
+        {
+            WeiboComment * comment = (WeiboComment *)composition.replyToStatus;
+            replyToComment = comment;
+            replyToStatus = replyToComment.replyToStatus;
+        }
+        
+        [api reply:composition.text toStatusID:replyToStatus.sid toCommentID:replyToComment.sid];
+        
+        if ([replyToStatus isEqual:composition.retweetingStatus])
+        {
+            // Also retweet
+            
+            WeiboAPI * api = [self authenticatedRequest:nil];
+            
+            NSString * text = composition.text;
+            NSString * additionalText = nil;
+            
+            if (replyToStatus.quotedBaseStatus)
+            {
+                additionalText = [NSString stringWithFormat:@" //@%@:%@", replyToStatus.user.screenName, replyToStatus.text];
+                
+                NSInteger textLength = WeiboCompositionTextLength(text);
+                NSInteger additionalTextLength = WeiboCompositionTextLength(additionalText);
+                
+                if (textLength + additionalTextLength <= 140)
+                {
+                    text = [text stringByAppendingString:additionalText];
+                }
+            }
+            
+            [api repost:text repostingID:replyToStatus.sid shouldComment:NO];
+        }
+    }
     else
     {
         WeiboAPI * api = [self authenticatedRequest:callback];
