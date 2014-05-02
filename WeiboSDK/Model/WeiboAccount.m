@@ -598,7 +598,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             [self.directMessagesManager endStreaming];
         });
     }
-    if (composition.type == WeiboCompositionTypeRetweet)
+    else if (composition.type == WeiboCompositionTypeRetweet)
     {
         WeiboAPI * api = [self authenticatedRequest:callback];
         
