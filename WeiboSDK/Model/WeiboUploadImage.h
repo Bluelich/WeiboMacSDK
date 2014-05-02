@@ -17,14 +17,13 @@ extern NSString * const WeiboUploadImageDidFailedToUploadNotification;
 
 @interface WeiboUploadImage : NSObject
 
-+ (instancetype)imageWithNSImage:(NSImage *)image account:(WeiboAccount *)account;
++ (instancetype)imageWithNSImage:(NSImage *)image;
 
-@property (nonatomic, strong, readonly) WeiboAccount * account;
 @property (nonatomic, strong, readonly) NSData * imageData;
 
-@property (nonatomic, assign, readonly) BOOL canUploadSeparately;
+- (BOOL)canUploadSeparatelyWithAccount:(WeiboAccount *)account;
 
-- (void)beginImageUpload;
+- (void)beginImageUploadWithAccount:(WeiboAccount *)account;
 - (void)cancelImageUpload;
 
 @property (nonatomic, assign, readonly) BOOL uploading;

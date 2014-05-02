@@ -18,8 +18,6 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 @interface WeiboUploadImage ()
 
-@property (nonatomic, strong) WeiboAccount * account;
-
 @property (nonatomic, assign) CGFloat uploadProgress;
 @property (nonatomic, strong) WeiboRequestError * uploadError;
 @property (nonatomic, weak) WeiboHTTPRequest * uploadRequest;
@@ -32,11 +30,10 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 @implementation WeiboUploadImage
 
-+ (instancetype)imageWithNSImage:(NSImage *)image account:(WeiboAccount *)account
++ (instancetype)imageWithNSImage:(NSImage *)image
 {
     WeiboUploadImage * uploadImage = [WeiboUploadImage new];
     
-    uploadImage.account = account;
     uploadImage.image = image;
     
     return uploadImage;
@@ -44,9 +41,9 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 #pragma mark - Accessors
 
-- (BOOL)canUploadSeparately
+- (BOOL)canUploadSeparatelyWithAccount:(WeiboAccount *)account
 {
-    return self.account.superpowerAuthorized;
+    return account.superpowerAuthorized;
 }
 
 - (BOOL)uploaded
@@ -61,14 +58,14 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 #pragma mark - Upload
 
-- (void)beginImageUpload
+- (void)beginImageUploadWithAccount:(WeiboAccount *)account
 {
-    if (!self.canUploadSeparately && self.imageData) return;
+    if (![self canUploadSeparatelyWithAccount:account] && self.imageData) return;
     
     WeiboUploadImage * __weak this = self;
     
     WeiboCallback * callback = WeiboCallbackMake(self, @selector(uploadFinished:info:), nil);
-    WeiboAPI * api = [self.account authenticatedSuperpowerRequest:callback];
+    WeiboAPI * api = [account authenticatedSuperpowerRequest:callback];
     
     [api uploadImageWithData:self.imageData];
     
