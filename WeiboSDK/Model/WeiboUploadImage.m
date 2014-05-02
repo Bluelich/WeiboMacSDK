@@ -60,7 +60,7 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 - (void)beginImageUploadWithAccount:(WeiboAccount *)account
 {
-    if (![self canUploadSeparatelyWithAccount:account] && self.imageData) return;
+    if (![self canUploadSeparatelyWithAccount:account] || !self.imageData || self.uploaded || self.uploading) return;
     
     WeiboUploadImage * __weak this = self;
     
