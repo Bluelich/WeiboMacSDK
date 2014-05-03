@@ -30,11 +30,13 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 @implementation WeiboUploadImage
 
-+ (instancetype)imageWithNSImage:(NSImage *)image
++ (instancetype)imageWithImageData:(NSData *)imageData
 {
     WeiboUploadImage * uploadImage = [WeiboUploadImage new];
     
-    uploadImage.image = image;
+    [uploadImage setImageWithOriginalImageData:imageData];
+    
+    if (!uploadImage.imageData) return nil;
     
     return uploadImage;
 }
@@ -119,14 +121,6 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
 
 - (void)setImage:(NSImage *)image
 {
-    // if it is animated gif, don't compress
-    if (image.weibo_isAnimatedGIF)
-    {
-        self.imageData = image.weibo_GIFRepresentation;
-        
-        return;
-    }
-    
     // maxiumn image width is 2048, height not limited
     if (image.size.width <= 2048)
     {
@@ -144,6 +138,24 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
     [resultImage unlockFocus];
     
     self.imageData = [resultImage weibo_JPEGRepersentationWithCompressFactor:0.92];
+}
+
+- (void)setImageWithOriginalImageData:(NSData *)imageData
+{
+    NSImage * nsImage = [[NSImage alloc] initWithData:imageData];
+    
+    if (nsImage)
+    {
+        // if it is animated gif, don't compress
+        if (nsImage.weibo_isAnimatedGIF)
+        {
+            self.imageData = imageData;
+        }
+        else
+        {
+            [self setImage:nsImage];
+        }
+    }
 }
 
 @end

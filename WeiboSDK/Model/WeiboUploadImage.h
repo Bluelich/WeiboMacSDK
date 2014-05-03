@@ -17,7 +17,7 @@ extern NSString * const WeiboUploadImageDidFailedToUploadNotification;
 
 @interface WeiboUploadImage : NSObject
 
-+ (instancetype)imageWithNSImage:(NSImage *)image;
++ (instancetype)imageWithImageData:(NSData *)imageData;
 
 @property (nonatomic, strong, readonly) NSData * imageData;
 
