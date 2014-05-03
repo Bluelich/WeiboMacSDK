@@ -135,15 +135,26 @@ static Weibo * _sharedWeibo = nil;
     
     [self saveCurrentState];
 }
-- (NSURL *)accountDataPathURL
+- (NSURL *)cachesAccountDataPathURL
 {
     NSURL * url = [NSURL fileURLWithPath:[WeiboFileManager cachesApplicationDirectory]];
     url = [url URLByAppendingPathComponent:@"accounts.dat"];
     return url;
 }
+- (NSURL *)applicationSupportAccountDataPathURL
+{
+    NSURL * url = [NSURL fileURLWithPath:[WeiboFileManager subApplicationSupportDirectory:@"accounts"]];
+    url = [url URLByAppendingPathComponent:@"accounts.dat"];
+    return url;
+}
 - (NSData *)accountData
 {
-    NSData * accountData = [NSData dataWithContentsOfURL:[self accountDataPathURL]];
+    NSData * accountData = [NSData dataWithContentsOfURL:[self applicationSupportAccountDataPathURL]];
+    
+    if (!accountData)
+    {
+        accountData = [NSData dataWithContentsOfURL:[self cachesAccountDataPathURL]];
+    }
     
     if (!accountData)
     {
@@ -155,18 +166,17 @@ static Weibo * _sharedWeibo = nil;
 }
 - (void)saveAccountData:(NSData *)accountData
 {
-    [accountData writeToURL:[self accountDataPathURL] atomically:YES];
+    [accountData writeToURL:[self applicationSupportAccountDataPathURL] atomically:YES];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:accountData forKey:@"accounts"];
+    [defaults synchronize];
 }
 - (void)saveCurrentState
 {
     NSData * accountData = [NSKeyedArchiver archivedDataWithRootObject:[self accounts]];
     [self saveAccountData:accountData];
-    
-    
-//    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-//
-//    [defaults setObject:accountData forKey:@"accounts"];
-//    [defaults synchronize];
 }
 
 - (NSArray *)accounts
