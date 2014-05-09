@@ -42,7 +42,7 @@
     return self;
 }
 
-- (Promise *)startRequest
+- (void)startRequest
 {
     if (self.oAuth2Token)
     {
@@ -74,28 +74,22 @@
     operation.shouldUseCredentialStorage = NO;
     operation.securityPolicy = [AFSecurityPolicy defaultPolicy];
     
-    void __block (^completionBlock)(AFHTTPRequestOperation * opration) = NULL;
-    
-    Promise * promise = [Promise new:^(PromiseResolver fulfiller, PromiseResolver rejecter) {
-        completionBlock = ^(AFHTTPRequestOperation * operation) {
-            self.runningOperation = nil;
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
-            
-            WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
-            
-            if (response.success)
-            {
-                fulfiller(response);
-                [self.responseCallback invoke:response.responseObject];
-            }
-            else
-            {
-                fulfiller(rejecter);
-                [self.responseCallback invoke:response.error];
-            }
-        };
-    }];
+    void __block (^completionBlock)(AFHTTPRequestOperation * opration) = ^(AFHTTPRequestOperation * operation) {
+        self.runningOperation = nil;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
+        
+        WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
+        
+        if (response.success)
+        {
+            [self.responseCallback invoke:response.responseObject];
+        }
+        else
+        {
+            [self.responseCallback invoke:response.error];
+        }
+    };;
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         completionBlock(operation);
@@ -139,8 +133,6 @@
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidSendNotification object:nil];
-    
-    return promise;
 }
 
 - (void)cancelRequest

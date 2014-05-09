@@ -26,7 +26,7 @@
 @property (nonatomic, copy) void (^uploadProgressBlock)(CGFloat progress);
 @property (nonatomic, copy) void (^downloadProgressBlock)(CGFloat progress);
 
-- (Promise *)startRequest;
+- (void)startRequest;
 - (void)cancelRequest;
 
 @end
