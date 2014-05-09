@@ -26,6 +26,5 @@ Pod::Spec.new do |s|
   s.dependency 'RegexKitLite'
   s.dependency 'AFNetworking'
   s.dependency 'CocoaSecurity', '~> 1.2'
-  s.dependency 'PromiseKit'
 
 end

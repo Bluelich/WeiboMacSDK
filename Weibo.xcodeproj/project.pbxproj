@@ -1123,7 +1123,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1143,7 +1143,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1162,7 +1162,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
