@@ -102,7 +102,9 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
 }
 - (NSString *)message{
     NSMutableString * string = [NSMutableString string];
-    [string appendString:errorStringInChinese?errorStringInChinese:errorString];
+    
+    NSString * desc = (errorStringInChinese?:errorString)?:@"";
+    [string appendString:desc];
     [string appendFormat:@" ( 错误代码:%ld",self.code];
     if (errorDetailCode > 0) {
         [string appendFormat:@" , 详细代码:%ld",errorDetailCode];
