@@ -108,9 +108,12 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 }
 - (void)addStatuses:(NSArray *)newStatuses withType:(WeiboStatusesAddingType)type{
     BOOL shouldPostNotification = YES;//[self hasData];
-
-    BOOL shouldForceToAppend = ![self hasData];
-        
+    
+    if (!self.hasData)
+    {
+        type = WeiboStatusesAddingTypeAppend;
+    }
+    
     NSMutableArray * statusesToAdd = [newStatuses mutableCopy];
     
     for (WeiboBaseStatus * status in self.statuses)
@@ -149,7 +152,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     }
     _topStatusesCount = topStatusCount;
     
-    [self noticeDidReceiveNewStatuses:statusesToAdd withAddingType:shouldForceToAppend?WeiboStatusesAddingTypeAppend:type];
+    [self noticeDidReceiveNewStatuses:statusesToAdd withAddingType:type];
     
     if (shouldPostNotification) {
         [self postStatusesChangedNotification];
