@@ -255,7 +255,7 @@
     else
     {
         WeiboCallback * callback = [self statusesResponseCallback];
-        NSDictionary * params = @{@"list_id" : listID};
+        NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:listID, @"list_id",nil];
         [self statusesRequest:@"friendships/groups/timeline.json" parameters:params sinceID:sinceID maxID:maxID page:page count:count callback:callback];
     }
 }
@@ -297,6 +297,7 @@
 {
     NSNumber * type = [NSNumber numberWithInteger:WeiboCompositionTypeNewTweet];
     WeiboCallback * callback = WeiboCallbackMake(self, @selector(updated:info:), type);
+    if (!text) text = @"";
     NSDictionary * params = @{@"status" : text,
                               @"id": @(repostID),
                               @"is_comment": @(comment ? 1 : 0)};
