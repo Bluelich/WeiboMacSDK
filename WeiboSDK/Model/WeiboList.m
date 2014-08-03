@@ -19,6 +19,7 @@
 @end
 
 @implementation WeiboList
+@synthesize description = _description;
 
 - (void)dealloc
 {
