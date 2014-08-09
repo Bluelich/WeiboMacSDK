@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeiboConstants.h"
 #import "WeiboComposition.h"
 #import "WeiboCallback.h"
 

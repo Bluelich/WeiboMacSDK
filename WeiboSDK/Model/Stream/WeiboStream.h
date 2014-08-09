@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeiboConstants.h"
 
 @class WeiboRequestError, WeiboBaseStatus;
 

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeiboConstants.h"
 
 extern NSString * const WeiboAccountSetDidChangeNotification;
 extern NSString * const WeiboDidHeartbeatNotification;

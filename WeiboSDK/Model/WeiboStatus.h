@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeiboConstants.h"
 #import "WeiboBaseStatus.h"
 
 @class WeiboUser, WeiboGeotag, WeiboCallback;

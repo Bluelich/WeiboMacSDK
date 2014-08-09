@@ -7,7 +7,6 @@
 //
 
 #import "WeiboStream.h"
-#import "WeiboConstants.h"
 
 extern NSString * const WeiboStatusStreamDidReceiveNewStatusesNotificationKey;
 extern NSString * const WeiboStatusStreamDidReceiveRequestErrorNotificationKey;

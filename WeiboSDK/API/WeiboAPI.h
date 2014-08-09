@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "WeiboConstants.h"
 #import "WeiboHTTPRequest.h"
 #import "WeiboRequestError.h"
 #import "WeiboCallback.h"

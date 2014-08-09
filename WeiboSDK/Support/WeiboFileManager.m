@@ -7,7 +7,6 @@
 //
 
 #import "WeiboFileManager.h"
-#import "WeiboConstants.h"
 
 @implementation WeiboFileManager
 

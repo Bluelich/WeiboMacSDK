@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WeiboAutocompleteResultItem.h"
-#import "WeiboConstants.h"
 
 @class FMDatabase, WeiboUser, WeiboAccount;
 

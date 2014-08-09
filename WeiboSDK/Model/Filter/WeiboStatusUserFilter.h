@@ -7,7 +7,6 @@
 //
 
 #import "WeiboStatusFilter.h"
-#import "WeiboConstants.h"
 
 @interface WeiboStatusUserFilter : WeiboStatusFilter
 
