@@ -65,8 +65,8 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     }
     else if ([response isKindOfClass:[NSDictionary class]])
     {
-        NSString * token = [response stringForKey:@"access_token" defaultValue:nil];
-        WeiboUserID userID = (WeiboUserID)[response longlongForKey:@"uid" defaultValue:0];
+        NSString * token = [response weibo_stringForKey:@"access_token" defaultValue:nil];
+        WeiboUserID userID = (WeiboUserID)[response weibo_longlongForKey:@"uid" defaultValue:0];
         
         if (userID != self.user.userID)
         {

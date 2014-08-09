@@ -10,10 +10,10 @@
 
 @interface NSDictionary (WeiboAdditions)
 
-- (BOOL)boolForKey:(NSString *)key defaultValue:(BOOL)defaultValue;
-- (int)intForKey:(NSString *)key defaultValue:(int)defaultValue;
-- (time_t)timeForKey:(NSString *)key defaultValue:(time_t)defaultValue;
-- (long long)longlongForKey:(NSString *)key defaultValue:(long long)defaultValue;
-- (NSString *)stringForKey:(NSString *)key defaultValue:(NSString *)defaultValue;
+- (BOOL)weibo_boolForKey:(NSString *)key defaultValue:(BOOL)defaultValue;
+- (int)weibo_intForKey:(NSString *)key defaultValue:(int)defaultValue;
+- (time_t)weibo_timeForKey:(NSString *)key defaultValue:(time_t)defaultValue;
+- (long long)weibo_longlongForKey:(NSString *)key defaultValue:(long long)defaultValue;
+- (NSString *)weibo_stringForKey:(NSString *)key defaultValue:(NSString *)defaultValue;
 
 @end

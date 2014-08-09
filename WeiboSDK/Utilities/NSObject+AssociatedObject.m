@@ -11,12 +11,12 @@
 
 @implementation NSObject (AssociatedObject)
 
-- (id)objectWithAssociatedKey:(NSString *)key
+- (id)weibo_objectWithAssociatedKey:(NSString *)key
 {
     return objc_getAssociatedObject(self, (__bridge const void *)(key));
 }
 
-- (void)setObject:(id)object forAssociatedKey:(NSString *)key retained:(BOOL)retain
+- (void)weibo_setObject:(id)object forAssociatedKey:(NSString *)key retained:(BOOL)retain
 {
     objc_setAssociatedObject(self, (__bridge const void *)(key), object, retain?OBJC_ASSOCIATION_RETAIN_NONATOMIC:OBJC_ASSOCIATION_ASSIGN);
 }

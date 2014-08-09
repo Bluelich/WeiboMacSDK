@@ -10,16 +10,8 @@
 
 @implementation NSArray (WeiboAdditions)
 
-- (id)firstObject
+- (NSInteger)weibo_binarySearch:(id)key usingBlock:(CompareObjects)comparator
 {
-    if (self.count)
-    {
-        return self[0];
-    }
-    return nil;
-}
-
--(NSInteger)binarySearch:(id)key usingBlock:(CompareObjects)comparator{
     if(self.count == 0 || key == nil || comparator == NULL)
         return -1;
     NSInteger min = 0, max = (NSInteger)[self count] - 1;

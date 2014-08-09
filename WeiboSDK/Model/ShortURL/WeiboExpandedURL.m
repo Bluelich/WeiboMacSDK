@@ -36,10 +36,10 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.shortURL = [dict stringForKey:@"url_short" defaultValue:nil];
-        self.originalURL = [dict stringForKey:@"url_long" defaultValue:nil];
-        self.type = [dict intForKey:@"type" defaultValue:0];
-        self.result = [dict boolForKey:@"result" defaultValue:YES];
+        self.shortURL = [dict weibo_stringForKey:@"url_short" defaultValue:nil];
+        self.originalURL = [dict weibo_stringForKey:@"url_long" defaultValue:nil];
+        self.type = [dict weibo_intForKey:@"type" defaultValue:0];
+        self.result = [dict weibo_boolForKey:@"result" defaultValue:YES];
         self.site = [self siteForURL:self.originalURL];
         self.derivedType = [self _derivedType];
         

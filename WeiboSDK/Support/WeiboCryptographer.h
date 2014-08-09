@@ -21,6 +21,6 @@
 
 @interface NSString (WeiboCryptographer)
 
-@property (nonatomic, readonly) NSString * stringForLogging;
+@property (nonatomic, readonly) NSString * weibo_stringForLogging;
 
 @end

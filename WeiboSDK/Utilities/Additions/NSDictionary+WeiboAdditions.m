@@ -10,15 +10,15 @@
 
 @implementation NSDictionary (WeiboAdditions)
 
-- (BOOL)boolForKey:(NSString *)key defaultValue:(BOOL)defaultValue{
+- (BOOL)weibo_boolForKey:(NSString *)key defaultValue:(BOOL)defaultValue{
     return [self objectForKey:key] == [NSNull null] ? defaultValue 
     : [[self objectForKey:key] boolValue];
 }
-- (int)intForKey:(NSString *)key defaultValue:(int)defaultValue{
+- (int)weibo_intForKey:(NSString *)key defaultValue:(int)defaultValue{
     return [self objectForKey:key] == [NSNull null] 
     ? defaultValue : [[self objectForKey:key] intValue];
 }
-- (time_t)timeForKey:(NSString *)key defaultValue:(time_t)defaultValue{
+- (time_t)weibo_timeForKey:(NSString *)key defaultValue:(time_t)defaultValue{
     NSString *stringTime   = [self objectForKey:key];
     if ((id)stringTime == [NSNull null]) {
         stringTime = @"";
@@ -35,11 +35,11 @@
 	}
 	return defaultValue;
 }
-- (long long)longlongForKey:(NSString *)key defaultValue:(long long)defaultValue{
+- (long long)weibo_longlongForKey:(NSString *)key defaultValue:(long long)defaultValue{
     return [self objectForKey:key] == [NSNull null] 
     ? defaultValue : [[self objectForKey:key] longLongValue];
 }
-- (NSString *)stringForKey:(NSString *)key defaultValue:(NSString *)defaultValue{
+- (NSString *)weibo_stringForKey:(NSString *)key defaultValue:(NSString *)defaultValue{
     
     if ([self objectForKey:key] == nil || [self objectForKey:key] == [NSNull null])
     {

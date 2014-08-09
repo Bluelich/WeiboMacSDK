@@ -81,7 +81,7 @@ static Weibo * _sharedWeibo = nil;
                     continue;
                 }
                 if (account.oAuth2Token) {
-                    NSLog(@"<Token> account正在添加, token: %@", account.oAuth2Token.stringForLogging);
+                    NSLog(@"<Token> account正在添加, token: %@", account.oAuth2Token.weibo_stringForLogging);
                     
                     [self addAccount:account postsNotification:NO];
                     

@@ -10,9 +10,7 @@
 
 @interface NSArray (WeiboAdditions)
 
-@property (nonatomic, retain, readonly) id firstObject;
-
 typedef NSComparisonResult (^CompareObjects) (id, id);
-- (NSInteger)binarySearch:(id)key usingBlock:(CompareObjects)comparator;
+- (NSInteger)weibo_binarySearch:(id)key usingBlock:(CompareObjects)comparator;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface NSObject (AssociatedObject)
 
-- (id)objectWithAssociatedKey:(NSString *)key;
-- (void)setObject:(id)object forAssociatedKey:(NSString *)key retained:(BOOL)retain;
+- (id)weibo_objectWithAssociatedKey:(NSString *)key;
+- (void)weibo_setObject:(id)object forAssociatedKey:(NSString *)key retained:(BOOL)retain;
 
 @end

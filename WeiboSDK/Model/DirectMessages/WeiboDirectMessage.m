@@ -40,11 +40,11 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.messageID = [dict longlongForKey:@"id" defaultValue:0];
-        self.date = [dict timeForKey:@"created_at" defaultValue:0];
-        self.text = [dict stringForKey:@"text" defaultValue:@""];
-        self.senderID = (WeiboUserID)[dict longlongForKey:@"sender_id" defaultValue:0];
-        self.recipientID = (WeiboUserID)[dict longlongForKey:@"recipient_id" defaultValue:0];
+        self.messageID = [dict weibo_longlongForKey:@"id" defaultValue:0];
+        self.date = [dict weibo_timeForKey:@"created_at" defaultValue:0];
+        self.text = [dict weibo_stringForKey:@"text" defaultValue:@""];
+        self.senderID = (WeiboUserID)[dict weibo_longlongForKey:@"sender_id" defaultValue:0];
+        self.recipientID = (WeiboUserID)[dict weibo_longlongForKey:@"recipient_id" defaultValue:0];
         
         NSDictionary * senderDictionary = [dict objectForKey:@"sender"];
         NSDictionary * recipientDictionary = [dict objectForKey:@"recipient"];

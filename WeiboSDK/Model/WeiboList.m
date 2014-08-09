@@ -34,11 +34,11 @@
 {
     if (self = [super init])
     {
-        self.listID = [dict stringForKey:@"idstr" defaultValue:@""];
-        self.name = [dict stringForKey:@"name" defaultValue:@""];
-        self.mode = [dict stringForKey:@"mode" defaultValue:@""];
-        self.description = [dict stringForKey:@"description" defaultValue:@""];
-        self.memberCount = [dict longlongForKey:@"member_count" defaultValue:0];
+        self.listID = [dict weibo_stringForKey:@"idstr" defaultValue:@""];
+        self.name = [dict weibo_stringForKey:@"name" defaultValue:@""];
+        self.mode = [dict weibo_stringForKey:@"mode" defaultValue:@""];
+        self.description = [dict weibo_stringForKey:@"description" defaultValue:@""];
+        self.memberCount = [dict weibo_longlongForKey:@"member_count" defaultValue:0];
     }
     return self;
 }

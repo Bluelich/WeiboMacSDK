@@ -21,9 +21,9 @@
 {
     if (self = [self init])
     {
-        self.userID = (WeiboUserID)[dict longlongForKey:@"uid" defaultValue:0];
-        self.screenName = [dict stringForKey:@"nickname" defaultValue:@""];
-        self.remark = [dict stringForKey:@"remark" defaultValue:@""];
+        self.userID = (WeiboUserID)[dict weibo_longlongForKey:@"uid" defaultValue:0];
+        self.screenName = [dict weibo_stringForKey:@"nickname" defaultValue:@""];
+        self.remark = [dict weibo_stringForKey:@"remark" defaultValue:@""];
     }
     return self;
 }

@@ -41,7 +41,7 @@
     
     NSString * key = [self cryptoKeyWithSalt:salt];
     
-    NSLog(@"<Token> 将进行加密 text:%@, salt:%@, key:%@", text.stringForLogging, salt, key);
+    NSLog(@"<Token> 将进行加密 text:%@, salt:%@, key:%@", text.weibo_stringForLogging, salt, key);
     
     NSString * resultString = nil;
     
@@ -81,7 +81,7 @@
 
 @implementation NSString (WeiboCryptographer)
 
-- (NSString *)stringForLogging
+- (NSString *)weibo_stringForLogging
 {
     if (self.length > 8)
     {

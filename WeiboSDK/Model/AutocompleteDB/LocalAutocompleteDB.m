@@ -307,9 +307,9 @@ static LocalAutocompleteDB * sharedDB = nil;
     {
         WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
 
-        item.itemID = [dict stringForKey:@"uid" defaultValue:nil];
-        item.autocompleteText = [dict stringForKey:@"nickname" defaultValue:@""];
-        item.autocompleteSubtext = [dict stringForKey:@"remark" defaultValue:@""];
+        item.itemID = [dict weibo_stringForKey:@"uid" defaultValue:nil];
+        item.autocompleteText = [dict weibo_stringForKey:@"nickname" defaultValue:@""];
+        item.autocompleteSubtext = [dict weibo_stringForKey:@"remark" defaultValue:@""];
         item.autocompleteType = WeiboAutocompleteTypeUser;
         
         if (item.itemID.length)
