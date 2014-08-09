@@ -18,7 +18,8 @@ static id _defaultFilter;
     }
     return _defaultFilter;
 }
-- (BOOL)validStatus:(WeiboBaseStatus *)status{
+- (BOOL)validStatus:(WeiboBaseStatus * __attribute__((unused)))status
+{
     // subclass should implement.
     return YES;
 }

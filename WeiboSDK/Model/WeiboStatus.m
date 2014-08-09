@@ -36,7 +36,7 @@
         {
             if (![mark isKindOfClass:[NSString class]]) continue;
             
-            WeiboStatusID sid = [mark longLongValue];
+            WeiboStatusID sid = (WeiboStatusID)[mark longLongValue];
             if (!sid) continue;
             for (WeiboStatus * status in objects)
             {
@@ -56,7 +56,7 @@
         {
             if (![ad isKindOfClass:[NSDictionary class]]) continue;
             
-            WeiboStatusID statusID = [ad longlongForKey:@"id" defaultValue:0];
+            WeiboStatusID statusID = (WeiboStatusID)[ad longlongForKey:@"id" defaultValue:0];
             
             if (!statusID) continue;
             for (WeiboStatus * status in objects)
@@ -94,7 +94,7 @@
 			NSRange start = [src rangeOfString:@"<a href=\""];
 			if (start.location != NSNotFound) {
 				int l = (int)[src length];
-				NSRange fromRang = NSMakeRange(start.location + start.length, l-start.length-start.location);
+				NSRange fromRang = NSMakeRange(start.location + start.length, (NSUInteger)l-start.length-start.location);
 				end   = [src rangeOfString:@"\"" options:NSCaseInsensitiveSearch 
                                      range:fromRang];
 				if (end.location != NSNotFound) {
@@ -128,8 +128,8 @@
         self.favorited = [dic boolForKey:@"favorited" defaultValue:NO];
         self.liked = NO; // we don't have like state
         self.truncated = [dic boolForKey:@"truncated" defaultValue:NO];
-        self.inReplyToStatusID = [dic longlongForKey:@"in_reply_to_status_id" defaultValue:-1];
-		self.inReplyToUserID = [dic intForKey:@"in_reply_to_user_id" defaultValue:-1];
+        self.inReplyToStatusID = (WeiboStatusID)[dic longlongForKey:@"in_reply_to_status_id" defaultValue:0];
+		self.inReplyToUserID = (WeiboUserID)[dic longlongForKey:@"in_reply_to_user_id" defaultValue:0];
 		self.inReplyToScreenname = [dic stringForKey:@"in_reply_to_screen_name" defaultValue:@""];
 		self.thumbnailPic = [dic stringForKey:@"thumbnail_pic" defaultValue:nil];
 		self.middlePic = [dic stringForKey:@"bmiddle_pic" defaultValue:nil];
@@ -174,12 +174,12 @@
 + (NSString *)base62FromDouble:(double)value
 {
 	NSString *base62 = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    NSInteger baseLength = [base62 length];
+    NSUInteger baseLength = [base62 length];
     NSMutableString *returnValue = [NSMutableString string];
 	double g = value;
-	while (g != 0)
+	while (g != 0.)
     {
-		int x = fmod(g,baseLength);
+		NSUInteger x = (NSUInteger)fmod(g,baseLength);
 		NSString *y = [base62 substringWithRange:NSMakeRange(x, 1)];
 		[returnValue insertString:y atIndex:0];
 		value /= baseLength;
@@ -191,14 +191,14 @@
 {
     NSMutableString * url = [NSMutableString string];
 	NSString * idString = [NSString stringWithFormat:@"%lld",sid];
-	for (int i = (int)(idString.length - 7); i > -7; i = i - 7)
+	for (int i = ((int)idString.length - 7); i > -7; i = i - 7)
     {
-		NSString * temp = [idString substringWithRange:NSMakeRange(i < 0? 0:i, i < 0? i + 7:7)];
+		NSString * temp = [idString substringWithRange:NSMakeRange((NSUInteger)(i < 0? 0:i), (NSUInteger)(i < 0? i + 7:7))];
 		temp = [self base62FromDouble:[temp doubleValue]];
-        NSInteger zerosToFill = 4 - temp.length;
+        NSUInteger zerosToFill = 4 - temp.length;
         if (i > 0)
         {
-            for (int j = 0; j < zerosToFill; j++)
+            for (NSUInteger j = 0; j < zerosToFill; j++)
             {
                 [url insertString:@"0" atIndex:0];
             }

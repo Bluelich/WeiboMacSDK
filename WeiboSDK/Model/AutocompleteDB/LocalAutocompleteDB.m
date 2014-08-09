@@ -205,8 +205,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     NSString * username = screenname;
     NSString * fullname = [self stylizedPinyinFromString:screenname];
     NSString * avatar_url = url;
-    NSNumber * updated_at = [NSNumber numberWithInteger:[[NSDate date] 
-                                                        timeIntervalSince1970]];
+    NSNumber * updated_at = @([[NSDate date] timeIntervalSince1970]);
     
     [db executeUpdate:@"insert or replace into names values (?,?,?,?,?,?)",ID,priority,username,fullname,avatar_url,updated_at];
 }
@@ -215,7 +214,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     if (!users.count) return;
     
     dispatch_async_low(^{
-        [self.dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        [self.dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback __attribute__((unused))) {
             
             for (WeiboUser * user in users)
             {
@@ -241,7 +240,7 @@ static LocalAutocompleteDB * sharedDB = nil;
     NSString * fullpinyin = [mString uppercaseString];
     return [fullpinyin substringToIndex:[fullpinyin length] > 16?16:[fullpinyin length]];
 }
-- (void)prioritizeUsername:(NSString *)screenname
+- (void)prioritizeUsername:(NSString * __attribute__((unused)))screenname
 {
     WeiboUnimplementedMethod
 }
@@ -333,7 +332,7 @@ static LocalAutocompleteDB * sharedDB = nil;
         
         for (WeiboAutocompleteResultItem * item in localItems)
         {
-            NSInteger existIdx = [results indexOfObject:item];
+            NSUInteger existIdx = [results indexOfObject:item];
             if (existIdx != NSNotFound)
             {
                 WeiboAutocompleteResultItem * exist = results[existIdx];

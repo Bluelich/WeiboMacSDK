@@ -32,7 +32,7 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.sid = [dict longlongForKey:@"id" defaultValue:-1];
+        self.sid = (WeiboStatusID)[dict longlongForKey:@"id" defaultValue:0];
 		self.createdAt = [dict timeForKey:@"created_at" defaultValue:0];
 		self.text = [dict stringForKey:@"text" defaultValue:@""];
         

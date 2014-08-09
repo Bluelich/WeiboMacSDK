@@ -16,7 +16,7 @@
     _loadOlderError = nil;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder * __attribute__((unused)))aDecoder
 {
     if (self = [self init])
     {
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
+- (void)encodeWithCoder:(NSCoder * __attribute__((unused)))aCoder
 {
     
 }

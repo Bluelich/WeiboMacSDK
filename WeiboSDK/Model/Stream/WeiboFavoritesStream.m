@@ -51,7 +51,7 @@
     if (!theAccount || !status) return;
     if (theAccount != account) return;
     
-    NSInteger idx = [self.statuses indexOfObject:status];
+    NSUInteger idx = [self.statuses indexOfObject:status];
     
     if (status.favorited)
     {

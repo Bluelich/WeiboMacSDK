@@ -29,7 +29,7 @@
     [self oAuth2TokenResponse:returnValue info:info];
 }
 
-- (void)oAuth2TokenResponse:(id)returnValue info:(id)info{
+- (void)oAuth2TokenResponse:(id)returnValue info:(id __attribute__((unused)))info{
     NSDictionary * dic = returnValue;
     NSString * token = [dic valueForKey:@"access_token"];
     NSTimeInterval expiresIn = [[dic valueForKey:@"expires_in"] intValue];

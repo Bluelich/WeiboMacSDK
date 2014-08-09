@@ -218,7 +218,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
                 
                 for (NSNumber * userID in self.unreadConversationUserIDsFromCache)
                 {
-                    WeiboDirectMessageConversation * conversation = [self conversationWithUserID:userID.longLongValue];
+                    WeiboDirectMessageConversation * conversation = [self conversationWithUserID:userID.unsignedLongLongValue];
                     if (!conversation) continue;
                     
                     WeiboDirectMessage * message = [conversation newestMessageNotFrom:me];
@@ -267,22 +267,22 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     return [[self newestMessageNotFromMe] date];
 }
 
-- (void)_deleteMessage:(WeiboDirectMessage *)message
+- (void)_deleteMessage:(WeiboDirectMessage * __attribute__((unused)))message
 {
     
 }
 
-- (void)deleteMessage:(WeiboDirectMessage *)message
+- (void)deleteMessage:(WeiboDirectMessage * __attribute__((unused)))message
 {
     
 }
 
-- (void)didDeleteMessage:(id)response info:(id)info
+- (void)didDeleteMessage:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     
 }
 
-- (void)deleteConversation:(WeiboDirectMessageConversation *)conversation
+- (void)deleteConversation:(WeiboDirectMessageConversation * __attribute__((unused)))conversation
 {
     
 }

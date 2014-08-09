@@ -26,11 +26,11 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 @property (nonatomic, strong) WeiboRequestError * loadNewerError;
 @property (nonatomic, strong) WeiboRequestError * loadOlderError;
 
-@property (nonatomic, assign, readonly) NSInteger topStatusesCount;
+@property (nonatomic, assign, readonly) NSUInteger topStatusesCount;
 @property (weak, nonatomic, readonly) WeiboBaseStatus * viewedMostRecentStatus;
-@property (nonatomic, readonly) NSInteger unreadCount;
+@property (nonatomic, readonly) NSUInteger unreadCount;
 
-@property (nonatomic, readonly) NSInteger loadOlderSuccessTimes;
+@property (nonatomic, readonly) NSUInteger loadOlderSuccessTimes;
 
 #pragma mark -
 #pragma mark Accessors
@@ -75,7 +75,7 @@ extern NSString * const WeiboStatusStreamNotificationAddingTypeKey;
 - (void)deleteStatusNotification:(NSNotification *)notification;
 
 - (void)noticeDidReceiveNewStatuses:(NSArray *)newStatuses withAddingType:(WeiboStatusesAddingType)type;
-- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index;
+- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSUInteger)index;
 
 - (NSArray *)statusFilters;
 

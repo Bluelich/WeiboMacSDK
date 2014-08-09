@@ -104,7 +104,7 @@ static Weibo * _sharedWeibo = nil;
     [cachePruningTimer invalidate];
 }
 
-- (void)heartbeat:(id)sender
+- (void)heartbeat:(id __attribute__((unused)))sender
 {
     for (WeiboAccount * account in accounts)
     {
@@ -116,7 +116,7 @@ static Weibo * _sharedWeibo = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDidHeartbeatNotification object:nil];
 }
-- (void)pruneCaches:(id)sender
+- (void)pruneCaches:(id __attribute__((unused)))sender
 {
     for (WeiboAccount * account in accounts)
     {
@@ -241,7 +241,7 @@ static Weibo * _sharedWeibo = nil;
             [account setUser:newUser];
             [account myUserDidUpdate:newUser];
             
-            NSInteger existIndex = [self.accounts indexOfObject:account];
+            NSUInteger existIndex = [self.accounts indexOfObject:account];
             
             if (existIndex != NSNotFound)
             {

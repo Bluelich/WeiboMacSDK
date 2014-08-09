@@ -51,7 +51,7 @@
     WeiboCallback * callback = [self loadOlderResponseCallback];
     WeiboAPI * api = [account authenticatedSuperpowerRequest:callback];
     
-    [api likeListForStautsID:self.baseStatus.sid page:loadedPage+1 count:50];
+    [api likeListForStautsID:self.baseStatus.sid page:(NSUInteger)(loadedPage+1) count:50];
 }
 - (BOOL)supportsFillingInGaps
 {

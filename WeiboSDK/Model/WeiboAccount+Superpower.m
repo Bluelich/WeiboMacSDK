@@ -57,7 +57,7 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeFailedNotification object:self userInfo:@{@"error":error}];
 }
 
-- (void)superpowerAuthorizeResponse:(id)response info:(id)info
+- (void)superpowerAuthorizeResponse:(id)response info:(id __attribute__((unused)))info
 {
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
@@ -66,7 +66,7 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     else if ([response isKindOfClass:[NSDictionary class]])
     {
         NSString * token = [response stringForKey:@"access_token" defaultValue:nil];
-        WeiboUserID userID = [response longlongForKey:@"uid" defaultValue:0];
+        WeiboUserID userID = (WeiboUserID)[response longlongForKey:@"uid" defaultValue:0];
         
         if (userID != self.user.userID)
         {

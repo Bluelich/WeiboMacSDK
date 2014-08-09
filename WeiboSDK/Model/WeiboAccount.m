@@ -345,9 +345,9 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     {
         NSMutableArray * bits = [NSMutableArray array];
         
-        NSInteger userBitsCount = 24;
+        NSUInteger userBitsCount = 24;
         
-        for (int i = 0; i < userBitsCount; i++)
+        for (NSUInteger i = 0; i < userBitsCount; i++)
         {
             [bits addObject:@((options & (1 << i)) ? 1 : 0)];
         }
@@ -360,7 +360,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         
         options = 0;
         
-        for (int i = 0; i < userBitsCount; i++)
+        for (NSUInteger i = 0; i < userBitsCount; i++)
         {
             options |= [bits[i] longLongValue] << i;
         }
@@ -513,7 +513,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [_delegate account:self didCheckingUnreadCount:nil];
     }
 }
-- (void)unreadCountResponse:(id)response info:(id)info{
+- (void)unreadCountResponse:(id)response info:(id __attribute__((unused)))info{
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
         return ;
@@ -521,17 +521,17 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     WeiboUnread * unread = (WeiboUnread *)response;
     
-    self.newStatusesCount = unread.newStatus;
-    self.newStatusMentionsCount = unread.newStatusMentions;
-    self.newCommentMentionsCount = unread.newCommentMentions;
-    self.newCommentsCount = unread.newComments;
-    self.newDirectMessagesCount = unread.newDirectMessages;
+    self.newStatusesCount = (NSInteger)unread.newStatus;
+    self.newStatusMentionsCount = (NSInteger)unread.newStatusMentions;
+    self.newCommentMentionsCount = (NSInteger)unread.newCommentMentions;
+    self.newCommentsCount = (NSInteger)unread.newComments;
+    self.newDirectMessagesCount = (NSInteger)unread.newDirectMessages;
     
-    if (unread.newFollowers > self.newFollowersCount)
+    if ((NSInteger)unread.newFollowers > self.newFollowersCount)
     {
-        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForNewFollowersCount:unread.newFollowers forAccount:self];
+        [[WeiboUserNotificationCenter defaultUserNotificationCenter] scheduleNotificationForNewFollowersCount:(NSInteger)unread.newFollowers forAccount:self];
     }
-    self.newFollowersCount = unread.newFollowers;
+    self.newFollowersCount = (NSInteger)unread.newFollowers;
     
     
     if (unread.newStatus > 0)
@@ -553,10 +553,10 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [commentsToMeStream loadNewer];
         [self resetUnreadCountWithType:WeiboUnreadCountTypeComment];
     }
-    [self setNewDirectMessagesCount:unread.newDirectMessages];
+    [self setNewDirectMessagesCount:(NSInteger)unread.newDirectMessages];
     // can NOT get access to DM api yet, just post a notification
     
-    [self setNewFollowersCount:unread.newFollowers];
+    [self setNewFollowersCount:(NSInteger)unread.newFollowers];
     
     if ([_delegate respondsToSelector:@selector(account:finishCheckingUnreadCount:)]) {
         [_delegate account:self finishCheckingUnreadCount:unread];
@@ -627,7 +627,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         {
             // Also retweet
             
-            WeiboAPI * api = [self authenticatedRequest:nil];
+            WeiboAPI * replyAPI = [self authenticatedRequest:nil];
             
             NSString * text = composition.text;
             
@@ -641,7 +641,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
                 text = [self appendQuotationToText:text withStatus:replyToStatus];
             }
             
-            [api repost:text repostingID:replyToStatus.sid shouldComment:NO];
+            [replyAPI repost:text repostingID:replyToStatus.sid shouldComment:NO];
         }
     }
     else
@@ -655,8 +655,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     NSString * additionalText = [NSString stringWithFormat:@" //@%@:%@", status.user.screenName, status.text];
     
-    NSInteger textLength = WeiboCompositionTextLength(text);
-    NSInteger additionalTextLength = WeiboCompositionTextLength(additionalText);
+    NSUInteger textLength = WeiboCompositionTextLength(text);
+    NSUInteger additionalTextLength = WeiboCompositionTextLength(additionalText);
     
     if (textLength + additionalTextLength <= 140)
     {
@@ -713,7 +713,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     }
     [(WeiboCallback *)info invoke:self];
 }
-- (void)myUserDidUpdate:(WeiboUser *)user{
+- (void)myUserDidUpdate:(WeiboUser * __attribute__((unused)))user{
     [self _postAccountDidUpdateNotification];
 }
 - (void)verifyCredentials:(WeiboCallback *)aCallback{
@@ -736,8 +736,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
 	[icon lockFocus];
     
-    float xoff = (size.width - scaledSize.width) * 0.50;
-    float yoff = (size.height - scaledSize.height) * 0.50;
+    double xoff = (size.width - scaledSize.width) * 0.50;
+    double yoff = (size.height - scaledSize.height) * 0.50;
     
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
     [image drawInRect:NSMakeRect(xoff, yoff, scaledSize.width, scaledSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -763,8 +763,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     _flags.requestingAvatar = 1;
     
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        _flags.requestingAvatar = 0;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response __attribute__((unused)), NSData *data, NSError *connectionError __attribute__((unused))) {
+        self->_flags.requestingAvatar = 0;
         if (data)
         {
             NSImage * image = [[NSImage alloc] initWithData:data];
@@ -780,6 +780,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
                 [nc postNotificationName:kWeiboAccountAvatarDidUpdateNotification object:image];
             }
         }
+        // FIXME: callback data is enough?
+        if (aCallback) [aCallback invoke:data];
     }];
 }
 
@@ -995,11 +997,11 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     status.liked = !status.liked;
     
-    WeiboAPI * api = [self authenticatedSuperpowerRequestWithCompletion:^(id responseObject, id info) {
+    WeiboAPI * api = [self authenticatedSuperpowerRequestWithCompletion:^(id responseObject, id info __attribute__((unused))) {
         if ([responseObject isKindOfClass:[WeiboRequestError class]])
         {
             status.liked = shouldUnlike;
-#warning Posts notification here
+            // TODO: Posts notification here
         }
     }];
     
@@ -1150,7 +1152,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self.directMessagesManager)
     {
-        return self.directMessagesManager.unreadConversations.count;
+        return (NSInteger)self.directMessagesManager.unreadConversations.count;
     }
     
     return _newDirectMessagesCount;
@@ -1160,7 +1162,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self.timelineStream.statuses.count)
     {
-        return self.timelineStream.unreadCount;
+        return (NSInteger)self.timelineStream.unreadCount;
     }
     return _newStatusesCount;
 }
@@ -1173,7 +1175,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self.statusMentionsStream.hasData)
     {
-        return self.statusMentionsStream.unreadCount;
+        return (NSInteger)self.statusMentionsStream.unreadCount;
     }
     return _newStatusMentionsCount;
 }
@@ -1181,7 +1183,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self.commentMentionsStream.hasData)
     {
-        return self.commentMentionsStream.unreadCount;
+        return (NSInteger)self.commentMentionsStream.unreadCount;
     }
     return _newCommentMentionsCount;
 }
@@ -1190,7 +1192,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     if (self.commentsToMeStream.hasData)
     {
-        return self.commentsToMeStream.unreadCount;
+        return (NSInteger)self.commentsToMeStream.unreadCount;
     }
     return _newCommentsCount;
 }

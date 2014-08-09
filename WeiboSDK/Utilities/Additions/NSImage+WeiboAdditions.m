@@ -52,7 +52,7 @@
             // set the place to save the GIF to
             CGImageDestinationRef animatedGIF = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData,
                                                                                  kUTTypeGIF,
-                                                                                 numFrame,
+                                                                                 (size_t)numFrame,
                                                                                  NULL
                                                                                  );
             CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast; //kCGImageAlphaNoneSkipFirst
@@ -66,15 +66,15 @@
                 
                 CGDataProviderRef frameProvider = CGDataProviderCreateWithData(NULL,
                                                                                [bitmapRep bitmapData],
-                                                                               [bitmapRep bytesPerRow] * [bitmapRep pixelsHigh],
+                                                                               (size_t)([bitmapRep bytesPerRow] * [bitmapRep pixelsHigh]),
                                                                                NULL
                                                                                );
                 
-                CGImageRef cgFrame = CGImageCreate ([bitmapRep pixelsWide],
-                                                    [bitmapRep pixelsHigh],
-                                                    bitsPerComponent,
-                                                    [bitmapRep bitsPerPixel],
-                                                    [bitmapRep bytesPerRow],
+                CGImageRef cgFrame = CGImageCreate ((size_t)[bitmapRep pixelsWide],
+                                                    (size_t)[bitmapRep pixelsHigh],
+                                                    (size_t)bitsPerComponent,
+                                                    (size_t)[bitmapRep bitsPerPixel],
+                                                    (size_t)[bitmapRep bytesPerRow],
                                                     colorSpaceRef,
                                                     bitmapInfo,
                                                     frameProvider,

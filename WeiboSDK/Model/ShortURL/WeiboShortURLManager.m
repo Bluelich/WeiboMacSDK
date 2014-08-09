@@ -84,7 +84,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
     // random account here, prevents open API access limit
     WeiboAccount * account = [accounts objectAtIndex:arc4random() % accounts.count];
     
-    [[account authenticatedRequestWithCompletion:^(id responseObject, id info) {
+    [[account authenticatedRequestWithCompletion:^(id responseObject, id info __attribute__((unused))) {
         [self.requestingURLs minusSet:urls];
         
         if (![responseObject isKindOfClass:[WeiboRequestError class]])
@@ -93,7 +93,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
             {
                 if (!shortURL.shortURL.length || !shortURL.originalURL.length) continue;
                 
-                [_shortURLs setObject:shortURL forKey:shortURL.shortURL];
+                [self->_shortURLs setObject:shortURL forKey:shortURL.shortURL];
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WeiboShortURLManagerBatchRequestDidSuccessNotification object:self userInfo:@{WeiboShortURLManagerNotificationShortURLSetKey : urls}];
@@ -114,7 +114,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
         
         while (array.count)
         {
-            NSInteger count = MIN(20, array.count);
+            NSUInteger count = MIN((NSUInteger)20, array.count);
             NSRange range = NSMakeRange(0, count);
             
             NSSet * batch = [NSSet setWithArray:[array subarrayWithRange:range]];

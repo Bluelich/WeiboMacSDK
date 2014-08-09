@@ -48,11 +48,11 @@
     
     [self GET:@"direct_messages/sent.json" parameters:params callback:callback];
 }
-- (void)directMessageResponse:(id)response info:(id)info
+- (void)directMessageResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     WeiboUnimplementedMethod;
 }
-- (void)directMessagesResponse:(id)response info:(id)info
+- (void)directMessagesResponse:(id)response info:(id __attribute__((unused)))info
 {
     [WeiboDirectMessage parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
@@ -69,7 +69,7 @@
     [self GET:@"direct_messages/user_list.json" parameters:params callback:callback];
 }
 
-- (void)directMessageConversationResponse:(id)returnValue info:(id)info
+- (void)directMessageConversationResponse:(id)returnValue info:(id __attribute__((unused)))info
 {
     [WeiboDirectMessageConversation parseObjectsWithJSONObject:returnValue account:authenticateWithAccount callback:responseCallback];
 }
@@ -100,7 +100,7 @@
     [self POST:@"direct_messages/new.json" parameters:params callback:callback];
 }
 
-- (void)directMessageSendResponse:(id)response info:(id)info
+- (void)directMessageSendResponse:(id)response info:(id __attribute__((unused)))info
 {
     [authenticateWithAccount refreshTimelineForType:WeiboCompositionTypeDirectMessage];
     [responseCallback invoke:response];

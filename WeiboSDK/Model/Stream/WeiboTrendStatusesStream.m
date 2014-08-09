@@ -45,7 +45,7 @@
     {
         loadedPage++;
     }
-    loadedPage = MAX(1, loadedPage);
+    loadedPage = MAX((NSUInteger)1, loadedPage);
     
     [super addStatuses:newStatuses withType:type];
 }

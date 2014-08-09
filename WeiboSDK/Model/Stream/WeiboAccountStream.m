@@ -35,7 +35,7 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        WeiboUserID userID = [aDecoder decodeInt64ForKey:@"account-id"];
+        WeiboUserID userID = (WeiboUserID)[aDecoder decodeInt64ForKey:@"account-id"];
         self.account = [[Weibo sharedWeibo] accountWithUserID:userID];
         
         if (!self.account) return nil;
@@ -47,7 +47,7 @@
 {
     [super encodeWithCoder:aCoder];
 
-    [aCoder encodeInt64:account.user.userID forKey:@"account-id"];
+    [aCoder encodeInt64:(int64_t)account.user.userID forKey:@"account-id"];
 }
 
 - (WeiboBaseStatus *)newestStatusThatIsNotMine{
@@ -74,7 +74,7 @@
 {
     if (notification.object == self.account)
     {
-        WeiboUserID userID = [notification.userInfo[@"userID"] longLongValue];
+        WeiboUserID userID = [notification.userInfo[@"userID"] unsignedLongLongValue];
         NSString * remark = notification.userInfo[@"remark"];
         
         for (WeiboBaseStatus * status in self.statuses)

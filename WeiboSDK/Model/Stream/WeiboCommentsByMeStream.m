@@ -55,7 +55,7 @@
     return [[super autosaveName] stringByAppendingString:@"comments_by_me.scrollPosition"];
 }
 
-- (NSInteger)unreadCount
+- (NSUInteger)unreadCount
 {
     return 0; // We must readed all comments sent by ourselves
 }

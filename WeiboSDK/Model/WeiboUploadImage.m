@@ -95,7 +95,7 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUploadImageUploadProgressDidUpdateNotification object:self];
 }
 
-- (void)uploadFinished:(id)responseObject info:(id)info
+- (void)uploadFinished:(id)responseObject info:(id __attribute__((unused)))info
 {
     [self setUploadProgress:1.0];
     [self setUploadRequest:nil];

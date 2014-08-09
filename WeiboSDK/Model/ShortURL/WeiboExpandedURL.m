@@ -57,7 +57,7 @@
     if (!domain.length) return WeiboExpandedURLSiteUnknow;
     domain = [domain lowercaseString];
     
-    NSInteger domainLength = domain.length;
+    NSUInteger domainLength = domain.length;
     
 #define MAP(_suffix_, _result_) \
     if ([domain hasSuffix:_suffix_]) { \

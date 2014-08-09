@@ -20,7 +20,7 @@
     WeiboCallback * callback = WeiboCallbackMake(self, @selector(myUserIDResponse:info:), nil);
     [self GET:@"account/get_uid.json" parameters:nil callback:callback];
 }
-- (void)myUserIDResponse:(id)returnValue info:(id)info
+- (void)myUserIDResponse:(id __attribute__((unused)))returnValue info:(id __attribute__((unused)))info
 {
     if ([returnValue isKindOfClass:[WeiboRequestError class]]) {
         return;
@@ -31,7 +31,7 @@
     NSDictionary * params = [NSDictionary dictionaryWithObject:userID forKey:@"uid"];
     [self GET:@"users/show.json" parameters:params callback:callback];
 }
-- (void)verifyCredentialsResponse:(id)response info:(id)info
+- (void)verifyCredentialsResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     [WeiboUser parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
@@ -61,7 +61,7 @@
 }
 
 #pragma mark ( User Response Handling )
-- (void)userResponse:(id)response info:(id)info
+- (void)userResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     [WeiboUser parseObjectWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
@@ -113,26 +113,26 @@
                              [NSString stringWithFormat:@"%lld",tuid],@"target_id", nil];
     [self GET:@"friendships/show.json" parameters:params callback:[self friendshipExistsCallback]];
 }
-- (void)friendshipForSourceUserID:(WeiboUserID)suid targetUserID:(WeiboUserID)tuid
+- (void)friendshipForSourceUserID:(WeiboUserID __attribute__((unused)))suid targetUserID:(WeiboUserID __attribute__((unused)))tuid
 {
     WeiboUnimplementedMethod
 }
-- (void)friendshipForSourceUsername:(NSString *)sscreenname targetUsername:(NSString *)tscreenname
+- (void)friendshipForSourceUsername:(NSString * __attribute__((unused)))sscreenname targetUsername:(NSString * __attribute__((unused)))tscreenname
 {
     WeiboUnimplementedMethod
 }
-- (void)friendshipInfo:(id)response info:(id)info
+- (void)friendshipInfo:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     WeiboUnimplementedMethod
 }
-- (void)friendshipExists:(id)response info:(id)info
+- (void)friendshipExists:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     [responseCallback invoke:[response objectForKey:@"target"]];
 }
 
 #pragma mark - User Lists
 
-- (void)userlistResponse:(id)response info:(id)info
+- (void)userlistResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     [WeiboUser parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
@@ -141,7 +141,7 @@
 {
     return [self userlistCallbackWithCursor:0];
 }
-- (WeiboCallback *)userlistCallbackWithCursor:(WeiboUserID)cursor
+- (WeiboCallback *)userlistCallbackWithCursor:(WeiboUserID __attribute__((unused)))cursor
 {
     return WeiboCallbackMake(self, @selector(userlistResponse:info:), nil);
 }

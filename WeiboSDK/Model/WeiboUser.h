@@ -33,7 +33,6 @@
     time_t createAt;
     BOOL following;
     BOOL followMe;
-    BOOL verified;
     NSTimeInterval cacheTime;
 }
 

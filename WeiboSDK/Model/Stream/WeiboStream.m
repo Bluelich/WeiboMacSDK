@@ -12,7 +12,7 @@
 @synthesize cacheTime, statuses, savedCellIndex, savedRelativeOffset;
 @synthesize viewedMostRecentID = _viewedMostRecentID;
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder * __attribute__((unused)))aDecoder
 {
     if (self = [self init])
     {
@@ -20,7 +20,7 @@
     }
     return self;
 }
-- (void)encodeWithCoder:(NSCoder *)aCoder
+- (void)encodeWithCoder:(NSCoder * __attribute__((unused)))aCoder
 {
     
 }
@@ -38,7 +38,8 @@
 - (void)retryLoadOlder{
     
 }
-- (void)fillInGap:(id)arg1{
+- (void)fillInGap:(id __attribute__((unused)))arg1
+{
     // subclass should implement
 }
 - (BOOL)supportsFillingInGaps{
@@ -53,7 +54,7 @@
 - (NSString *)autosaveName{
     return nil;
 }
-- (NSUInteger)statuseIndexByID:(WeiboStatusID)theID{
+- (NSUInteger)statuseIndexByID:(WeiboStatusID __attribute__((unused)))theID{
     return 0;
 }
 - (BOOL)isStreamEnded{
@@ -71,8 +72,7 @@
     NSString * key = [self viewedMostRecentIDKey];
     if (key)
     {
-        NSNumber * value = [NSNumber numberWithLongLong:viewedMostRecentID];
-        [[NSUserDefaults standardUserDefaults] setObject:value forKey:key];
+        [[NSUserDefaults standardUserDefaults] setObject:@(viewedMostRecentID) forKey:key];
     }
 }
 - (WeiboStatusID)viewedMostRecentID
@@ -83,7 +83,7 @@
         if (key)
         {
             NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];
-            _viewedMostRecentID = [[ud objectForKey:key] longLongValue];
+            _viewedMostRecentID = [[ud objectForKey:key] unsignedLongLongValue];
         }
     }
     return _viewedMostRecentID;

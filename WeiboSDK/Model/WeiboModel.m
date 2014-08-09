@@ -12,8 +12,6 @@
 #import <objc/runtime.h>
 #import <libextobjc/extobjc.h>
 
-static NSMutableDictionary *keyNames = nil;
-
 @interface NSObject (WeiboModelSetMetaData)
 
 - (void)weibo_setServerMetaData:(NSDictionary *)metaData;
@@ -27,6 +25,8 @@ static NSMutableDictionary *keyNames = nil;
 @end
 
 @implementation WeiboModel
+
+static NSMutableDictionary *keyNames = nil;
 
 + (void)enumeratePropertiesUsingBlock:(void (^)(objc_property_t property, BOOL *stop))block {
 	Class cls = self;
@@ -59,7 +59,7 @@ static NSMutableDictionary *keyNames = nil;
 
 	NSMutableArray *names = [[NSMutableArray alloc] init];
 	
-    [self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL *stop) {
+    [self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL * __attribute__((unused)) stop) {
         ext_propertyAttributes *attributes = ext_copyPropertyAttributes(property);
         @onExit {
             free(attributes);
@@ -146,7 +146,7 @@ static NSMutableDictionary *keyNames = nil;
     }
     return self;
 }
-- (BOOL)updateWithJSONDictionary:(NSDictionary *)dict
+- (BOOL)updateWithJSONDictionary:(NSDictionary * __attribute__((unused)))dict
 {
     return YES;
 }
@@ -226,7 +226,7 @@ static NSMutableDictionary *keyNames = nil;
     return result;
 }
 
-+ (void)processObjects:(NSMutableArray *)objects withMetadata:(NSDictionary *)metadata
++ (void)processObjects:(NSMutableArray * __attribute__((unused)))objects withMetadata:(NSDictionary * __attribute__((unused)))metadata
 {
     
 }
@@ -289,7 +289,7 @@ static NSMutableDictionary *keyNames = nil;
     
     return model;
 }
-+ (void)processObject:(WeiboModel *)object withMetadata:(NSDictionary *)metadata
++ (void)processObject:(WeiboModel * __attribute__((unused)))object withMetadata:(NSDictionary * __attribute__((unused)))metadata
 {
     
 }

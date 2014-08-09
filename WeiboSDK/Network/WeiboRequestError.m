@@ -50,7 +50,6 @@ NSString * const WeiboRequestErrorDomain = @"WeiboRequestErrorDomain";
         error_code = [[resultDictionary valueForKey:@"error_code"] intValue];
     }
     if ((self = [super initWithDomain:WeiboRequestErrorDomain code:error_code userInfo:nil])) {
-        NSDictionary * resultDictionary = [self parseResponseToDictionaryWithString:responseString];
         requestURLString = [resultDictionary valueForKey:@"request"];
         errorDetailCode = [[resultDictionary valueForKey:@"error_detail_code"] intValue];
         errorString = [resultDictionary valueForKey:@"error"];

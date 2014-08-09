@@ -44,7 +44,7 @@
 {
     [WeiboStatus parseObjectsWithJSONObject:response account:authenticateWithAccount rootKey:info[@"rootKey"] callback:responseCallback];
 }
-- (void)commentsResponse:(id)response info:(id)info{
+- (void)commentsResponse:(id)response info:(id __attribute__((unused)))info{
     [WeiboComment parseObjectsWithJSONObject:response account:authenticateWithAccount callback:responseCallback];
 }
 - (void)friendsTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count{
@@ -99,7 +99,7 @@
 
     [self statusesRequest:@"statuses/repost_timeline.json" parameters:params sinceID:since maxID:max count:count callback:WeiboCallbackMake(self, @selector(statusesResponse:info:), @{@"rootKey": @"reposts"})];
 }
-- (void)commentConversationWithCommentID:(WeiboStatusID)cid
+- (void)commentConversationWithCommentID:(WeiboStatusID __attribute__((unused)))cid
 {
     WeiboUnimplementedMethod
     
@@ -129,7 +129,7 @@
     NSDictionary * params = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"page",[NSString stringWithFormat:@"%ld",count],@"count", nil];
     [self GET:@"favorites.json" parameters:params callback:callback];
 }
-- (void)favoritesResponse:(id)returnValue info:(id)info
+- (void)favoritesResponse:(id)returnValue info:(id __attribute__((unused)))info
 {
     [WeiboFavoriteStatus parseObjectsWithJSONObject:returnValue account:authenticateWithAccount callback:responseCallback];
 }
@@ -145,7 +145,7 @@
     [self POST:@"favorites/destroy.json" parameters:@{@"id":@(statusID)} callback:callback];
 }
 
-- (void)favoriteActionResponse:(id)responseObject info:(id)info
+- (void)favoriteActionResponse:(id)responseObject info:(id __attribute__((unused)))info
 {
     [responseCallback invoke:responseObject];
 }
@@ -153,8 +153,8 @@
 #pragma mark - Like
 - (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count
 {
-    [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WeiboBlockCallback(^(id responseObject, id info) {
-        [WeiboLikeStatus parseObjectsWithJSONObject:responseObject account:authenticateWithAccount callback:responseCallback];
+    [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WeiboBlockCallback(^(id responseObject, id info __attribute__((unused))) {
+        [WeiboLikeStatus parseObjectsWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
     }, nil)];
 }
 - (void)likeStatusID:(WeiboStatusID)statusID
@@ -167,8 +167,8 @@
 }
 - (WeiboCallback *)likeActionCallback
 {
-    return WeiboBlockCallback(^(id responseObject, id info) {
-        [responseCallback invoke:responseObject];
+    return WeiboBlockCallback(^(id responseObject, id info __attribute__((unused))) {
+        [self->responseCallback invoke:responseObject];
     }, nil);
 }
 
@@ -196,7 +196,7 @@
     WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(trendsResponse:info:) info:nil];
     [self GET:@"trends/hourly.json" parameters:nil callback:callback];
 }
-- (void)trendsResponse:(id)returnValue info:(id)info{
+- (void)trendsResponse:(id)returnValue info:(id __attribute__((unused)))info{
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
     dispatch_async(queue, ^{
         NSDictionary * trends = [returnValue objectForKey:@"trends"];
@@ -207,7 +207,7 @@
             [result addObject:[item objectForKey:@"query"]];
         }
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [responseCallback invoke:result];
+            [self->responseCallback invoke:result];
         });
     });
 }
@@ -221,7 +221,7 @@
 {
     [self GET:@"friendships/groups.json" parameters:nil callback:WeiboCallbackMake(self, @selector(listsResponse:info:), nil)];
 }
-- (void)listsResponse:(id)response info:(id)info
+- (void)listsResponse:(id)response info:(id __attribute__((unused)))info
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSDictionary * dict = response;
@@ -241,12 +241,12 @@
             result = @[];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [responseCallback invoke:result];
+            [self->responseCallback invoke:result];
         });
     });
 }
 
-- (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSInteger)count page:(NSInteger)page
+- (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSUInteger)count page:(NSUInteger)page
 {
     if ([listID isEqual:WeiboDummyListIDFirendCircle])
     {
@@ -267,7 +267,7 @@
 #pragma mark -
 #pragma mark - Hot 
 
-- (void)hotStatusesForPage:(NSInteger)page
+- (void)hotStatusesForPage:(NSInteger __attribute__((unused)))page
 {
     WeiboUnimplementedMethod
 //    if (!page) page = 1;
@@ -280,10 +280,10 @@
 
 #pragma mark -
 #pragma mark Weibo Access
-- (void)statuseResponse:(id)response info:(id)info{
+- (void)statuseResponse:(id)response info:(id __attribute__((unused)))info{
     [responseCallback invoke:response];
 }
-- (void)commentResponse:(id)response info:(id)info
+- (void)commentResponse:(id)response info:(id __attribute__((unused)))info
 {
     [responseCallback invoke:response];
 }

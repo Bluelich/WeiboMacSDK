@@ -13,7 +13,7 @@
 
 #pragma mark -
 #pragma mark Other
-- (void)unreadCountSinceID:(WeiboStatusID)since{
+- (void)unreadCountSinceID:(WeiboStatusID __attribute__((unused)))since{
     WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
     NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
     
@@ -28,7 +28,7 @@
 - (void)unreadCount{
     [self unreadCountSinceID:0];
 }
-- (void)unreadCountResponse:(id)response info:(id)info{
+- (void)unreadCountResponse:(id)response info:(id __attribute__((unused)))info{
     if ([response isKindOfClass:[WeiboRequestError class]]) {
         [responseCallback dissociateTarget];
         return;
@@ -78,7 +78,7 @@
     [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
     [request startRequest];
 }
-- (void)resetUnreadResponse:(id)response info:(id)info{
+- (void)resetUnreadResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info{
     // Not Implemented Yet.
     [responseCallback dissociateTarget];
 }

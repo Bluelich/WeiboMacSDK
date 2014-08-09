@@ -29,7 +29,7 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
     [api lists];
 }
 
-- (void)listsResponse:(id)response info:(id)info
+- (void)listsResponse:(id)response info:(id __attribute__((unused)))info
 {
     BOOL postsNotification = NO;
     

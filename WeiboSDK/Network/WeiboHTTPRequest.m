@@ -55,7 +55,7 @@
     if (self.multiparts)
     {
         request = [self.requestSerializer multipartFormRequestWithMethod:self.method URLString:self.url.absoluteString parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [self.multiparts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [self.multiparts enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * __attribute__((unused)) stop) {
                 if ([obj isKindOfClass:[NSData class]])
                 {
                     NSMutableDictionary *mutableHeaders = [NSMutableDictionary dictionary];
@@ -74,12 +74,12 @@
     operation.shouldUseCredentialStorage = NO;
     operation.securityPolicy = [AFSecurityPolicy defaultPolicy];
     
-    void __block (^completionBlock)(AFHTTPRequestOperation * opration) = ^(AFHTTPRequestOperation * operation) {
+    void __block (^completionBlock)(AFHTTPRequestOperation * opration) = ^(AFHTTPRequestOperation * o) {
         self.runningOperation = nil;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kWeiboHTTPRequestDidCompleteNotification object:nil];
         
-        WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:operation];
+        WeiboHTTPResponse * response = [WeiboHTTPResponse responseWithAFHTTPRequestOperation:o];
         
         if (response.success)
         {
@@ -91,15 +91,15 @@
         }
     };;
     
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completionBlock(operation);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completionBlock(operation);
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *o, id responseObject __attribute__((unused))) {
+        completionBlock(o);
+    } failure:^(AFHTTPRequestOperation *o, NSError *error __attribute__((unused))) {
+        completionBlock(o);
     }];
     
     if (self.uploadProgressBlock)
     {
-        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        [operation setUploadProgressBlock:^(NSUInteger bytesWritten __attribute__((unused)), long long totalBytesWritten, long long totalBytesExpectedToWrite) {
             CGFloat progress = (CGFloat)totalBytesWritten / totalBytesExpectedToWrite;
             self.uploadProgressBlock(progress);
         }];
@@ -107,7 +107,7 @@
     
     if (self.downloadProgressBlock)
     {
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead __attribute__((unused)), long long totalBytesRead, long long totalBytesExpectedToRead) {
             CGFloat progress = (CGFloat)totalBytesRead / totalBytesExpectedToRead;
             self.downloadProgressBlock(progress);
         }];

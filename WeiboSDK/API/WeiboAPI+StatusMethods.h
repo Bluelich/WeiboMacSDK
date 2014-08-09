@@ -53,7 +53,7 @@
 #pragma mark -
 #pragma mark Lists
 - (void)lists;
-- (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSInteger)count page:(NSInteger)page;
+- (void)listStatuses:(NSString *)listID sinceID:(WeiboStatusID)sinceID maxID:(WeiboStatusID)maxID count:(NSUInteger)count page:(NSUInteger)page;
 - (void)friendCircleTimelineSinceID:(WeiboStatusID)since maxID:(WeiboStatusID)max count:(NSUInteger)count;
 
 #pragma mark - Hot

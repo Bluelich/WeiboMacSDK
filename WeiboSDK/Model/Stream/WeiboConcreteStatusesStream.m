@@ -141,7 +141,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
             break;
     }
     
-    NSInteger topStatusCount = 0;
+    NSUInteger topStatusCount = 0;
     for (WeiboBaseStatus * status in self.statuses)
     {
         if (status.isTopStatus) {
@@ -162,11 +162,9 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         [[LocalAutocompleteDB sharedAutocompleteDB] assimilateFromStatuses:statusesToAdd];
     }
 }
-- (void)_deleteStatus:(WeiboBaseStatus *)theStatus{
-    NSInteger index = [self statuseIndex:theStatus];
-    if (index < 0) {
-        return;
-    }    
+- (void)_deleteStatus:(WeiboBaseStatus *)theStatus
+{
+    NSUInteger index = [self statuseIndex:theStatus];
     if (index >= [[self statuses] count]) {
         return;
     }
@@ -326,13 +324,13 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     return nil;
 }
 
-- (NSInteger)unreadCount
+- (NSUInteger)unreadCount
 {
     WeiboBaseStatus * topStatus = [self viewedMostRecentStatus];
     
     if (!topStatus) return 0;
     
-    NSInteger count = [statuses indexOfObject:topStatus];
+    NSUInteger count = [statuses indexOfObject:topStatus];
     
     count -= [self topStatusesCount]; // 置顶微博不进行计算
     
@@ -344,8 +342,8 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     WeiboBaseStatus * topStatus = [self viewedMostRecentStatus];
     WeiboBaseStatus * statusToMark = [self statusWithID:statusID];
     
-    NSInteger viewedMostRecentIndex = [statuses indexOfObject:topStatus];
-    NSInteger indexToMark = [self statuseIndex:statusToMark];
+    NSUInteger viewedMostRecentIndex = [statuses indexOfObject:topStatus];
+    NSUInteger indexToMark = [self statuseIndex:statusToMark];
     
     if (indexToMark == viewedMostRecentIndex + 1)
     {
@@ -360,6 +358,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 {
     
 }
+
 - (void)loadNewer
 {
     if (_flags.isLoadingNewer) {
@@ -371,10 +370,14 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     _flags.isLoadingNewer = YES;
     [self _loadNewer];
 }
-- (void)_loadOlder{
+
+- (void)_loadOlder
+{
     
 }
-- (void)loadOlder{
+
+- (void)loadOlder
+{
     if (_flags.isLoadingNewer || _flags.isAtEnd ||  _flags.isLoadingOlder) {
         return;
     }
@@ -385,14 +388,20 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     _flags.isLoadingOlder = YES;
     [self _loadOlder];
 }
-- (void)retryLoadOlder{
+
+- (void)retryLoadOlder
+{
     _flags.isAtEnd = NO;
     [self loadOlder];
 }
-- (void)_loadBeforeGap:(NSString *)gap{
-    
+
+- (void)_loadBeforeGap:(NSString * __attribute__((unused)))gap
+{
+
 }
-- (void)fillInGap:(NSString *)gap{
+
+- (void)fillInGap:(NSString * __attribute__((unused)))gap
+{
     
 }
 
@@ -437,15 +446,18 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
         [self addStatuses:response withType:WeiboStatusesAddingTypeAppend];
     }
 }
-- (void)loadNewerResponse:(id)response info:(id)info{
+- (void)loadNewerResponse:(id)response info:(id __attribute__((unused)))info
+{
     _flags.isLoadingNewer = NO;
     [self statusesResponse:response couldBeGap:YES isFromFillingInGap:NO];
 }
-- (void)loadOlderResponse:(id)response info:(id)info{
+- (void)loadOlderResponse:(id)response info:(id __attribute__((unused)))info
+{
     _flags.isLoadingOlder = NO;
     [self statusesResponse:response couldBeGap:NO isFromFillingInGap:NO];
 }
-- (void)fillInGapResponse:(id)response info:(id)info{
+- (void)fillInGapResponse:(id)response info:(id __attribute__((unused)))info
+{
     [self statusesResponse:response couldBeGap:YES isFromFillingInGap:YES];
 }
 
@@ -570,7 +582,7 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
 {
     _flags.isAtEnd = YES;
 }
-- (void)_postError:(WeiboRequestError *)error
+- (void)_postError:(WeiboRequestError * __attribute__((unused)))error
 {
     
 }
@@ -610,10 +622,10 @@ NSString * const WeiboStatusStreamNotificationAddingTypeKey = @"WeiboStatusStrea
     NSDictionary * userInfo = @{WeiboStatusStreamNotificationRequestErrorKey : error};
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidReceiveRequestErrorNotificationKey object:self userInfo:userInfo];
 }
-- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSInteger)index
+- (void)noticeDidRemoveStatus:(WeiboBaseStatus *)status atIndex:(NSUInteger)index
 {
     NSDictionary * userInfo = @{WeiboStatusStreamNotificationBaseStatusKey : status,
-                                WeiboStatusStreamNotificationStatusIndexKey : [NSNumber numberWithInteger:index]};
+                                WeiboStatusStreamNotificationStatusIndexKey : @(index)};
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboStatusStreamDidRemoveStatusNotificationKey object:self userInfo:userInfo];
 }
 

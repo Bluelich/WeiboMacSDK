@@ -52,7 +52,7 @@
         self.mode = [aDecoder decodeObjectForKey:@"mode"];
         self.description = [aDecoder decodeObjectForKey:@"description"];
         self.memberCount = [aDecoder decodeInt64ForKey:@"member_count"];
-        self.decodedAccountID = [aDecoder decodeInt64ForKey:@"account_id"];
+        self.decodedAccountID = (WeiboUserID)[aDecoder decodeInt64ForKey:@"account_id"];
     }
     return self;
 }
@@ -64,7 +64,7 @@
     [aCoder encodeObject:self.mode forKey:@"mode"];
     [aCoder encodeObject:self.description forKey:@"description"];
     [aCoder encodeInt64:self.memberCount forKey:@"member_count"];
-    [aCoder encodeInt64:self.account.user.userID forKey:@"account_id"];
+    [aCoder encodeInt64:(int64_t)self.account.user.userID forKey:@"account_id"];
 }
 
 + (instancetype)listWithDictionary:(NSDictionary *)dict

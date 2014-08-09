@@ -45,7 +45,7 @@ NSString * const WeiboAccountFilterSetDidChangeNotification = @"WeiboAccountFilt
     return array;
 }
 
-- (void)filterSetDidChange;
+- (void)filterSetDidChange
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountFilterSetDidChangeNotification object:self];
 }

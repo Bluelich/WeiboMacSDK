@@ -40,7 +40,7 @@ NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
     [request startRequest];
 }
 
-- (void)superpowerTokenResponse:(id)response info:(id)info
+- (void)superpowerTokenResponse:(id)response info:(id __attribute__((unused)))info
 {
     [responseCallback invoke:response];
 }

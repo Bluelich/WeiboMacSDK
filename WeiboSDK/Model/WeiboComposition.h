@@ -46,9 +46,9 @@ typedef NSInteger WeiboCompositionType;
 
 @end
 
-NS_INLINE NSInteger WeiboCompositionTextLength(NSString * text)
+NS_INLINE NSUInteger WeiboCompositionTextLength(NSString * text)
 {
-    NSInteger idx, length = [text length], sbc = 0, ascii = 0, blank = 0;
+    NSUInteger idx, length = [text length], sbc = 0, ascii = 0, blank = 0;
     for(idx = 0; idx < length; idx++)
     {
         unichar c = [text characterAtIndex:idx];
@@ -68,5 +68,5 @@ NS_INLINE NSInteger WeiboCompositionTextLength(NSString * text)
     
     if (!ascii && !sbc) return 0;
 
-    return sbc + (NSInteger)ceilf((float)(ascii + blank)/2.0);
+    return sbc + (NSUInteger)ceil((double)(ascii + blank)/2.0);
 }

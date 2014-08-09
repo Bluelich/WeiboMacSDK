@@ -106,7 +106,7 @@ NSString * const WeiboDirectMessageConversationDidMarkAsReadNotification = @"Wei
 {
     if (!message) return;
     
-    NSInteger idx = [_messages indexOfObject:message inSortedRange:NSMakeRange(0, _messages.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(WeiboDirectMessage * obj1, WeiboDirectMessage * obj2) {
+    NSUInteger idx = [_messages indexOfObject:message inSortedRange:NSMakeRange(0, _messages.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(WeiboDirectMessage * obj1, WeiboDirectMessage * obj2) {
         return [obj1 compare:obj2];
     }];
     

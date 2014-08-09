@@ -16,12 +16,12 @@
 @implementation WeiboUser
 @synthesize userID, screenName, name, province, city, location, description;
 @synthesize url, profileImageUrl, domain, gender, followersCount, friendsCount;
-@synthesize statusesCount, favouritesCount, createAt, following, verified, status;
+@synthesize statusesCount, favouritesCount, createAt, following, status;
 @synthesize cacheTime, followMe, profileLargeImageUrl;
 
 - (id)initWithCoder:(NSCoder *)decoder{
     if (self = [super init]) {
-        self.userID = [decoder decodeInt64ForKey:@"user-id"];
+        self.userID = (WeiboUserID)[decoder decodeInt64ForKey:@"user-id"];
         self.screenName = [decoder decodeObjectForKey:@"screenname"];
         self.name = [decoder decodeObjectForKey:@"name"];
         self.remark = [decoder decodeObjectForKey:@"remark"];
@@ -50,7 +50,7 @@
 }
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeInt64:userID forKey:@"user-id"];
+    [encoder encodeInt64:(int64_t)userID forKey:@"user-id"];
     [encoder encodeObject:screenName forKey:@"screenname"];
     [encoder encodeObject:_remark forKey:@"remark"];
     [encoder encodeObject:profileImageUrl forKey:@"profile-image-url"];
@@ -101,7 +101,7 @@
 {
     if ([super updateWithJSONDictionary:dic])
     {
-        self.userID = [dic longlongForKey:@"id" defaultValue:0];
+        self.userID = (WeiboUserID)[dic longlongForKey:@"id" defaultValue:0];
         self.screenName = [dic stringForKey:@"screen_name" defaultValue:@""];
         self.name = [dic stringForKey:@"name" defaultValue:@""];
         self.remark = [dic stringForKey:@"remark" defaultValue:nil];

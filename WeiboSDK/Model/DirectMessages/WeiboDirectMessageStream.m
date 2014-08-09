@@ -51,7 +51,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     if (self = [self init])
     {
 //        self.messages = [aDecoder decodeObjectForKey:@"messages"];
-        WeiboUserID accountUserID = [aDecoder decodeInt64ForKey:@"account-id"];
+        WeiboUserID accountUserID = (WeiboUserID)[aDecoder decodeInt64ForKey:@"account-id"];
         self.account = [[Weibo sharedWeibo] accountWithUserID:accountUserID];
         
         if (!self.account)
@@ -66,7 +66,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 {
     [super encodeWithCoder:aCoder];
 
-    [aCoder encodeInt64:self.account.user.userID forKey:@"account-id"];
+    [aCoder encodeInt64:(int64_t)self.account.user.userID forKey:@"account-id"];
 }
 
 - (NSArray *)messages
@@ -88,7 +88,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     return [[_messages firstObject] messageID];
 }
 
-- (void)messagesResponse:(id)response info:(id)info
+- (void)messagesResponse:(id)response info:(id __attribute__((unused)))info
 {
     if ([response isKindOfClass:[WeiboRequestError class]])
     {
@@ -176,7 +176,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     
     for (WeiboDirectMessage * message in messages)
     {
-        NSInteger idx = [_messages indexOfObject:message inSortedRange:NSMakeRange(0, _messages.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(WeiboDirectMessage * obj1, WeiboDirectMessage * obj2) {
+        NSUInteger idx = [_messages indexOfObject:message inSortedRange:NSMakeRange(0, _messages.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(WeiboDirectMessage * obj1, WeiboDirectMessage * obj2) {
             return [obj1 compare:obj2];
         }];
         
@@ -192,7 +192,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
         [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamDidUpdateNotification object:self userInfo:userInfo];
     }
 }
-- (void)deleteMessage:(WeiboDirectMessage *)message
+- (void)deleteMessage:(WeiboDirectMessage * __attribute__((unused)))message
 {
     
 }

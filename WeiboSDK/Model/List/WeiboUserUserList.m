@@ -56,7 +56,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        WeiboUserID userID = [aDecoder decodeInt64ForKey:@"account_id"];
+        WeiboUserID userID = (WeiboUserID)[aDecoder decodeInt64ForKey:@"account_id"];
         self.account = [[Weibo sharedWeibo] accountWithUserID:userID];
         
         if (!self.account) return nil;
@@ -70,7 +70,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
 {
     [super encodeWithCoder:aCoder];
     
-    [aCoder encodeInt64:self.account.user.userID forKey:@"account_id"];
+    [aCoder encodeInt64:(int64_t)self.account.user.userID forKey:@"account_id"];
     [aCoder encodeObject:self.user forKey:@"user"];
 }
 
@@ -188,7 +188,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    WeiboUserID cursor = [[users weibo_serverMetaData] longlongForKey:@"next_cursor" defaultValue:0];
+    WeiboUserID cursor = (WeiboUserID)[[users weibo_serverMetaData] longlongForKey:@"next_cursor" defaultValue:0];
     NSInteger totalCount = [[users weibo_serverMetaData] intForKey:@"total_number" defaultValue:0];
     
     if (cursor)
@@ -227,7 +227,7 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         [_users addObjectsFromArray:toAdd];
     }
     
-    if (_users.count == totalCount)
+    if (_users.count == (NSUInteger)totalCount)
     {
         [self markAtEnd];
     }

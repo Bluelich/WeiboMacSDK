@@ -28,7 +28,7 @@
     [aCoder encodeBool:self.filterQuotedStatus forKey:@"filter-quoted-status"];
 }
 
-- (BOOL)validateStatus:(WeiboBaseStatus *)status
+- (BOOL)validateStatus:(WeiboBaseStatus * __attribute__((unused)))status
 {
     return NO;
 }

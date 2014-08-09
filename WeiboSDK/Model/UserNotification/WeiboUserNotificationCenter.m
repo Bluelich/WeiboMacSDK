@@ -39,13 +39,16 @@ static BOOL AtLeaseMavericks    = NO;
 
 + (void)initialize
 {
-    SInt32 major = 0;
-    SInt32 minor = 0;
-    Gestalt(gestaltSystemVersionMajor, &major);
-    Gestalt(gestaltSystemVersionMinor, &minor);
+    AtLeastMountainLion = NO;//(major == 10 && minor >= 8);
+    AtLeaseMavericks    = NO;//(major == 10 && minor >= 9);
     
-    AtLeastMountainLion = (major == 10 && minor >= 8);
-    AtLeaseMavericks    = (major == 10 && minor >= 9);
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7) {
+        AtLeastMountainLion = YES;
+    }
+    
+    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8) {
+        AtLeaseMavericks = YES;
+    }
 }
 
 + (instancetype)defaultUserNotificationCenter
@@ -345,13 +348,13 @@ static BOOL AtLeaseMavericks    = NO;
 
 #pragma mark - NSUserNotificationCenter Delegate
 
-- (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+- (void)userNotificationCenter:(NSUserNotificationCenter * __attribute__((unused)))center didActivateNotification:(NSUserNotification *)notification
 {
     if (!notification) return;
     
     NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
     
-    WeiboUserID accountUserID = [notification.userInfo[WeiboUserNotificationUserInfoAccountUserIDKey] longLongValue];
+    WeiboUserID accountUserID = [notification.userInfo[WeiboUserNotificationUserInfoAccountUserIDKey] unsignedLongLongValue];
     if (accountUserID)
     {
         WeiboAccount * account = [[Weibo sharedWeibo] accountWithUserID:accountUserID];
@@ -366,7 +369,7 @@ static BOOL AtLeaseMavericks    = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboUserNotificationCenterActivatedNotificationNotification object:self userInfo:userInfo];
 }
 
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter * __attribute__((unused)))center shouldPresentNotification:(NSUserNotification *)notification
 {
     if ([[notification.userInfo objectForKey:WeiboUserNotificationCenterUserInfoImportantFlagKey] boolValue])
     {

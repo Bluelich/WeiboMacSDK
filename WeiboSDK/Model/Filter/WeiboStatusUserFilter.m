@@ -22,7 +22,7 @@
     if (self = [super initWithCoder:aDecoder])
     {
         self.screenname = [aDecoder decodeObjectForKey:@"screenname"];
-        self.userID = [aDecoder decodeInt64ForKey:@"user-id"];
+        self.userID = (WeiboUserID)[aDecoder decodeInt64ForKey:@"user-id"];
     }
     return self;
 }
@@ -31,7 +31,7 @@
     [super encodeWithCoder:aCoder];
     
     [aCoder encodeObject:self.screenname forKey:@"screenname"];
-    [aCoder encodeInt64:self.userID forKey:@"user-id"];
+    [aCoder encodeInt64:(int64_t)self.userID forKey:@"user-id"];
 }
 
 - (BOOL)validateStatus:(WeiboBaseStatus *)status

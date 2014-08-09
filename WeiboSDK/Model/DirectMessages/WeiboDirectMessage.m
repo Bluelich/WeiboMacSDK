@@ -43,8 +43,8 @@
         self.messageID = [dict longlongForKey:@"id" defaultValue:0];
         self.date = [dict timeForKey:@"created_at" defaultValue:0];
         self.text = [dict stringForKey:@"text" defaultValue:@""];
-        self.senderID = [dict longlongForKey:@"sender_id" defaultValue:0];
-        self.recipientID = [dict longlongForKey:@"recipient_id" defaultValue:0];
+        self.senderID = (WeiboUserID)[dict longlongForKey:@"sender_id" defaultValue:0];
+        self.recipientID = (WeiboUserID)[dict longlongForKey:@"recipient_id" defaultValue:0];
         
         NSDictionary * senderDictionary = [dict objectForKey:@"sender"];
         NSDictionary * recipientDictionary = [dict objectForKey:@"recipient"];
@@ -59,7 +59,7 @@
 
 - (void)setRead:(BOOL)read
 {
-    _flags.read = read;
+    _flags.read = (unsigned int)read;
 }
 
 - (BOOL)read

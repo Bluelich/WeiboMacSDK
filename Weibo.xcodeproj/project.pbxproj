@@ -926,7 +926,7 @@
 		C6FC9E3914E3C3F300094A8F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Wutian;
 			};
 			buildConfigurationList = C6FC9E3C14E3C3F300094A8F /* Build configuration list for PBXProject "Weibo" */;
@@ -1101,9 +1101,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1115,7 +1117,25 @@
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DNDEBUG",
+				);
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wimplicit-retain-self",
+					"-Wfloat-equal",
+					"-Wextra",
+					"-Werror",
+					"-Wdeprecated-implementations",
+					"-Wconversion",
+					"-Wall",
+					"-Wreturn-type",
+					"-Wnewline-eof",
+					"-Wundef",
+					"-Wsign-compare",
+					"-Wshadow",
+				);
 			};
 			name = MacAppStore;
 		};
@@ -1186,8 +1206,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1207,7 +1229,25 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DNDEBUG",
+				);
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wimplicit-retain-self",
+					"-Wfloat-equal",
+					"-Wextra",
+					"-Werror",
+					"-Wdeprecated-implementations",
+					"-Wconversion",
+					"-Wall",
+					"-Wreturn-type",
+					"-Wnewline-eof",
+					"-Wundef",
+					"-Wsign-compare",
+					"-Wshadow",
+				);
 			};
 			name = Debug;
 		};
@@ -1220,9 +1260,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1234,7 +1276,25 @@
 				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DNDEBUG",
+				);
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wimplicit-retain-self",
+					"-Wfloat-equal",
+					"-Wextra",
+					"-Werror",
+					"-Wdeprecated-implementations",
+					"-Wconversion",
+					"-Wall",
+					"-Wreturn-type",
+					"-Wnewline-eof",
+					"-Wundef",
+					"-Wsign-compare",
+					"-Wshadow",
+				);
 			};
 			name = Release;
 		};

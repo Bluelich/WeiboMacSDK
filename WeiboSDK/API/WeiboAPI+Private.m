@@ -75,7 +75,7 @@ multipartFormData:(NSDictionary *)parts
                                  selector:@selector(_responseReceived:callback:)
                                      info:callback];
 }
-- (WeiboCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info{
+- (WeiboCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id __attribute__((unused)))info{
     WeiboCallback * actualCallback = [WeiboCallback callbackWithTarget:target
                                                         selector:selector
                                                             info:nil];
