@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboAutocompleteResultItem.h"
 
-@class FMDatabase, WeiboUser, WeiboAccount;
+@class WeiboUser, WeiboAccount;
 
 @interface LocalAutocompleteDB : NSObject
 

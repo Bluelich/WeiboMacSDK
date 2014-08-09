@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "WeiboHTTPResponse.h"
 
-@class WTMutableMultiDictionary, WeiboCallback;
+@class WeiboCallback;
 
 @interface WeiboHTTPRequest : NSObject
 
