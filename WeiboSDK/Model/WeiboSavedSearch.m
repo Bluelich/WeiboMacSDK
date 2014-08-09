@@ -31,6 +31,11 @@
     [aCoder encodeInteger:self.type forKey:@"type"];
 }
 
+- (NSUInteger)hash
+{
+    return ((self.keyword.hash + 1) * ((NSUInteger)self.type + 1));
+}
+
 - (BOOL)isEqual:(WeiboSavedSearch *)object
 {
     if (self == object) return YES;

@@ -12,8 +12,13 @@
 @synthesize priority, autocompleteType, autocompleteAction, itemID;
 @synthesize userInfo, autocompleteText, autocompleteSubtext, autocompleteImageURL;
 
-- (NSString *)searchableSortableText{
+- (NSString *)searchableSortableText
+{
     return nil;
+}
+- (NSUInteger)hash
+{
+    return self.itemID.hash;
 }
 - (BOOL)isEqual:(WeiboAutocompleteResultItem *)object
 {

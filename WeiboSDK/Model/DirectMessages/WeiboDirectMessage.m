@@ -72,6 +72,11 @@
     return [self.account.user isEqual:self.sender];
 }
 
+- (NSUInteger)hash
+{
+    return (NSUInteger)self.messageID;
+}
+
 - (BOOL)isEqual:(WeiboDirectMessage *)object
 {
     if (object == self) return YES;

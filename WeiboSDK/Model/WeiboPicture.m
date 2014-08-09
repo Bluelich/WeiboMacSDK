@@ -33,6 +33,11 @@
     return NO;
 }
 
+- (NSUInteger)hash
+{
+    return self.thumbnailImage.hash;
+}
+
 - (BOOL)isEqual:(id)object
 {
     if (self == object)

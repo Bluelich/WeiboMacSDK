@@ -159,6 +159,11 @@
     return [self.account.user isEqual:self];
 }
 
+- (NSUInteger)hash
+{
+    return self.userID;
+}
+
 - (BOOL)isEqual:(id)object
 {
     if (self == object)

@@ -376,6 +376,13 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     return [Weibo globalKeychainService];
 }
+- (NSUInteger)hash
+{
+    if (self.username) {
+        return self.username.hash;
+    }
+    return self.user.userID;
+}
 - (BOOL)isEqualToAccount:(WeiboAccount *)anotherAccount
 {
     if (self.username)

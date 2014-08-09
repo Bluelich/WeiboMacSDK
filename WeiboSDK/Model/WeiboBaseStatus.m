@@ -130,6 +130,11 @@
     }
 }
 
+- (NSUInteger)hash
+{
+    return self.sid;
+}
+
 - (BOOL)isEqual:(id)object
 {
     if (self == object)

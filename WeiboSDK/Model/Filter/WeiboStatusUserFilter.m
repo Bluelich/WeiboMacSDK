@@ -63,6 +63,11 @@
     return self.screenname;
 }
 
+- (NSUInteger)hash
+{
+    return self.userID;
+}
+
 - (BOOL)isEqual:(WeiboStatusUserFilter *)object
 {
     if (self == object) return YES;
