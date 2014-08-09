@@ -48,6 +48,19 @@
     
     [self GET:@"direct_messages/sent.json" parameters:params callback:callback];
 }
+- (void)publicMessagesSinceID:(WeiboMessageID)since maxID:(WeiboMessageID)max count:(NSUInteger)count
+{
+    WeiboCallback * callback = [self directMessagesResponseCallback];
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    
+    if (since) [params setObject:@(since) forKey:@"since_id"];
+    if (max) [params setObject:@(max) forKey:@"max_id"];
+    if (count) [params setObject:@(count) forKey:@"count"];
+    
+    [self GET:@"direct_messages/public/messages.json" parameters:params callback:callback];
+}
+
 - (void)directMessageResponse:(id __attribute__((unused)))response info:(id __attribute__((unused)))info
 {
     WeiboUnimplementedMethod;

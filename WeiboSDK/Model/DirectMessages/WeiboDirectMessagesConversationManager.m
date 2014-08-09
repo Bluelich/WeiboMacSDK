@@ -11,14 +11,13 @@
 #import "WeiboDirectMessageConversation.h"
 #import "WeiboAccount.h"
 #import "NSArray+WeiboAdditions.h"
+#import "WeiboDirectMessagesConversationManager_Private.h"
 
 NSString * const WeiboDirectMessagesConversationListDidUpdateNotification = @"WeiboDirectMessagesConversationListDidUpdateNotification";
 NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"WeiboDirectMessagesManagerDidFinishLoadingNotification";
 
 @interface WeiboDirectMessagesConversationManager ()
 {
-    WeiboSentDirectMessageStream * _sentStream;
-    WeiboReceivedDirectMessageStream * _receivedStream;
     NSMutableArray * _conversations;
     NSInteger streamingRequestCount;
     struct {
@@ -26,9 +25,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
         unsigned int streaming : 1;
     } _flags;
 }
-
-@property (nonatomic, strong) WeiboSentDirectMessageStream * sentStream;
-@property (nonatomic, strong) WeiboReceivedDirectMessageStream * receivedStream;
 
 @property (nonatomic, strong) NSArray * unreadConversationUserIDsFromCache;
 
@@ -43,12 +39,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self _stopStreaming];
-    _sentStream = nil;
-    _receivedStream = nil;
-    _conversations = nil;
-    
-    _unreadConversationUserIDsFromCache = nil;
-    
 }
 
 - (instancetype)init
@@ -56,6 +46,8 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     if (self = [super init])
     {
         _conversations = [[NSMutableArray alloc] init];
+        
+        [self _setupNotifications];
     }
     return self;
 }
@@ -64,7 +56,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 {
     if (self = [self init])
     {
-        [self setAccount:account];
+        self.account = account;
     }
     return self;
 }
@@ -93,19 +85,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     [aCoder encodeObject:userIDs forKey:@"unread-state"];
 }
 
-- (void)setAccount:(WeiboAccount *)account
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    self.sentStream = [[WeiboSentDirectMessageStream alloc] init];
-    self.receivedStream = [[WeiboReceivedDirectMessageStream alloc] init];
-    
-    self.sentStream.account = account;
-    self.receivedStream.account = account;
-    
-    [self _setupNotifications];
-}
-
 - (void)initialzeConversationsIfNeeded
 {
     if (!_flags.conversationsLoaded)
@@ -116,19 +95,16 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 
 - (void)refresh
 {
-    [_receivedStream loadNewer];
-    [_sentStream loadNewer];
+    [self.messageStreams makeObjectsPerformSelector:@selector(loadNewer)];
 }
 - (void)loadOlder
 {
-    [_receivedStream loadOlder];
-    [_sentStream loadOlder];
+    [self.messageStreams makeObjectsPerformSelector:@selector(loadOlder)];
 }
 
 - (void)_setupNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sentDidUpdate:) name:WeiboDirectMessageStreamDidUpdateNotification object:_sentStream];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidUpdate:) name:WeiboDirectMessageStreamDidUpdateNotification object:_receivedStream];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageStreamDidUpdate:) name:WeiboDirectMessageStreamDidUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messagesStreamFinishedLoading:) name:WeiboDirectMessageStreamFinishedLoadingNotification object:nil];
 }
 
@@ -177,7 +153,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
             [conversation addMessage:message];
             
             // optimizing memory usage, point user to a shared object, hope this works
-            WeiboUser * me = _sentStream.account.user;
+            WeiboUser * me = self.account.user;
             WeiboUser * he = conversation.correspondent;
             
             message.sender = fromMe ? me : he;
@@ -201,12 +177,22 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 
 - (void)messagesStreamFinishedLoading:(NSNotification *)notification
 {
-    if (notification.object != _sentStream && notification.object != _receivedStream)
-    {
+    NSArray * messageStreams = self.messageStreams;
+    
+    if (![messageStreams containsObject:notification.object]) {
         return;
     }
     
-    if (_sentStream.messagesLoaded && _receivedStream.messagesLoaded)
+    BOOL everyStreamLoaded = YES;
+    
+    for (WeiboDirectMessageStream * stream in messageStreams) {
+        if (!stream.messagesLoaded) {
+            everyStreamLoaded = NO;
+            break;
+        }
+    }
+    
+    if (everyStreamLoaded)
     {
         if (!_flags.conversationsLoaded)
         {
@@ -214,7 +200,7 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
             
             if (self.unreadConversationUserIDsFromCache.count)
             {
-                WeiboUser * me = _sentStream.account.user;
+                WeiboUser * me = self.account.user;
                 
                 for (NSNumber * userID in self.unreadConversationUserIDsFromCache)
                 {
@@ -236,30 +222,40 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     }
 }
 
-- (void)sentDidUpdate:(NSNotification *)notification
+- (void)messageStreamDidUpdate:(NSNotification *)notification
 {
+    WeiboDirectMessageStream * stream = notification.object;
+    
+    if (![self.messageStreams containsObject:stream]) return;
+    
     NSArray * messages = notification.userInfo[@"messages"];
     
-    [self addMessages:messages fromMe:YES];
-}
-
-- (void)receivedDidUpdate:(NSNotification *)notification
-{
-    NSArray * messages = notification.userInfo[@"messages"];
-    
-    [self addMessages:messages fromMe:NO];
+    [self addMessages:messages fromMe:stream.messagesFromAccount];
 }
 
 - (time_t)newestMessageDate
 {
-    time_t newestSentDate = [(WeiboDirectMessage *)self.sentStream.messages.lastObject date];
-    
-    return MAX([self newestMessageDateNotFromMe], newestSentDate);
+    return [[self newestMessageOnlyFromOthers:NO] date];
 }
 
 - (WeiboDirectMessage *)newestMessageNotFromMe
 {
-    return _receivedStream.messages.lastObject;
+    return [self newestMessageOnlyFromOthers:YES];
+}
+
+- (WeiboDirectMessage *)newestMessageOnlyFromOthers:(BOOL)onlyFromOthers
+{
+    WeiboDirectMessage * newest = nil;
+    
+    for (WeiboDirectMessageStream * stream in self.messageStreams) {
+        if (onlyFromOthers && stream.messagesFromAccount) continue;
+        WeiboDirectMessage * message = stream.messages.lastObject;
+        if (message.date > newest.date) {
+            newest = message;
+        }
+    }
+    
+    return newest;
 }
 
 - (time_t)newestMessageDateNotFromMe
@@ -321,11 +317,21 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
 
 - (BOOL)isLoadingNewer
 {
-    return _sentStream.isLoadingNewer || _receivedStream.isLoadingNewer;
+    for (WeiboDirectMessageStream * stream in self.messageStreams) {
+        if (stream.isLoadingNewer) {
+            return YES;
+        }
+    }
+    return NO;
 }
 - (BOOL)isLoadingOlder
 {
-    return _sentStream.isLoadingOlder || _receivedStream.isLoadingOlder;
+    for (WeiboDirectMessageStream * stream in self.messageStreams) {
+        if (stream.isLoadingOlder) {
+            return YES;
+        }
+    }
+    return NO;
 }
 - (BOOL)isLoading
 {

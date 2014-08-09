@@ -11,28 +11,46 @@
 
 @implementation WeiboAccount (DirectMessage)
 
-- (NSString *)directMessageCachePath
+- (NSString *)directMessageCachePathWithTypeString:(NSString *)typeString
 {
     NSString * directory = [WeiboFileManager subCacheDirectory:@"messages"];
-    return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%lld.zip", self.user.userID]];
+    return [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%lld_%@.zip", self.user.userID, typeString]];
 }
 
 - (void)saveDirectMessages
 {
-    if (self.directMessagesManager)
-    {
-        [NSKeyedArchiver archiveRootObject:self.directMessagesManager toFile:[self directMessageCachePath]];
+    if (self.privateMessagesManager) {
+        [NSKeyedArchiver archiveRootObject:self.privateMessagesManager toFile:[self directMessageCachePathWithTypeString:@"private"]];
+    }
+    
+    if (self.publicMessagesManager) {
+        [NSKeyedArchiver archiveRootObject:self.privateMessagesManager toFile:[self directMessageCachePathWithTypeString:@"public"]];
     }
 }
-- (WeiboDirectMessagesConversationManager *)restoreDirectMessageManager
+
+- (WeiboPrivateMessagesConversationManager *)restorePrivateMessageManager
 {
-    id object = [NSKeyedUnarchiver unarchiveObjectWithFile:[self directMessageCachePath]];
+    id object = [NSKeyedUnarchiver unarchiveObjectWithFile:[self directMessageCachePathWithTypeString:@"private"]];
     
-    if ([object isKindOfClass:[WeiboDirectMessagesConversationManager class]])
+    if ([object isKindOfClass:[WeiboPrivateMessagesConversationManager class]])
     {
         [object setAccount:self];
         
-        return (WeiboDirectMessagesConversationManager *)object;
+        return (WeiboPrivateMessagesConversationManager *)object;
+    }
+    
+    return nil;
+}
+
+- (WeiboPublicMessagesConversationManager *)restorePublicMessageManager
+{
+    id object = [NSKeyedUnarchiver unarchiveObjectWithFile:[self directMessageCachePathWithTypeString:@"public"]];
+    
+    if ([object isKindOfClass:[WeiboPublicMessagesConversationManager class]])
+    {
+        [object setAccount:self];
+        
+        return (WeiboPublicMessagesConversationManager *)object;
     }
     
     return nil;

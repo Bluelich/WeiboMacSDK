@@ -26,7 +26,7 @@
     [api sentDirectMessagesSinceID:0 maxID:[self oldestMessageID]-1 count:200];
 }
 
-- (BOOL)forceReadBit
+- (BOOL)messagesFromAccount
 {
     return YES;
 }

@@ -82,7 +82,8 @@ enum {
     WeiboUnreadCountTypeStatusMention = 2,
     WeiboUnreadCountTypeDirectMessage = 3,
     WeiboUnreadCountTypeFollower = 4,
-    WeiboUnreadCountTypeCommentMention = 5
+    WeiboUnreadCountTypeCommentMention = 5,
+    WeiboUnreadCountTypePublicMessage = 16,
 };
 typedef NSUInteger WeiboUnreadCountType;
 

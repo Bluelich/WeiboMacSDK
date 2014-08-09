@@ -14,7 +14,7 @@
 @class WeiboTimelineStream, WeiboMentionsStream, WeiboCommentMentionsStream, WeiboCommentsToMeStream, WeiboCommentsByMeStream;
 @class WeiboUserTimelineStream, WeiboUnread, WeiboStream;
 @class WeiboRepliesStream, WeiboRepostsStream, WeiboStatus, WeiboBaseStatus, WeiboLikesStream;
-@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboDirectMessagesConversationManager, WeiboStatusAdvertisementFilter, WeiboSavedSearch;
+@class WeiboUserStream, WeiboFavoritesStream, WeiboStatusAccountMentionFilter, WeiboPrivateMessagesConversationManager, WeiboPublicMessagesConversationManager, WeiboStatusAdvertisementFilter, WeiboSavedSearch;
 
 @protocol WeiboAccountDelegate;
 
@@ -69,7 +69,8 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 @property (assign, nonatomic) WeiboNotificationOptions notificationOptions;
 
 @property (nonatomic, strong) NSString * superpowerToken;
-@property (nonatomic, strong, readonly) WeiboDirectMessagesConversationManager * directMessagesManager;
+@property (nonatomic, strong, readonly) WeiboPrivateMessagesConversationManager * privateMessagesManager;
+@property (nonatomic, strong, readonly) WeiboPublicMessagesConversationManager * publicMessagesManager;
 
 #pragma mark -
 #pragma mark Life Cycle
@@ -155,7 +156,8 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 
 - (void)willSaveToDisk;
 - (void)didRestoreFromDisk;
-- (void)refreshDirectMessages;
+- (void)refreshPrivateMessages;
+- (void)refreshPublicMessage;
 
 @property (nonatomic, assign) NSInteger newStatusesCount;
 @property (nonatomic, assign, readonly) NSInteger newMentionsCount;
@@ -163,6 +165,7 @@ extern NSString * const WeiboUserRemarkDidUpdateNotification;
 @property (nonatomic, assign) NSInteger newCommentMentionsCount;
 @property (nonatomic, assign) NSInteger newCommentsCount;
 @property (nonatomic, assign) NSInteger newDirectMessagesCount;
+@property (nonatomic, assign) NSInteger newPublicMessagesCount;
 @property (nonatomic, assign) NSInteger newFollowersCount;
 
 #pragma mark - Saved Searches

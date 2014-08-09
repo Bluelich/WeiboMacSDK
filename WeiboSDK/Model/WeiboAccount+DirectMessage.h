@@ -7,11 +7,13 @@
 //
 
 #import "WeiboAccount.h"
-#import "WeiboDirectMessagesConversationManager.h"
+#import "WeiboPrivateMessagesConversationManager.h"
+#import "WeiboPublicMessagesConversationManager.h"
 
 @interface WeiboAccount (DirectMessage)
 
 - (void)saveDirectMessages;
-- (WeiboDirectMessagesConversationManager *)restoreDirectMessageManager;
+- (WeiboPrivateMessagesConversationManager *)restorePrivateMessageManager;
+- (WeiboPublicMessagesConversationManager *)restorePublicMessageManager;
 
 @end

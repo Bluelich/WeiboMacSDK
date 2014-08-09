@@ -11,14 +11,7 @@
 
 @class WeiboCallback;
 
-@interface WeiboUnread : WeiboModel {
-    NSUInteger newStatus;
-    NSUInteger newFollowers;
-    NSUInteger newDirectMessages;
-    NSUInteger newStatusMentions;
-    NSUInteger newCommentMentions;
-    NSUInteger newComments;
-}
+@interface WeiboUnread : WeiboModel
 
 @property (assign, nonatomic) NSUInteger newStatus;
 @property (assign, nonatomic) NSUInteger newFollowers;
@@ -26,5 +19,6 @@
 @property (assign, nonatomic) NSUInteger newStatusMentions;
 @property (assign, nonatomic) NSUInteger newCommentMentions;
 @property (assign, nonatomic) NSUInteger newComments;
+@property (assign, nonatomic) NSUInteger newPublicMessages;
 
 @end

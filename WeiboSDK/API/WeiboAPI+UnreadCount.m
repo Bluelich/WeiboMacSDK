@@ -15,13 +15,15 @@
 #pragma mark Other
 - (void)unreadCountSinceID:(WeiboStatusID __attribute__((unused)))since{
     WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(unreadCountResponse:info:) info:nil];
-    NSDictionary * param = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%lld",authenticateWithAccount.user.userID] forKey:@"uid"];
+    
+    NSDictionary * params = @{@"uid": @(authenticateWithAccount.user.userID),
+                              @"unread_message": @1};
     
     NSURL * url = [NSURL URLWithString:@"https://rm.api.weibo.com/2/remind/unread_count.json"];
     WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
     [request setResponseCallback:callback];
     [request setMethod:@"GET"];
-    [request setParameters:param];
+    [request setParameters:params];
     [request setOAuth2Token:authenticateWithAccount.oAuth2Token];
     [request startRequest];
 }
@@ -39,6 +41,11 @@
 - (void)resetUnreadWithType:(WeiboUnreadCountType)type{
     if (type == WeiboUnreadCountTypeStatus) {
         // Weibo Open API auto reset status count now.
+        return;
+    }
+    
+    if (type == WeiboUnreadCountTypePublicMessage) {
+        // FIXME: we are not able to reset public message count now.
         return;
     }
     

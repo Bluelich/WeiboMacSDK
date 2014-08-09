@@ -76,6 +76,11 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 
 - (BOOL)forceReadBit
 {
+    return self.messagesFromAccount;
+}
+
+- (BOOL)messagesFromAccount
+{
     return NO;
 }
 

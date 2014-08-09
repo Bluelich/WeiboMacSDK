@@ -12,7 +12,6 @@
 #import "JSONKit.h"
 
 @implementation WeiboUnread
-@synthesize newStatus, newStatusMentions, newCommentMentions, newComments, newDirectMessages, newFollowers;
 
 #pragma mark -
 #pragma mark Parse Methods
@@ -27,7 +26,8 @@
         self.newComments = (NSUInteger)[dict weibo_intForKey:@"cmt" defaultValue:0];
         self.newDirectMessages = (NSUInteger)[dict weibo_intForKey:@"dm" defaultValue:0];
         self.newFollowers = (NSUInteger)[dict weibo_intForKey:@"follower" defaultValue:0];
-    
+        self.newPublicMessages = (NSUInteger)[dict weibo_intForKey:@"msgbox" defaultValue:0];
+        
         return YES;
     }
     return NO;
@@ -42,7 +42,8 @@
     [string appendFormat:@"\nnew comment mentions:%ld, ",self.newCommentMentions];
     [string appendFormat:@"\nnew comments:%ld, ",self.newComments];
     [string appendFormat:@"\nnew dms:%ld, ",self.newDirectMessages];
-    [string appendFormat:@"\nnew followers:%ld. ",self.newFollowers];
+    [string appendFormat:@"\nnew followers:%ld, ",self.newFollowers];
+    [string appendFormat:@"\nnew public messages:%ld. ", self.newPublicMessages];
     return string;
 }
 

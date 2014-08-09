@@ -31,7 +31,8 @@
 #import "WeiboBaseStatus.h"
 #import "WeiboStatus.h"
 #import "WeiboComment.h"
-#import "WeiboDirectMessagesConversationManager.h"
+#import "WeiboPrivateMessagesConversationManager.h"
+#import "WeiboPublicMessagesConversationManager.h"
 #import "WeiboUserNotificationCenter.h"
 #import "Weibo.h"
 #import "WeiboCryptographer.h"
@@ -55,7 +56,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
 @interface WeiboAccount ()
 
-@property (nonatomic, strong) WeiboDirectMessagesConversationManager * directMessagesManager;
+@property (nonatomic, strong) WeiboPrivateMessagesConversationManager * privateMessagesManager;
+@property (nonatomic, strong) WeiboPublicMessagesConversationManager * publicMessagesManager;
 @property (nonatomic, strong) NSMutableArray * savedSearchKeywords;
 
 @end
@@ -69,24 +71,6 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
 #pragma mark -
 #pragma mark Life Cycle
-- (void)dealloc
-{
-    _lists = nil;
-    
-    _keywordFilters = nil;
-    _userFilters = nil;
-    _clientFilters = nil;
-    _userHighlighters = nil;
-    
-    _mentionHighlighter = nil;
-    _advertisementFilter = nil;
-    
-    _superpowerToken = nil;
-    _directMessagesManager = nil;
-    
-    _savedSearchKeywords = nil;
-    
-}
 
 - (id)init
 {
@@ -257,21 +241,28 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 }
 - (void)didRestoreFromDisk
 {
-    _directMessagesManager = [self restoreDirectMessageManager];
+    _privateMessagesManager = [self restorePrivateMessageManager];
+    _publicMessagesManager = [self restorePublicMessageManager];
     
-    [self refreshDirectMessages];
+    [self refreshPrivateMessages];
+    [self refreshPublicMessage];
 }
-- (void)refreshDirectMessages
+- (void)refreshPrivateMessages
 {
-    if (self.directMessagesManager)
+    if (self.privateMessagesManager)
     {
-        if (!self.directMessagesManager.receivedStream.isLoading)
+        if (!self.privateMessagesManager.receivedStream.isLoading)
         {
             [self resetUnreadCountWithType:WeiboUnreadCountTypeDirectMessage];
         }
         
-        [self.directMessagesManager refresh];
-    }
+        [self.privateMessagesManager refresh];
+    }    
+}
+
+- (void)refreshPublicMessage
+{
+    [self.publicMessagesManager refresh];
 }
 
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword apiRoot:(NSString *)root
@@ -467,16 +458,24 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     [self setValue:result forKeyPath:keyPath];
 }
 
-- (WeiboDirectMessagesConversationManager *)directMessagesManager
+- (WeiboPrivateMessagesConversationManager *)privateMessagesManager
 {
     if (!self.superpowerAuthorized) return nil;
     
-    if (!_directMessagesManager)
-    {
-        _directMessagesManager = [[WeiboDirectMessagesConversationManager alloc] initWithAccount:self];
+    if (!_privateMessagesManager) {
+        _privateMessagesManager = [[WeiboPrivateMessagesConversationManager alloc] initWithAccount:self];
     }
+    return _privateMessagesManager;
+}
+
+- (WeiboPublicMessagesConversationManager *)publicMessagesManager
+{
+    if (!self.superpowerAuthorized) return nil;
     
-    return _directMessagesManager;
+    if (!_publicMessagesManager) {
+        _publicMessagesManager = [[WeiboPublicMessagesConversationManager alloc] initWithAccount:self];
+    }
+    return _publicMessagesManager;
 }
 
 #pragma mark -
@@ -497,7 +496,8 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
             //[commentsTimelineStream loadNewer];
             break;
         case WeiboCompositionTypeDirectMessage:
-            [self.directMessagesManager refresh];
+            [self refreshPrivateMessages];
+            [self refreshPublicMessage];
         default:
             break;
     }
@@ -533,6 +533,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     self.newCommentMentionsCount = (NSInteger)unread.newCommentMentions;
     self.newCommentsCount = (NSInteger)unread.newComments;
     self.newDirectMessagesCount = (NSInteger)unread.newDirectMessages;
+    self.newPublicMessagesCount = (NSInteger)unread.newPublicMessages;
     
     if ((NSInteger)unread.newFollowers > self.newFollowersCount)
     {
@@ -594,7 +595,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
     
     if (composition.type == WeiboCompositionTypeDirectMessage)
     {
-        [self.directMessagesManager requestStreaming];
+        [self.privateMessagesManager requestStreaming];
         
         WeiboAPI * api = [self authenticatedSuperpowerRequest:callback];
         [api sendDirectMessage:composition.text toUserID:composition.directMessageUser.userID];
@@ -602,7 +603,7 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         double delayInSeconds = 90.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.directMessagesManager endStreaming];
+            [self.privateMessagesManager endStreaming];
         });
     }
     else if (composition.type == WeiboCompositionTypeRetweet)
@@ -1157,9 +1158,9 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 
 - (NSInteger)newDirectMessagesCount
 {
-    if (self.directMessagesManager)
+    if (self.privateMessagesManager)
     {
-        return (NSInteger)self.directMessagesManager.unreadConversations.count;
+        return (NSInteger)self.privateMessagesManager.unreadConversations.count;
     }
     
     return _newDirectMessagesCount;
@@ -1208,9 +1209,20 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
 {
     _newDirectMessagesCount = newDirectMessagesCount;
     
-    if (newDirectMessagesCount && self.directMessagesManager)
+    if (newDirectMessagesCount && self.privateMessagesManager)
     {
-        [self refreshDirectMessages];
+        [self refreshPrivateMessages];
+    }
+}
+
+- (void)setNewPublicMessagesCount:(NSInteger)newPublicMessagesCount
+{
+    if (_newPublicMessagesCount != newPublicMessagesCount) {
+        _newPublicMessagesCount = newPublicMessagesCount;
+        
+        if (newPublicMessagesCount && self.publicMessagesManager) {
+            [self refreshPublicMessage];
+        }
     }
 }
 
