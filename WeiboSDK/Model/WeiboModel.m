@@ -26,7 +26,7 @@
 
 @implementation WeiboModel
 
-static NSMutableDictionary *keyNames = nil;
+static NSDictionary *keyNames = nil;
 
 + (void)enumeratePropertiesUsingBlock:(void (^)(objc_property_t property, BOOL *stop))block {
 	Class cls = self;
@@ -52,33 +52,35 @@ static NSMutableDictionary *keyNames = nil;
 
 + (void)initialize
 {
-	if (!keyNames)
-	{
-		keyNames = [[NSMutableDictionary alloc] init];
-	}
-
-	NSMutableArray *names = [[NSMutableArray alloc] init];
-	
-    [self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL * __attribute__((unused)) stop) {
-        ext_propertyAttributes *attributes = ext_copyPropertyAttributes(property);
-        @onExit {
-            free(attributes);
-        };
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableDictionary * keyNamesMap = [NSMutableDictionary dictionaryWithDictionary:keyNames];
         
-        if (attributes->readonly && attributes->ivar == NULL) return;
+        NSMutableArray *names = [[NSMutableArray alloc] init];
         
-        NSString * key = @(property_getName(property));
-        [names addObject:key];
-    }];
-
-    NSArray * ignored = [self ignoredCodingProperties];
-    
-    if (ignored)
-    {
-        [names removeObjectsInArray:ignored];
-    }
-	
-	[keyNames setObject:names forKey:NSStringFromClass(self)];
+        [self enumeratePropertiesUsingBlock:^(objc_property_t property, BOOL * __attribute__((unused)) stop) {
+            ext_propertyAttributes *attributes = ext_copyPropertyAttributes(property);
+            @onExit {
+                free(attributes);
+            };
+            
+            if (attributes->readonly && attributes->ivar == NULL) return;
+            
+            NSString * key = @(property_getName(property));
+            [names addObject:key];
+        }];
+        
+        NSArray * ignored = [self ignoredCodingProperties];
+        
+        if (ignored)
+        {
+            [names removeObjectsInArray:ignored];
+        }
+        
+        [keyNamesMap setObject:names forKey:NSStringFromClass(self)];
+        
+        keyNames = [NSDictionary dictionaryWithDictionary:keyNamesMap];
+    });
 }
 
 
@@ -330,7 +332,7 @@ static NSString * const WeiboModelMetadataKey = @"WeiboModelMetadataKey";
 
 - (void)weibo_setServerMetaData:(NSDictionary *)metaData
 {
-    [self setObject:metaData forAssociatedKey:WeiboModelMetadataKey retained:YES];
+    [self weibo_setObject:metaData forAssociatedKey:WeiboModelMetadataKey retained:YES];
 }
 
 @end
@@ -339,7 +341,7 @@ static NSString * const WeiboModelMetadataKey = @"WeiboModelMetadataKey";
 
 - (NSDictionary *)weibo_serverMetaData
 {
-    return [self objectWithAssociatedKey:WeiboModelMetadataKey];
+    return [self weibo_objectWithAssociatedKey:WeiboModelMetadataKey];
 }
 
 @end
