@@ -11,6 +11,7 @@
 #import "WeiboUser.h"
 #import "WeiboBaseStatus.h"
 
+
 enum {
 	WeiboCompositionTypeNewTweet,
 	WeiboCompositionTypeComment,

@@ -132,7 +132,7 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
     
     [self _loadOlder];
     
-    _flags.isLoadingNewer = YES;
+    _flags.isLoadingOlder = YES;
 }
 
 - (BOOL)isLoadingNewer

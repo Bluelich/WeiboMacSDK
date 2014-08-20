@@ -257,6 +257,8 @@
 		C665B67018AFBD6C00DBD3CB /* WeiboShortURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboShortURLManager.m; path = ShortURL/WeiboShortURLManager.m; sourceTree = "<group>"; };
 		C669030217E427EC005A859D /* WeiboAccount+DirectMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAccount+DirectMessage.h"; sourceTree = "<group>"; };
 		C669030317E427EC005A859D /* WeiboAccount+DirectMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeiboAccount+DirectMessage.m"; sourceTree = "<group>"; };
+		C66B720B199E5AE40038A7F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C66B720C199E5AE40038A7F3 /* WeiboSDKFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiboSDKFramework.h; sourceTree = "<group>"; };
 		C682BABF17C3C0B500B3149F /* WeiboStatusAccountMentionFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboStatusAccountMentionFilter.h; sourceTree = "<group>"; };
 		C682BAC017C3C0B500B3149F /* WeiboStatusAccountMentionFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboStatusAccountMentionFilter.m; sourceTree = "<group>"; };
 		C6880780174E048000FD69F4 /* WeiboComposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboComposition.h; sourceTree = "<group>"; };
@@ -487,6 +489,23 @@
 				C6F3E01018D42DA80055131A /* WeiboUserTimelineStream.m */,
 			);
 			path = UserStream;
+			sourceTree = "<group>";
+		};
+		C66B7209199E5AE40038A7F3 /* WeiboSDKFramework */ = {
+			isa = PBXGroup;
+			children = (
+				C66B720C199E5AE40038A7F3 /* WeiboSDKFramework.h */,
+				C66B720A199E5AE40038A7F3 /* Supporting Files */,
+			);
+			path = WeiboSDKFramework;
+			sourceTree = "<group>";
+		};
+		C66B720A199E5AE40038A7F3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C66B720B199E5AE40038A7F3 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		C68B2F7117ACD1CA005CC80C /* Filter */ = {
@@ -759,6 +778,7 @@
 				C6011AF9151475D500A0A49C /* README.md */,
 				C6FC9E6314E3C40200094A8F /* WeiboSDK */,
 				C6146F1718D4378B00C672F1 /* WeiboSDKResources */,
+				C66B7209199E5AE40038A7F3 /* WeiboSDKFramework */,
 				C6FC9E4514E3C3F400094A8F /* Frameworks */,
 				C6FC9E4314E3C3F400094A8F /* Products */,
 				82812E9C745B41ADA7F266E3 /* Pods.xcconfig */,

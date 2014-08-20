@@ -52,7 +52,8 @@
 NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction = @"WeiboStatusFavoriteStateDidChangeNotifiaction";
 NSString * const WeiboAccountSavedSearchesDidChangeNotification = @"WeiboAccountSavedSearchesDidChangeNotification";
 NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpdateNotification";
-
+NSString * const WeiboAccountDidSentCompositionNotification = @"WeiboAccountDidSentCompositionNotification";
+NSString * const WeiboAccountDidSentCompositionNotificationCompositionKey = @"composition";
 
 @interface WeiboAccount ()
 
@@ -683,7 +684,14 @@ NSString * const WeiboUserRemarkDidUpdateNotification = @"WeiboUserRemarkDidUpda
         [composition errorSending];
         [_delegate account:self didFailToPost:composition errorMessage:error.errorString error:error];
     }
+    else
+    {
+        NSDictionary * userInfo = [NSDictionary dictionaryWithObjectsAndKeys:composition, WeiboAccountDidSentCompositionNotificationCompositionKey, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountDidSentCompositionNotification object:self userInfo:userInfo];
+    }
     [composition didSend:response];
+    
 }
 
 #pragma mark -

@@ -59,7 +59,7 @@ ivar = newVar;
 
 NS_INLINE void dispatch_next(dispatch_block_t block)
 {
-    dispatch_async(dispatch_get_current_queue(), block);
+    dispatch_async(dispatch_get_main_queue(), block);
 }
 NS_INLINE void dispatch_async_priority(NSInteger priority, dispatch_block_t work)
 {

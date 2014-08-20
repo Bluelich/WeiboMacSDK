@@ -21,6 +21,8 @@
 extern NSString * const WeiboStatusFavoriteStateDidChangeNotifiaction;
 extern NSString * const WeiboAccountSavedSearchesDidChangeNotification;
 extern NSString * const WeiboUserRemarkDidUpdateNotification;
+extern NSString * const WeiboAccountDidSentCompositionNotification;
+extern NSString * const WeiboAccountDidSentCompositionNotificationCompositionKey;
 
 @interface WeiboAccount : NSObject <NSCoding>
 {
