@@ -278,9 +278,11 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     
 }
 
-- (void)deleteConversation:(WeiboDirectMessageConversation * __attribute__((unused)))conversation
+- (void)deleteConversation:(WeiboDirectMessageConversation *)conversation
 {
+    [_conversations removeObject:conversation];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessagesConversationListDidUpdateNotification object:self];
 }
 
 - (NSArray *)unreadConversations

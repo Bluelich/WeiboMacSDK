@@ -13,7 +13,7 @@
 extern NSString * const WeiboDirectMessagesConversationListDidUpdateNotification;
 extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 
-@class WeiboAccount;
+@class WeiboAccount, WeiboDirectMessageConversation;
 
 @interface WeiboDirectMessagesConversationManager : NSObject <NSCoding>
 
@@ -36,5 +36,8 @@ extern NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification;
 
 - (void)requestStreaming; // poll间隔提到15秒一次
 - (void)endStreaming;
+
+- (WeiboDirectMessageConversation *)conversationWithUserID:(WeiboUserID)userID;
+- (void)deleteConversation:(WeiboDirectMessageConversation *)conversation;
 
 @end

@@ -18,6 +18,14 @@
 
 @implementation WeiboPublicMessagesConversationManager
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(compositionDidSent:) name:WeiboAccountDidSentCompositionNotification object:nil];
+    }
+    return self;
+}
+
 - (void)setAccount:(WeiboAccount *)account
 {
     if (self.account != account) {
@@ -34,6 +42,33 @@
         return nil;
     }
     return @[_publicMessageStream];
+}
+
+- (void)compositionDidSent:(NSNotification *)notification
+{
+    if (notification.object != self.account) {
+        return;
+    }
+    
+    id<WeiboComposition> compostion = notification.userInfo[WeiboAccountDidSentCompositionNotificationCompositionKey];
+    
+    if (!compostion || compostion.type != WeiboCompositionTypeDirectMessage) {
+        return;
+    }
+    
+    WeiboUser * user = compostion.directMessageUser;
+    
+    if (!user) {
+        return;
+    }
+    
+    WeiboDirectMessageConversation * conversation = [self conversationWithUserID:user.userID];
+    
+    if (!conversation) {
+        return;
+    }
+    
+    [self deleteConversation:conversation];
 }
 
 @end
