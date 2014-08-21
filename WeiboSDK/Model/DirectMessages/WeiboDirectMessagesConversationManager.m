@@ -66,8 +66,6 @@ NSString * const WeiboDirectMessagesManagerDidFinishLoadingNotification = @"Weib
     if (self = [self init])
     {        
         _unreadConversationUserIDsFromCache = [aDecoder decodeObjectForKey:@"unread-state"];
-        
-        [self _setupNotifications];
     }
     return self;
 }

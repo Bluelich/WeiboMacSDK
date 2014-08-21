@@ -31,7 +31,7 @@
 {
     BOOL deriveUserNotification = self.messagesLoaded && fromServer;
     
-    [super addMessages:messages];
+    [super addMessages:messages fromServer:fromServer];
     
     if (deriveUserNotification && messages.count)
     {
