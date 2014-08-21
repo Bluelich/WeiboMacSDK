@@ -115,8 +115,11 @@
 
 - (void)directMessageSendResponse:(id)response info:(id __attribute__((unused)))info
 {
-    [authenticateWithAccount refreshTimelineForType:WeiboCompositionTypeDirectMessage];
     [responseCallback invoke:response];
+    
+    dispatch_next(^{
+        [self->authenticateWithAccount refreshTimelineForType:WeiboCompositionTypeDirectMessage];
+    });
 }
 
 @end
