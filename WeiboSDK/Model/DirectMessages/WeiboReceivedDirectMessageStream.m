@@ -27,9 +27,9 @@
     [api directMessagesSinceID:0 maxID:[self oldestMessageID]-1 count:200];
 }
 
-- (void)addMessages:(NSArray *)messages
+- (void)addMessages:(NSArray *)messages fromServer:(BOOL)fromServer
 {
-    BOOL deriveUserNotification = self.messagesLoaded;
+    BOOL deriveUserNotification = self.messagesLoaded && fromServer;
     
     [super addMessages:messages];
     

@@ -177,6 +177,11 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
 
 - (void)addMessages:(NSArray *)messages
 {
+    [self addMessages:messages fromServer:YES];
+}
+
+- (void)addMessages:(NSArray *)messages fromServer:(BOOL)fromServer
+{
     BOOL readBit = [self forceReadBit];
     
     for (WeiboDirectMessage * message in messages)
@@ -196,6 +201,8 @@ NSString * const WeiboDirectMessageStreamFinishedLoadingNotification = @"WeiboDi
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WeiboDirectMessageStreamDidUpdateNotification object:self userInfo:userInfo];
     }
+    
+#pragma unused(fromServer)
 }
 - (void)deleteMessage:(WeiboDirectMessage * __attribute__((unused)))message
 {

@@ -9,6 +9,8 @@
 #import "WeiboPublicMessagesConversationManager.h"
 #import "WeiboDirectMessagesConversationManager_Private.h"
 #import "WeiboPublicDirectMessageStream.h"
+#import "WeiboPrivateMessagesConversationManager.h"
+#import "WeiboDirectMessageConversation.h"
 
 @interface WeiboPublicMessagesConversationManager ()
 
@@ -68,6 +70,7 @@
         return;
     }
     
+    [self.account.privateMessagesManager.receivedStream addMessages:conversation.messages fromServer:NO];
     [self deleteConversation:conversation];
 }
 
