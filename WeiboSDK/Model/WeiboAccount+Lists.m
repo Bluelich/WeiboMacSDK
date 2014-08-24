@@ -22,6 +22,7 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
         return;
     }
     
+    _flags.loadingLists = YES;
     _flags.listsAccessDenied = NO;
     
     WeiboCallback * callback = WeiboCallbackMake(self, @selector(listsResponse:info:), nil);
@@ -31,6 +32,8 @@ NSString * const WeiboAccountListsDidUpdateNotification = @"WeiboAccountListsDid
 
 - (void)listsResponse:(id)response info:(id __attribute__((unused)))info
 {
+    _flags.loadingLists = NO;
+    
     BOOL postsNotification = NO;
     
     if ([response isKindOfClass:[NSArray class]])
