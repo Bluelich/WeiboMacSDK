@@ -122,6 +122,14 @@
     [WeiboComment parseObjectsWithJSONObject:response account:authenticateWithAccount rootKey:info[@"rootKey"] callback:responseCallback];
 }
 
+- (void)statusWithID:(WeiboStatusID)sid
+{
+    [self GET:@"statuses/show" parameters:@{@"id": @(sid)} callback:WeiboBlockCallback(^(id responseObject, id info) {
+        [WeiboStatus parseObjectWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
+#pragma unused(info)
+    }, nil)];
+}
+
 #pragma mark -
 #pragma mark Favorites
 - (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count{

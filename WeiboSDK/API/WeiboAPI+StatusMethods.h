@@ -32,6 +32,8 @@
 - (void)commentConversationWithCommentID:(WeiboStatusID)cid;
 - (void)commentWithID:(WeiboStatusID)cid;
 
+- (void)statusWithID:(WeiboStatusID)sid;
+
 #pragma mark -
 #pragma mark Favorites
 - (void)favoritesForPage:(NSUInteger)page count:(NSUInteger)count;
