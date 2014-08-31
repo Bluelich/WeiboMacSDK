@@ -124,7 +124,7 @@
 
 - (void)statusWithID:(WeiboStatusID)sid
 {
-    [self GET:@"statuses/show" parameters:@{@"id": @(sid)} callback:WeiboBlockCallback(^(id responseObject, id info) {
+    [self GET:@"statuses/show.json" parameters:@{@"id": @(sid)} callback:WeiboBlockCallback(^(id responseObject, id info) {
         [WeiboStatus parseObjectWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
 #pragma unused(info)
     }, nil)];
