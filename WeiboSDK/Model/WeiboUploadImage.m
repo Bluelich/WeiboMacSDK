@@ -135,9 +135,10 @@ NSString * const WeiboUploadImageDidFailedToUploadNotification = @"WeiboUploadIm
     
     [resultImage lockFocus];
     [image drawInRect:NSMakeRect(0, 0, targetSize.width, targetSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    NSBitmapImageRep * bitmapRep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0, 0.0, targetSize.width, targetSize.height)];
     [resultImage unlockFocus];
     
-    self.imageData = [resultImage weibo_JPEGRepersentationWithCompressFactor:0.92];
+    self.imageData = [bitmapRep representationUsingType:NSJPEGFileType properties:@{NSImageCompressionFactor: @0.92}];
 }
 
 - (void)setImageWithOriginalImageData:(NSData *)imageData

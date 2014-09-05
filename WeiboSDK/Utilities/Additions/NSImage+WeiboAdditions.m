@@ -135,7 +135,7 @@
         if ([rep isKindOfClass:[NSBitmapImageRep class]] == YES)
         {
             NSBitmapImageRep * bitmapRep = (NSBitmapImageRep *)rep;
-            return [bitmapRep representationUsingType:NSPNGFileType properties:@{NSImageCompressionFactor: @(factor)}];
+            return [bitmapRep representationUsingType:NSJPEGFileType properties:@{NSImageCompressionFactor: @(factor)}];
         }
     }
     return nil;
