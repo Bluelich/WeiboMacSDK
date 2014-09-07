@@ -8,18 +8,19 @@
 
 #import "WeiboUserFollowersList.h"
 #import "WeiboAPI+UserMethods.h"
+#import "WeiboAccount+Superpower.h"
 
 @implementation WeiboUserFollowersList
 
 - (void)_loadNewer
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:YES]];
+    WeiboAPI * api = [self.account authenticatedSuperpowerRequest:[self usersListCallbackWithLoadingNewer:YES]];
     [api followersForUserID:self.user.userID cursor:0];
 }
 
 - (void)_loadOlder
 {
-    WeiboAPI * api = [self.account authenticatedRequest:[self usersListCallbackWithLoadingNewer:NO]];
+    WeiboAPI * api = [self.account authenticatedSuperpowerRequest:[self usersListCallbackWithLoadingNewer:NO]];
     [api followersForUserID:self.user.userID cursor:self.cursor];
 }
 
