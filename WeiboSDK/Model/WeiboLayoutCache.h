@@ -14,6 +14,7 @@
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) BOOL fontSize;
 @property (nonatomic, assign) BOOL showThumb;
+@property (nonatomic, assign) BOOL showAvatar;
 @property (nonatomic, assign) BOOL placeThumbOnSide;
 
 // Derived
