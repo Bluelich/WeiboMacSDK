@@ -11,9 +11,9 @@
 #import "WeiboUser.h"
 #import "WeiboPicture.h"
 #import "WeiboCallback.h"
-#import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 #import "RegexKitLite.h"
+#import <NSDictionary+Accessors.h>
 
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;
@@ -56,7 +56,7 @@
         {
             if (![ad isKindOfClass:[NSDictionary class]]) continue;
             
-            WeiboStatusID statusID = (WeiboStatusID)[ad weibo_longlongForKey:@"id" defaultValue:0];
+            WeiboStatusID statusID = (WeiboStatusID)[ad longLongForKey:@"id"];
             
             if (!statusID) continue;
             for (WeiboStatus * status in objects)
@@ -87,7 +87,7 @@
         self.treatRetweetedStatusAsQuoted = YES;
         
         // parse source parameter
-		NSString *src = [dic weibo_stringForKey:@"source" defaultValue:nil];
+		NSString *src = [dic stringForKey:@"source"];
 		NSRange r = [src rangeOfString:@"<a href"];
 		NSRange end;
 		if (r.location != NSNotFound) {
@@ -125,15 +125,15 @@
 		}
         
         
-        self.favorited = [dic weibo_boolForKey:@"favorited" defaultValue:NO];
+        self.favorited = [dic boolForKey:@"favorited"];
         self.liked = NO; // we don't have like state
-        self.truncated = [dic weibo_boolForKey:@"truncated" defaultValue:NO];
-        self.inReplyToStatusID = (WeiboStatusID)[dic weibo_longlongForKey:@"in_reply_to_status_id" defaultValue:0];
-		self.inReplyToUserID = (WeiboUserID)[dic weibo_longlongForKey:@"in_reply_to_user_id" defaultValue:0];
-		self.inReplyToScreenname = [dic weibo_stringForKey:@"in_reply_to_screen_name" defaultValue:@""];
-		self.thumbnailPic = [dic weibo_stringForKey:@"thumbnail_pic" defaultValue:nil];
-		self.middlePic = [dic weibo_stringForKey:@"bmiddle_pic" defaultValue:nil];
-		self.originalPic = [dic weibo_stringForKey:@"original_pic" defaultValue:nil];
+        self.truncated = [dic boolForKey:@"truncated"];
+        self.inReplyToStatusID = (WeiboStatusID)[dic longLongForKey:@"in_reply_to_status_id"];
+		self.inReplyToUserID = (WeiboUserID)[dic longLongForKey:@"in_reply_to_user_id"];
+        self.inReplyToScreenname = [dic stringForKey:@"in_reply_to_screen_name"] ? : @"";
+		self.thumbnailPic = [dic stringForKey:@"thumbnail_pic"];
+		self.middlePic = [dic stringForKey:@"bmiddle_pic"];
+		self.originalPic = [dic stringForKey:@"original_pic"];
         
         NSArray * picURLs = [dic objectForKey:@"pic_urls"];
         

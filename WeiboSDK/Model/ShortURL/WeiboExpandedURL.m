@@ -7,7 +7,7 @@
 //
 
 #import "WeiboExpandedURL.h"
-#import "NSDictionary+WeiboAdditions.h"
+#import <NSDictionary+Accessors.h>
 
 @interface WeiboExpandedURL ()
 
@@ -36,10 +36,10 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.shortURL = [dict weibo_stringForKey:@"url_short" defaultValue:nil];
-        self.originalURL = [dict weibo_stringForKey:@"url_long" defaultValue:nil];
-        self.type = [dict weibo_intForKey:@"type" defaultValue:0];
-        self.result = [dict weibo_boolForKey:@"result" defaultValue:YES];
+        self.shortURL = [dict stringForKey:@"url_short"];
+        self.originalURL = [dict stringForKey:@"url_long"];
+        self.type = [dict intForKey:@"type"];
+        self.result = [dict boolForKey:@"result"];
         self.site = [self siteForURL:self.originalURL];
         self.derivedType = [self _derivedType];
         

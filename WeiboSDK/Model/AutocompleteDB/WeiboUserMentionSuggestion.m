@@ -7,7 +7,7 @@
 //
 
 #import "WeiboUserMentionSuggestion.h"
-#import "NSDictionary+WeiboAdditions.h"
+#import <NSDictionary+Accessors.h>
 
 @implementation WeiboUserMentionSuggestion
 
@@ -21,9 +21,9 @@
 {
     if (self = [self init])
     {
-        self.userID = (WeiboUserID)[dict weibo_longlongForKey:@"uid" defaultValue:0];
-        self.screenName = [dict weibo_stringForKey:@"nickname" defaultValue:@""];
-        self.remark = [dict weibo_stringForKey:@"remark" defaultValue:@""];
+        self.userID = (WeiboUserID)[dict longLongForKey:@"uid"];
+        self.screenName = [dict stringForKey:@"nickname"] ? : @"";
+        self.remark = [dict stringForKey:@"remark"] ? : @"";
     }
     return self;
 }

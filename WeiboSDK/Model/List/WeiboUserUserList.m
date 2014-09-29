@@ -10,7 +10,7 @@
 #import "WeiboCallback.h"
 #import "WeiboRequestError.h"
 #import "Weibo.h"
-#import "NSDictionary+WeiboAdditions.h"
+#import <NSDictionary+Accessors.h>
 
 NSString * const WeiboUserUserListDidAddUsersNotification = @"WeiboUserUserListDidAddUsersNotification";
 NSString * const WeiboUserUserListDidReceiveRequestErrorNotification = @"WeiboUserUserListDidReceiveRequestErrorNotification";
@@ -188,8 +188,8 @@ NSString * const WeiboUserUserListNotificationRequestErrorKey = @"WeiboUserUserL
         return;
     }
     
-    WeiboUserID cursor = (WeiboUserID)[[users weibo_serverMetaData] weibo_longlongForKey:@"next_cursor" defaultValue:0];
-    NSInteger totalCount = [[users weibo_serverMetaData] weibo_intForKey:@"total_number" defaultValue:0];
+    WeiboUserID cursor = (WeiboUserID)[[users weibo_serverMetaData] longLongForKey:@"next_cursor"];
+    NSInteger totalCount = [[users weibo_serverMetaData] intForKey:@"total_number"];
     
     if (cursor)
     {

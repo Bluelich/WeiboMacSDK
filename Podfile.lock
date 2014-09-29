@@ -1,20 +1,22 @@
 PODS:
-  - AFNetworking (2.2.3):
+  - AFNetworking (2.3.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.3):
+  - AFNetworking/NSURLConnection (2.3.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.3):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.3)
-  - AFNetworking/Security (2.2.3)
-  - AFNetworking/Serialization (2.2.3)
+  - AFNetworking/NSURLSession (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.3.1)
+  - AFNetworking/Security (2.3.1)
+  - AFNetworking/Serialization (2.3.1)
   - CocoaSecurity (1.2.4)
   - FMDB (2.3):
     - FMDB/standard
@@ -57,6 +59,7 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
+  - NSDictionary+Accessors (1.0.0)
   - RegexKitLite (4.0)
   - SSKeychain (1.2.2)
 
@@ -66,16 +69,22 @@ DEPENDENCIES:
   - FMDB (~> 2.2)
   - JSONKit-NoWarning (~> 1.1)
   - libextobjc
+  - NSDictionary+Accessors (from `https://github.com/Naituw/NSDictionary-Accessors.git`)
   - RegexKitLite
   - SSKeychain (~> 1.2)
 
-SPEC CHECKSUMS:
-  AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
-  CocoaSecurity: 7118996ece3493e6dcf2d45006bf0c1d955dbbc8
-  FMDB: 8b6b69b1164e3007d7f4b3b3719e667602ec247e
-  JSONKit-NoWarning: 2f26e19ba35ce3a5ed64ef1345313045325c4238
-  libextobjc: 2c9fc8226f0f38e562587f65172f93f0c9b4a47a
-  RegexKitLite: b16f029b518614394438e17b7d1df8bfa1e5a81e
-  SSKeychain: 3d0b76c87e7b062a7ad1631a825fddec84367d44
+EXTERNAL SOURCES:
+  NSDictionary+Accessors:
+    :git: https://github.com/Naituw/NSDictionary-Accessors.git
 
-COCOAPODS: 0.32.1
+SPEC CHECKSUMS:
+  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  CocoaSecurity: 7ce1b967863d4e96dcffdbad17671117900e6c6e
+  FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
+  JSONKit-NoWarning: fc8d6dd8ec65e303867d1bd274632fc60a4a8ab9
+  libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
+  NSDictionary+Accessors: b62ce299b39bf809ab2543e47b4e90a600e5d503
+  RegexKitLite: 761b4944f23cb8fe20697b2e47be0689fd832c09
+  SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
+
+COCOAPODS: 0.33.1
