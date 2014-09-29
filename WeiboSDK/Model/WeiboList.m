@@ -9,7 +9,7 @@
 #import "WeiboList.h"
 #import "WeiboAccount.h"
 #import "Weibo.h"
-#import "NSDictionary+WeiboAdditions.h"
+#import <NSDictionary+Accessors.h>
 
 @interface WeiboList ()
 
@@ -34,11 +34,11 @@
 {
     if (self = [super init])
     {
-        self.listID = [dict weibo_stringForKey:@"idstr" defaultValue:@""];
-        self.name = [dict weibo_stringForKey:@"name" defaultValue:@""];
-        self.mode = [dict weibo_stringForKey:@"mode" defaultValue:@""];
-        self.description = [dict weibo_stringForKey:@"description" defaultValue:@""];
-        self.memberCount = [dict weibo_longlongForKey:@"member_count" defaultValue:0];
+        self.listID = [dict stringForKey:@"idstr"] ? : @"";
+        self.name = [dict stringForKey:@"name"] ? : @"";
+        self.mode = [dict stringForKey:@"mode"] ? : @"";
+        self.description = [dict stringForKey:@"description"] ? : @"";
+        self.memberCount = [dict longLongForKey:@"member_count"];
     }
     return self;
 }

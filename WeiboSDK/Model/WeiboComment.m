@@ -10,9 +10,9 @@
 #import "WeiboStatus.h"
 #import "WeiboUser.h"
 #import "WeiboCallback.h"
-#import "NSDictionary+WeiboAdditions.h"
 #import "NSObject+AssociatedObject.h"
 #import "JSONKit.h"
+#import <NSDictionary+Accessors.h>
 
 @implementation WeiboComment
 @synthesize replyToStatus, replyToComment;

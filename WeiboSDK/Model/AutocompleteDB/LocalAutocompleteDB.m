@@ -19,7 +19,7 @@
 #import "WeiboCallback.h"
 #import "WeiboAPI+UserMethods.h"
 #import "WeiboUserMentionSuggestion.h"
-#import "NSDictionary+WeiboAdditions.h"
+#import <NSDictionary+Accessors.h>
 
 static LocalAutocompleteDB * sharedDB = nil;
 
@@ -307,9 +307,9 @@ static LocalAutocompleteDB * sharedDB = nil;
     {
         WeiboAutocompleteResultItem * item = [[WeiboAutocompleteResultItem alloc] init];
 
-        item.itemID = [dict weibo_stringForKey:@"uid" defaultValue:nil];
-        item.autocompleteText = [dict weibo_stringForKey:@"nickname" defaultValue:@""];
-        item.autocompleteSubtext = [dict weibo_stringForKey:@"remark" defaultValue:@""];
+        item.itemID = [dict stringForKey:@"uid"];
+        item.autocompleteText = [dict stringForKey:@"nickname"] ? : @"";
+        item.autocompleteSubtext = [dict stringForKey:@"remark"] ? : @"";
         item.autocompleteType = WeiboAutocompleteTypeUser;
         
         if (item.itemID.length)
