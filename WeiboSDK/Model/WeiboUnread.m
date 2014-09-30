@@ -9,7 +9,6 @@
 #import "WeiboUnread.h"
 #import "WeiboCallback.h"
 #import "JSONKit.h"
-#import <NSDictionary+Accessors.h>
 
 @implementation WeiboUnread
 

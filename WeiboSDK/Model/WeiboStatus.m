@@ -13,7 +13,6 @@
 #import "WeiboCallback.h"
 #import "JSONKit.h"
 #import "RegexKitLite.h"
-#import <NSDictionary+Accessors.h>
 
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;

@@ -7,7 +7,6 @@
 //
 
 #import "WeiboPicture.h"
-#import <NSDictionary+Accessors.h>
 
 @implementation WeiboPicture
 
