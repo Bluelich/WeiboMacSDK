@@ -1,27 +1,27 @@
 PODS:
-  - AFNetworking (2.3.1):
+  - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.3.1):
+  - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.3.1):
+  - AFNetworking/NSURLSession (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.3.1)
-  - AFNetworking/Security (2.3.1)
-  - AFNetworking/Serialization (2.3.1)
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
   - CocoaSecurity (1.2.4)
-  - FMDB (2.3):
+  - FMDB (2.4):
     - FMDB/standard
-  - FMDB/common (2.3)
-  - FMDB/standard (2.3):
+  - FMDB/common (2.4)
+  - FMDB/standard (2.4):
     - FMDB/common
   - JSONKit-NoWarning (1.2)
   - libextobjc (0.4):
@@ -59,7 +59,7 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4)
   - libextobjc/UmbrellaHeader (0.4)
-  - NSDictionary+Accessors (1.0.0)
+  - NSDictionary+Accessors-BothPlatform (1.0.0)
   - RegexKitLite (4.0)
   - SSKeychain (1.2.2)
 
@@ -69,22 +69,18 @@ DEPENDENCIES:
   - FMDB (~> 2.2)
   - JSONKit-NoWarning (~> 1.1)
   - libextobjc
-  - NSDictionary+Accessors (from `https://github.com/Naituw/NSDictionary-Accessors.git`)
+  - NSDictionary+Accessors-BothPlatform (~> 1.0)
   - RegexKitLite
   - SSKeychain (~> 1.2)
 
-EXTERNAL SOURCES:
-  NSDictionary+Accessors:
-    :git: https://github.com/Naituw/NSDictionary-Accessors.git
-
 SPEC CHECKSUMS:
-  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CocoaSecurity: 7ce1b967863d4e96dcffdbad17671117900e6c6e
-  FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
+  FMDB: 0b2fa25e5264ef177973c0cb8c02c711107979aa
   JSONKit-NoWarning: fc8d6dd8ec65e303867d1bd274632fc60a4a8ab9
   libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
-  NSDictionary+Accessors: b62ce299b39bf809ab2543e47b4e90a600e5d503
-  RegexKitLite: 761b4944f23cb8fe20697b2e47be0689fd832c09
+  NSDictionary+Accessors-BothPlatform: c0ab7df1e7e10dd0a12274d60fd4135aae189da8
+  RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.1

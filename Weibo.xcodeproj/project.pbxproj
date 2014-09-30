@@ -41,7 +41,6 @@
 		C6647D4314ED638E00422998 /* WeiboRequestError.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F317B114E7CD2200A952FE /* WeiboRequestError.m */; };
 		C6647D4514ED638E00422998 /* WeiboCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FC9E6514E3C43D00094A8F /* WeiboCallback.m */; };
 		C6647D4914ED638E00422998 /* WeiboAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DB909414E4EE3B001DE9F5 /* WeiboAPI.m */; };
-		C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */ = {isa = PBXBuildFile; fileRef = C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */; };
 		C665B67118AFBD6C00DBD3CB /* WeiboShortURLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C665B66F18AFBD6C00DBD3CB /* WeiboShortURLManager.h */; };
 		C665B67218AFBD6C00DBD3CB /* WeiboShortURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C665B67018AFBD6C00DBD3CB /* WeiboShortURLManager.m */; };
 		C669030417E427EC005A859D /* WeiboAccount+DirectMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = C669030217E427EC005A859D /* WeiboAccount+DirectMessage.h */; };
@@ -211,7 +210,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		82812E9C745B41ADA7F266E3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		1FC5C1DC3C5B619723E8DDBF /* Pods.macappstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.macappstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.macappstore.xcconfig"; sourceTree = "<group>"; };
+		79A1A9E2623619E3FA2FF1B0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		88B04C51B9AE6E633F25F784 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C6011AF9151475D500A0A49C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		C6084B4117D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAPI+SuperpowerAuth.h"; sourceTree = "<group>"; };
 		C6084B4217D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeiboAPI+SuperpowerAuth.m"; sourceTree = "<group>"; };
@@ -222,8 +223,6 @@
 		C6146ED118D4342C00C672F1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autocomplete_schema.sql; sourceTree = "<group>"; };
 		C6146F3E18D46B6D00C672F1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		C617C91914EBAB1D00CC75F5 /* WeiboGeotag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboGeotag.h; sourceTree = "<group>"; };
-		C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboGeotag.m; sourceTree = "<group>"; };
 		C6188FD318CC95D0004ED7D1 /* WeiboLikeStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboLikeStatus.h; sourceTree = "<group>"; };
 		C6188FD418CC95D0004ED7D1 /* WeiboLikeStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboLikeStatus.m; sourceTree = "<group>"; };
 		C618900718CE0988004ED7D1 /* WeiboLikesStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboLikesStream.h; sourceTree = "<group>"; };
@@ -440,6 +439,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		48B024DDFC3436AC3ADC84FC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				88B04C51B9AE6E633F25F784 /* Pods.debug.xcconfig */,
+				79A1A9E2623619E3FA2FF1B0 /* Pods.release.xcconfig */,
+				1FC5C1DC3C5B619723E8DDBF /* Pods.macappstore.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C60B51201745D30900E99C07 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,8 +686,6 @@
 				C61E986515A9921100C42FE5 /* WeiboEmotion.h */,
 				C61E986615A9921100C42FE5 /* WeiboEmotion.m */,
 				C6880780174E048000FD69F4 /* WeiboComposition.h */,
-				C617C91914EBAB1D00CC75F5 /* WeiboGeotag.h */,
-				C617C91A14EBAB1E00CC75F5 /* WeiboGeotag.m */,
 				C62B76E3186B34FF00152B31 /* WeiboSavedSearch.h */,
 				C62B76E4186B34FF00152B31 /* WeiboSavedSearch.m */,
 				C69CB49218E7B69A0093C02D /* WeiboUploadImage.h */,
@@ -789,7 +796,7 @@
 				C66B7209199E5AE40038A7F3 /* WeiboSDKFramework */,
 				C6FC9E4514E3C3F400094A8F /* Frameworks */,
 				C6FC9E4314E3C3F400094A8F /* Products */,
-				82812E9C745B41ADA7F266E3 /* Pods.xcconfig */,
+				48B024DDFC3436AC3ADC84FC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1035,7 +1042,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1089,7 +1096,6 @@
 				C6F3E05C18D42EBE0055131A /* NSArray+WeiboAdditions.m in Sources */,
 				C6F3E03618D42DBD0055131A /* WeiboCommentsTimelineStream.m in Sources */,
 				C6A4719018AE558800B3CB48 /* WeiboCryptographer.m in Sources */,
-				C6647D5714ED638E00422998 /* WeiboGeotag.m in Sources */,
 				C6F3E03C18D42DBD0055131A /* WeiboListStream.m in Sources */,
 				C6F3E04218D42DBD0055131A /* WeiboRepostsStream.m in Sources */,
 				C665B67218AFBD6C00DBD3CB /* WeiboShortURLManager.m in Sources */,
@@ -1196,7 +1202,7 @@
 		};
 		C6AC071918704E6700D20556 /* MacAppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
+			baseConfigurationReference = 1FC5C1DC3C5B619723E8DDBF /* Pods.macappstore.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1211,6 +1217,7 @@
 					"-ObjC",
 					"-framework",
 					Security,
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1219,7 +1226,7 @@
 		};
 		C6B4DC1D14ED347C0032A8CF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
+			baseConfigurationReference = 88B04C51B9AE6E633F25F784 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1230,6 +1237,7 @@
 					"-ObjC",
 					"-framework",
 					Security,
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1238,7 +1246,7 @@
 		};
 		C6B4DC1E14ED347C0032A8CF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82812E9C745B41ADA7F266E3 /* Pods.xcconfig */;
+			baseConfigurationReference = 79A1A9E2623619E3FA2FF1B0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1249,6 +1257,7 @@
 					"-ObjC",
 					"-framework",
 					Security,
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
