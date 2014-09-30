@@ -26,5 +26,6 @@ Pod::Spec.new do |s|
   s.dependency 'RegexKitLite'
   s.dependency 'AFNetworking'
   s.dependency 'CocoaSecurity', '~> 1.2'
+  s.dependency 'NSDictionary+Accessors', :git => 'https://github.com/Naituw/NSDictionary-Accessors.git'
 
 end
