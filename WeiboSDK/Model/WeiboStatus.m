@@ -7,7 +7,6 @@
 //
 
 #import "WeiboStatus.h"
-#import "WeiboGeotag.h"
 #import "WeiboUser.h"
 #import "WeiboPicture.h"
 #import "WeiboCallback.h"
@@ -16,7 +15,7 @@
 
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;
-@synthesize geo, favorited, inReplyToUserID, source, sourceUrl;
+@synthesize favorited, inReplyToUserID, source, sourceUrl;
 @synthesize inReplyToScreenname;
 
 - (void)dealloc{
@@ -135,6 +134,13 @@
 		self.originalPic = [dic stringForKey:@"original_pic"];
         
         NSArray * picURLs = [dic objectForKey:@"pic_urls"];
+        
+        NSDictionary * geo = [dic dictionaryForKey:@"geo"];
+        if (geo) {
+            CLLocationDegrees latitude = [geo doubleForKey:@"latitude"];
+            CLLocationDegrees longitude = [geo doubleForKey:@"longitude"];
+            _geoCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        }
         
         self.pics = [WeiboPicture objectsWithJSONObject:picURLs account:self.account];
         
