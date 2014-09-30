@@ -11,7 +11,6 @@
 #import "WeiboCallback.h"
 #import "WeiboAccount.h"
 #import "JSONKit.h"
-#import <NSDictionary+Accessors.h>
 
 @implementation WeiboUser
 @synthesize userID, screenName, name, province, city, location, description;

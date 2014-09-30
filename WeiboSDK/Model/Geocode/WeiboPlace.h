@@ -16,4 +16,6 @@
 @property (nonatomic, copy) NSString * provinceName;
 @property (nonatomic, copy) NSString * address;
 
+@property (nonatomic, readonly) BOOL coordinateValid;
+
 @end

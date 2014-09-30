@@ -12,7 +12,6 @@
 #import "WeiboCallback.h"
 #import "NSObject+AssociatedObject.h"
 #import "JSONKit.h"
-#import <NSDictionary+Accessors.h>
 
 @implementation WeiboComment
 @synthesize replyToStatus, replyToComment;

@@ -7,7 +7,6 @@
 //
 
 #import "WeiboExpandedURL.h"
-#import <NSDictionary+Accessors.h>
 
 @interface WeiboExpandedURL ()
 

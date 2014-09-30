@@ -8,7 +8,6 @@
 
 #import "WeiboDirectMessage.h"
 #import "WeiboAccount.h"
-#import <NSDictionary+Accessors.h>
 
 @interface WeiboDirectMessage ()
 {

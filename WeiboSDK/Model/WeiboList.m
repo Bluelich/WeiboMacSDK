@@ -9,7 +9,6 @@
 #import "WeiboList.h"
 #import "WeiboAccount.h"
 #import "Weibo.h"
-#import <NSDictionary+Accessors.h>
 
 @interface WeiboList ()
 

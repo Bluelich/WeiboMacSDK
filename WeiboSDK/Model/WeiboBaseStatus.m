@@ -12,7 +12,6 @@
 #import "WeiboCallback.h"
 #import "WeiboAccount.h"
 #import "JSONKit.h"
-#import <NSDictionary+Accessors.h>
 
 @interface WeiboBaseStatus ()
 
