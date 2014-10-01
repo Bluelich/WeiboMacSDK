@@ -7,15 +7,17 @@
 //
 
 #import "WeiboStatus.h"
+#import "WeiboGeotag.h"
 #import "WeiboUser.h"
 #import "WeiboPicture.h"
 #import "WeiboCallback.h"
+#import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 #import "RegexKitLite.h"
 
 @implementation WeiboStatus
 @synthesize truncated, retweetedStatus, inReplyToStatusID;
-@synthesize favorited, inReplyToUserID, source, sourceUrl;
+@synthesize geo, favorited, inReplyToUserID, source, sourceUrl;
 @synthesize inReplyToScreenname;
 
 - (void)dealloc{
@@ -54,7 +56,7 @@
         {
             if (![ad isKindOfClass:[NSDictionary class]]) continue;
             
-            WeiboStatusID statusID = (WeiboStatusID)[ad longLongForKey:@"id"];
+            WeiboStatusID statusID = (WeiboStatusID)[ad weibo_longlongForKey:@"id" defaultValue:0];
             
             if (!statusID) continue;
             for (WeiboStatus * status in objects)
@@ -85,7 +87,7 @@
         self.treatRetweetedStatusAsQuoted = YES;
         
         // parse source parameter
-		NSString *src = [dic stringForKey:@"source"];
+		NSString *src = [dic weibo_stringForKey:@"source" defaultValue:nil];
 		NSRange r = [src rangeOfString:@"<a href"];
 		NSRange end;
 		if (r.location != NSNotFound) {
@@ -123,24 +125,17 @@
 		}
         
         
-        self.favorited = [dic boolForKey:@"favorited"];
+        self.favorited = [dic weibo_boolForKey:@"favorited" defaultValue:NO];
         self.liked = NO; // we don't have like state
-        self.truncated = [dic boolForKey:@"truncated"];
-        self.inReplyToStatusID = (WeiboStatusID)[dic longLongForKey:@"in_reply_to_status_id"];
-		self.inReplyToUserID = (WeiboUserID)[dic longLongForKey:@"in_reply_to_user_id"];
-        self.inReplyToScreenname = [dic stringForKey:@"in_reply_to_screen_name"] ? : @"";
-		self.thumbnailPic = [dic stringForKey:@"thumbnail_pic"];
-		self.middlePic = [dic stringForKey:@"bmiddle_pic"];
-		self.originalPic = [dic stringForKey:@"original_pic"];
+        self.truncated = [dic weibo_boolForKey:@"truncated" defaultValue:NO];
+        self.inReplyToStatusID = (WeiboStatusID)[dic weibo_longlongForKey:@"in_reply_to_status_id" defaultValue:0];
+		self.inReplyToUserID = (WeiboUserID)[dic weibo_longlongForKey:@"in_reply_to_user_id" defaultValue:0];
+		self.inReplyToScreenname = [dic weibo_stringForKey:@"in_reply_to_screen_name" defaultValue:@""];
+		self.thumbnailPic = [dic weibo_stringForKey:@"thumbnail_pic" defaultValue:nil];
+		self.middlePic = [dic weibo_stringForKey:@"bmiddle_pic" defaultValue:nil];
+		self.originalPic = [dic weibo_stringForKey:@"original_pic" defaultValue:nil];
         
         NSArray * picURLs = [dic objectForKey:@"pic_urls"];
-        
-        NSDictionary * geo = [dic dictionaryForKey:@"geo"];
-        if (geo) {
-            CLLocationDegrees latitude = [geo doubleForKey:@"latitude"];
-            CLLocationDegrees longitude = [geo doubleForKey:@"longitude"];
-            _geoCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
-        }
         
         self.pics = [WeiboPicture objectsWithJSONObject:picURLs account:self.account];
         

@@ -8,6 +8,7 @@
 
 #import "WeiboUnread.h"
 #import "WeiboCallback.h"
+#import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
 @implementation WeiboUnread
@@ -19,13 +20,13 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.newStatus = (NSUInteger)[dict intForKey:@"status"];
-        self.newStatusMentions = (NSUInteger)[dict intForKey:@"mention_status"];
-        self.newCommentMentions = (NSUInteger)[dict intForKey:@"mention_cmt"];
-        self.newComments = (NSUInteger)[dict intForKey:@"cmt"];
-        self.newDirectMessages = (NSUInteger)[dict intForKey:@"dm"];
-        self.newFollowers = (NSUInteger)[dict intForKey:@"follower"];
-        self.newPublicMessages = (NSUInteger)[dict intForKey:@"msgbox"];
+        self.newStatus = (NSUInteger)[dict weibo_intForKey:@"status" defaultValue:0];
+        self.newStatusMentions = (NSUInteger)[dict weibo_intForKey:@"mention_status" defaultValue:0];
+        self.newCommentMentions = (NSUInteger)[dict weibo_intForKey:@"mention_cmt" defaultValue:0];
+        self.newComments = (NSUInteger)[dict weibo_intForKey:@"cmt" defaultValue:0];
+        self.newDirectMessages = (NSUInteger)[dict weibo_intForKey:@"dm" defaultValue:0];
+        self.newFollowers = (NSUInteger)[dict weibo_intForKey:@"follower" defaultValue:0];
+        self.newPublicMessages = (NSUInteger)[dict weibo_intForKey:@"msgbox" defaultValue:0];
         
         return YES;
     }

@@ -7,6 +7,7 @@
 //
 
 #import "WeiboPicture.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 @implementation WeiboPicture
 
@@ -21,9 +22,9 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.thumbnailImage = [dict stringForKey:@"thumbnail_pic"];
-        self.middleImage = [dict stringForKey:@"bmiddle_pic"];
-        self.originalImage = [dict stringForKey:@"original_pic"];
+        self.thumbnailImage = [dict weibo_stringForKey:@"thumbnail_pic" defaultValue:nil];
+        self.middleImage = [dict weibo_stringForKey:@"bmiddle_pic" defaultValue:nil];
+        self.originalImage = [dict weibo_stringForKey:@"original_pic" defaultValue:nil];
         
         if (!self.thumbnailImage.length) return NO;
         

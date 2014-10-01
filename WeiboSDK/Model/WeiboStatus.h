@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 #import "WeiboBaseStatus.h"
 
-@class WeiboUser, WeiboCallback;
+@class WeiboUser, WeiboGeotag, WeiboCallback;
 
 @interface WeiboStatus : WeiboBaseStatus {
     BOOL truncated;
     WeiboStatus * retweetedStatus;
     WeiboStatusID inReplyToStatusID;
+    WeiboGeotag * geo;
     BOOL favorited;
     WeiboUserID inReplyToUserID;
     NSString * __weak inReplyToScreenname;
@@ -26,6 +26,7 @@
 @property (assign, nonatomic) BOOL truncated;
 @property (strong, atomic) WeiboStatus * retweetedStatus;
 @property (assign, nonatomic) WeiboStatusID inReplyToStatusID;
+@property (strong, nonatomic) WeiboGeotag * geo;
 @property (assign, nonatomic) BOOL favorited;
 @property (assign, nonatomic) BOOL liked;
 @property (assign, nonatomic) WeiboUserID inReplyToUserID;
@@ -33,7 +34,6 @@
 @property (strong, nonatomic) NSString * source;
 @property (strong, nonatomic) NSString * sourceUrl;
 @property (strong, nonatomic, readonly) NSURL * webLink;
-@property (assign, nonatomic, readonly) CLLocationCoordinate2D geoCoordinate;
 
 @property (nonatomic, assign) BOOL treatRetweetedStatusAsQuoted;
 

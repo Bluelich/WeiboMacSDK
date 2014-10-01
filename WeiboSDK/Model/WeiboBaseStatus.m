@@ -12,6 +12,7 @@
 #import "WeiboCallback.h"
 #import "WeiboAccount.h"
 #import "JSONKit.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 @interface WeiboBaseStatus ()
 
@@ -31,9 +32,9 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.sid = (WeiboStatusID)[dict longLongForKey:@"id"];
-		self.createdAt = [dict integerForKey:@"created_at"];
-        self.text = [dict stringForKey:@"text"] ? : @"";
+        self.sid = (WeiboStatusID)[dict weibo_longlongForKey:@"id" defaultValue:0];
+		self.createdAt = [dict weibo_timeForKey:@"created_at" defaultValue:0];
+		self.text = [dict weibo_stringForKey:@"text" defaultValue:@""];
         
         NSDictionary* userDic = [dict objectForKey:@"user"];
 		if (userDic && [userDic isKindOfClass:[NSDictionary class]])

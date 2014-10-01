@@ -8,12 +8,12 @@
 
 #import "WeiboAccount+Superpower.h"
 #import "WeiboAPI+SuperpowerAuth.h"
+#import "NSDictionary+WeiboAdditions.h"
 #import "WeiboSuperpowerAPI.h"
 #import "SSKeychain.h"
 #import "WeiboCallback.h"
 #import "WeiboDirectMessagesConversationManager.h"
 #import "Weibo.h"
-#import <NSDictionary+Accessors.h>
 
 NSString * const WeiboAccountSuperpowerAuthorizeFinishedNotification = @"WeiboAccountSuperpowerAuthorizeFinishedNotification";
 NSString * const WeiboAccountSuperpowerAuthorizeFailedNotification = @"WeiboAccountSuperpowerAuthorizeFailedNotification";
@@ -65,8 +65,8 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     }
     else if ([response isKindOfClass:[NSDictionary class]])
     {
-        NSString * token = [(NSDictionary *)response stringForKey:@"access_token"];
-        WeiboUserID userID = (WeiboUserID)[(NSDictionary *)response longLongForKey:@"uid"];
+        NSString * token = [response weibo_stringForKey:@"access_token" defaultValue:nil];
+        WeiboUserID userID = (WeiboUserID)[response weibo_longlongForKey:@"uid" defaultValue:0];
         
         if (userID != self.user.userID)
         {

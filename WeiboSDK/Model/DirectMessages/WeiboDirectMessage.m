@@ -8,6 +8,7 @@
 
 #import "WeiboDirectMessage.h"
 #import "WeiboAccount.h"
+#import "NSDictionary+WeiboAdditions.h"
 
 @interface WeiboDirectMessage ()
 {
@@ -39,11 +40,11 @@
 {
     if ([super updateWithJSONDictionary:dict])
     {
-        self.messageID = [dict longLongForKey:@"id"];
-        self.date = [dict integerForKey:@"created_at"];
-        self.text = [dict stringForKey:@"text"] ? : @"";
-        self.senderID = (WeiboUserID)[dict longLongForKey:@"sender_id"];
-        self.recipientID = (WeiboUserID)[dict longLongForKey:@"recipient_id"];
+        self.messageID = [dict weibo_longlongForKey:@"id" defaultValue:0];
+        self.date = [dict weibo_timeForKey:@"created_at" defaultValue:0];
+        self.text = [dict weibo_stringForKey:@"text" defaultValue:@""];
+        self.senderID = (WeiboUserID)[dict weibo_longlongForKey:@"sender_id" defaultValue:0];
+        self.recipientID = (WeiboUserID)[dict weibo_longlongForKey:@"recipient_id" defaultValue:0];
         
         NSDictionary * senderDictionary = [dict objectForKey:@"sender"];
         NSDictionary * recipientDictionary = [dict objectForKey:@"recipient"];

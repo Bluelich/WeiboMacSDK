@@ -10,6 +10,7 @@
 #import "WeiboStatus.h"
 #import "WeiboCallback.h"
 #import "WeiboAccount.h"
+#import "NSDictionary+WeiboAdditions.h"
 #import "JSONKit.h"
 
 @implementation WeiboUser
@@ -100,35 +101,35 @@
 {
     if ([super updateWithJSONDictionary:dic])
     {
-        self.userID = (WeiboUserID)[dic longLongForKey:@"id"];
-        self.screenName = [dic stringForKey:@"screen_name"] ? : @"";
-        self.name = [dic stringForKey:@"name"] ? : @"";
-        self.remark = [dic stringForKey:@"remark"];
+        self.userID = (WeiboUserID)[dic weibo_longlongForKey:@"id" defaultValue:0];
+        self.screenName = [dic weibo_stringForKey:@"screen_name" defaultValue:@""];
+        self.name = [dic weibo_stringForKey:@"name" defaultValue:@""];
+        self.remark = [dic weibo_stringForKey:@"remark" defaultValue:nil];
         
         self.province = @""; // Not implemented yet.
         self.city = @""; // Not implemented yet.
-        self.location = [dic stringForKey:@"location"];
-        self.description = [dic stringForKey:@"description"];
-        self.url = [dic stringForKey:@"url"];
-        self.profileImageUrl = [dic stringForKey:@"profile_image_url"];
-        self.profileLargeImageUrl = [dic stringForKey:@"avatar_large"];
-        self.domain = [dic stringForKey:@"domain"];
+        self.location = [dic weibo_stringForKey:@"location" defaultValue:@""];
+        self.description = [dic weibo_stringForKey:@"description" defaultValue:@""];
+        self.url = [dic weibo_stringForKey:@"url" defaultValue:@""];
+        self.profileImageUrl = [dic weibo_stringForKey:@"profile_image_url" defaultValue:@""];
+        self.profileLargeImageUrl = [dic weibo_stringForKey:@"avatar_large" defaultValue:nil];
+        self.domain = [dic weibo_stringForKey:@"domain" defaultValue:@""];
         
         NSString * genderChar = [dic objectForKey:@"gender"];
         if ([genderChar isEqualToString:@"m"])      self.gender = WeiboGenderMale;
         else if ([genderChar isEqualToString:@"f"]) self.gender = WeiboGenderFemale;
         else                                        self.gender = WeiboGenderUnknow;
         
-        self.followersCount = [dic intForKey:@"followers_count"];
-        self.friendsCount = [dic intForKey:@"friends_count"];
-        self.statusesCount = [dic intForKey:@"statuses_count" ];
-        self.favouritesCount = [dic intForKey:@"favourites_count" ];
-        self.createAt = [dic integerForKey:@"create_at"];
-        self.following = [dic boolForKey:@"following"];
-        self.followMe = [dic boolForKey:@"follow_me"];
-        //self.verified = [dic boolForKey:@"verified" ];
-        self.verifiedType = [dic objectForKey:@"verified_type"] ? [dic intForKey:@"verified_type"] : -1;
-        self.verifiedReason = [dic stringForKey:@"verified_reason"];
+        self.followersCount = [dic weibo_intForKey:@"followers_count" defaultValue:0];
+        self.friendsCount = [dic weibo_intForKey:@"friends_count" defaultValue:0];
+        self.statusesCount = [dic weibo_intForKey:@"statuses_count" defaultValue:0];
+        self.favouritesCount = [dic weibo_intForKey:@"favourites_count" defaultValue:0];
+        self.createAt = [dic weibo_timeForKey:@"create_at" defaultValue:0];
+        self.following = [dic weibo_boolForKey:@"following" defaultValue:NO];
+        self.followMe = [dic weibo_boolForKey:@"follow_me" defaultValue:NO];
+        //self.verified = [dic boolForKey:@"verified" defaultValue:NO];
+        self.verifiedType = [dic weibo_intForKey:@"verified_type" defaultValue:-1];
+        self.verifiedReason = [dic weibo_stringForKey:@"verified_reason" defaultValue:nil];
         
         NSDictionary * statusDic = [dic objectForKey:@"status"];
         if (statusDic) {

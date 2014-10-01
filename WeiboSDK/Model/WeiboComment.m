@@ -10,6 +10,7 @@
 #import "WeiboStatus.h"
 #import "WeiboUser.h"
 #import "WeiboCallback.h"
+#import "NSDictionary+WeiboAdditions.h"
 #import "NSObject+AssociatedObject.h"
 #import "JSONKit.h"
 

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NSDictionary+Accessors.h>
 #import "WeiboCallback.h"
 
 @class WeiboAccount;
