@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/Naituw/WeiboMacSDK"
   s.license          = 'MIT'
   s.author           = { "Wutian" => "naituw@gmail.com" }
-  s.source           = { :git => "https://github.com/Naituw/WeiboMacSDK.git", :tag => 'v3.0.0' }
+  s.source           = { :git => "https://github.com/Naituw/WeiboMacSDK.git", :tag => '3.0.0' }
   s.social_media_url = 'http://weibo.com/naituw'
 
   s.platform     = :osx
