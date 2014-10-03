@@ -1,22 +1,23 @@
 # WeiboMacSDK
 
-[![Version](http://cocoapod-badges.herokuapp.com/v/WeiboMacSDK/badge.png)](http://cocoadocs.org/docsets/WeiboMacSDK)
-[![Platform](http://cocoapod-badges.herokuapp.com/p/WeiboMacSDK/badge.png)](http://cocoadocs.org/docsets/WeiboMacSDK)
+<!--[![Version](http://cocoapod-badges.herokuapp.com/v/WeiboMacSDK/badge.png)](http://cocoadocs.org/docsets/WeiboMacSDK)
+[![Platform](http://cocoapod-badges.herokuapp.com/p/WeiboMacSDK/badge.png)](http://cocoadocs.org/docsets/WeiboMacSDK)-->
 
-## State
-
-WeiboMacSDK is currently under havily development. The API should not be considered stable until 1.0.
 
 ## Usage
 
+// TODO
+
 ## Requirements
+
+- OS X 10.8 SDK
 
 ## Installation
 
-WeiboMacSDK is * NOT * available through main repo of [CocoaPods](http://cocoapods.org) currently, but you can still manage it by CocoaPods (as a private repo). To install
+WeiboMacSDK is available through CocoaPods. To install
 it simply add the following line to your Podfile:
 
-    pod 'WeiboMacSDK', :git => 'https://github.com/Naituw/WeiboMacSDK.git'
+    pod 'WeiboMacSDK'
 
 
 ## Author
