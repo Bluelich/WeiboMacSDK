@@ -22,6 +22,7 @@ typedef enum {
     
     // Error codes defined by SDK
     WeiboErrorCodeSuperpowerUserNotMatch = 929001,
+    WeiboErrorCodeParametersInvalid      = 929002,
 } WeiboErrorCode;
 
 @interface WeiboRequestError : NSError {

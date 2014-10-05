@@ -37,4 +37,7 @@
 - (WeiboCallback *)errorlessCallbackWithCallback:(WeiboCallback *)callback;
 - (WeiboCallback *)errorlessCallbackWithTarget:(id)target selector:(SEL)selector info:(id)info;
 
+- (void)requestFailedWithError:(NSError *)error;
+- (void)requestFailedWithErrorCode:(WeiboErrorCode)code;
+
 @end

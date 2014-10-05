@@ -83,4 +83,14 @@ multipartFormData:(NSDictionary *)parts
 }
 
 
+- (void)requestFailedWithError:(NSError *)error
+{
+    [responseCallback invoke:error];
+}
+
+- (void)requestFailedWithErrorCode:(WeiboErrorCode)code
+{
+    [self requestFailedWithError:[WeiboRequestError errorWithCode:code]];
+}
+
 @end
