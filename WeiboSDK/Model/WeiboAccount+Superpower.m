@@ -40,7 +40,7 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
 }
 - (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WeiboCallbackBlock)completion
 {
-    return [self authenticatedSuperpowerRequest:WeiboBlockCallback(completion, nil)];
+    return [self authenticatedSuperpowerRequest:WeiboBlockCallback(completion)];
 }
 
 - (void)authorizeSuperpowerWithUsername:(NSString *)aUsername password:(NSString *)aPassword

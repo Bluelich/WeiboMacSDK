@@ -124,10 +124,9 @@
 
 - (void)statusWithID:(WeiboStatusID)sid
 {
-    [self GET:@"statuses/show.json" parameters:@{@"id": @(sid)} callback:WeiboBlockCallback(^(id responseObject, id info) {
+    [self GET:@"statuses/show.json" parameters:@{@"id": @(sid)} callback:WeiboBlockCallback(^(id responseObject) {
         [WeiboStatus parseObjectWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
-#pragma unused(info)
-    }, nil)];
+    })];
 }
 
 #pragma mark -
@@ -161,9 +160,9 @@
 #pragma mark - Like
 - (void)likeListForStautsID:(WeiboStatusID)statusID page:(NSUInteger)page count:(NSUInteger)count
 {
-    [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WeiboBlockCallback(^(id responseObject, id info __attribute__((unused))) {
+    [self GET:@"attitudes/show.json" parameters:@{@"id": @(statusID), @"count": @(count), @"page": @(page)} callback:WeiboBlockCallback(^(id responseObject) {
         [WeiboLikeStatus parseObjectsWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
-    }, nil)];
+    })];
 }
 - (void)likeStatusID:(WeiboStatusID)statusID
 {
@@ -175,9 +174,9 @@
 }
 - (WeiboCallback *)likeActionCallback
 {
-    return WeiboBlockCallback(^(id responseObject, id info __attribute__((unused))) {
+    return WeiboBlockCallback(^(id responseObject) {
         [self->responseCallback invoke:responseObject];
-    }, nil);
+    });
 }
 
 #pragma mark -

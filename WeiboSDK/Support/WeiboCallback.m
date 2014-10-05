@@ -22,9 +22,9 @@
 WeiboCallback * WeiboCallbackMake(id aTarget,SEL aSelector,id aInfo){
     return [WeiboCallback callbackWithTarget:aTarget selector:aSelector info:aInfo];
 }
-WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block, id aInfo)
+WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block)
 {
-    return [[WeiboCallback alloc] initWithBlock:block info:aInfo];
+    return [[WeiboCallback alloc] initWithBlock:block info:nil];
 }
 - (WeiboCallback *)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo{
     if ((self = [super init])) {

@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^WeiboCallbackBlock)(id responseObject, id info);
+typedef void (^WeiboCallbackBlock)(id responseObject);
 
 @interface WeiboCallback : NSObject
 
 WeiboCallback * WeiboCallbackMake(id aTarget,SEL aSelector,id aInfo);
-WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block, id aInfo);
+WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block);
 
 + (id)callbackWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;
 - (id)initWithTarget:(id)aTarget selector:(SEL)aSelector info:(id)aInfo;

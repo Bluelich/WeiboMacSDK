@@ -16,9 +16,9 @@
 {
     if (!urls.count) return;
     
-    [self GET:@"short_url/expand.json" parameters:@{@"url_short": urls} callback:WeiboBlockCallback(^(id responseObject, id info __attribute__((unused))) {
+    [self GET:@"short_url/expand.json" parameters:@{@"url_short": urls} callback:WeiboBlockCallback(^(id responseObject) {
         [WeiboExpandedURL parseObjectsWithJSONObject:responseObject account:self->authenticateWithAccount callback:self->responseCallback];
-    }, nil)];
+    })];
 }
 
 @end

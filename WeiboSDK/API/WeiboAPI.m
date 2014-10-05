@@ -28,7 +28,7 @@
                                         account:(WeiboAccount *)account
                                      completion:(WeiboCallbackBlock)completion
 {
-    return [self authenticatedRequestWithAPIRoot:root account:account callback:WeiboBlockCallback(completion, nil)];
+    return [self authenticatedRequestWithAPIRoot:root account:account callback:WeiboBlockCallback(completion)];
 }
 - (id)initWithAccount:(WeiboAccount *)account
               apiRoot:(NSString *)root 

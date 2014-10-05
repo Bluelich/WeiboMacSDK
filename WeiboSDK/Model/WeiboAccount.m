@@ -1013,7 +1013,7 @@ NSString * const WeiboAccountDidSentCompositionNotificationCompositionKey = @"co
     
     status.liked = !status.liked;
     
-    WeiboAPI * api = [self authenticatedSuperpowerRequestWithCompletion:^(id responseObject, id info __attribute__((unused))) {
+    WeiboAPI * api = [self authenticatedSuperpowerRequestWithCompletion:^(id responseObject) {
         if ([responseObject isKindOfClass:[WeiboRequestError class]])
         {
             status.liked = shouldUnlike;
