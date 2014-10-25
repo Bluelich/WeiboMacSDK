@@ -201,7 +201,19 @@ static BOOL AtLeaseMavericks    = NO;
         NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
         
         [userInfo setObject:@(type) forKey:WeiboUserNotificationUserInfoItemTypeKey];
-        [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
+        
+        if (user) {
+            [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
+            
+            BOOL simplifiedCoding = user.simplifiedCoding;
+            
+            user.simplifiedCoding = YES;
+            
+            NSData * userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+            [userInfo setObject:userData forKey:WeiboUserNotificationUserInfoItemUserDataKey];
+            
+            user.simplifiedCoding = simplifiedCoding;
+        }
         
         if (isCommentMention)
         {
@@ -257,7 +269,19 @@ static BOOL AtLeaseMavericks    = NO;
         NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
         
         [userInfo setObject:@(type) forKey:WeiboUserNotificationUserInfoItemTypeKey];
-        [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
+        if (user) {
+            [userInfo setObject:@(user.userID) forKey:WeiboUserNotificationUserInfoItemUserIDKey];
+            
+            BOOL simplifiedCoding = user.simplifiedCoding;
+            
+            user.simplifiedCoding = YES;
+            
+            NSData * userData = [NSKeyedArchiver archivedDataWithRootObject:user];
+            [userInfo setObject:userData forKey:WeiboUserNotificationUserInfoItemUserDataKey];
+            
+            user.simplifiedCoding = simplifiedCoding;
+        }
+        
         [userInfo setObject:@(status.replyToStatus.sid) forKey:WeiboUserNotificationUserInfoItemIDKey];
         [userInfo setObject:@(status.sid) forKey:WeiboUserNotificationUserInfoCommentIDKey];
         [userInfo setObject:@(account.user.userID) forKey:WeiboUserNotificationUserInfoAccountUserIDKey];
