@@ -19,28 +19,17 @@
     
     NSString * screenName = [NSString stringWithFormat:@"@%@", self.account.user.screenName];
     
-    if ([status.text rangeOfString:screenName].length != 0)
-    {
+    if ([status.text rangeOfString:screenName].length != 0) {
         status.mentionedMe = YES;
         
         return NO;
     }
     
-    if (status.quotedBaseStatus &&
-        status.quotedBaseStatus.user.userID != self.account.user.userID)
-    {
-        if (status.quotedBaseStatus.user.userID == self.account.user.userID)
-        {
+    if (status.quotedBaseStatus) {
+        if (status.quotedBaseStatus.user.userID == self.account.user.userID) {
             status.mentionedMe = YES;
-            
-            return NO;
-        }
-        
-        if ([status.quotedBaseStatus.text rangeOfString:screenName].length != 0)
-        {
+        } else if ([status.quotedBaseStatus.text rangeOfString:screenName].length != 0) {
             status.mentionedMe = YES;
-            
-            return NO;
         }
     }
     
