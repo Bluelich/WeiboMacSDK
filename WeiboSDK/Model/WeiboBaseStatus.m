@@ -32,7 +32,7 @@
     if ([super updateWithJSONDictionary:dict])
     {
         self.sid = (WeiboStatusID)[dict longLongForKey:@"id"];
-		self.createdAt = [dict integerForKey:@"created_at"];
+		self.createdAt = [dict timeForKey:@"created_at"];
         self.text = [dict stringForKey:@"text"] ? : @"";
         
         NSDictionary* userDic = [dict objectForKey:@"user"];

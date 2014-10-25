@@ -24,7 +24,7 @@ PODS:
   - FMDB/standard (2.4):
     - FMDB/common
   - JSONKit-NoWarning (1.2)
-  - libextobjc (0.4):
+  - libextobjc (0.4.1):
     - libextobjc/EXTADT
     - libextobjc/EXTConcreteProtocol
     - libextobjc/EXTKeyPathCoding
@@ -37,29 +37,29 @@ PODS:
     - libextobjc/NSMethodSignature+EXT
     - libextobjc/RuntimeExtensions
     - libextobjc/UmbrellaHeader
-  - libextobjc/EXTADT (0.4):
+  - libextobjc/EXTADT (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTConcreteProtocol (0.4):
+  - libextobjc/EXTConcreteProtocol (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTKeyPathCoding (0.4):
+  - libextobjc/EXTKeyPathCoding (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTNil (0.4):
+  - libextobjc/EXTNil (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSafeCategory (0.4):
+  - libextobjc/EXTSafeCategory (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTScope (0.4):
+  - libextobjc/EXTScope (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSelectorChecking (0.4):
+  - libextobjc/EXTSelectorChecking (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSynthesize (0.4):
+  - libextobjc/EXTSynthesize (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/NSInvocation+EXT (0.4):
+  - libextobjc/NSInvocation+EXT (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/NSMethodSignature+EXT (0.4):
+  - libextobjc/NSMethodSignature+EXT (0.4.1):
     - libextobjc/RuntimeExtensions
-  - libextobjc/RuntimeExtensions (0.4)
-  - libextobjc/UmbrellaHeader (0.4)
-  - NSDictionary+Accessors-BothPlatform (1.0.0)
+  - libextobjc/RuntimeExtensions (0.4.1)
+  - libextobjc/UmbrellaHeader (0.4.1)
+  - NSDictionary+Accessors-BothPlatform (1.1.0)
   - RegexKitLite (4.0)
   - SSKeychain (1.2.2)
 
@@ -78,9 +78,9 @@ SPEC CHECKSUMS:
   CocoaSecurity: 7ce1b967863d4e96dcffdbad17671117900e6c6e
   FMDB: 0b2fa25e5264ef177973c0cb8c02c711107979aa
   JSONKit-NoWarning: fc8d6dd8ec65e303867d1bd274632fc60a4a8ab9
-  libextobjc: ba42e4111f433273a886cd54f0ddaddb7f62f82f
-  NSDictionary+Accessors-BothPlatform: c0ab7df1e7e10dd0a12274d60fd4135aae189da8
+  libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
+  NSDictionary+Accessors-BothPlatform: 01462bb7d8b18fa45883d5eaac27da5282cd23bd
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.34.4

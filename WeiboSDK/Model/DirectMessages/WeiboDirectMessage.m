@@ -40,7 +40,7 @@
     if ([super updateWithJSONDictionary:dict])
     {
         self.messageID = [dict longLongForKey:@"id"];
-        self.date = [dict integerForKey:@"created_at"];
+        self.date = [dict timeForKey:@"created_at"];
         self.text = [dict stringForKey:@"text"] ? : @"";
         self.senderID = (WeiboUserID)[dict longLongForKey:@"sender_id"];
         self.recipientID = (WeiboUserID)[dict longLongForKey:@"recipient_id"];
