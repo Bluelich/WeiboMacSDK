@@ -14,6 +14,8 @@
 		C6084B4C17D2056500A667F2 /* WeiboSuperpowerAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C6084B4A17D2056500A667F2 /* WeiboSuperpowerAPI.m */; };
 		C60B700018CF5ADE004358E5 /* WeiboModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C60B6FFE18CF5ADE004358E5 /* WeiboModel.h */; };
 		C60B700118CF5ADE004358E5 /* WeiboModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */; };
+		C613CAE319E0431100911096 /* WeiboAPI+Location.h in Headers */ = {isa = PBXBuildFile; fileRef = C613CAE119E0431100911096 /* WeiboAPI+Location.h */; };
+		C613CAE419E0431100911096 /* WeiboAPI+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = C613CAE219E0431100911096 /* WeiboAPI+Location.m */; };
 		C6188FD518CC95D0004ED7D1 /* WeiboLikeStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = C6188FD318CC95D0004ED7D1 /* WeiboLikeStatus.h */; };
 		C6188FD618CC95D0004ED7D1 /* WeiboLikeStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = C6188FD418CC95D0004ED7D1 /* WeiboLikeStatus.m */; };
 		C618900918CE0988004ED7D1 /* WeiboLikesStream.h in Headers */ = {isa = PBXBuildFile; fileRef = C618900718CE0988004ED7D1 /* WeiboLikesStream.h */; };
@@ -220,6 +222,8 @@
 		C6084B4A17D2056500A667F2 /* WeiboSuperpowerAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboSuperpowerAPI.m; sourceTree = "<group>"; };
 		C60B6FFE18CF5ADE004358E5 /* WeiboModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboModel.h; sourceTree = "<group>"; };
 		C60B6FFF18CF5ADE004358E5 /* WeiboModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboModel.m; sourceTree = "<group>"; };
+		C613CAE119E0431100911096 /* WeiboAPI+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeiboAPI+Location.h"; sourceTree = "<group>"; };
+		C613CAE219E0431100911096 /* WeiboAPI+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeiboAPI+Location.m"; sourceTree = "<group>"; };
 		C6146ED118D4342C00C672F1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6146F0818D4350F00C672F1 /* autocomplete_schema.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autocomplete_schema.sql; sourceTree = "<group>"; };
 		C6146F3E18D46B6D00C672F1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -718,6 +722,8 @@
 				C6EC374D1745EE570085E6ED /* WeiboAPI+Private.m */,
 				C6084B4117D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.h */,
 				C6084B4217D1E13D00A667F2 /* WeiboAPI+SuperpowerAuth.m */,
+				C613CAE119E0431100911096 /* WeiboAPI+Location.h */,
+				C613CAE219E0431100911096 /* WeiboAPI+Location.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -942,6 +948,7 @@
 				C6F3E00918D42D2A0055131A /* WeiboUserRelationshipUserList.h in Headers */,
 				C6F3E03318D42DBD0055131A /* WeiboCommentMentionsStream.h in Headers */,
 				C6F3E03D18D42DBD0055131A /* WeiboMentionsStream.h in Headers */,
+				C613CAE319E0431100911096 /* WeiboAPI+Location.h in Headers */,
 				C6EC37621745F2BA0085E6ED /* WeiboAPI+UnreadCount.h in Headers */,
 				C6F3E06418D42F0F0055131A /* WeiboConstants.h in Headers */,
 				C6F3DFEF18D42C650055131A /* WeiboStatusSourceFilter.h in Headers */,
@@ -1134,6 +1141,7 @@
 				C62B76E6186B34FF00152B31 /* WeiboSavedSearch.m in Sources */,
 				C6EC37501745EE570085E6ED /* WeiboAPI+Private.m in Sources */,
 				C6F3E00218D42D2A0055131A /* WeiboSearchUserList.m in Sources */,
+				C613CAE419E0431100911096 /* WeiboAPI+Location.m in Sources */,
 				C6F3E09A18D42F970055131A /* WeiboList.m in Sources */,
 				C6EC37551745EF9C0085E6ED /* WeiboAPI+UserMethods.m in Sources */,
 				C6EC375A1745F13B0085E6ED /* WeiboAPI+StatusMethods.m in Sources */,
