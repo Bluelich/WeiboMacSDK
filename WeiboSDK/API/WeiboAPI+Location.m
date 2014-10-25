@@ -24,7 +24,7 @@
     
     [self GET:@"location/geo/geo_to_address.json" parameters:@{@"coordinate": coordinateString} callback:WeiboBlockCallback(^(id responseObject) {
         if (responseObject) {
-#warning Unfinished...
+            
         }
     })];
 }
