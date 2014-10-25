@@ -84,7 +84,7 @@ NSString * const WeiboShortURLManagerNotificationShortURLSetKey = @"WeiboShortUR
     // random account here, prevents open API access limit
     WeiboAccount * account = [accounts objectAtIndex:arc4random() % accounts.count];
     
-    [[account authenticatedRequestWithCompletion:^(id responseObject, id info __attribute__((unused))) {
+    [[account authenticatedRequestWithCompletion:^(id responseObject) {
         [self.requestingURLs minusSet:urls];
         
         if (![responseObject isKindOfClass:[WeiboRequestError class]])
