@@ -49,7 +49,7 @@ WeiboCallback * WeiboBlockCallback(WeiboCallbackBlock block)
 - (void)invoke:(id)returnValue{
     if (self.block)
     {
-        self.block(returnValue, _info);
+        self.block(returnValue);
     }
     
     if (self.target && _selector)
