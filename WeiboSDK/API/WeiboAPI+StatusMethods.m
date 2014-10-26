@@ -392,9 +392,23 @@
     }
     [self POST:url parameters:params multipartFormData:nil callback:callback];
 }
+
 - (void)updateWithComposition:(id<WeiboComposition>)composition
 {
-    if (composition.uploadImages.count > 1)
+    BOOL usesMultiImageAPI = NO;
+    
+    if (composition.uploadImages.count > 1) {
+        usesMultiImageAPI = YES;
+    }
+    
+    if (composition.uploadImages.count == 1) {
+        WeiboUploadImage * image = [composition.uploadImages firstObject];
+        if (image.uploaded) {
+            usesMultiImageAPI = YES;
+        }
+    }
+    
+    if (usesMultiImageAPI)
     {
         NSMutableArray * picIDs = [NSMutableArray array];
         
