@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.prefix_header_file = "WeiboSDK/SupportingFiles/WeiboSDK-Prefix.pch"
   s.source_files = 'WeiboSDK/**/*.{h,m,c}'
-  s.requires_arc = true,
+  s.requires_arc = true
   s.resources = 'WeiboSDKResources'
 
   s.dependency 'libextobjc'
