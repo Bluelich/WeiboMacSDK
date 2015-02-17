@@ -148,6 +148,14 @@
             }
             break;
         }
+        case WeiboExpandedURLSiteWeibo:
+        {
+            if ([_originalURL rangeOfString:@"video.weibo.com/show"].location != NSNotFound)
+            {
+                type = WeiboExpandedURLTypeVideo;
+            }
+            break;
+        }
         default:
             break;
     }
