@@ -12,6 +12,7 @@
 
 NSString * const WeiboSuperpowerAppKey = @"82966982";
 NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
+NSString * const WeiboSuperpowerOAuthRedirectURI = @"http://oauth.weico.cc";
 
 @implementation WeiboAPI (DirectMessageAuth)
 
@@ -22,12 +23,36 @@ NSString * const WeiboSuperpowerAppSecret = @"72d4545a28a46a6f329c4f2b1e949e6a";
     username = [username stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSDictionary * params = @{
-        @"client_id" : WeiboSuperpowerAppKey,
-        @"client_secret" : WeiboSuperpowerAppSecret,
-        @"username" : username,
-        @"password" : password,
-        @"grant_type" : @"password"
-    };
+                              @"client_id" : WeiboSuperpowerAppKey,
+                              @"client_secret" : WeiboSuperpowerAppSecret,
+                              @"username" : username,
+                              @"password" : password,
+                              @"grant_type" : @"password"
+                              };
+    
+    WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(superpowerTokenResponse:info:) info:nil];
+    
+    NSURL * url = [NSURL URLWithString:@"https://api.weibo.com/oauth2/access_token"];
+    
+    WeiboHTTPRequest * request = [WeiboHTTPRequest requestWithURL:url];
+    [request setResponseCallback:callback];
+    [request setMethod:@"POST"];
+    [request setParameters:params];
+    [request startRequest];
+}
+
+- (void)superpowerTokenWithAuthCode:(NSString *)code appKey:(NSString *)appkey appSecret:(NSString *)appSecret redirectURI:(NSString *)redirectURI
+{
+    appkey = appkey ? : WeiboSuperpowerAppKey;
+    appSecret = appSecret ? : WeiboSuperpowerAppSecret;
+    code = code ? : @"";
+    redirectURI = redirectURI ? : WeiboSuperpowerOAuthRedirectURI;
+    
+    NSDictionary * params = @{@"client_id" : WeiboSuperpowerAppKey,
+                              @"client_secret" : WeiboSuperpowerAppSecret,
+                              @"code": code,
+                              @"grant_type" : @"authorization_code",
+                              @"redirect_uri": redirectURI};
     
     WeiboCallback * callback = [self errorlessCallbackWithTarget:self selector:@selector(superpowerTokenResponse:info:) info:nil];
     

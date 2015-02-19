@@ -52,6 +52,15 @@ NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification = @"Wei
     [api superpowerTokenWithUsername:aUsername password:aPassword];
 }
 
+- (void)authorizeSuperpowerWithAuthCode:(NSString *)code appKey:(NSString *)appkey appSecret:(NSString *)appSecret redirectURI:(NSString *)uri
+{
+    if (_flags.superpowerAuthorizing) return;
+    
+    WeiboAPI * api = [self authenticatedRequest:WeiboCallbackMake(self, @selector(superpowerAuthorizeResponse:info:), nil)];
+    
+    [api superpowerTokenWithAuthCode:code appKey:appkey appSecret:appSecret redirectURI:uri];
+}
+
 - (void)superpowerAuthorizeFailedWithError:(WeiboRequestError *)error
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:WeiboAccountSuperpowerAuthorizeFailedNotification object:self userInfo:@{@"error":error}];

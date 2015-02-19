@@ -20,6 +20,7 @@ extern NSString * const WeiboAccountSuperpowerAuthorizeStateChangedNotification;
 - (WeiboAPI *)authenticatedSuperpowerRequest:(WeiboCallback *)callback;
 - (WeiboAPI *)authenticatedSuperpowerRequestWithCompletion:(WeiboCallbackBlock)completion;
 - (void)authorizeSuperpowerWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authorizeSuperpowerWithAuthCode:(NSString *)code appKey:(NSString *)appkey appSecret:(NSString *)appSecret redirectURI:(NSString *)uri;
 - (void)deauthorizeSuperpower;
 
 - (void)restoreSuperpowerTokenFromKeychain;

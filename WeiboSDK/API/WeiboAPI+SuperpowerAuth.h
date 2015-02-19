@@ -11,5 +11,6 @@
 @interface WeiboAPI (superpowerAuth)
 
 - (void)superpowerTokenWithUsername:(NSString *)username password:(NSString *)password;
+- (void)superpowerTokenWithAuthCode:(NSString *)code appKey:(NSString *)appkey appSecret:(NSString *)appSecret redirectURI:(NSString *)redirectURI;
 
 @end
